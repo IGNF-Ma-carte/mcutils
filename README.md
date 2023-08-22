@@ -32,7 +32,7 @@ to run analysis on exmaple pages
 The documentaion will be created at  `./public/doc`
 
 
-## Build and tests online
+## Build and test instance
 
 You have to build the app before commit. The build will be deploy on the test instance.
 Before buil take care to run static analysis and fix errors (`npm run lint`).
