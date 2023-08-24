@@ -51,3 +51,4 @@ Code is licensed under the [MIT](/LICENSE) license.
 
 NB: This License does not grant permission to use the trade names, trademarks, service marks, or product names of the Licensor, except as required for reasonable and customary use in describing the origin of the Work.
 
+**Important Notice** : Notice concerning graphic elements: Please note that the logos, images and graphic elements associated with **IGN, included in this repository, are protected by copyright and are not covered by the MIT licence. Use of these elements is subject to applicable laws and regulations and must be made in accordance with the rights and permissions granted by the respective owners
