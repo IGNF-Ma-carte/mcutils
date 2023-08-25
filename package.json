@@ -22,8 +22,8 @@
     "Openlayers",
     "ol"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "IGNF",
+  "license": "MIT",
   "bugs": {
     "url": "http://sd-redmine.ign.fr/"
   },
