@@ -80,7 +80,7 @@ import fakeMap from './dialog/fakeMap'
 import VectorStyle from './layer/VectorStyle'
 import './ol/source/getFeatureInfo'
 import { Feature } from 'ol'
-import { LineString, Point } from 'ol/geom'
+import { LineString } from 'ol/geom'
 
 loadFont();
 

@@ -478,7 +478,7 @@ const matchGeom = {
 /** Get style for layer condition
  * 
  */
-function getConditionStyle(f, clustered, options) {
+function getConditionStyle(f, clustered, options, clusterColor) {
   const styles = f.getLayer().getConditionStyle()
   for (let k=0; k < styles.length; k++) {
     const st = styles[k];
@@ -500,10 +500,10 @@ function getConditionStyle(f, clustered, options) {
     }
     if (isok) {
       if (!st.symbol) return [];
-      return getFeatureStyle(f, clustered, options, st.symbol.getIgnStyle())
+      return getFeatureStyle(f, clustered, options, st.symbol.getIgnStyle(), clusterColor)
     }
   }
-  return getFeatureStyle(f, clustered, options, f.getLayer().getIgnStyle(true))
+  return getFeatureStyle(f, clustered, options, f.getLayer().getIgnStyle(true), clusterColor)
 }
 
 /** Create style function to draw features
@@ -529,9 +529,9 @@ function getStyleFn(options) {
 
   // Clusters style
   return function(f, res, clustered) {
-    // Reset cache on PixelRatio change
+    // Reset cache on PixelRatio change ???
     if (_cachePixelRatio !== window.devicePixelRatio) {
-      clearCache();
+      // ??? clearCache();
     }
     
     // Handle clusters
@@ -546,17 +546,19 @@ function getStyleFn(options) {
 
     // Style from layer condition
     if (f.getLayer()) {
-      if (f.getLayer().getConditionStyle().length) return getConditionStyle(f, clustered, options)
+      if (f.getLayer().getConditionStyle && f.getLayer().getConditionStyle().length) {
+        return getConditionStyle(f, clustered, options, clusterColor)
+      } 
     }
     
     // Feature style
-    return getFeatureStyle(f, clustered, options)
+    return getFeatureStyle(f, clustered, options, null, clusterColor)
   }
 }
 
 /** Get style for feature
  */
-function getFeatureStyle(f, clustered, options, ignStyle) {
+function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
   var style;
   // Convert ignStyle to openlayers style
   var s = getIgnStyle(f, ignStyle);
@@ -573,8 +575,8 @@ function getFeatureStyle(f, clustered, options, ignStyle) {
   if (!(st = _cacheStyle[id.main])) {
     var strokeDash = getStrokeDash(s);
     var img;
-    if (clustered && typeGeom!=='Point') {
-      img = clusterImage({ size:1, color:clusterColor });
+    if (clustered && typeGeom !== 'Point') {
+      img = clusterImage({ size:1, color: clusterColor });
     } else {
       img = getImage(id.main, s, f, options.ghost, label);
     }
@@ -645,7 +647,7 @@ function getFeatureStyle(f, clustered, options, ignStyle) {
     })];
   }
   return style;
-};
+}
 
 /** Get select Style
  * @memberof ignStyle

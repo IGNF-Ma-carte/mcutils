@@ -1380,6 +1380,7 @@ StoryMap.prototype.setCarte = function(carte, n) {
         if (this.get('tips') && 
           this.get('tips').hover && 
           e.feature.getLayer && 
+          e.feature.getLayer() && 
           e.feature.getLayer().get('popupHoverSelect')) {
           if (e.feature !== carte.popover.feature) {
             carte.popover.feature = e.feature;

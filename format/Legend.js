@@ -84,13 +84,14 @@ Legend.prototype.read = function(legend, options, append, layers) {
  * @return {Object}
  */
 Legend.prototype.write = function(legend) {
-  const options = {};
+  const options = {
+    legendtitle: legend.getTitle(),
+    lineHeight: legend.get('lineHeight'),
+    legendWidth: 300,
+    legendParam: { width: 300, lineHeight: options.lineHeight }
+    // legendPos: "bottom-left"
+  };
   
-  options.legendtitle = legend.getTitle();
-  options.lineHeight = legend.get('lineHeight');
-  options.legendWidth = 300;
-  options.legendParam = { width: 300, lineHeight: options.lineHeight }
-  // options.legendPos = "bottom-left"
   if (legend.get('type')) options.type = legend.get('type');
 
   // Get legend items

@@ -167,5 +167,5 @@ function mdCalendar(element) {
   })
 }
 
-export { prepareCalendar }
+export { prepareCalendar, joursFeries }
 export default mdCalendar
