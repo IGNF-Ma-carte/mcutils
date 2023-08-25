@@ -1,47 +1,18 @@
 # Macarte-utils
 Library to use with Ma carte
 
-## Installation 
+## About
 
-Install project and dependencies
+`Macarte-utils` is a library to create, read, display Macarte maps and storymaps.
+It has been developed by [@IGNF](https://github.com/IGNF) for its own needs to improve [Macarte apps and services](https://macarte.ign.fr/).
 
-> npm install
+## Documentation
 
-## Development
+Check out the [hosted examples](https://ignf-ma-carte.github.io/mcutils/mcutils/) or the [API documentation](https://ignf-ma-carte.github.io/mcutils/doc/)
 
-### Run tests page
+## Bugs
 
-> npm start
-
-Test are available at http://localhost:1234/
-
-### Static code analysis
-
-Use lint to run analysis
-
-> npm run lint
-
-to run analysis on example pages
-
-> npm run lintex
-
-### Documentation
-
-> npm run doc
-
-The documentation will be created at  `./docs/doc`
-
-
-## Build and test instance
-
-You have to build the app before commit. The build will be deploy on the test instance.
-Before build take care to run static analysis and fix errors (`npm run lint`).
-
-```
-npm run build
-```
-
-NB: You may have to clean manually the build repository before runing the build to remove unecessary files.
+Please use the [GitHub issue tracker](https://github.com/IGNF-Ma-carte/mcutils/issues) for all bugs and feature requests. Before creating a new issue, do a quick search to see if the problem has been reported already.
 
 ## LICENSE
 
