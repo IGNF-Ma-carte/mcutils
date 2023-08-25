@@ -1,0 +1,47 @@
+@media (max-width:1200px)  {
+  .mc-filter[data-mode="gallery"] ul.mc-ul li {
+    width: calc(50% - 1em);
+  }
+}
+
+@media (max-width:900px)  {
+  .mc-list-carte[data-mode="gallery"] ul.mc-ul li {
+    width: calc(50% - 1em);
+  }
+  .mc-filter[data-mode="gallery"] ul.mc-ul li {
+    width: calc(100% - 1em);
+  }
+  .mc-list.mc-filter .filters {
+    width: 15em;
+  }
+  .mc-list.mc-filter > [class^="mc-list-"], .mc-list.mc-filter ul {
+    padding-left: min(15em, 50%);
+  }
+  .mc-list-carte[data-mode="list"] li {
+    padding-left: .5em;
+  }
+  .mc-list-carte[data-mode="list"] li.mc-list-head .mc-icon,
+  .mc-list-carte[data-mode="list"] li .mc-icon {
+    display: none;
+  }
+}
+
+@media (max-width:500px)  {
+  .mc-list-carte[data-mode="gallery"] ul.mc-ul li {
+    width: calc(100% - 1em);
+  }  
+}
+
+@media (min-width:1200px)  {
+  .mc-list-carte[data-mode="gallery"] ul.mc-ul li {
+    width: calc(25% - 1em);
+  }  
+  .mc-filter[data-mode="gallery"] ul.mc-ul li {
+    width: calc(33.33% - 1em);
+  }
+}
+@media (min-width:1600px)  {
+  .mc-filter[data-mode="gallery"] ul.mc-ul li {
+    width: calc(25% - 1em);
+  }
+}

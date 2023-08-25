@@ -1,0 +1,12 @@
+#map {
+  display: inline-block;
+
+  width: 50%;
+  height: 30em;
+}
+#form {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 1em;
+  width: 23em;
+}

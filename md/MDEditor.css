@@ -1,0 +1,507 @@
+[data-markdown] {
+  tab-size: 2;
+}
+
+.md-toolbar {
+  margin: 0;
+  padding: 0;
+  border: 0!important;
+  background: #eee;
+  color: #71777a;
+  line-height: 1em;
+  padding: .3em;
+}
+
+.md-toolbar > i {
+  position: relative;
+  font-style: normal;
+  font-size: .8em;
+  display: inline-block;
+  width: 1em;
+  line-height: 1em;
+  text-align: middle;
+  vertical-align: top;
+  padding: .2em .5em .1em;
+  margin: .1em 0 0;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  vertical-align: middle;
+}
+.md-toolbar > i:hover {
+  color: #000;
+}
+.md-toolbar > i.title:before {
+  content: 'T';
+  font-weight: bold;
+  font-family: serif;
+  font-size: 1.3em;
+  vertical-align: middle;
+}
+
+.md-toolbar > i.line {
+  position: relative;
+  width: 1em;
+  height: 1.3em;
+  padding: 0 .5em;
+  border-width: 1px 0;
+}
+
+.md-toolbar > i.line:before,
+.md-toolbar > i.separator {
+  width: 0;
+  height: 1em;
+  margin: .2em .2em 0;
+  padding: 0;
+  border: 1px solid currentColor;
+  border-width: 0 1px;
+  border-color: currentColor #fff #fff currentColor;
+}
+
+.md-toolbar > i.line:before {
+  content: "";
+  position: absolute;
+  display: block;
+  left: 50%;
+  top: 50%;
+  width: 1em;
+  height: 0;
+  border-width: 1.5px 0;
+  margin: 0;
+  transform: translate(-50%, -50%);
+}
+
+.md-toolbar > i.fi-info {
+  float: right;
+}
+.ol-ext-dialog.fullMD form .md-toolbar > i.fi-info {
+  position: absolute;
+  right: 0;
+}
+.md-toolbar > i.add {
+  width: auto;
+  padding: .2em .1em .1em;
+}
+.md-toolbar > i.add:after {
+  content: "";
+  width: 100%;
+  height: 2px;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  background-color: #3993f3;
+}
+
+.md-toolbar > i.add:before {
+  content: 'Plus...';
+};
+
+
+/* Dialog */
+.ol-ext-dialog.help.md-help > form {
+  width: 800px;
+}
+.ol-ext-dialog.help.md-help > form .ol-buttons input {
+  padding: 0 1em;
+  min-width: 4em;
+  margin: .5em 0 .5em .5em;
+}
+
+.ol-ext-dialog[class*=" mdedit-"] > form {
+  width: 35em;
+}
+.ol-ext-dialog[class*=" mdedit-"] .mderror {
+  border-color: #800;
+}
+
+.ol-ext-dialog[class*=" mdedit-"] label,
+.ol-ext-dialog[class*=" mdedit-"] i {
+  display: block;
+}
+.ol-ext-dialog[class*=" mdedit-"] input[type="text"],
+.ol-ext-dialog[class*=" mdedit-"] input[type="url"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+.ol-ext-dialog[class*=" mdedit-"] input[type="number"] {
+  width: 5em;
+}
+
+.ol-ext-dialog[class*=" mdedit-"] .twitter {
+  display: none;
+}
+
+.ol-ext-dialog label.mdimgsize {
+  display: inline-block;
+  margin-top: 1em;
+}
+.ol-ext-dialog span.link,
+.ol-ext-dialog.mdedit-link span.media {
+  display: none;
+}
+.ol-ext-dialog[class*=" mdedit-"] .mdpop {
+  display: none;
+}
+.ol-ext-dialog.mdedit-link .mdpop,
+.ol-ext-dialog.mdedit-link span.link {
+  display: inline-block;
+}
+.ol-ext-dialog.mdedit-link .mdimgsize,
+.ol-ext-dialog.mdedit-link .width,
+.ol-ext-dialog.mdedit-link .height {
+  display: none;
+}
+.ol-ext-dialog.mdedit-twitter .twitter {
+  display: block;
+}
+.ol-ext-dialog.mdedit-twitter label.twitter {
+  margin-top: 1em;
+}
+.ol-ext-dialog.mdedit-twitter span.twitter {
+  display: inline-block;
+}
+.ol-ext-dialog.mdedit-twitter .mdalt,
+.ol-ext-dialog.mdedit-twitter .mdimgsize {
+  display: none;
+}
+
+.ol-ext-dialog.mdedit-icon form {
+  overflow: visible;
+}
+.ol-ext-dialog.mdedit-icon .ol-content {
+  padding: .5em;
+}
+.ol-ext-dialog.mdedit-icon i.fa {
+  font-size: 2em;
+  display: inline-block;
+  width: 1.5em;
+  line-height: 1.5em;
+  color: #71777a;
+  text-align: center;
+  cursor: pointer;
+}
+.ol-ext-dialog.mdedit-icon i.fa:hover {
+  box-shadow: 0 0 .1em #71777a;
+}
+.ol-ext-dialog.mdedit-icon label {
+  display: inline-block;
+  padding: .5em;
+}
+
+.ol-ext-dialog.mdedit-icon select {
+  padding: 1em;
+}
+.ol-ext-dialog.mdedit-icon .color.ol-input-popup {
+  margin-left: .5em;
+}
+.ol-ext-dialog.mdedit-icon .color [class^="color-"] {
+  display: inline-block;
+  background-color: #666;
+  width: 2em;
+  height: 2em;
+  vertical-align: middle;
+}
+.ol-ext-dialog.mdedit-icon .color .color-red {
+  background-color: #800;
+}
+.ol-ext-dialog.mdedit-icon .color .color-green {
+  background-color: #080;
+}
+.ol-ext-dialog.mdedit-icon .color .color-blue {
+  background-color: #008;
+}
+.ol-ext-dialog.mdedit-icon .color ul {
+  right: 0;
+  left: unset;
+}
+.ol-ext-dialog.mdedit-icon .color li {
+  display: inline-block;
+  padding: 3px;
+}
+
+.ol-ext-dialog.mdedit-attr ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ol-ext-dialog.mdedit-attr ul li {
+  display: inline-block;
+  padding: .2em .5em;
+  margin: .3em;
+  border-radius: 3px;
+  background-color: #E1EEFD;
+
+}
+.ol-ext-dialog.mdedit-attr ul li.select {
+  background-color: #307ccd;
+  color: #E1EEFD;
+}
+
+.ol-ext-dialog.mdedit-attr label {
+  margin-top: .5em;
+  border-top: 1px solid #999;
+  padding-top: .5em;
+}
+
+/* Editor */
+.mdEditDialog {
+  content:"";
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+  color: #666;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,.5);
+  z-index: 9999;
+}
+textarea.mdEditor {
+  -moz-tab-size : 4;
+  -o-tab-size : 4;
+  tab-size : 4;
+}
+.mdEditDialog h1 {
+  margin: 0 0 .5em;
+  font-size: 1.3em;
+}
+.mdEditDialog > div {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -30%);
+  transform: translate(-50%, -30%);
+  background-color: #fff;
+  box-shadow: 5px 5px 5px rgba(0,0,0,.5);
+  padding: 1em;
+  z-index: 9999;
+}
+.mdEditDialog label {
+  display: block;
+  padding-top: .5em;
+}
+.mdEditDialog input[type='text'] {
+  display: block;
+  width: 34em;
+  height: 1em;
+}
+.mdEditDialog input[type='number'] {
+  width: 5em;
+}
+.mdEditDialog .mderror {
+  -webkit-box-shadow: 0 0 1px 1px red;
+  box-shadow: 0 0 1px 1px red;
+}
+.mdEditDialog input[type='submit'],
+.mdEditDialog input[type='button'] {
+  float: right;
+  background: #369;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+  padding: 0 1em;
+  margin: 1em 0 0 .5em;
+}
+.mdEditDialog.twitter i.twitter {
+  display: block;
+  font-size: .8em;
+  border-left: 5px solid #ccc;
+  padding-left: .5em;
+  margin-left: .5em;
+}
+.mdEditDialog span {
+  padding-top: .5em;
+}
+.ol-ext-dialog[class*=" mdedit-"] label.fullscreen,
+.mdEditDialog .mdimgsize {
+  display: none;
+}
+.ol-ext-dialog.mdedit-media label.fullscreen {
+  display: block;
+  margin-top: .5em;
+}
+.mdEditDialog.media .mdimgsize {
+  display: inline-block;
+}
+.mdEditDialog .twitter,
+.mdEditDialog.twitter .mdalt {
+  display: none;
+}
+.mdEditDialog.twitter .twitter,
+.mdEditDialog.twitter input.mdimgsize {
+  display: inline-block;
+}
+
+
+/* Edit bar */
+
+.mdEditBar {
+  background: #eee;
+  float: left;
+  color: #333;
+}
+.mdEditBar i {
+  padding: 5px 7px;
+  font-size: .9em;
+  cursor: pointer;
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  text-align: center;
+  text-shadow: 2px 2px 1px #fff;
+  vertical-align: middle;
+}
+.mdEditBar i.title:before {
+  content: "T";
+  font-weight: bold;
+  font-family: serif;
+  font-size: 1.4em;
+  display: inline-block;
+  margin: -.15em;
+}
+.mdEditBar i.line:before {
+  content: "";
+  height: 1px;
+  background: #111;
+  padding: 0;
+  box-shadow: 1px 1px 2px 1px #fff;
+  width: 100%;
+  display: block;
+  margin: .4em 0;
+}
+.mdEditBar i.separator {
+  width: 1px;
+  background: #ccc;
+  padding: 0;
+  height: 1.2em;
+  box-shadow: 1px 0px 2px 1px #fff;
+  margin: 0 2px;
+}
+
+.mdEditDialog.iconDlg i {
+  padding: .3em;
+  width: 7%;
+  height: 1em;;
+  text-align: center;
+}
+.mdEditDialog.iconDlg i:hover {
+  box-shadow: 1px 1px 5px rgba(0,0,0,.5);
+  z-index: 1;
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+/* Color dialog */
+.ol-ext-dialog.mdedit-icon .ol-ext-popup-input.ol-popup {
+  margin: 0 .5em;
+}
+.ol-ext-dialog.mdedit-icon .ol-ext-colorpicker .ol-txt-color {
+  width: 170px;
+  padding: 0.2em;
+}
+
+/* Fullscreen MD Editor */
+body > .ol-ext-dialog.fullMD {
+  z-index: 999;
+}
+body > .ol-ext-dialog.fullMD form {
+  padding: 0;
+  width: 80em;
+  max-width: calc(100vw - 2em);
+}
+body > .ol-ext-dialog.fullMD .ol-content .md-toolbar {
+  padding: 0;
+}
+body > .ol-ext-dialog.fullMD .ol-content {
+  height: 100vh;
+  max-height: calc(100vh - 6em);
+  padding: 0;
+}
+body > .ol-ext-dialog.fullMD .ol-content > div > div {
+  position: relative;
+  display: inline-block;
+  width: 50%;
+  padding: .5em;
+  box-sizing: border-box;
+  height: calc(100vh - 6em);
+  vertical-align: top;
+  overflow: auto;
+}
+body > .ol-ext-dialog.fullMD .ol-content > div > div:nth-child(2) {
+  top: .5em;
+  height: calc(100vh - 6.5em);
+}
+
+body > .ol-ext-dialog.fullMD form .ol-closebox {
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #fff;
+  padding: .5em;
+}
+
+body > .ol-ext-dialog.fullMD .ol-content .tb {
+  position: absolute;
+  top: .5em;
+  left: .5em;
+  right: .5em;
+  height: 3.5em;
+  background-color: #eee;
+}
+body > .ol-ext-dialog.fullMD .ol-content .tb i {
+  font-size: 1em;
+  line-height: 1.2em;
+}
+body > .ol-ext-dialog.fullMD .ol-content .md-toolbar {
+  max-width: 33em;
+  padding-right: 1.8em;
+}
+body > .ol-ext-dialog.fullMD .ol-buttons {
+  width: 50%;
+  box-sizing: border-box;
+}
+body > .ol-ext-dialog.fullMD .ol-content textarea {
+  position: absolute ;
+  top: 4em;
+  left: .5em;
+  bottom: 0;
+  right: .5em;
+  min-width: calc(100% - 1em);
+  max-width: calc(100% - 1em);
+  min-height: calc(100% - 4em);
+  max-height: calc(100% - 4em);
+  box-sizing: border-box;
+  resize: none;
+  padding: 0 .5em;
+}
+
+@media (orientation: portrait) {
+  body > .ol-ext-dialog.fullMD form .ol-closebox {
+    display: none;
+  }
+  body > .ol-ext-dialog.fullMD .ol-content > div > div {
+    width: 100%;
+    height: calc(50vh - 3.5em);
+    z-index: 1;
+  }
+  body > .ol-ext-dialog.fullMD .ol-content > div > div:nth-child(2) {
+    top: 0;
+    left: .5em;
+    right: .5em;
+    width: calc(100% - 1em);
+    height: calc(50vh - 2.5em);
+    z-index: 0;
+  }
+  body > .ol-ext-dialog.fullMD .ol-buttons {
+    width: unset;
+  }
+}
+
+@media (max-width: 18em) {
+  body > .ol-ext-dialog.fullMD .ol-content textarea {
+    top: 4em;
+    min-height: calc(100% - 4em);
+    max-height: calc(100% - 4em);
+  }
+}
+

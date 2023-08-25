@@ -1,0 +1,17 @@
+/** Openlayers extension
+@namespace ol
+*/
+/**  
+@namespace ol.layer
+*/
+/**  
+@namespace ol.interaction
+*/
+/**  
+@namespace ol.layer.Base
+*/
+/** 
+* @classdesc Extend ol/Feature
+* @name ol.Feature
+* @class
+*/

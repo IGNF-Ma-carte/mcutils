@@ -1,0 +1,54 @@
+.ol-control button {
+  position: relative;
+  top: auto;
+  left: auto;
+}
+.ol-layerswitcher > button {
+  background-color: rgba(0,60,136,0.5);
+}
+
+.ol-layerswitcher > button:before,
+.ol-control.ol-legend > button:first-child:before,
+.ol-control.ol-search button:before,
+.ol-control.ol-print button:before,
+.ol-control.ol-geobt button:before {
+  font-family: font-gis;
+  font-weight: normal;
+  width: 1em;
+  height: 1em;
+  border: 0;
+  line-height: 1em;
+  border-radius: 0;
+  box-shadow: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background: none;
+  font-size: 1.1em;
+}
+
+.ol-layerswitcher > button:before {
+  content: '\ea14';
+  font-family: font-ign;
+  font-size: .8em;
+}
+.ol-control.ol-legend > button:first-child:before {
+  content: '\ea85';
+}
+.ol-control.ol-search button:before {
+  content: '\ea60';
+}
+.ol-control.ol-print button:before {
+  content: '\ea96';
+}
+.ol-control.ol-geobt button:before {
+  content: '\ea89';
+}
+
+.ol-layerswitcher > button:after,
+.ol-control.ol-legend > button:first-child:after,
+.ol-control.ol-search button:after,
+.ol-control.ol-print button:after,
+.ol-control.ol-geobt button:after {
+  content: none;
+}

@@ -1,0 +1,76 @@
+.mc-input-media {
+  font-size: 1em;
+  position: relative;
+  display: inline-block;
+}
+
+.mc-input-media input[type="text"] {
+  width: calc(100% - 2.5em);
+  box-sizing: border-box;
+  padding-right: 2em;
+}
+
+.mc-input-media .mc-img {
+  position: relative;
+  width: 6em;
+  height: 5em;
+  background-image: linear-gradient(45deg, 
+    #ccc, #ccc 1em, 
+    transparent 1em, transparent 2em,
+    #ccc 2em, #ccc 3em ,
+    transparent 3em, transparent 4em,
+    #ccc 4em, #ccc 5em ,
+    transparent 5em, transparent 6em,
+    #ccc 6em, #ccc 7em ,
+    transparent 5em
+  );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: block;
+  margin: auto;
+}
+.mc-input-media.loading .mc-img {
+  opacity: .3;
+}
+.mc-input-media.loading:before {
+  content: "\f110";
+  font-family: FontAwesome;
+  animation: fa-spin 1s infinite steps(8);
+  position: absolute;
+  font-size: 2em;
+  top: -.3em;
+  left: calc(50% + 1em);
+  color: #3993f3;
+}
+
+.mc-input-media button.user-media {
+  font-size: 1em;
+  border: 0;
+  margin: 0;
+  height: 2.5em;
+  width: 2.5em;
+}
+.mc-input-media button.user-media i {
+  line-height: 1em;
+  font-size: 1.5em;
+  vertical-align: middle;
+}
+
+.mc-input-media button.delete {
+  position: relative;
+  background: red;
+  border: 0;
+  padding: 0;
+  color: #3993f3;
+  width: 0;
+  height: 2.5em;
+  vertical-align: middle;
+}
+.mc-input-media button.delete i {
+  position: absolute;
+  right: .5em;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5em;
+}

@@ -1,0 +1,58 @@
+[data-page="site"][data-univers=carto] h1,
+[data-univers=carto] .ol-ext-dialog > form .ol-buttons input,
+[data-univers=carto] .colored,
+[data-univers=carto] .button-ghost,
+[data-univers=carto] a,
+[data-univers=carto] .hoverColored:hover {
+  color: #3993f3;
+}
+[data-univers=carto] .ol-ext-dialog > form .ol-buttons input[type="submit"],
+[data-univers=carto] .ol-ext-dialog > form .ol-buttons input,
+[data-univers=carto] .input-placeholder.focus, /* :focus-within, */
+[data-univers=carto] .accordion li > div,
+[data-univers=carto] input:focus,
+[data-univers=carto] select:focus,
+[data-univers=carto] textarea:focus {
+  border-color: #3993f3;
+}
+[data-univers=carto] .ol-ext-dialog > form .ol-buttons input[type="submit"],
+[data-univers=carto] .backColored,
+[data-univers=carto] a.article:before,
+[data-univers=carto] .breadcrumb a:before,
+[data-univers=carto] .button-colored {
+  background-color: #3993f3;
+}
+[data-univers=carto] .ol-ext-dialog > form .ol-buttons input[type="submit"]:hover,
+[data-univers=carto] .button-colored:hover {
+  background-color: #307ccd;
+  border-color: #307ccd;
+}
+[data-univers=carto] .button-colored:active {
+  background-color: #7EB9F7;
+}
+[data-univers=carto] .lightBackColored,
+[data-univers=carto] .ol-ext-check.ol-ext-radio input:checked ~ span,
+[data-univers=carto] .ol-ext-check input:checked ~ span {
+  background-color: #E1EEFD;
+}
+[data-univers=carto] .lightColored {
+  color: #E1EEFD;
+}
+[data-univers=carto] .ol-ext-check span,
+[data-univers=carto] .darkColored,
+[data-univers=carto] .button-ghost:hover {
+  color: #307ccd;
+}
+[data-univers=carto] .button-ghost:active,
+[data-univers=carto] a:hover,
+[data-univers=carto] .secondColored {
+  color: #7EB9F7;
+}
+[data-univers="carto"] [data-role="tabs"] [data-title] > div.selected {
+  color: #3993f3;
+  border-color: #3993f3;
+  background-color: #e1eefd;
+}
+[data-univers="carto"] .accordion > li.accordion-title label {
+  background-color: #e1eefd;
+}

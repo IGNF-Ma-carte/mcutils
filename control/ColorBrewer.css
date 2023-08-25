@@ -1,0 +1,115 @@
+.color-brewer {
+  display: inline-block;
+}
+.color-brewer .cbr-type {
+}
+.color-brewer .cbr-scheme {
+  background-color: #eee;
+  padding: .5em;
+  margin: .5em 0;
+}
+.color-brewer .cbr-scheme > div {
+  display: none;
+}
+.color-brewer[data-type='colored'] .cbr-scheme > div.colored {
+  display: block;
+}
+.color-brewer[data-type='sequential'] .cbr-scheme > div.sequential {
+  display: block;
+}
+.color-brewer[data-type='diverging'] .cbr-scheme > div.diverging {
+  display: block;
+}
+.color-brewer[data-type='qualitative'] .cbr-scheme > div.qualitative {
+  display: block;
+}
+.color-brewer .cbr-scheme > div > div {
+  display: inline-block;
+  vertical-align: top;
+  padding: .25em;
+  cursor: pointer;
+}
+.color-brewer .cbr-scheme > div > div:hover {
+  background-color: #ccc;
+}
+.color-brewer .cbr-scheme > div > div.selected {
+  background-color: #3993f3;
+}
+
+.color-brewer .cbr-colors > div,
+.color-brewer .cbr-scheme > div > div > div {
+  width: 1em;
+  height: 1em;
+  border: 1px solid #ccc;
+}
+.color-brewer .cbr-colors {
+  position: relative;
+  padding: .5em;
+}
+.color-brewer .cbr-colors > div {
+  display: inline-block;
+  position: relative;
+}
+
+.color-brewer[data-type='custom'] .cbr-scheme > div.custom {
+  display: block;
+}
+.color-brewer[data-type='custom'] .cbr-modifiers {
+  display: none;
+}
+.color-brewer[data-type='custom'] .cbr-colors > div {
+  margin: 3px;
+  cursor: pointer;
+}
+.color-brewer[data-type='custom'] .cbr-colors > div.br {
+  box-shadow: 0 0 0 1px #666;
+}
+.color-brewer[data-type='custom'] .cbr-colors > div.selected {
+  box-shadow: 0 0 0 3px #3993f3;
+}
+.color-brewer[data-type='custom'] .cbr-colors > div.br:before,
+.color-brewer[data-type='custom'] .cbr-colors > div.br:after {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  border-color: transparent transparent #666;
+  border-width: 0 .5em .5em;
+  bottom: -.5em;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.color-brewer[data-type='custom'] .cbr-colors > div.br:before {
+  border-color: transparent transparent #fff;
+  border-width: 0 .7em .6em;
+}
+.color-brewer .cbr-scheme > div.custom .ol-vignet {
+  display: none;
+}
+.color-brewer .cbr-scheme > div.custom .ol-tab:hover {
+  background-color: transparent;
+}
+.color-brewer .cbr-scheme > div.custom .ol-popup {
+  display: inline-block;
+  background-color: #fff;
+  width: 182px;
+  height: auto;
+}
+
+.color-brewer .cbr-gradient {
+  text-align: right;
+  display: none;
+}
+.color-brewer .cbr-gradient button {
+  min-width: auto;
+  line-height: 1.5em;
+}
+.color-brewer[data-type='custom'] .cbr-gradient {
+  display: block;
+}
+.color-brewer .cbr-gradient button:after {
+  content: '\f04e';
+  font-family: FontAwesome;
+  display: inline-block;
+  margin-left: .5em;
+}
+

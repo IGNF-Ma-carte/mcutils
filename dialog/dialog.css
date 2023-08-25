@@ -1,0 +1,140 @@
+body > .ol-ext-dialog form {
+  padding-left: 0;
+  padding-right: 0;
+}
+body > .ol-ext-dialog .ol-content {
+  padding: 0 1em;
+  box-sizing: border-box;
+}
+body > .ol-ext-dialog form .ol-buttons {
+  padding: 0 1em;
+}
+body > .ol-ext-dialog form > h2 {
+  font-size: 1.7em;
+  padding: 0 .588em;
+}
+
+.ol-ext-print-dialog > form, 
+.ol-ext-print-dialog.ol-visible > form {
+  width: auto;
+}
+
+.mc-help {
+  cursor: pointer;
+  display: inline-block;
+  font: normal normal normal 14px font-ign;
+  text-rendering: auto;
+  vertical-align: top;
+  margin: -.5em 0;
+  padding: .5em;
+}
+.mc-help:before {
+  content: "\ea13";
+}
+
+.ol-ext-dialog.help {
+  /* font-size: 15px; */
+}
+.ol-ext-dialog.help.large > form,
+.ol-ext-dialog.info > form {
+  width: 100%;
+}
+
+.ol-ext-dialog.help.medium > form {
+  width: 800px;
+}
+.ol-ext-dialog.help.small > form {
+  width: 500px;
+}
+
+.ol-ext-dialog.wait form {
+  width: 25em;
+}
+.ol-ext-dialog.wait h2,
+.ol-ext-dialog.message h2,
+.ol-ext-dialog.alert h2 {
+  padding-left: 2.8em;
+}
+.ol-ext-dialog.wait .ol-content,
+.ol-ext-dialog.message .ol-content,
+.ol-ext-dialog.alert .ol-content {
+  padding-left: 5em;
+  padding-top: .5em;
+  min-height: 2.5em;
+}
+.ol-ext-dialog.wait .ol-content:before,
+.ol-ext-dialog.message .ol-content:before,
+.ol-ext-dialog.alert .ol-content:before {
+  position: absolute;
+  font-family: "FontAwesome";
+  font-size: 3em;
+  top: .5em;
+  left: .3em;
+  line-height: 1em;
+  width: 1em;
+  text-align: center;
+}
+.ol-ext-dialog.wait .ol-content:before {
+  top: .3em;
+  content: "\f110";
+  animation: fa-spin 1s infinite steps(8);
+}
+.ol-ext-dialog.message .ol-content:before {
+  content: "\f05a";
+  color: #999;
+}
+.ol-ext-dialog.alert .ol-content:before {
+  content: "\f071";
+  color: #f45648;
+}
+
+.ol-ext-dialog .error {
+  padding: .5em;
+  font-size: .9em;
+  border: 1px solid currentColor;
+  margin: .5em 0;
+}
+
+.ol-ext-dialog.page404 form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  max-width: 100%;
+  transform: none;
+  border: 0;
+  transition: none;
+}
+.ol-ext-dialog.page404 form .ol-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  max-height: unset;
+  max-width: unset;
+}
+.ol-ext-dialog.page404 form .ol-content .mc-image-boussole {
+  width: min(50vw, 50vh);
+  height: min(50vw, 50vh);
+  margin: auto;
+}
+.ol-ext-dialog.page404 form .ol-content .mc-info {
+  font-size: 1.5em;
+  margin: .5em 0;
+}
+.ol-ext-dialog.page404 form .ol-content b.mc-info {
+  display: block;
+  font-size: 3em;
+  font-weight: bold;
+  color: #90c149;
+  margin: .25em 0;
+  line-height: 1em;
+}
+
+@media (max-width: 300px) {
+  .ol-ext-dialog.page404 form .ol-content {
+    font-size: 5vw;
+  }
+}

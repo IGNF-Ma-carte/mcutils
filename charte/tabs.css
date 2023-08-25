@@ -1,0 +1,36 @@
+[data-univers] [data-role="tabs"] [data-title] {
+  display: block;
+  border-bottom: 1px solid rgba(184,188,193,.5);
+}
+[data-univers] [data-role="tabs"] [data-title] > div {
+  cursor: pointer;
+  color: #788089;
+  line-height: 7rem;
+  padding: 0 2rem;
+  display: inline-block;
+  width: fit-content;
+  margin: 0;
+  border-bottom: 0.25em solid transparent;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+[data-univers] [data-role="tabs"] [data-title] > div:hover {
+  color: #091625;
+  background-color: #f4f6f8;
+  border-color: #b8bcc1;
+  transition: color .25s ease, background-color .25s ease, border-color .25s ease;
+}
+
+[data-univers] [data-role="tabs"] > [data-tab] {
+  display: none;
+}
+[data-univers] [data-role="tabs"] > [data-tab].selected {
+  display: block;
+}
+
+[data-access="enforce"] [data-role="tabs"] [data-title] > div.selected {
+  color: #091625;
+  border-color: #091625;
+  background-color: #f4f6f8!important;
+}

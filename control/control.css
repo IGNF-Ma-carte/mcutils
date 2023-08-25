@@ -1,0 +1,165 @@
+.ol-layerswitcher {
+  color: #036;
+}
+.ol-layerswitcher.ol-layer-shop .layerup {
+  background-color: transparent;
+  color: currentColor;
+  height: 2em;
+}
+.ol-layerswitcher.ol-layer-shop .layerup:before {
+  position: absolute;
+  content: "\ea4e";
+  font-family: font-ign;
+  width: 1em;
+  height: 1em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+  box-shadow: none;
+}
+.ol-layerswitcher.ol-layer-shop .layerInfo {
+  background: none;
+  color: currentColor;
+}
+.ol-layerswitcher.ol-layer-shop .layerInfo:before {
+  content: "\ea13";
+  font-family: font-ign;
+  font-size: 1em;
+  color: currentColor;
+}
+
+.ol-layerswitcher .panel li.ol-layer-select {
+  background-color: transparent;
+}
+.ol-layerswitcher .panel li {
+  transition: .5s;
+}
+.ol-layerswitcher .panel li.ol-dragover {
+  transition: none;
+  background-color: transparent;
+}
+.ol-layerswitcher .panel li.dropover-before {
+  padding-top: 3em;
+  background-color: transparent;
+}
+.ol-layerswitcher .panel li.dropover-after {
+  padding-bottom: 3em;
+  background-color: transparent;
+}
+
+.ol-layerswitcher [type] + label:after {
+  display: none;
+}
+.ol-layerswitcher [type] + label:before{
+  content: "\ea53";
+  font-family: font-ign;
+  font-size: 1.2em;
+  border: 0;
+  line-height: 1.2em;
+  background-color: transparent;
+  cursor: pointer;
+}
+.ol-layerswitcher input:checked + label:before {
+  content: "\ea2f";
+}
+
+.ol-layerswitcher .layerswitcher-opacity {
+  border-color: currentColor;
+}
+.ol-touch .ol-layerswitcher .layerswitcher-opacity .layerswitcher-opacity-cursor,
+.ol-layerswitcher .layerswitcher-opacity .layerswitcher-opacity-cursor {
+  background-color: currentColor;
+  width: 10px;
+  height: 10px;
+}
+.ol-layerswitcher .layerswitcher-opacity .layerswitcher-opacity-cursor:before {
+  width: 20px;
+  height: 20px;
+  background-color: currentColor;
+  opacity: .5;
+}
+.ol-touch .ol-layerswitcher .layerswitcher-opacity .layerswitcher-opacity-cursor {
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.ol-ext-dialog.layer-info > form {
+  width: 40em;
+  font-size: 16px;
+}
+.ol-ext-dialog.layer-info > form .md > .copy {
+  margin: .5em 0 0;
+}
+.ol-ext-dialog.layer-info > form h2:before {
+  content: '\ea14';
+  font-family: font-ign;
+  margin-right: .5em;
+  float: left;
+  font-size: 1.5em;
+}
+
+.ol-ext-dialog select,
+.ol-ext-dialog input {
+  color: currentColor;
+}
+
+.ol-ext-print-dialog {
+  font-size: 1.5rem;
+}
+.ol-ext-print-dialog .ol-print-param h2 {
+  color: currentColor;
+}
+.ol-ext-print-dialog button {
+  color: currentColor;
+  border-color: currentColor;
+}
+.ol-ext-print-dialog .ol-print-title input {
+  width: calc(100% - 1em);
+  margin-left: 1em;
+}
+.ol-ext-print-dialog select {
+  padding: .7rem;
+  background-color: transparent;
+  width: calc(100% - 8em);
+}
+.ol-ext-print-dialog .ol-saveas select,
+.ol-ext-print-dialog .ol-savelegend select {
+  padding: 0.7rem;
+  width: 14em;
+  max-width: 100%;
+}
+
+.ol-ext-toggle-switch span {
+  color: currentColor;
+  opacity: .65;
+}
+
+.ol-control.ol-legend {
+  background-color: rgba(255,255,255,.9);
+}
+.ol-control.ol-legend:hover {
+  background-color: rgba(255,255,255,1);
+}
+.ol-control.ol-legend.ol-collapsed {
+  background-color: rgba(255,255,255,.4);
+}
+.ol-control.ol-legend.ol-collapsed:hover {
+  background-color: rgba(255,255,255,.6);
+}
+
+@media print {
+  .ol-ext-print-dialog .ol-content {
+    padding: 0!important;
+    max-height: unset!important;
+  }
+}
+
+.ol-ext-dialog.ol-wmscapabilities form {
+  width: 600px;
+  min-height: 15em;
+  top: 15%;
+  transform: translate(-50%, -15%);
+}
+.ol-ext-dialog.ol-wmscapabilities .ol-content {
+  max-height: calc(100vh - 6em);
+}

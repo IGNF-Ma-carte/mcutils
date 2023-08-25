@@ -1,0 +1,57 @@
+[data-page="site"][data-univers=particulier] h1,
+[data-univers=particulier] .ol-ext-dialog > form .ol-buttons input,
+[data-univers=particulier] .colored,
+[data-univers=particulier] .button-ghost,
+[data-univers=particulier] a,
+[data-univers=particulier] .hoverColored:hover {
+  color: #2DC398;
+}
+[data-univers=particulier] .ol-ext-dialog > form .ol-buttons input[type="submit"],
+[data-univers=particulier] .ol-ext-dialog > form .ol-buttons input,
+[data-univers=particulier] .input-placeholder.focus,
+[data-univers=particulier] .accordion li > div,
+[data-univers=particulier] input:focus,
+[data-univers=particulier] select:focus,
+[data-univers=particulier] textarea:focus {
+  border-color: #2DC398;
+}
+[data-univers=particulier] .ol-ext-dialog > form .ol-buttons input[type="submit"],
+[data-univers=particulier] .backColored,
+[data-univers=particulier] a.article:before,
+[data-univers=particulier] .breadcrumb a:before,
+[data-univers=particulier] .button-colored {
+  background-color: #2DC398;
+}
+[data-univers=particulier] .ol-ext-dialog > form .ol-buttons input[type="submit"]:hover,
+[data-univers=particulier] .button-colored:hover {
+  background-color: #26A581;
+}
+[data-univers=particulier] .button-colored:active {
+  background-color: #77D8BC;
+}
+[data-univers=particulier] .lightBackColored,
+[data-univers=particulier] .ol-ext-check.ol-ext-radio input:checked ~ span,
+[data-univers=particulier] .ol-ext-check input:checked ~ span {
+  background-color: #DFF6EF;
+}
+[data-univers=particulier] .lightColored {
+  color: #DFF6EF;
+}
+[data-univers=particulier] .ol-ext-check span,
+[data-univers=particulier] .darkColored,
+[data-univers=particulier] .button-ghost:hover {
+  color: #26A581;
+}
+[data-univers=particulier] .button-ghost:active,
+[data-univers=particulier] a:hover,
+[data-univers=particulier] .secondColored {
+  color: #77D8BC;
+}
+[data-univers="particulier"] [data-role="tabs"] [data-title] > div.selected {
+  color: #2DC398;
+  border-color: #2DC398;
+  background-color: #DFF6EF;
+}
+[data-univers="particulier"] .accordion > li.accordion-title label {
+  background-color: #DFF6EF;
+}

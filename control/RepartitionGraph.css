@@ -1,0 +1,78 @@
+.repartionGraph {
+  position: relative;
+  background: #eee;
+  padding: 0.5em 0;
+  text-align: center;
+}
+
+.rgOptions label {
+  font-size: 0.85em;
+}
+
+.rgGraph canvas {
+  background:#fff;
+}
+
+.rgGraph {
+  display: inline-block;
+  position: relative;
+}
+
+.rgGraph .rgMarker {
+  position: absolute;
+  display: block;
+  width:1px;
+  background:currentColor;
+  top:0;
+  bottom: 5px;
+  left:10px;
+}
+
+.rgGraph .rgMarker:after {
+  content: "";
+  border-style: solid;
+  border-color: transparent transparent rgba(255,255,255,0.5);
+  border-width: 0 9px 11px;
+  width: 0;
+  height: 0;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform:translateX(-50%);
+  -webkit-transform:translateX(-50%);
+  display:none;
+  cursor: pointer;
+  z-index: 1;
+}
+.rgGraph .rgMarker:after {
+  border-color: transparent transparent currentColor;
+  border-width:0 6px 7px;
+}
+
+.rgGraph .rgMarker.disable {
+  pointer-events: none;
+  color: #ccc
+}
+.rgGraph .rgMarker.disable:after {
+  z-index: 0;
+  border-color: currentColor;
+}
+
+.rgLimits {
+  text-align: left;
+}
+.rgLimits input {
+  width: 20%;
+  box-sizing: border-box;
+  pointer-events: none;
+  border: 1px solid #ccc;
+}
+
+.repartionGraph[data-edit="c"] .rgGraph .rgMarker:before,
+.repartionGraph[data-edit="c"] .rgGraph .rgMarker:after {
+  display:block;
+}
+.repartionGraph[data-edit="c"] .rgLimits input {
+  border: 1px solid #666;
+  pointer-events: all;
+}

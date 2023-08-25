@@ -1,0 +1,85 @@
+.accordion {
+  list-style: none;
+  padding: 0;
+}
+
+.accordion > li > label {
+  position: relative;
+  font-size: 1.2em;
+  border-bottom: .1rem solid #dde1e6;
+  display: block;
+  line-height: 1.2;
+  padding: 2rem 4rem 2rem 2rem;
+  font-weight: 500;
+  color: #788089;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.accordion > li > input:checked ~ label {
+  color: #091625;
+}
+
+.accordion > li > label:hover {
+  background-color: #f4f6f8;
+}
+.accordion > li > input[type="radio"],
+.accordion > li > input[type="checkbox"] {
+  display: none;
+}
+.accordion > li > div {
+  display: none;
+}
+.accordion > li > input:checked ~ div {
+  display: block;
+}
+.accordion > li > input:checked ~ div:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.accordion > li > input ~ label:after {
+  content: "\e903";
+  font-family: font-ign;
+  position: absolute;
+  font-size: 1.5rem;
+  color: #788089;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  width: 1.5rem;
+  text-align: center;
+}
+.accordion > li > input:checked ~ label:after {
+  content: "\e904";
+}
+
+.accordion > li > div {
+  padding: 1.5rem;
+  border: 0.1rem solid #dde1e6;
+  border-left: 0.5rem solid #90c149;
+  border-top: 0;
+  border-right-color: #dde1e6!important;
+  border-bottom-color: #dde1e6!important;
+}
+
+.accordion > li.accordion-title label {
+  font-weight: 800;
+  color: #091625;
+  background-color: #EEF5E3;
+  border: 0;
+}
+[data-access="enforce"] .accordion > li.accordion-title label {
+  background-color:#f4f6f8!important;
+}
+.accordion > li.accordion-title label:after {
+  display: none;
+}
+
+.accordion > li.accordion-button > input:checked ~ label {
+  color: #788089;
+}
+.accordion > li.accordion-button label:after,
+.accordion > li.accordion-button > input:checked ~ label:after {
+  content: "\e907";
+  font-family: font-ign;
+}

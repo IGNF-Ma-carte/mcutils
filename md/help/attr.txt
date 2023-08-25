@@ -1,0 +1,121 @@
+## Les attributs
+
+Le format markdown est étendu pour afficher des attributs fournis lors d'une sélection par exemple.
+Dans les exemples ci-dessous, les attributs suivant sont fournis
+| attributs | valeurs |
+| --------- | ------- |
+%ATTRIBUTES%
+
+Pour afficher un attribut, il suffit de le mettre entre deux `%`.
+[++ :fa-code:fw: Code ++]
+```md
+%name%
+%address%
+%cp% %commune%
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+%name%
+%address%
+%cp% %commune%
+[----]
+
+#### Liste des attributs
+
+Il est possible d'afficher la liste des attributs disponibles sur un objet à l'aide de : `&percnt;ATTRIBUTES%`
+
+[++ :fa-code:fw: Code ++]
+```md
+%ATTRIBUTES%
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+%ATTRIBUTES%
+[----]
+
+
+#### Attibuts calculés
+
+Lorsqu'un objet est sélectionné, les attributs `%COORD%` (coordonées) et `%COORDMS%` (coordonnes en degré, minutes, secondes) de l'objet sont disponibles, ainsi que `%LENGTH%` pour une ligne et `%AREA%` pour un polygone.
+
+#### Attributs liens
+
+Si votre attribut est un lien avec des caractères spéciaux, vous pouvez les échapper en utilisant la fonction URL[%attr%].
+
+[++ :fa-code:fw: Code ++]
+```md
+Un caractère ',' est illégal. La fin du lien ne sera pas pris en compte, il faut utiliser `URL[%attr%']`.
+- [ ] %img% 
+- [x] URL[%img%]
+- [x] !(URL[%img%] 200)
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+Un caractère ',' est illégal. La fin du lien ne sera pas pris en compte, il faut utiliser `URL[%attr%']`.
+- [ ] %img% 
+- [x] URL[%img%]
+- [x] !(URL[%img%] 200)
+[----]
+
+### Affichage conditionnel
+
+Il est possible de contitionner l'afficher à la présence (ou non) d'un attribut.
+Pour cela, il suffit de mettre l'attribut entre double parenthèses `&lpar;(&percnt;attr&percnt;))`.
+Dans ce cas, l'ensemble de l'expression entre parenthèses s'affiche ou non suivant la valeur de l'attribut.
+
+[++ :fa-code:fw: Code ++]
+```md
+1. name : ((l'attribut %name% est défini (et s'affiche).))
+2. nom : ((l'attribut %nom% n'est pas défini (et ne s'affiche pas).))
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+1. name : ((l'attribut %name% est défini (et s'affiche).))
+2. nom : ((l'attribut %nom% n'est pas défini (et ne s'affiche pas).))
+[----]
+
+#### Affichage alternatif
+Il est possible d'ajouter un texte alternatif qui s'affichera en lieu et place si l'attribut n'est pas défini en l'ajoutant dans les parenthèses après une double barre : `||`
+[++ :fa-code:fw: Code ++]
+```md
+1. ((name = %name% (défini) || `name` n'est pas défini ))
+2. ((nom = %nom% (défini)   || `nom` n'est pas défini  ))
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+1. ((name = %name% (défini) || `name` n'est pas défini ))
+2. ((nom = %nom% (défini)   || `nom` n'est pas défini  ))
+[----]
+
+#### Conditions multiple
+
+Les condition peuvent s'ajouter entre elles lorsqu'elles sont entre les parenthèses.
+[++ :fa-code:fw: Code ++]
+```md
+1. ((%name% et %commune% sont définis.))
+2. ((%name% et %ville% sont définis.))
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+1. ((%name% et %commune% sont définis.))
+2. ((%name% et %ville% sont définis.))
+[----]
+
+#### Tests conditionnels
+
+Il est possible de tester l'existance d'une valeur sans l'afficher en utilisant `&lpar;(?&percnt;attr&percnt;` ou `&lpar;(!&percnt;attr&percnt;`.
+
+[++ :fa-code:fw: Code ++]
+```md
+1. ((?%name% L'attribut `name` est défini. )) ((!%name% L'attribut `name` n'est pas défini. ))
+2. ((?%nom% L'attribut `nom` est défini. )) ((!%nom% L'attribut `nom` n'est pas défini. ))
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+1. ((?%name% L'attribut `name` est défini. )) ((!%name% L'attribut `name` n'est pas défini. ))
+2. ((?%nom% L'attribut `nom` est défini. )) ((!%nom% L'attribut `nom` n'est pas défini. ))
+[----]
+
+### Caractères d'échappement
+
+Utilisez `&amp;lpar;`, `&amp;rpar;`  ou `&amp;percnt;` pour échapper les caractères (`(`, `)` ou `%`) dans votre code.

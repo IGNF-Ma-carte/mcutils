@@ -1,0 +1,63 @@
+/* table list */
+.mc-list-carte[data-mode="list"] .mc-content,
+.mc-list-carte[data-mode="list"] .mc-secondary {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.mc-list-carte[data-mode="list"] .mc-secondary > * {
+  vertical-align: top;
+}
+.mc-list-carte[data-mode="list"] .mc-list-head .mc-secondary .mc-view {
+  text-align: center;
+}
+.mc-list-carte[data-mode="list"] .mc-secondary > *::before {
+  content: none;
+}
+
+.mc-list-carte[data-mode="list"] .mc-info {
+  width: 1em;
+  padding: 0;
+  overflow-wrap: anywhere;
+  text-align: center;
+  overflow: visible;
+}
+.mc-list-carte[data-mode="list"] .mc-info > i::before {
+  margin: 0;
+}
+.mc-list-carte[data-mode="list"] li > * {
+  overflow: hidden;
+  max-height: 6em;
+}
+.mc-list-carte[data-mode="list"] .mc-content {
+  max-width: calc(100% - 18em);
+  width: 60%;
+  float: left;
+}
+.mc-list-carte.mc-atlas[data-mode="list"] .mc-content {
+  max-width: calc(100% - 17em);
+  width: calc(60% + 2em);
+}
+.mc-list-carte[data-mode="list"] .mc-secondary > * {
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.mc-list-carte[data-mode="list"] .mc-secondary{
+  min-width: 17em;
+  width: calc(40% - 2em);
+}
+.mc-list-carte[data-mode="list"] .mc-theme {
+  width: calc(100% - 9em);
+}
+.mc-list-carte[data-mode="list"] .mc-date {
+  width: 4em;
+  text-align: center;
+}
+.mc-list-carte[data-mode="list"] .mc-view {
+  width: 5em;
+  text-align: right;
+  padding-right: 2em;
+}
+
+/**/

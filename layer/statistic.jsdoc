@@ -1,0 +1,25 @@
+/** Parameters for statistic calculation
+ * @typedef {Object} statisticParam
+ * @property {string} [typeMap=choroplethe] choroplethe,categorie,symbol,sectoriel,heatmap
+ * @property {Array<string>} cols list of columns to use
+ * @property {string} [mode=q] class mode c(=custom), q(=quantile), k(=k-means), l(=logarithmic) or e(=equidistant)
+ * @property {number} [nbClass=5] number of classes
+ * @property {string} [symbol=''] symbol name to use in as symbol point
+ * @property {number} [rmin=3] min radius (symbol/sectoriel), if < 0 mean proportional radius
+ * @property {number} [rmax=20] max radius (symbol/sectoriel)
+ * @property {ol/colorLike} [stroke=true] has stroke
+ * @property {Array<number>} [limits] Statistics classes limit values
+ * @property {number} [alpha=1] alpha (for points)
+ * @property {string} [chartType=pie] pie,pie3D, donut or bar
+ * @property {number} [hradius=5] heatmap radius
+ * @property {number} [hblur=15] heatmap blur
+ * @property {Array<string>} [brewerColors] list of brewer colors
+ */
+
+/** Parameters for statistic calculation
+ * @typedef {Object} statisticValues
+ * @property {string} att
+ * @property {number} length
+ * @property {Object} array
+ * @private
+ */

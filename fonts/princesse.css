@@ -1,0 +1,86 @@
+@font-face {
+  font-family: 'princesse';
+  src: url('./font/princesse.eot');
+  src: url('./font/princesse.eot') format('embedded-opentype'),
+       url('./font/princesse.woff') format('woff'),
+       url('./font/princesse.ttf') format('truetype'),
+       url('./font/princesse.svg') format('svg');
+/*  src: url('./princesse.eot?87010871');
+  src: url('./princesse.eot?87010871#iefix') format('embedded-opentype'),
+       url('./princesse.woff?87010871') format('woff'),
+       url('./princesse.ttf?87010871') format('truetype'),
+       url('./princesse.svg?87010871#princesse') format('svg');*/
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'princesse';
+    src: url('./princesse.svg?87010871#princesse') format('svg');
+  }
+}
+*/
+
+ [class^="princesse-"]:before, [class*=" princesse-"]:before {
+  font-family: "princesse";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.princesse-couronne:before { content: '\e800'; } /* '' */
+.princesse-grenouille:before { content: '\e801'; } /* '' */
+.princesse-lampe:before { content: '\e802'; } /* '' */
+.princesse-licorne:before { content: '\e803'; } /* '' */
+.princesse-mirroir:before { content: '\e804'; } /* '' */
+.princesse-papillon:before { content: '\e805'; } /* '' */
+.princesse-pegasse:before { content: '\e806'; } /* '' */
+.princesse-tour:before { content: '\e807'; } /* '' */
+.princesse-baguette:before { content: '\e808'; } /* '' */
+.princesse-carrosse:before { content: '\e809'; } /* '' */
+.princesse-carrosse-citrouille:before { content: '\e80a'; } /* '' */
+.princesse-chapeau-fee:before { content: '\e80b'; } /* '' */
+.princesse-chapeau-magicien:before { content: '\e80c'; } /* '' */
+.princesse-chapeau-merlin:before { content: '\e80d'; } /* '' */
+.princesse-citrouille:before { content: '\e80e'; } /* '' */
+.princesse-cle-coeur:before { content: '\e80f'; } /* '' */
+.princesse-coeur:before { content: '\e810'; } /* '' */
+.princesse-tete-licorne:before { content: '\e811'; } /* '' */
+.princesse-chateau:before { content: '\e812'; } /* '' */
+.princesse-chateau2:before { content: '\e813'; } /* '' */
+.princesse-chateau3:before { content: '\e814'; } /* '' */
+.princesse-chateau6:before { content: '\e815'; } /* '' */
+.princesse-chateau7:before { content: '\e816'; } /* '' */
+.princesse-chateau4:before { content: '\e817'; } /* '' */
+.princesse-chateau5:before { content: '\e818'; } /* '' */

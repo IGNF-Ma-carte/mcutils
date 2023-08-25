@@ -1,0 +1,135 @@
+.ol-ext-dialog.mc-folder-media form{
+  overflow: visible;
+}
+
+.mc-list.mc-list-media .mc-search {
+  margin-bottom: .5em;
+}
+.mc-list .media-count {
+  font-family: Fira Sans,Open Sans,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif;
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 0.2em 1em 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.mc-list .filters h2.folders:before {
+  content: '\ea54';
+}
+
+.mc-list.mc-list-media ul.mc-ul {
+  text-align: center;
+}
+.mc-list.mc-list-media .mc-ul li {
+  width: 8em;
+  padding: 1em;
+  display: inline-block;
+}
+
+.mc-list.mc-list-media li .mc-icon {
+  width: 5em;
+  height: 5em;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  margin: auto;
+}
+.mc-list.mc-list-media li span {
+  display: block;
+  font-size: .9em;
+}
+.mc-list.mc-list-media li .mc-name {
+  font-size: .8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mc-list.mc-list-media li .mc-date {
+  font-size: .8em;
+}
+
+.mc-list-media.mc-check li .ol-ext-check {
+  position: absolute;
+  left: 0;
+  top: 1em;
+  height: 5em;
+  width: 100%;
+  padding: .5em;
+  box-sizing: border-box;
+}
+
+.mc-list-media.noThumb .thumb {
+  display: none;
+}
+
+.mc-list-media .thumb {
+  margin: 0 .5em;
+  padding-top: .5em;
+}
+
+.mc-list-media .mc-media-header {
+  display: flex;
+  text-align: center;
+  flex-direction: row;
+  width: 100%;
+}
+.mc-list-media .mc-media-header > * {
+  flex-grow: 1;
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: .5em;
+}
+.mc-list-media .mc-media-header > div.mc-list-head {
+  margin: 0;
+}
+
+.mc-list-media .mc-media-header button {
+  line-height: 2.3em;
+  min-width: auto;
+  margin: 0 .5em .5em;
+  height: 2.6em;
+}
+.mc-list-media .mc-media-header .mc-filter,
+.mc-list-media .mc-media-header .mc-filter * {
+  cursor: pointer;
+  text-align: left;
+}
+.mc-list-media .mc-media-header button.fi-filter {
+  background: transparent;
+  border: 0;
+  margin: 0 .5em;
+}
+
+.mc-list-media .mc-select-folder {
+  flex-grow: 0;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  background: #3993f3;
+  color: #fff;
+  border: 1px solid #3993f3;
+  margin: 0 .5em .5em;
+}
+.mc-list-media select {
+  padding: .5em 1em .5em 0em;
+  vertical-align: middle;
+  max-width: 10em;
+  color: #091625;
+}
+.mc-list-media .mc-limit {
+  text-align: right;
+}
+.mc-list-media .mc-limit label {
+  margin-right: .5em;
+}
+
+.mc-list-media .mc-select-folder:before {
+  content: '\ea54';
+  font-family: font-ign;
+  width: 1.5em;
+  font-size: 1.5em;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
+}

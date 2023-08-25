@@ -1,0 +1,57 @@
+.ol-collection-list.mcSymbolLib li {
+  border-left: 5px solid transparent;
+}
+.ol-collection-list.mcSymbolLib li:hover {
+  background-color: #f4f6f8;
+}
+.ol-collection-list.mcSymbolLib li.ol-select {
+  background-color: #E1EEFD;
+  border-color: #7EB9F7;
+  color: #091625;
+  font-weight: 500;
+}
+
+.ol-collection-list li .ol-order {
+  border-radius: 5px;
+}
+.ol-collection-list li .ol-order:hover {
+  background-color: rgba(126, 185, 247, .3);
+}
+.ol-collection-list li .ol-order:before {
+  content: "\ea4e";
+  font-family: font-ign;
+  box-shadow: unset;
+  background-color: transparent;
+  top: 50%;
+  left: 50%;
+  width: unset;
+  height: unset;
+  transform: translate(-50%, -50%);
+}
+
+.ol-ext-dialog.lockAccount p:first-child {
+  margin: 0 0 1em;
+}
+.ol-ext-dialog.lockAccount a:after {
+  content: '\f08e';
+  display: inline-block;
+  font-family: FontAwesome;
+}
+
+[data-connected] #menu-panel [data-id="create-account"],
+[data-connected] #menu-panel [data-id="reset-password"] {
+  display: none;
+}
+[data-id="minetest"]{
+  display:none;
+}
+[data-user-role*="EDUGEO"] [data-id="minetest"]{
+  display:block;
+}
+
+#menu-panel [data-id="account"] {
+  display: none;
+}
+[data-connected] #menu-panel [data-id="account"] {
+  display: block;
+}

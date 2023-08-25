@@ -1,0 +1,47 @@
+.ol-toggle.profilBt > div {
+  position: absolute;
+  background-color: #fff;
+  top: 3px;
+  left: calc(100% + 2px);
+  box-shadow: 1px 1px 4px 1px rgba(0,0,0,.5);
+  display: none;
+}
+.ol-toggle.profilBt.ol-active > div {
+  display: block;
+}
+
+.ol-toggle.profilBt .profil-info,
+.ol-toggle.profilBt .profil-error {
+  padding: .25em 1em;
+  font-size: .8em;
+  width: 10em;
+  display: none;
+  white-space: normal;
+}
+.ol-toggle.profilBt .hidden .ol-profil,
+.ol-toggle.profilBt .error .ol-profil {
+  display: none;
+}
+.ol-toggle.profilBt .error .profil-error,
+  .ol-toggle.profilBt .hidden .profil-info {
+  display: block;
+}
+.ol-toggle.profilBt .loading:before {
+  content: "Chargement...";
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+}
+
+.ol-toggle.profilBt .loading > * {
+  opacity: .3;
+}
+
+.ol-profil table {
+  table-layout: fixed;
+}
+.ol-profil table td {
+  padding-top: .5em;
+}

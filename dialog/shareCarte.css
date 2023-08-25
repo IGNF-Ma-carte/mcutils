@@ -1,0 +1,80 @@
+.mc-share-map > form {
+  width: 40em;
+}
+.mc-share-map p.cgu {
+  font-style: italic;
+}
+.mc-share-map a {
+  font-style: normal;
+}
+.mc-share-map .link {
+  position: relative;
+  display: inline-block;
+}
+.mc-share-map .link a span {
+  display: inline-block;
+  overflow: hidden;
+  max-width: calc(100% - 2em);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+  cursor: pointer;
+}
+.mc-share-map .link a:before {
+  right: 1.5em;
+}
+
+.mc-share-map .link a {
+  cursor: pointer;
+  text-shadow: unset!important;
+}
+.mc-share-map .link a:after {
+  content: "\f0ea";
+  font-weight: normal;
+  font-family: FontAwesome;
+  color: #091625;
+  font-size: 1em;
+}
+
+.mc-share-map .list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+.mc-share-map a {
+  color: #3993f3;
+  text-decoration: none;
+}
+.mc-share-map .list a {
+  display: inline-block;
+  text-align: center;
+  margin: .5em 1em;
+  cursor: pointer;
+}
+
+.mc-share-map .list a i {
+  font-size: 3em;
+  display: block;
+}
+
+.ol-ext-dialog .copy-info,
+.mc-share-map .copy-info {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,.5);
+  color: #fff;
+  font-weight: normal;
+  padding: .5em 1em;
+  border-radius: 2em;
+  opacity: 0;
+  transition: .2s;
+  pointer-events: none;
+}
+.ol-ext-dialog .copy-info.visible,
+.mc-share-map .copy-info.visible {
+  opacity: 1;
+  bottom: 1em;
+}

@@ -1,0 +1,63 @@
+.ol-collection-list.mcSymbolLib {
+  padding: 0;
+}
+.ol-collection-list.mcSymbolLib li {
+  padding-left: 0;
+  overflow: hidden;
+  display: block;
+}
+.ol-collection-list.mcSymbolLib .mcSymbol {
+  position: relative;
+}
+.ol-collection-list.mcSymbolLib .mcSymbol > * {
+  position: relative;
+}
+.ol-collection-list.mcSymbolLib .mcSymbol > * {
+  vertical-align: middle;
+}
+.ol-collection-list.mcSymbolLib .mcSymbol > span {
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  width: calc(100% - 70px - 4em);
+  text-overflow: ellipsis;
+}
+
+.ol-collection-list.mcSymbolLib .mcSymbol > canvas {
+  margin-right: 5px;
+}
+
+.ol-collection-list.mcSymbolLib .mcSymbol input[type="text"] {
+  display: none;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #fff;
+  z-index: 1;
+}
+.ol-collection-list.mcSymbolLib .mcSymbol[data-edit] input[type="text"] {
+  display: block;
+}
+
+.ol-collection-list.mcSymbolLib .mcSymbol i {
+  position: absolute;
+  width: 2em;
+  top: 0;
+  right: 0;
+  height: 100%;
+  border-radius: 5px;
+}
+.ol-collection-list.mcSymbolLib .mcSymbol i:hover {
+  background-color: rgba(126, 185, 247, .3);
+}
+.ol-collection-list.mcSymbolLib .mcSymbol i:before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.ol-collection-list.mcSymbolLib .mcSymbol i.fi-pencil {
+  right: 2em;
+}
+

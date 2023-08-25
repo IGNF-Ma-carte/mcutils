@@ -1,0 +1,132 @@
+.ol-ext-popup-input.popup-pattern {
+  width: 3em;
+  height: 2.2em;
+  color: transparent;
+}
+.ol-ext-popup-input.popup-pattern .ol-popup {
+  padding: 3px;
+}
+
+.ol-ext-popup-input.popup-pattern p.param-title {
+  margin: 0 0 .2em 0;
+  font-weight: normal;
+  font-size: 1.2em;
+}
+.ol-ext-popup-input.popup-pattern ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 18em;
+  float: left;
+}
+.ol-ext-popup-input.popup-pattern li {
+  display: inline-block;
+  width: 3em;
+  height: 2.5em;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.ol-ext-popup-input.popup-pattern li:hover,
+.ol-ext-popup-input.popup-pattern li[data-selected] {
+  border-color: #3993f3;
+  box-shadow: 0 0 0 3px #3993f3;
+  position: relative;
+  z-index: 1;
+}
+
+.ol-ext-popup-input.popup-pattern .ol-vignet {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border: 0;
+  background-color: currentColor;
+  pointer-events: none;
+  border: 1px solid #999;
+  box-sizing: border-box;
+}
+
+.ol-ext-popup-input.popup-pattern .parameters {
+  display: inline-block;
+  color: #091625;
+  width: 11em;
+  padding: .5em;
+}
+.ol-ext-popup-input.popup-pattern button {
+  width: 100%;
+  min-width: auto;
+  line-height: 1.5em;
+  margin-top: .5em;
+}
+.ol-ext-popup-input.popup-pattern label {
+  width: 7em;
+  text-align: right;
+  display: inline-block;
+  padding-right: .5em;
+  box-sizing: border-box;
+  line-height: 2.4em;
+}
+.ol-ext-popup-input.popup-pattern label:after {
+  content: " :";
+}
+.ol-ext-popup-input.popup-pattern label.ol-ext-check {
+  width: 4em;
+  line-height: 2em;
+  padding: 0;
+  vertical-align: middle;
+  text-align: center;
+}
+.ol-ext-popup-input.popup-pattern label.ol-ext-check:after {
+  display: none;
+}
+
+
+.ol-ext-popup-input.popup-pattern input[type="number"] {
+  width: 4em;
+  line-height: 2em;
+  font-size: 1em;
+}
+.ol-ext-popup-input.popup-pattern .size,
+.ol-ext-popup-input.popup-pattern .spacing,
+.ol-ext-popup-input.popup-pattern .angle {
+  opacity: .5;
+  pointer-events: none;
+}
+.ol-ext-popup-input.popup-pattern input[type="number"].angle {
+  display: none;
+}
+.ol-ext-popup-input.popup-pattern[data-pattern="hatch"] .ol-ext-check.angle {
+  display: none;
+}
+.ol-ext-popup-input.popup-pattern[data-pattern="hatch"] input[type="number"].angle {
+  display: inline-block;
+}
+
+.ol-ext-popup-input.popup-pattern[data-pattern="hatch"] .size,
+.ol-ext-popup-input.popup-pattern[data-pattern="hatch"] .spacing,
+.ol-ext-popup-input.popup-pattern[data-pattern="hatch"] .angle,
+.ol-ext-popup-input.popup-pattern[data-pattern="cross"] .size,
+.ol-ext-popup-input.popup-pattern[data-pattern="cross"] .spacing,
+.ol-ext-popup-input.popup-pattern[data-pattern="cross"] .angle,
+.ol-ext-popup-input.popup-pattern[data-pattern="dot"] .size,
+.ol-ext-popup-input.popup-pattern[data-pattern="dot"] .spacing,
+.ol-ext-popup-input.popup-pattern[data-pattern="dot"] .angle,
+.ol-ext-popup-input.popup-pattern[data-pattern="circle"] .size,
+.ol-ext-popup-input.popup-pattern[data-pattern="circle"] .spacing,
+.ol-ext-popup-input.popup-pattern[data-pattern="circle"] .angle,
+.ol-ext-popup-input.popup-pattern[data-pattern="square"] .size,
+.ol-ext-popup-input.popup-pattern[data-pattern="square"] .spacing,
+.ol-ext-popup-input.popup-pattern[data-pattern="square"] .angle,
+.ol-ext-popup-input.popup-pattern[data-pattern="tile"] .size,
+.ol-ext-popup-input.popup-pattern[data-pattern="tile"] .spacing,
+.ol-ext-popup-input.popup-pattern[data-pattern="tile"] .angle {
+  opacity: 1;
+  pointer-events: all;
+}
+

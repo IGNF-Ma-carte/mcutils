@@ -1,0 +1,31 @@
+#form {
+  display: inline-block;
+  vertical-align: top;
+  padding-right: 1em;
+  width: 22em;
+  box-sizing: border-box;
+}
+#map {
+  display: inline-block;
+  width: calc(100% - 22em);
+  height: 40em;
+}
+
+.ol-popup-content tr td:first-child {
+  max-width: 10em;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#form > * {
+  display: block;
+  margin: .5em 0 0;
+  padding: 1em 0;
+  border-bottom: 5px solid #999;
+  width: 100%;
+}
+
+#form input[type="number"] {
+  max-width: 7em;
+  margin: 0 .25em;
+}

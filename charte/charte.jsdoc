@@ -1,0 +1,42 @@
+/** Fired when app is set/unset fullscreen 
+ * @event fullscreen
+ * @memberof charte
+ */
+ 
+/** Fired when header title (or logo) is clicked 
+ * @event header:title
+ * @memberof charte
+ */
+/** Fired when header menu is toggled 
+ * @event header:menu
+ * @memberof charte
+ */
+/** Fired when header menu list is toggled 
+ * @event header:list
+ * @property {string} id menu id
+ * @memberof charte
+ */
+
+/** Fired when an item of the menu list is clicked 
+ * @event menu:list
+ * @property {string} id menu id
+ * @property {string} title the menu title
+ * @memberof charte
+ */
+/** Fired when a tab is toggled 
+ * @event tab:show
+ * @property {string} id id of the tab shown or null if the tab hides
+ * @memberof charte
+ */
+
+/** Fired when the user name is clicked / connected 
+ * @event user
+ * @property {boolean} name click on the user name
+ * @property {boolean} head click on the user head logo
+ * @memberof charte
+ */
+/** Fired when the user logout (diconnect) is clicked 
+ * @event user:logout
+ * @memberof charte
+ */
+

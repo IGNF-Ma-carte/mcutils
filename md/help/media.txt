@@ -1,0 +1,238 @@
+## Les Médias
+
+La syntaxe permettant d’insérer un média est semblable à celle des liens. On commence cependant par insérer un point d’exclamation. Suivent ensuite des crochets pour un texte alternatif, puis l’URL du média entre parenthèses. 
+La description est facultative mais vivement recommandée.
+On peut de manière facultative ajouter la largeur et la hauteur du média avec un signe x entre les deux. Si l'une l'autre des valeur n'est pas fournie, le media est redimentionner de manière proportionnelle.
+```md
+![texte alternatif](url_du_media lxh)
+```
+
+### Les image
+
+Lorsque l'url du média est une image celle ci va s'afficher dans le texte.
+[++ :fa-code:fw: Code ++]
+```md
+Une image : 
+![une image](https://tinyurl.com/2pfk2s5y)
+Une image (en petit): 
+![une image](https://tinyurl.com/2pfk2s5y 20x)
+Une image (en petit): 
+![une image](https://tinyurl.com/2pfk2s5y x20)
+Une image redimentionnée en x, en y, déformée : 
+!(https://tinyurl.com/2pfk2s5y 50x) !(https://tinyurl.com/2pfk2s5y x50) !(https://tinyurl.com/2pfk2s5y 50x50)
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+Une image : 
+![une image](https://tinyurl.com/2pfk2s5y)
+Une image redimentionnée en x, en y, déformée : 
+!(https://tinyurl.com/2pfk2s5y 50x) !(https://tinyurl.com/2pfk2s5y x50) !(https://tinyurl.com/2pfk2s5y 50x50)
+[----]
+
+### Image en plein écrans
+
+Vous pouvez ajouter un lien pour afficher une image en plein écran au clic, en utilisant l'url 
+`app://fullscreen`.
+
+[++ :fa-code:fw: Code ++]
+```md
+[![Gerbille gourmande](https://tinyurl.com/2pfk2s5y 200)](app://fullscreen)
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+[![Gerbille gourmande](https://tinyurl.com/2pfk2s5y 200)](app://fullscreen)
+[----]
+
+## Les sons
+
+Si le média est un son (extension mp3) il s'affiche sous forme de barre de lecture audio.
+[++ :fa-code:fw: Code ++]
+```md
+![Little pleasures 1N72](https://www.freesound.org/data/previews/350/350572_2244250-lq.mp3)
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+![Little pleasures 1N72](https://www.freesound.org/data/previews/350/350572_2244250-lq.mp3)
+[----]
+
+### Les vidéos
+
+Si vous avez une url de vidéo. On peut généralement récupérer les url dans les liens de partage sur les sites proposant des vidéos.
+[++ :fa-code:fw: Code ++]
+```md
+###### Video Youtube :
+> !(https://youtu.be/YIPcOSNwVjw?list=PL3fKQzhbIJQkLWW_v0PQ1cymbGq7qkSlQ)
+
+###### Video Dailymotion
+> !(http://dai.ly/x4vg0c)
+
+###### Video Vimeo
+> !(https://vimeo.com/30601900)
+
+###### Video au format mp4:
+> ![sample video](http://www.w3schools.com/html/mov_bbb.mp4 x200) 
+> Video courtesy of [Big Buck Bunny](http://www.bigbuckbunny.org/).
+
+###### Vidéo INA :
+> !(https://player.ina.fr/player/embed/PUB3372530001/1/1b0bd203fbcd702f9bc9b10ac3d0fc21)
+
+###### Vidéo INA jalon:
+> !(InaEdu04527)
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+###### Video Youtube :
+> !(https://youtu.be/YIPcOSNwVjw?list=PL3fKQzhbIJQkLWW_v0PQ1cymbGq7qkSlQ)
+
+###### Video Dailymotion
+> !(http://dai.ly/x4vg0c)
+
+###### Video Vimeo
+> !(https://vimeo.com/30601900)
+
+###### Video au format mp4:
+> ![sample video](http://www.w3schools.com/html/mov_bbb.mp4 x200) 
+> Video courtesy of [Big Buck Bunny](http://www.bigbuckbunny.org/).
+
+###### Vidéo INA :
+> !(https://player.ina.fr/player/embed/PUB3372530001/1/1b0bd203fbcd702f9bc9b10ac3d0fc21)
+[----]
+
+### Icones
+
+Vous pouvez ajouter des icones à vos textes en utilisant la syntaxe `:nom-de-l-icone:`
+Il est également possible d'ajouter des options et une couleur de manière optionnelle : `:nom-de-l-icone:options:couleur:`
+Les options peuvent concerner la taille de l'icone (2x,3x, 4x) ou son alignement (left / right)
+Une liste d'icones est disponible [ici :fa-external-link:](https://fontawesome.com/v4.7/icons/).
+[++ :fa-code:fw: Code ++]
+```md
+Une icone en fonction de sa taille :
+:fa-smile-o:  :fa-smile-o:2x: :fa-smile-o:3x: :fa-smile-o:4x: :fa-smile-o:5x:
+
+Une taille fixe (fw = fixed width) pour des listes
+:fa-car:2x fw: en voiture
+:ign-panneau-zone_pieton:2x fw: à pied
+:ign-transport-avion:2x fw: en avion
+
+Des icones en couleur :
+:fa-map:3x:red: :fa-map:3x:#369:
+
+:fa-car:3x left: Une icone alignée
+à gauche du texte
+
+:fa-gear:2x right: Une icone alignée à droite du texte...
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+Une icone en fonction de sa taille :
+:fa-smile-o:  :fa-smile-o:2x: :fa-smile-o:3x: :fa-smile-o:4x: :fa-smile-o:5x:
+
+Une taille fixe (fw = fixed width) pour des listes
+:fa-car:2x fw: en voiture
+:ign-panneau-zone_pieton:2x fw: à pied
+:ign-transport-avion:2x fw: en avion
+
+Des icones en couleur :
+:fa-map:3x:red: :fa-map:3x:#369:
+
+:fa-car:3x left: Une icone alignée
+à gauche du texte
+
+:fa-gear:2x right: Une icone alignée à droite du texte...
+[----]
+
+## Les médias sociaux
+
+Une URL de média social permet d'afficher celui-ci.
+
+### Partage Twitter 
+
+Pour partager une page avec Twitter, indiquer le texte du partage entre [] et l'url de partage Twitter.
+[++ :fa-code:fw: Code ++]
+```md
+![Partager ma carte](https://twitter.com/share)
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+![Partager ma carte](https://twitter.com/share)
+[----]
+
+Il est également possible d'afficher les tweets d'un utilisateur ou ses timelines.
+[++ :fa-code:fw: Code ++]
+```md
+#### Tweet d'un utilisateur :
+!(https://twitter.com/jmviglino/status/1022836760827580416)
+
+Pour afficher les images du tweet, ajouter 1 et pour limiter la largeur utiliser le second argument x400 
+!(https://twitter.com/jmviglino/status/1022836760827580416 1x400)
+
+#### Afficher la timeline d'un utilisateur (2 tweets et une largeur de 400) :
+!(https://twitter.com/ignfrance/timeline 2x400)
+
+#### Afficher une timeline spécifique (2 tweets et une largeur de 400) :
+!(https://twitter.com/TwitterDev/timelines/539487832448843776 2x400)
+
+#### Afficher la timeline dans une grille (3 tweets) :
+!(https://twitter.com/TwitterDev/timegrid/539487832448843776 3)
+```
+[----]
+[-- :fa-desktop:fw: Résultat --]
+#### Tweet d'un utilisateur :
+!(https://twitter.com/jmviglino/status/1022836760827580416)
+
+Pour afficher les images du tweet, ajouter 1 et pour limiter la largeur utiliser le second argument x400 
+!(https://twitter.com/jmviglino/status/1022836760827580416 1x400)
+
+#### Afficher la timeline d'un utilisateur (2 tweets et une largeur de 400) :
+!(https://twitter.com/ignfrance/timeline 2x400)
+
+#### Afficher une timeline spécifique (2 tweets et une largeur de 400) :
+!(https://twitter.com/TwitterDev/timelines/539487832448843776 2x400)
+
+#### Afficher la timeline dans une grille (3 tweets) :
+!(https://twitter.com/TwitterDev/timegrid/539487832448843776 3)
+[----]
+
+### Partage Mastodon
+
+Pour afficher un message de Mastondon sous la forme :
+`!&#40;mastodon://[instance]/@[utilisateur]/[id] [largeur]x[hauteur])`.
+[++ :fa-code:fw: Code ++]
+```md
+![](mastodon://mapstodon.space/@jmviglino/109375903773183958 x300)
+```
+[----]
+[-- :fa-desktop:fw: Résultat --]
+![](mastodon://mapstodon.space/@jmviglino/109375903773183958 x300)
+[----]
+
+
+### Partage Facebook
+
+Pour ajouter un bouton de like facebook sur la page, il faut utiliser l'url de like facebook.
+[++ :fa-code:fw: Code ++]
+```md
+![Partager ma carte](https://www.facebook.com/like)
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+![Partager ma carte](https://www.facebook.com/like)
+[----]
+
+Il est également possible de partager des contenus facebook :
+[-- :fa-code:fw: Code --]
+```md
+### Facebook d'un utilisateur
+!(https://www.facebook.com/ignfr/ 400x400)
+
+### Afficher une publication
+!(https://www.facebook.com/ignfr/posts/1795674127148746 300x300)
+```
+[----]
+[-- :fa-desktop:fw: Résultat --]
+### Facebook d'un utilisateur
+!(https://www.facebook.com/ignfr/ 400x400)
+
+### Afficher une publication
+!(https://www.facebook.com/ignfr/posts/1795674127148746 300x300)
+[----]

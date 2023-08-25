@@ -1,0 +1,82 @@
+.ol-control.ol-toggle.centered > div,
+.ol-control.ol-toggle.centered > div:before {
+  left: 50%!important;
+  transform: translateX(-50%);
+}
+
+.ol-ext-dialog.optionTools label {
+  display: block;
+}
+
+/* button icons */
+.ol-control.ol-selection > button:after,
+.ol-control.ol-drawpoint > button:after,
+.ol-control.ol-drawline > button:after,
+.ol-control.ol-drawpolygon > button:after,
+.ol-control.ol-drawhole > button:after,
+.ol-control.ol-drawregular > button:after,
+.ol-control.ol-offset > button:after,
+.ol-control.ol-transform > button:after,
+.ol-control.ol-split button:after,
+.ol-control.ol-offset > button i:before,
+.ol-control.ol-transform > button i:before,
+.ol-control.ol-transform > button i:after {
+  content: none;
+}
+.ol-control.ol-selection > button:before,
+.ol-control.ol-drawpoint > button:before,
+.ol-control.ol-drawline > button:before,
+.ol-control.ol-drawpolygon > button:before,
+.ol-control.ol-drawhole > button:before,
+.ol-control.ol-drawregular > button:before,
+.ol-control.ol-offset > button:before,
+.ol-control.ol-transform > button:before,
+.ol-control.ol-split button:before {
+  font-family: font-gis;
+  left: 50%;
+  top: calc(50% - 1px);
+  transform: translate(-50%, -50%);
+  box-shadow: unset;
+  background-color: transparent;
+  width: auto;
+  height: auto;
+  border: 0;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.ol-control.ol-split button:before {
+  content: "\f0c4";
+  font-family: FontAwesome;
+}
+.ol-control.ol-selection > button:before {
+  content: "\ea3a";
+}
+.ol-control.ol-drawpoint > button:before {
+  content: "\e913";
+  font-family: font-ign;
+}
+.ol-control.ol-drawline > button:before {
+  content: "\ea02";
+  font-size: 1.2em;
+}
+.ol-control.ol-drawpolygon > button:before {
+  content: "\ea03";
+  font-size: 1.2em;
+}
+.ol-control.ol-drawhole > button:before {
+  content: "\ea04";
+  font-size: 1.2em;
+}
+.ol-control.ol-offset > button:before {
+  content: "\eb26";
+  font-size: 1.2em;
+}
+.ol-control.ol-transform > button:before {
+  content: "\ea74";
+  font-size: 1.3em;
+}
+.ol-control.ol-drawregular > button:before {
+  content: "\ea06";
+  font-size: 1em;
+}

@@ -1,0 +1,139 @@
+.ol-ext-dialog.mc-user-media > form {
+  width: 45em;
+}
+
+.ol-ext-dialog.mc-upload-media .upload {
+  position: relative;
+  height: 15em;
+  overflow: hidden;
+  margin: 0.5em 0;
+  min-height: 5em;
+  max-height: calc(100vh - 13em);
+  cursor: pointer;
+  background-color: #fff;
+  box-sizing: border-box;
+  border: 5px dashed #3993f3;
+}
+.ol-ext-dialog.mc-upload-media.error .upload {
+  border-color: #a00;
+}
+.ol-ext-dialog.mc-upload-media .upload label span {
+  display: none;
+  font-weight: bold;
+}
+.ol-ext-dialog.mc-upload-media.error .upload label span {
+  color: #a00;
+  display: block;
+}
+.ol-ext-dialog.mc-upload-media .upload input {
+  display: block;
+  font-size: 1em;
+  width: 20em;
+	height: 15em;
+	opacity: 0;
+	overflow: hidden;
+	z-index: -1;
+  cursor: pointer;
+}
+.ol-ext-dialog.mc-upload-media .upload label {
+  position: absolute;
+  display: block;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255,255,255,.8);
+  box-sizing: border-box;
+  pointer-events: none;
+  width: 100%;
+  padding: .5em 0;
+  text-shadow: 1px 1px 2px #fff, -1px 1px 2px #fff, -1px -1px 2px #fff, 1px -1px 2px #fff;
+}
+.ol-ext-dialog.mc-upload-media.error .upload label {
+  background-color: rgba(255,255,255,.95);
+}
+.ol-ext-dialog.mc-upload-media.img .upload label {
+  color: #fff;
+  border-color: #ccc;
+}
+.ol-ext-dialog.mc-upload-media.img .upload label::before {
+  display: none;
+}
+.ol-ext-dialog.mc-upload-media .upload label:before {
+  content: '\e927';
+  font-family: font-ign;
+  font-size: 3em;
+  color: #3993f3;
+  display: block;
+}
+.ol-ext-dialog.mc-upload-media .upload img {
+  position: absolute;
+  display: none;
+  top: 50%;
+  left: 50%;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  max-width: calc(20em - 20px);
+  max-height: calc(15em - 20px);
+  pointer-events: none;
+  background-image: 
+    linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%), 
+    linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+.ol-ext-dialog.mc-upload-media.img .upload img {
+  display: block;
+}
+
+.ol-ext-dialog.mc-upload-media .upload img.oldImage {
+  display: block;
+  height: 100%;
+}
+.ol-ext-dialog.mc-upload-media.img .upload img.oldImage {
+  display: none;
+}
+
+
+.ol-ext-dialog.mc-upload-media .ol-buttons input:first-child {
+  display: none;
+}
+.ol-ext-dialog.mc-upload-media.mc-update .ol-buttons input:first-child,
+.ol-ext-dialog.mc-upload-media.img .ol-buttons input:first-child {
+  display: inline-block;
+}
+
+.ol-ext-dialog.mc-upload-media input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ol-ext-dialog.mc-folder-media ul,
+.ol-ext-dialog.mc-upload-media ul {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 1px 1px 3px #000;
+  left: 1em;
+  right: 1em;
+  z-index: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ol-ext-dialog.mc-folder-media li,
+.ol-ext-dialog.mc-upload-media li {
+  padding: .1em 1em;
+  cursor: pointer;
+}
+.ol-ext-dialog.mc-folder-media li:hover,
+.ol-ext-dialog.mc-upload-media li:hover {
+  background-color: #eee;
+}
+
+.ol-ext-dialog.mc-folder-media input[type="text"] {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: .5em 0 0;
+}

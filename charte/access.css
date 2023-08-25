@@ -1,0 +1,158 @@
+[data-access] [data-role="header"] .menuBar {
+  background-color: #fff;
+  box-shadow: inset 0 0 0 1px #091625;
+}
+
+[data-access][data-page="site"] h1,
+[data-access] [data-role="header"] .menuBar:before,
+[data-access] [data-role="header"] .menuBar span {
+  color: #091625!important;
+}
+
+[data-access] a {
+  color: #091625!important;
+}
+[data-access] a.article:before,
+[data-access] .breadcrumb a:before {
+  background-color: #091625!important;
+}
+
+[data-access] [data-role="header"] .menu ul li.current {
+  background-color: #f4f6f8!important;
+  border-color: #091625!important;
+}
+
+[data-access] [data-role="mega"],
+[data-access] [data-role="mega"] * {
+  color: #091625!important
+}
+
+[data-access] .colored,
+[data-access] .hoverColored {
+  color: #091625!important
+}
+
+[data-access] [data-role="mega"] [class*=primary] {
+  background: #f4f6f8!important;
+  color: #091625!important;
+}
+[data-access] [data-role="mega"] a.btn {
+  border: .1rem solid #091625;
+  background-color: #fff;
+}
+
+[data-role="mega"] .o-banner--bg a >  div {
+  padding: 1rem;
+}
+[data-access] [data-role="mega"] .o-banner--bg a >  div {
+  background-color: #fff;
+}
+[data-access] [data-role="mega"] .o-banner__btn > span {
+  border: .1rem solid #091625;
+  background-color: #fff;
+}
+
+[data-access] button[aria-expanded="true"],
+[data-access] .megamenu__link:hover {
+  background-color: #f4f6f8!important;
+  border-color: #091625!important;
+}
+
+[data-access] [data-role="menu-tab"] .menu i:hover,
+[data-access] [data-role="menu-tab"] .menu .select i {
+  background-color: #fff;
+}
+[data-access] [data-role="menu-tab"] .menu i:hover:before,
+[data-access] [data-role="menu-tab"] .menu .select i:before {
+  color: #091625!important;
+}
+
+[data-access] .ol-ext-dialog > form .ol-buttons input[type="submit"], 
+[data-access] .ol-ext-dialog > form .ol-buttons input[type="submit"]:hover, 
+[data-access] .ol-ext-dialog > form .ol-buttons input, 
+[data-access] button.button, 
+[data-access] button.button:hover, 
+[data-access] .button-colored, 
+[data-access] .button-colored:hover, 
+[data-access] .button-colored:visited, 
+[data-access] input:focus, 
+[data-access] select:focus, 
+[data-access] textarea:focus {
+  border: .1rem solid #091625!important;
+  color: #091625!important;
+  background-color: #fff!important;
+}
+
+[data-access] .ol-ext-dialog .ol-content:before,
+[data-access] .mc-input-media button.delete i {
+  color: #091625!important;
+}
+[data-access] label.input-placeholder,
+[data-access] select,
+[data-access] textarea,
+[data-access] input {
+  border-color: #091625!important;
+}
+[data-access] label.input-placeholder textarea {
+  border: 0!important;
+}
+
+[data-access] button.button {
+  line-height: 4.8rem;
+}
+[data-access] a.button-colored:before {
+  display: none;
+}
+
+[data-access] .ol-ext-check span {
+  border-color: #091625!important;
+  color: #091625!important;
+  background-color: #fff!important;
+}
+
+[data-access] .ol-ext-check input:checked ~ span {
+  border-color: #091625!important;
+  background-color: #091625!important;
+  color: #fff!important;
+}
+
+[data-access] [data-role^="teaser-"] article .tag {
+  color: #091625!important;
+  background-color: #f4f6f8!important;
+}
+
+[data-access][data-page="site"] [data-role="subfooter"],
+[data-access][data-page="site"] [data-role="subfooter"] > div {
+  background-color: #f4f6f8!important;
+}
+[data-access][data-page="site"] [data-role="footer"] {
+  background-color: #fff;
+}
+[data-access][data-page="site"] [data-role="footer"] *,
+[data-access][data-page="site"] [data-role="footer"] *:after,
+[data-access][data-page="site"] [data-role="subfooter"] * {
+  color: #091625!important;
+}
+[data-access][data-page="site"] [data-role="footer"] .copy {
+  border: 0;
+}
+
+[data-access] .ol-popup.popup-symbol i {
+  color: #091625!important;
+}
+[data-access] .ol-input-popup.ol-size li > *,
+[data-access] .ol-input-popup.ol-width li > * {
+  background-color: #091625!important;
+}
+[data-access] .ol-input-popup.ol-size li > .ol-option-0:before {
+  background-color: #091625!important;
+}
+[data-access] .ol-input-popup.ol-size li > .ol-option-0 {
+  border-color: #091625!important;
+  background-color: #fff!important;
+}
+
+[data-access] .ol-input-range .ol-slider > .ol-cursor, 
+[data-access] .ol-input-range .ol-slider > .ol-back {
+  background-color: #091625!important;
+}

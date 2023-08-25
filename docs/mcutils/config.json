@@ -1,0 +1,10 @@
+{
+  "server": "https://macarte-qualif.ign.fr/",
+  "viewer": "https://ignf.gitlab.io/macarte/mcviewer/?map=$ID&$NOTITLE",
+  "editor": "https://macarte-qualif.ign.fr/$TYPE/$ID",
+  "userProfile": "https://macarte-qualif.ign.fr/utilisateur/$NAME",
+  "faq": "https://macarte-qualif.ign.fr/aide/faq/$ARTICLE",
+  "tuto": "https://macarte-qualif.ign.fr/aide/tuto/$ARTICLE",
+  "version": "https://macarte-qualif.ign.fr/aide/notes-de-version/$ARTICLE",
+  "gppKey": "0gd4sx9gxx6ves3hf3hfeyhw"
+}

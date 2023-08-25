@@ -1,0 +1,97 @@
+## Les listes
+
+Un caractère * en début de ligne permet de créer une liste.
+Il est possible de faire des sous-listes en les décallant du début de la ligne.
+[++ :fa-code:fw: Code ++]
+```md
+* *item1*
+* **item2**
+  * sous-item1
+  * sous-item2
+* item3
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+* *item1*
+* **item2**
+  * sous-item1
+  * sous-item2
+* item3
+[----]
+
+### Listes ordonnées
+
+Pour créer une liste numérotée, il vous suffira d’inscrire un chiffre suivi d’un point.
+[++ :fa-code:fw: Code ++]
+```md
+1. item1
+2. item2
+3. item3
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+1. item1
+2. item2
+3. item3
+[----]
+
+### Listes à cocher
+
+Utilisez des crochets [ ] pour créer des listes à coche ou [x] pour cocher les cases.
+[++ :fa-code:fw: Code ++]
+```md
+- [ ] Case non cochée
+- [x] Case cochée
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+- [ ] Case non cochée
+- [x] Case cochée
+[----]
+
+### Tableaux
+
+Utilisés 4 **-** ou plus avec des séparateurs **|** pour ajouter un tableau.
+Une tablulation en début de cellule permet de centrer celle-ci ou un signe supérieur pour aligner à droite.
+[++ :fa-code:fw: Code ++]
+```md
+| **Entête**            |	Seconde colonne            |
+| --------------------- | -------------------------- |
+| Cellule 1             |	`cellule 2`<br>*(centrée)* |
+| ~~Première colonne~~  |> Colonne 2<br>*(à droite)* |
+|	[un lien](https://www.ign.fr) |	Une image<br>![squirrel](https://tinyurl.com/2pfk2s5y x100) |
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+| **Entête**            |	Seconde colonne            |
+| --------------------- | -------------------------- |
+| Cellule 1             |	`cellule 2`<br>*(centrée)* |
+| ~~Première colonne~~  |> Colonne 2<br>*(à droite)* |
+|	[un lien](https://www.ign.fr) |	Une image<br>![squirrel](https://tinyurl.com/2pfk2s5y x100) |
+[----]
+
+### blocs dépliants
+
+On peut ajouter des blocs dépliants au clique sur leur titre en les encadrant par des `[-- titre --]` et `[----]`.
+En utilisant la syntaxe `[++ titre ++]` le bloc est déplié par défaut.
+[++ :fa-code:fw: Code ++]
+```md
+[-- Titre cliquable --]
+Contenu masqué au démarrage, **dévoilé** lors du clic !
+[----]
+
+[++#### Titre cliquable ++]
+Contenu affiché au démarrage, **masqué** lors du clic !
+[----]
+```
+[----]
+
+
+[-- Titre cliquable --]
+Contenu masqué au démarrage, **dévoilé** lors du clic !
+[----]
+
+
+[++#### Titre cliquable ++]
+Contenu affiché au démarrage, **masqué** lors du clic !
+[----]

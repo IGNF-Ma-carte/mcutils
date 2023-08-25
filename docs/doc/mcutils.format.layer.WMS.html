@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>MCUtils Class: WMS</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">MCUtils</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="charte.html">charte</a></li><li><a href="charte.macarte.html">charte.macarte</a></li><li><a href="dialog.html">dialog</a></li><li><a href="dialogMessage.html">dialogMessage</a></li><li><a href="ignStyle.html">ignStyle</a></li><li><a href="JSONFile.html">JSONFile</a></li><li><a href="JSONOptions.html">JSONOptions</a></li><li><a href="mcutils.html">mcutils</a></li><li><a href="mcutils.control.html">mcutils.control</a></li><li><a href="mcutils.format.html">mcutils.format</a></li><li><a href="mcutils.format.control.html">mcutils.format.control</a></li><li><a href="mcutils.format.layer.html">mcutils.format.layer</a></li><li><a href="md2html.html">md2html</a></li><li><a href="module-ol_style_Collaboratif-ol_style_Collaboratif.html">ol/style/Collaboratif~ol_style_Collaboratif</a></li><li><a href="ol.html">ol</a></li><li><a href="ol.interaction.html">ol.interaction</a></li><li><a href="ol.layer.html">ol.layer</a></li><li><a href="ol.layer.Base.html">ol.layer.Base</a></li><li><a href="serviceURL.html">serviceURL</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-control_url.html">control/url</a></li><li><a href="module-font_loadFonts.html">font/loadFonts</a></li><li><a href="module-layout.html">layout</a></li><li><a href="module-layout_JCSSRule.html">layout/JCSSRule</a></li><li><a href="module-ol_style_Collaboratif.html">ol/style/Collaboratif</a></li><li><a href="module-version_toV4.html">version/toV4</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="Docx.html">Docx</a></li><li><a href="EcoLayer.html">EcoLayer</a></li><li><a href="ECReport.html">ECReport</a></li><li><a href="GuichetAPI.html">GuichetAPI</a></li><li><a href="global.html#I18N">I18N</a></li><li><a href="ListCarte.html">ListCarte</a></li><li><a href="ListMedias.html">ListMedias</a></li><li><a href="ListTable.html">ListTable</a></li><li><a href="ListUserCarte.html">ListUserCarte</a></li><li><a href="MacarteAPI.html">MacarteAPI</a></li><li><a href="mcutils.Carte.html">mcutils.Carte</a></li><li><a href="mcutils.control.ColorBrewer.html">mcutils.control.ColorBrewer</a></li><li><a href="mcutils.control.CSVPreview.html">mcutils.control.CSVPreview</a></li><li><a href="mcutils.control.InputMedia.html">mcutils.control.InputMedia</a></li><li><a href="mcutils.control.LegendControl.html">mcutils.control.LegendControl</a></li><li><a href="mcutils.control.Profil.html">mcutils.control.Profil</a></li><li><a href="mcutils.control.RepartitionGraph.html">mcutils.control.RepartitionGraph</a></li><li><a href="mcutils.dialog.FlashMessage.html">mcutils.dialog.FlashMessage</a></li><li><a href="mcutils.dialog.saveAs.html">mcutils.dialog.saveAs</a></li><li><a href="mcutils.format.Base.html">mcutils.format.Base</a></li><li><a href="mcutils.format.Carte.html">mcutils.format.Carte</a></li><li><a href="mcutils.format.control.Legend.html">mcutils.format.control.Legend</a></li><li><a href="mcutils.format.control.MousePosition.html">mcutils.format.control.MousePosition</a></li><li><a href="mcutils.format.layer.ECo.html">mcutils.format.layer.ECo</a></li><li><a href="mcutils.format.layer.ECReport.html">mcutils.format.layer.ECReport</a></li><li><a href="mcutils.format.layer.Edugeo.html">mcutils.format.layer.Edugeo</a></li><li><a href="mcutils.format.layer.File.html">mcutils.format.layer.File</a></li><li><a href="mcutils.format.layer.GeoImage.html">mcutils.format.layer.GeoImage</a></li><li><a href="mcutils.format.layer.Geoportail.html">mcutils.format.layer.Geoportail</a></li><li><a href="mcutils.format.layer.Layer.html">mcutils.format.layer.Layer</a></li><li><a href="mcutils.format.layer.MVT.html">mcutils.format.layer.MVT</a></li><li><a href="mcutils.format.layer.PBF.html">mcutils.format.layer.PBF</a></li><li><a href="mcutils.format.layer.Statistic.html">mcutils.format.layer.Statistic</a></li><li><a href="mcutils.format.layer.VectorStyle.html">mcutils.format.layer.VectorStyle</a></li><li><a href="mcutils.format.layer.WFS.html">mcutils.format.layer.WFS</a></li><li><a href="mcutils.format.layer.WMS.html">mcutils.format.layer.WMS</a></li><li><a href="mcutils.format.layer.WMTS.html">mcutils.format.layer.WMTS</a></li><li><a href="mcutils.format.layer.XYZ.html">mcutils.format.layer.XYZ</a></li><li><a href="mcutils.format.StoryMap.html">mcutils.format.StoryMap</a></li><li><a href="mcutils.input.FormStyle.html">mcutils.input.FormStyle</a></li><li><a href="mcutils.input.PopupArrow.html">mcutils.input.PopupArrow</a></li><li><a href="mcutils.input.PopupDash.html">mcutils.input.PopupDash</a></li><li><a href="mcutils.input.PopupPattern.html">mcutils.input.PopupPattern</a></li><li><a href="mcutils.input.PopupSymbol.html">mcutils.input.PopupSymbol</a></li><li><a href="mcutils.input.SymbolLibInput.html">mcutils.input.SymbolLibInput</a></li><li><a href="mcutils.StoryMap.html">mcutils.StoryMap</a></li><li><a href="MDEditor.html">MDEditor</a></li><li><a href="MDEditorBase.html">MDEditorBase</a></li><li><a href="ol.Feature.html">ol.Feature</a></li><li><a href="ol.layer.EcoSource.html">ol.layer.EcoSource</a></li><li><a href="ol.layer.MVT.html">ol.layer.MVT</a></li><li><a href="ol.layer.Statistic.html">ol.layer.Statistic</a></li><li><a href="ol.layer.VectorStyle.html">ol.layer.VectorStyle</a></li><li><a href="ol.layer.VectorTile.html">ol.layer.VectorTile</a></li><li><a href="ol_format_Guesser.html">ol_format_Guesser</a></li><li><a href="Search.html">Search</a></li><li><a href="Select.html">Select</a></li><li><a href="SymbolLib.html">SymbolLib</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="events.list.html" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="charte.html#.event:fullscreen">charte.event:fullscreen</a></li><li><a href="charte.html#.event:user">charte.event:user</a></li><li><a href="charte.html#.event:header:list">charte.header:list</a></li><li><a href="charte.html#.event:header:menu">charte.header:menu</a></li><li><a href="charte.html#.event:header:title">charte.header:title</a></li><li><a href="charte.html#.event:menu:list">charte.menu:list</a></li><li><a href="charte.html#.event:tab:show">charte.tab:show</a></li><li><a href="charte.html#.event:user:logout">charte.user:logout</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#_T">_T</a></li><li><a href="global.html#_uploadMediaDialog">_uploadMediaDialog</a></li><li><a href="global.html#addMediaDialog">addMediaDialog</a></li><li><a href="global.html#connectDialog">connectDialog</a></li><li><a href="global.html#embedCarte">embedCarte</a></li><li><a href="global.html#fullscreen">fullscreen</a></li><li><a href="global.html#getAuth">getAuth</a></li><li><a href="global.html#getConditionStyle">getConditionStyle</a></li><li><a href="global.html#getFeatureStyle">getFeatureStyle</a></li><li><a href="global.html#getLayerSwitcher">getLayerSwitcher</a></li><li><a href="global.html#getMediaFolderDialog">getMediaFolderDialog</a></li><li><a href="global.html#getSimpleGeomType">getSimpleGeomType</a></li><li><a href="global.html#helpData">helpData</a></li><li><a href="global.html#helpDialog">helpDialog</a></li><li><a href="global.html#inputFolderList">inputFolderList</a></li><li><a href="global.html#notification">notification</a></li><li><a href="global.html#openCarte">openCarte</a></li><li><a href="global.html#openMedia">openMedia</a></li><li><a href="global.html#read">read</a></li><li><a href="global.html#removeDiacritics">removeDiacritics</a></li><li><a href="global.html#render2Feature">render2Feature</a></li><li><a href="global.html#roundCoords">roundCoords</a></li><li><a href="global.html#saveCarte">saveCarte</a></li><li><a href="global.html#setCarousel">setCarousel</a></li><li><a href="global.html#shareCarte">shareCarte</a></li><li><a href="global.html#showHelp">showHelp</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#updateMediaDialog">updateMediaDialog</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	<h1 class="page-title">Class: WMS</h1>
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="mcutils.html">mcutils</a><a href="mcutils.format.html">.format</a><a href="mcutils.format.layer.html">.layer</a>.</span>
+        
+        WMS
+        </h2>
+        
+            <div class="class-description"><p>WMS layer format reader/writer</p></div>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+<hr>
+<dt>
+    <h4 class="name" id="WMS"><span class="type-signature"></span>new WMS()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Constructor</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		format/layer/WMS.js
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>mcutils.format.Layer</li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<hr>
+<dt>
+    <h4 class="name" id="read"><span class="type-signature"></span>read(options, url, imageCrop, imageMask)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Read layer from param</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>extend layer options</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>url of the static image</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options.imageCenter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ol.Coordinate</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>center of the image</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options.imageScale</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ol.Size</span>
+|
+
+<span class="param-type">Number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>[scalex, scaley] of the image</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options.imageRotate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>angle of the image in radian, default 0</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>imageCrop</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ol.Extent</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>image crop to be show (in the image) default: [0,0,imageWidth,imageHeight]</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>imageMask</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;ol.Coordinate></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>linestring to mask the image on the map</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		format/layer/WMS.js
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ol_layer_Tile</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        </dl>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	IGN &copy; DSI/SDM/RDS
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a>
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : false,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+.mc-list-carte[data-mode="mini"] li {
+  min-height: unset;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: .25em .5em;
+}
+.mc-list-carte[data-mode="mini"] li > div {
+  display: none;
+}
+.mc-list-carte[data-mode="mini"] li div.mc-content {
+  display: block;
+}
+.mc-list-carte[data-mode="mini"] li div.mc-content * {
+  display: none;
+}
+.mc-list-carte[data-mode="mini"] li div.mc-content .mc-title {
+  display: block;
+  font-size: 1em;
+  font-weight: normal;
+}
+.mc-list-carte[data-mode="mini"] li div.mc-title:before {
+  content: none;
+}

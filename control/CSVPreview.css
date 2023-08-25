@@ -1,0 +1,42 @@
+table.mc-csv-preview {
+  white-space: nowrap;
+}
+table.mc-csv-preview td {
+  border-color: #dde1e6;
+  border-style: solid;
+  border-width: 0 0 1px 1px;
+  color: #000;
+  background-color: #fff;
+  cursor: default;
+  height: 1em;
+  max-width: 15em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+table.mc-csv-preview thead td,
+table.mc-csv-preview td.lnum {
+  background-color: #f4f6f8;
+  font-weight: 700;
+}
+table.mc-csv-preview td.lnum,
+table.mc-csv-preview td.number {
+  text-align: right;
+}
+table.mc-csv-preview thead td.lnum {
+  text-align: center;
+}
+
+table.mc-csv-preview thead td.selected {
+  background-color: #7EB9F7;
+}
+[data-access="enforce"] table.mc-csv-preview thead td.selected {
+  background-color: #dde1e6;
+}
+
+table.mc-csv-preview thead td.selected:before {
+  content: '[';
+}
+table.mc-csv-preview thead td.selected:after {
+  content: ']';
+}

@@ -7,13 +7,13 @@ Install project and dependencies
 
 > npm install
 
-## Developpement
+## Development
 
 ### Run tests page
 
 > npm start
 
-Test are avaliable at http://localhost:1234/
+Test are available at http://localhost:1234/
 
 ### Static code analysis
 
@@ -21,7 +21,7 @@ Use lint to run analysis
 
 > npm run lint
 
-to run analysis on exmaple pages
+to run analysis on example pages
 
 > npm run lintex
 
@@ -29,13 +29,13 @@ to run analysis on exmaple pages
 
 > npm run doc
 
-The documentaion will be created at  `./public/doc`
+The documentation will be created at  `./docs/doc`
 
 
 ## Build and test instance
 
 You have to build the app before commit. The build will be deploy on the test instance.
-Before buil take care to run static analysis and fix errors (`npm run lint`).
+Before build take care to run static analysis and fix errors (`npm run lint`).
 
 ```
 npm run build
@@ -49,6 +49,6 @@ Copyright (c) IGN-France. All rights reserved.
 
 Code is licensed under the [MIT](/LICENSE) license.
 
-NB: This License does not grant permission to use the trade names, trademarks, service marks, or product names of the Licensor, except as required for reasonable and customary use in describing the origin of the Work.
+**NB**: This License does not grant permission to use the trade names, trademarks, service marks, or product names of the Licensor, except as required for reasonable and customary use in describing the origin of the Work.
 
-**Important Notice** : Notice concerning graphic elements: Please note that the logos, images and graphic elements associated with IGN, included in this repository, are protected by copyright and are not covered by the MIT licence. Use of these elements is subject to applicable laws and regulations and must be made in accordance with the rights and permissions granted by the respective owners
+**Important Notice**: Notice concerning graphic elements - Please note that the logos, images and graphic elements associated with IGN, included in this repository, are protected by copyright and are not covered by the MIT licence. Use of these elements is subject to applicable laws and regulations and must be made in accordance with the rights and permissions granted by the respective owners

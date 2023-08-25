@@ -1,0 +1,42 @@
+.ol-ext-dialog.mc-save-map > form {
+  width: 35em;
+}
+.ol-ext-dialog.mc-save-map .accent {
+  padding-top: 0;
+  display: none;
+}
+.ol-ext-dialog.mc-save-map select {
+  max-width: 100%;
+}
+.ol-ext-dialog.mc-save-map option:disabled {
+  color: #aaa;
+  display: none;
+}
+
+.ol-ext-dialog.mc-save-map label.input-placeholder {
+  display: block;
+}
+.ol-ext-dialog.mc-save-map label textarea {
+  min-width: 100%;
+  max-width: 100%;
+  max-height: calc(100vh - 50em);
+  min-height: 3.6em;
+}
+.ol-ext-dialog.mc-save-map ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ol-ext-dialog.mc-save-map li {
+  padding: .5em;
+}
+
+.ol-ext-dialog.mc-save-map .mc-input-media {
+  width: 25em;
+  display: block;
+  max-width: 100%;
+}
+
+.ol-ext-dialog.mc-save-map li > div {
+  margin: .5em auto;
+}

@@ -1,0 +1,8 @@
+.csv {
+  width: 100%;
+  overflow: auto;
+}
+
+select option:first-child {
+  background-color: #7EB9F7;
+}

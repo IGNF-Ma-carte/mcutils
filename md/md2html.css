@@ -1,0 +1,320 @@
+/** md2html: Simple markdown 2 html convertor
+*
+*	Copyright (c) 2016 Jean-Marc VIGLINO (https://github.com/Viglino), 
+*	released under the CeCILL-B license (French BSD license)
+*	(http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
+*
+*/
+.md h1, .md h2, .md h3, .md h4, .md h5, .md h6 {
+  color: currentColor;
+  font-size: 1em;
+  margin: 0.2em 0;
+  text-align: left;
+}
+.md h1 { font-size: 2.1em; }
+.md h2 { font-size: 1.7em; }
+.md h3 { font-size: 1.5em; }
+.md h4 { font-size: 1.3em; }
+.md h5 { font-size: 1.1em; }
+
+.md hr {
+  clear: both;
+}
+
+.md a,
+.md a:hover {
+  color: currentColor;
+  border: 0;
+  text-decoration: underline;
+  font-weight: normal;
+}
+.md a:before,
+.md a:after {
+  display: none;
+}
+
+.md a[href="#"] {
+  text-decoration: none;
+}
+
+.md { text-align: justify; }
+.md .center { text-align: center; margin:0; }
+.md .right { text-align: right; margin:0; }
+.md .left { text-align: left; margin:0; }
+.md table { text-align: left; }
+
+.md ul {
+  list-style: disc;
+}
+.md ol { 
+  list-style: decimal;
+}
+.md ul ul {
+  list-style: circle;
+}
+
+.md ul, .md ol { 
+  margin: 0;
+  padding-left: 1.5em;
+}
+.md ul ul, .md ol ol, .md ul ol, .md ol ul { 
+  margin: 0;
+  padding-left: 1em;
+}
+
+.md ul li.check-,
+.md ul li.check-x { 
+  list-style: none;
+  position: relative;
+  padding-left: .2em;
+}
+.md ul li.check-:before,
+.md ul li.check-x:before {
+  content: '';
+  position: absolute;
+  box-sizing: border-box;
+  background-color: transparent;
+  border: 0.1em solid;
+  border-radius: 0.1em;
+  width: 0.9em;
+  height: 0.9em;
+  top: 0.3em;
+  left: -1.23em;
+  opacity: .5;
+}
+.md ul li.check-x:after {
+  content: "";
+  position: absolute;
+  width: 0.25em;
+  height: 0.7em;
+  border: 0.1em solid;
+  border-width: 0 0.2em 0.2em 0;
+  transform: rotate(45deg);
+  top: 0.13em;
+  left: -0.85em;
+}
+
+.md blockquote {
+  border-left: 5px solid #999;
+  margin: 0 0.5em;
+  padding: 0 1em;
+}
+.md code { 
+  color: #800;
+  tab-size: 2;
+  user-select: all;
+}
+
+.md pre { 
+  background-color: #eee; 
+  padding: 0.5em; 
+  margin:0; 
+  display: block;
+  overflow: auto;
+}
+.md pre code.hljs { 
+  color: #333;
+  padding: .5em 1em;
+  user-select: text;
+}
+
+.md .fa.left,
+.md .fa.fa-left {
+  float: left;
+  margin-right: .25em;
+}
+.md .fa.right,
+.md .fa.fa-right {
+  float: right;
+  margin-left: .25em;
+}
+.md .fa-small {
+  font-size: .7em;
+  vertical-align: middle;
+}
+
+
+.md img { 
+  max-width: min(100%, 500px);
+  vertical-align: middle;
+}
+
+.md table { 
+  border-spacing:0; 
+  font-size:1em;
+  max-width: 100%;
+  display: block;
+  overflow: hidden;
+}
+.md table tr:nth-child(odd) { background:#eee; }
+.md table tr.md-header { background:#ddf; }
+.md table tr.md-header td { background:#ddf; border-bottom:1px solid #369; }
+.md table tr:last-child td { border-bottom:1px solid #369; }
+.md table td { padding:0 0.5em; }
+.md table td.center { text-align:center }
+
+.md a.fullscreen {
+  cursor:zoom-in;
+}
+
+.md audio { vertical-align: middle }
+
+/* collapsible blocks */
+.md .mdBlock {
+  display: grid;
+}
+.md input.mdBlock {
+  display:none;
+}
+.md .mdBlock > label {
+  position: relative;
+  display: block;
+  background-color: #eee;
+  color: #091625;
+  padding: 0 0 0 1em;
+  cursor: pointer;
+}
+.md .mdBlock > label:before {
+  content: "";
+  font-size: .6em;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent transparent transparent currentColor;
+  display: inline-block;
+  border-width: .5em 0 .5em .5em;
+  vertical-align: middle;
+  position: absolute;
+  top: 50%;
+  left: .5em;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.md .mdBlockContent {
+	display: none;
+  border: 0.5em solid #eee;
+  padding: 0.5em;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+.md .mdBlockContent pre.code {
+  background-color: transparent;
+  padding: 0;
+  margin: -.5em;
+}
+.md input.mdBlock:checked + .mdBlock .mdBlockContent {
+  display: block;
+}
+.md input.mdBlock:checked + .mdBlock label:before {
+  border-color: #ccc transparent transparent;
+  border-width: .5em .5em 0;
+  left: .25em;
+}
+
+.md .floatRight {
+  float: right;
+  margin: 0 0 0 .5em;
+}
+.md .floatLeft {
+  float: left;
+  margin: 0 .5em 0 0;
+}
+.md iframe {
+  max-width: 100%;
+}
+.md .md-stodon {
+  display: block;
+  margin: auto;
+  min-width: 400px;
+  min-height: 200px;
+  border: 0;
+}
+iframe.video,
+.twitter-tweet {
+  margin: auto;
+}
+.md iframe.twitter-grid {
+  display: inline-block!important;
+}
+.md iframe.facebook-share-button,
+.md iframe.twitter-share-button {
+  vertical-align: middle;
+  border:none;
+  overflow:hidden;
+}
+.md a.facebook-share {
+  background-color: #1877f2;
+  color: #fff;
+  border-radius: 3px;
+  padding: 2px .5em;
+  text-decoration: none;
+  font-weight: normal;
+}
+.md a.facebook-share:before {
+  content: "\f09a";
+  font-family: FontAwesome;
+  display: inline-block;
+  position: unset;
+  background: #fff;
+  margin-right: 0.5em;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 1em;
+  height: 1em;
+  color: #1877f2;
+  text-align: center;
+  vertical-align: middle;
+}
+.md twitterwidget {
+  display: inline-block!important;
+  min-width: 200px;
+}
+
+.md kbd {
+  background-color: #eee;
+  padding: 0 0.3em;
+  display: inline-block;
+  box-shadow: inset 1px 1px 3px 2px #fff, 3px 2px 2px #999, 0px 0px 0 1px #999;
+  border-radius: 3px /100%;
+  margin: 0 0.3em 0 0.2em;
+  text-shadow: 1px 1px #fff;
+  font-size: .9em;
+  vertical-align: middle;
+  margin-top: -3px;
+  box-sizing: border-box;
+  min-width: 1.3em;
+  text-align: center;
+  min-height: 1.4em;
+  cursor: default;
+}
+
+.md .md-card-printer {
+  display: none;
+}
+
+.md .md-chart {
+  max-width: calc(100% - 1em);
+  width: 500px;
+  margin: auto;
+  display: inline-block;
+  padding: .5em;
+}
+.md .md-chart-center {
+  display: block;
+}
+.md .md-chart-hidden {
+  position: absolute;
+  top: -1000px;
+}
+.md .md-chart-left {
+  float: left;
+}
+.md .md-chart-right {
+  float: right;
+}
+
+.md a.moveTo,
+.md a.stepTo {
+  cursor: pointer;
+}

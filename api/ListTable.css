@@ -1,0 +1,123 @@
+.mc-list {
+  position: relative;
+}
+.mc-list.mc-loading > * {
+  opacity: .2;
+  transition: opacity .3s;
+}
+.mc-list.mc-loading:before {
+  content: "\f110";
+  font-family: FontAwesome;
+  position: absolute;
+  font-size: 4em;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: fa-spin 1s infinite steps(8);
+  opacity: .8;
+}
+.mc-list.mc-loading {
+  pointer-events: none;
+  min-height: 5em;
+}
+
+.mc-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.mc-list li {
+  position: relative;
+  color: #555;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+.mc-list li:hover {
+  background-color: #eee;
+}
+.mc-list li.mc-list-head {
+  font-weight: bold;
+  cursor: unset;
+  display: none!important;
+}
+.mc-list[data-mode="list"] li.mc-list-head {
+  display: block!important;
+}
+.mc-list[data-mode="list"] li.mc-list-head * {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mc-list li.mc-list-head:hover {
+  background-color: transparent;
+}
+.mc-list.mc-select li > i {
+  background-color: #fff;
+}
+.mc-list.mc-select li:hover > i {
+  background-color: #eee;
+}
+.mc-list.mc-select li.mc-select,
+.mc-list.mc-select li.mc-select .mc-info {
+  background-color: #E1EEFD;
+}
+
+.mc-list .mc-list-error {
+  padding-top: 2em;
+  font-style: italic;
+  font-size: 1.1em;
+}
+
+.mc-list.mc-check li .ol-ext-check {
+  float: left;
+}
+.mc-list li .ol-ext-check {
+  display: none;
+}
+.mc-list.mc-check li .ol-ext-check {
+  display: block;
+  cursor: pointer;
+}
+
+/* Header / footer */
+.mc-list > [class^="mc-list-"] {
+  text-align: center;
+  user-select: none;
+}
+.mc-list > [class^="mc-list-"] i {
+  font-style: unset;
+  display: inline-block;
+  padding: 0 .5em;
+  height: 2em;
+  min-width: 1em;
+  line-height: 2em;
+  text-align: center;
+  cursor: pointer;
+}
+.mc-list > [class^="mc-list-"] i:hover {
+  box-shadow: inset 0 -2px currentColor;
+}
+.mc-list > [class^="mc-list-"] i.button-colored {
+  font-weight: bold;
+}
+.mc-list > [class^="mc-list-"] i.none {
+  pointer-events: none;
+  vertical-align: middle;
+}
+.mc-list > [class^="mc-list-"] i.prev:before {
+  content: '\e909';
+  font-family: font-ign;
+}
+.mc-list > [class^="mc-list-"] i.pprev:before {
+  content: '\e910';
+  font-family: font-ign;
+}
+.mc-list > [class^="mc-list-"] i.next:before {
+  content: '\e907';
+  font-family: font-ign;
+}
+.mc-list > [class^="mc-list-"] i.nnext:before {
+  content: '\e918';
+  font-family: font-ign;
+}

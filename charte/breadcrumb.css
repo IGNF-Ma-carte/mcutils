@@ -1,0 +1,33 @@
+ul.breadcrumb {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: Fira Sans,Open Sans,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif;
+  font-weight: 500;
+  color: #788089;
+  margin-bottom: 3rem;
+}
+ul.breadcrumb li {
+  display: inline-block;
+}
+ul.breadcrumb li:before {
+  content: "\e907";
+  font-family: font-ign;
+  color: #dde1e6;
+  margin: 0 .5rem; 
+  width: 20rem;
+}
+ul.breadcrumb li:first-child::before {
+  content: none;
+}
+
+ul.breadcrumb li a:before,
+ul.breadcrumb li a:after {
+  content: none;
+}
+ul.breadcrumb li a {
+  color: #788089!important;
+}
+ul.breadcrumb li:hover a:before {
+  content: "";
+}

@@ -1,0 +1,57 @@
+[data-page="site"][data-univers=professionnel] h1,
+[data-univers=professionnel] .ol-ext-dialog > form .ol-buttons input,
+[data-univers=professionnel] .colored,
+[data-univers=professionnel] .button-ghost,
+[data-univers=professionnel] a,
+[data-univers=professionnel] .hoverColored:hover {
+  color: #472AD6;
+}
+[data-univers=professionnel] .ol-ext-dialog > form .ol-buttons input[type="submit"],
+[data-univers=professionnel] .ol-ext-dialog > form .ol-buttons input,
+[data-univers=professionnel] .input-placeholder.focus,
+[data-univers=professionnel] .accordion li > div,
+[data-univers=professionnel] input:focus,
+[data-univers=professionnel] select:focus,
+[data-univers=professionnel] textarea:focus {
+  border-color: #472AD6;
+}
+[data-univers=professionnel] .ol-ext-dialog > form .ol-buttons input[type="submit"],
+[data-univers=professionnel] .backColored,
+[data-univers=professionnel] a.article:before,
+[data-univers=professionnel] .breadcrumb a:before,
+[data-univers=professionnel] .button-colored {
+  background-color: #472AD6;
+}
+[data-univers=professionnel] .ol-ext-dialog > form .ol-buttons input[type="submit"]:hover,
+[data-univers=professionnel] .button-colored:hover {
+  background-color: #3C23B6;
+}
+[data-univers=professionnel] .button-colored:active {
+  background-color: #8774E4;
+}
+[data-univers=professionnel] .lightBackColored,
+[data-univers=professionnel] .ol-ext-check.ol-ext-radio input:checked ~ span,
+[data-univers=professionnel] .ol-ext-check input:checked ~ span {
+  background-color: #E3DFF8;
+}
+[data-univers=professionnel] .lightColored {
+  color: #E3DFF8;
+}
+[data-univers=professionnel] .ol-ext-check span,
+[data-univers=professionnel] .darkColored,
+[data-univers=professionnel] .button-ghost:hover {
+  color: #3C23B6;
+}
+[data-univers=professionnel] .button-ghost:active,
+[data-univers=professionnel] a:hover,
+[data-univers=professionnel] .secondColored {
+  color: #8774E4;
+}
+[data-univers="professionnel"] [data-role="tabs"] [data-title] > div.selected {
+  color: #472AD6;
+  border-color: #472AD6;
+  background-color: #E3DFF8;
+}
+[data-univers="professionnel"] .accordion > li.accordion-title label {
+  background-color: #E3DFF8;
+}

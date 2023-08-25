@@ -1,0 +1,28 @@
+Grâce à l'option d'intégration, vous pouvez ajouter les cartes et les narrations **Ma carte** à un site Web ou à un blog.
+L'intégration des cartes se fait via une balise `<iframe>`. 
+
+### Intégrer une carte
+* Dans la liste des options de partage, cliquez sur Intégrer.
+* Copiez le code HTML figurant dans la zone qui s'affiche en cliquant sur le bouton :fa-clipboard:.
+* Collez le code dans le code HTML de votre site Web.
+
+La carte s'affichera conformément à la dernière mise à jour (enregistrement).
+
+### Options d'intégration
+
+#### :fa-check-square-o:fw: Taille de la fenêtre
+Vous pouvez définir la taille de la fenêtre cartographique (largeur et hauteur).
+
+#### :fa-check-square-o:fw: Zoom molette
+Si votre carte doit être intégrée sur une page avec un défilement, le zoom à la molette peut empêcher le défilement correct lorsqu'on se trouve sur la carte. 
+Dans ce cas, choisissez le mode de zoom avec <kbd Ctrl> + molette, la molette seule étant réservée au défilement de la page.
+
+#### :fa-check-square-o:fw: Masquer le titre
+Vous pouvez choisir de ne pas afficher le titre de la carte si celui-ci est déjà présent sur la page Web d'acceuil.
+:fa-warning:fw: Attention : la carte est responsive, c'est à dire que si la zone dans laquelle votre carte doit s'afficher est trop petite le titre sera automatiquement masqué pour laisser plus de place à la carte.
+NB : cette option est sans effet si le titre de la carte est masqué dans le modèle utilisé.
+
+### Position de la carte
+
+Pour forcer la position de la carte, remplissez les champs longitude, latitude et zoom du formulaire.
+Cette option n'est pas disponible pour les narrations réalisée avec le modèle onglet.

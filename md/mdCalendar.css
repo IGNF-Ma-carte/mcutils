@@ -1,0 +1,29 @@
+.md .mdCalendar .mdTitle,
+.md .mdCalendar .mdDay {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  margin: 1px;
+  border: 2px solid transparent;
+  text-align: center;
+  font-size: .8em;
+  line-height: 1.2em;
+  padding: .2em;
+}
+.md .mdCalendar .mdDay {
+  background-color: #ccc;
+  opacity: .5;
+}
+.md .mdCalendar .mdTitle {
+  border-color: #ccc;
+}
+.md .mdCalendar .today {
+  border-color: #369;
+}
+.md .mdCalendar .tomonth {
+  opacity: 1;
+}
+.md .mdCalendar .check {
+  background-color: #f55;
+  color: #fff;
+}

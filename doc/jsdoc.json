@@ -1,0 +1,35 @@
+{
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "opts": {
+    "template": "./node_modules/ink-docstrap/template",
+    "recurse": true,
+    "destination": "./docs/doc",
+    "readme": "./doc/doc.md"
+  },
+  "recurseDepth": 10,
+  "source": {
+    "include0": [],
+    "exclude": ["node_module", "todo", "examples", ".*", "docs"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "sourceType": "module",
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc","closure"]
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "theme": "cerulean",
+    "navType": "vertical",
+    "includeDate": false,
+    "outputSourcePath": true,
+    "collapseSymbols": false,
+    "syntaxTheme ": "default",
+    "copyright": "IGN &copy; DSI/SDM/RDS",
+    "systemName": "MCUtils"
+  }
+}

@@ -1,0 +1,454 @@
+.mc-list-carte li {
+  padding: 0.5em .5em 0.5em 7.5em;
+  min-height: 6em;
+}
+
+.mc-list-carte li.mc-list-head {
+  min-height: unset;
+}
+.mc-list-carte[data-mode="list"] li.mc-list-head > * {
+  display: inline-block;
+  height: auto;
+  border: 0;
+  box-shadow: unset;
+}
+.mc-list-carte[data-mode="list"] li.mc-list-head > .mc-info {
+  position: absolute;
+  width: 3em;
+  line-height: 1.5em;
+}
+
+.mc-list-carte.mc-check .mc-icon {
+  left: 1.5em;
+}
+.mc-list-carte[data-mode="list"].mc-check .mc-content {
+  padding-left: 1em;
+  box-sizing: border-box;
+}
+.mc-list-carte.mc-check li .ol-ext-check {
+  position: absolute;
+  display: block;
+  left: -0.25em;
+  height: 100%;
+  padding: 2em 6em 0 0;
+  z-index: 1;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.mc-list-carte[data-mode="gallery"] .mc-ul li .ol-ext-check {
+  display: none;
+}
+.mc-list-carte[data-mode="mini"] .mc-ul li .ol-ext-check {
+  position: unset;
+  padding: 0;
+  float: left;
+}
+
+.mc-list-carte .mc-title {
+  font-size: 1.1em;
+  margin: 0;
+  padding-right: .5em;
+  display: inline-block;
+  font-weight: bold;
+}
+.mc-list-carte .mc-title:before {
+  content: "\ea55";
+  font-weight: normal;
+  font-family: font-gis;
+  margin-right: 0.2em;
+  vertical-align: middle;
+  font-size: 1.3em;
+  display: inline-block;
+  line-height: 1em;
+}
+.mc-list-carte .storymap .mc-title:before {
+  content: "\eb2b";
+}
+.mc-list-carte .statistic .mc-title:before {
+  content: "\eab3";
+}
+
+.mc-list-carte .mc-icon {
+  position: absolute;
+  width: 6em;
+  height: 6em;
+  overflow: hidden;
+  left: .5em;
+  /*
+  background-color: #fff;
+  border: .5em solid #fff;
+  box-shadow: 2px 2px 4px 1px rgba(0,0,0,.5); 
+  */
+}
+.mc-list-carte .mc-icon img {
+  position: absolute;
+  max-height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.mc-list-carte .mc-desc {
+  max-height: 3em;
+  overflow: hidden;
+}
+
+.mc-list-carte .mc-user {
+  display: inline-block;
+}
+.mc-list-carte.mc-profile .mc-user {
+  display: none;
+}
+.mc-list-carte .mc-user:hover {
+  box-shadow: inset 0 -2px #aaa;
+}
+
+.mc-list-carte .mc-user:before {
+  content: "\e91a";
+  font-family: font-ign;
+  padding: 0 .5em 0 0;
+}
+.mc-list-carte li .mc-secondary > div {
+  display: inline-block;
+  padding-right: .5em;
+}
+.mc-list-carte .mc-tag:before {
+  content: "\ea2c";
+  font-family: font-ign;
+  padding: 0 .5em 0 0;
+}
+.mc-list-carte .mc-theme:before {
+  content: "\ea08";
+  font-family: font-ign;
+  padding: 0 .5em 0 0;
+}
+.mc-list-carte .mc-date:before {
+  content: "\e911";
+  font-family: font-ign;
+  padding: 0 .5em 0 0;
+}
+.mc-list-carte .mc-view:before {
+  content: "\ea2f";
+  font-family: font-ign;
+  padding: 0 .5em 0 0;
+}
+
+.mc-list-carte li .mc-info {
+  position: relative;
+  float: right;
+  line-height: 1.3em;
+  z-index: 1;
+  background-color: #fff;
+  padding: 0 .5em;
+  right: -.5em;
+}
+.mc-list-carte li:hover .mc-info {
+  background-color: #eee;
+}
+.mc-list-carte li.mc-list-head:hover .mc-info {
+  background-color: transparent;
+}
+
+.mc-list-carte li .mc-info > i:before {
+  font-family: font-ign;
+  font-style: normal;
+  margin: 0 .25em;
+}
+.mc-list-carte.mc-atlas li.mc-list-head .mc-info,
+.mc-list-carte.mc-atlas li .mc-info > i.mc-share {
+  display: none;
+}
+.mc-list-carte li .mc-info > i.mc-share:before {
+  content: "\ea3c";
+  font-size: 1.2em;
+  float: right;
+}
+.mc-list-carte li .mc-info > i.mc-inactive:before {
+  content: "\f05e";
+  font-family: "fontawesome";
+  color: #d70;
+}
+.mc-list-carte li .mc-info > i.mc-invalid:before {
+  content: "\f071";
+  font-family: "fontawesome";
+  color: #a00;
+}
+
+/* Search options */
+.mc-list .mapCount {
+  font-family: Fira Sans,Open Sans,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif;
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: .2em 1em 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.mc-list .mc-search {
+  position: relative;
+}
+
+.mc-list .mc-search::before {
+  position: absolute;
+  font-size: 1.2em;
+  content: "\e914";
+  font-family: font-ign;
+  left: .5em;
+  top: 1em;
+  transform: translateY(-50%);
+}
+
+.mc-list .mc-search > input[type="search"] {
+  font-size: 1em;
+  width: calc(100% - 2.5em);
+  box-sizing: border-box;
+  padding-left: 2.5em;
+  height: 2.5em;
+}
+.mc-list .mc-search > button.search {
+  display: inline-block;
+  font-size: 1em;
+  width: 2.5em;
+  margin: 0;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 0;
+  height: 2.5em;
+  vertical-align: middle;
+  line-height: 1em;
+  border: 0;
+}
+
+.mc-list .buttons {
+  display: flex;
+  text-align: center;
+  flex-direction: row;
+  width: 100%;
+}
+.mc-list .buttons > div {
+  flex-grow: 1;
+}
+.mc-list .buttons > div:first-child {
+  flex-grow: 0;
+}
+.mc-list .buttons > div:first-child > * {
+  cursor: pointer;
+}
+.mc-list .buttons button {
+  margin: .7em 0;
+}
+.mc-list .buttons select {
+  padding: 1.3rem 1rem;
+}
+
+@media (max-width: 800px) {
+  .mc-list .buttons label {
+    display: none;
+  }
+}
+@media (max-width: 450px) {
+  .mc-list .buttons select {
+    padding: 1.3rem 0;
+  }
+}
+
+.mc-list .buttons label {
+  padding: 0 .5em;
+}
+.mc-list .buttons label select {
+  margin-left: .5em;
+}
+.mc-list[data-mode="list"] .list,
+.mc-list[data-mode="mini"] .mini,
+.mc-list[data-mode="gallery"] .gallery,
+.mc-list .display:hover {
+    background-color: #E1EEFD;
+}
+.mc-list .display:before {
+  content: "\f0c9";
+  font-family: FontAwesome;
+  margin-right: .5em;
+}
+.mc-list .gallery:before {
+  content: "\f009";
+}
+.mc-list .list:before {
+  content: "\f03a";
+}
+
+.mc-list .buttons button {
+  border: 0;
+  background-color: transparent;
+  padding: .5em .5em;
+}
+
+.mc-list.mc-filter .filters {
+  width: 20em;
+  max-width: 50%;
+  min-height: 5em;
+  float: left;
+}
+
+.mc-list .filters {
+  display: none;
+}
+.mc-list.mc-filter .filters {
+  display: block;
+}
+.mc-list.mc-filter > [class^="mc-list-"],
+.mc-list.mc-filter ul {
+  padding-left: min(20em, 50%);
+}
+
+.mc-list.mc-filter .filters h2 {
+  font-size: 1em;
+  background-color: #eee;
+  padding: .5em;
+  margin: 1em 0 0;
+  cursor: pointer;
+  font-weight: normal;
+}
+.mc-list.mc-filter .filters h2:after {
+  content: '\e907';
+  font-family: font-ign;
+  float: right;
+  transform: rotate(-90deg);
+  font-weight: normal;
+  transition: .3s;
+}
+.mc-list.mc-filter .filters h2.selected:after {
+  transform: rotate(90deg);
+}
+.mc-list.mc-filter .filters input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mc-list.mc-filter .filters > div,
+.mc-list.mc-filter .filters > ul {
+  max-height: 0;
+  overflow: hidden;
+  transition: .3s;
+}
+.mc-list.mc-filter .filters ul {
+  padding: 0;
+}
+.mc-list.mc-filter .filters h2.selected + div,
+.mc-list.mc-filter .filters h2.selected + ul {
+  max-height: 40em;
+}
+.mc-list.mc-filter .filters ul li {
+  min-height: 0;
+  padding: .5em 3em .5em 1em;
+  border: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mc-list.mc-filter .filters ul.theme li {
+  padding-left: 0;
+}
+.mc-list.mc-filter .filters ul i {
+  float: unset;
+  position: unset;
+  font-size: 1.5em;
+  vertical-align: middle;
+  margin-right: .5em;
+}
+.mc-list.mc-filter .filters ul span {
+  vertical-align: middle;
+  line-height: 2em;
+}
+.mc-list.mc-filter .filters ul span.count {
+  position: absolute;
+  right: .5em;
+  background-color: #fff;
+}
+.mc-list.mc-filter .filters ul li:hover span.count {
+  background-color: #eee;
+}
+
+.mc-list .filterOptions {
+  display: inline-block;
+  vertical-align: middle;
+}
+.mc-list .filterOptions > div {
+  position: relative;
+  display: inline-block;
+  padding: 0 1.5em 0 .5em;
+  color: #fff;
+  border-radius: .5em;
+  margin: 0 .2em;
+  cursor: pointer;
+  max-width: 10em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+.mc-list .filterOptions > div:after {
+  content: '\e902';
+  position: absolute;
+  font-family: font-ign;
+  font-weight: bold;
+  font-size: .5em;
+  right: 1em;
+  top: 1em;
+}
+.mc-list .filterOptions i {
+  padding-right: .5em;
+}
+
+.mc-list .filters h2:before,
+.mc-list [class*="filter-"]:before {
+  font-family: font-ign;
+  margin-right: .5em;
+}
+.mc-list .filters h2:before {
+  content: "\ea08";
+  font-size: 1.5em;
+}
+.mc-list .filters h2.author:before,
+.mc-list .filter-user:before {
+  content: '\e91a';
+}
+.mc-list .filters h2.type:before,
+.mc-list .filter-type:before {
+  content: '\e915';
+}
+.mc-list .filters h2.share:before,
+.mc-list .filter-share:before {
+  content: "\ea3c";
+}
+.mc-list .filters h2.valid:before {
+  content: "\f05e";
+  font-family: "fontawesome";
+}
+.mc-list .filters h2.active:before {
+  content: "\f071";
+  font-family: "fontawesome";
+}
+.mc-list .filters h2.premium:before,
+.mc-list .filter-premium:before {
+  content: '\ea24';
+}
+
+.mc-list.mc-atlas .valid,
+.mc-list.mc-atlas .active,
+.mc-list.mc-atlas .share,
+.mc-list.mc-profile .author {
+  display: none;
+}
+
+.mc-list .author .autocomplete {
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 1px 1px 3px #000;
+  width: 20em;
+  z-index: 1;
+}
+
+.fi-theme-undefined:before {
+  content: "\f128";
+  font-family: FontAwesome;
+  width: 1em;
+}

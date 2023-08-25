@@ -1,0 +1,223 @@
+@font-face {
+  font-family: 'fontign';
+  src: url('./font/fontign.eot?68892121');
+  src: url('./font/fontign.eot?68892121#iefix') format('embedded-opentype'),
+       url('./font/fontign.woff2?68892121') format('woff2'),
+       url('./font/fontign.woff?68892121') format('woff'),
+       url('./font/fontign.ttf?68892121') format('truetype'),
+       url('./font/fontign.svg?68892121#fontign') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fontign';
+    src: url('./font/fontign.svg?68892121#fontign') format('svg');
+  }
+}
+*/
+ 
+ [class^="ign-"]:before, [class*=" ign-"]:before {
+  font-family: "fontign";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+ 
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+ 
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+ 
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+ 
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+ 
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+ 
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+ 
+.ign-service-recyclage:before { content: '\e800'; } /* '' */
+.ign-service-sante:before { content: '\e801'; } /* '' */
+.ign-service-toilettes:before { content: '\e802'; } /* '' */
+.ign-service-wifi:before { content: '\e803'; } /* '' */
+.ign-sport-cheval:before { content: '\e804'; } /* '' */
+.ign-sport-course:before { content: '\e805'; } /* '' */
+.ign-sport-marche:before { content: '\e806'; } /* '' */
+.ign-sport-nautique:before { content: '\e807'; } /* '' */
+.ign-sport-piscine:before { content: '\e808'; } /* '' */
+.ign-sport-randonnee:before { content: '\e809'; } /* '' */
+.ign-sport-ski:before { content: '\e80a'; } /* '' */
+.ign-sport-ski_descente:before { content: '\e80b'; } /* '' */
+.ign-sport-stade:before { content: '\e80c'; } /* '' */
+.ign-sport-tir:before { content: '\e80d'; } /* '' */
+.ign-top-camping:before { content: '\e80e'; } /* '' */
+.ign-top-canoe:before { content: '\e80f'; } /* '' */
+.ign-top-cheval:before { content: '\e810'; } /* '' */
+.ign-top-delta:before { content: '\e811'; } /* '' */
+.ign-top-detente:before { content: '\e812'; } /* '' */
+.ign-top-ecusson:before { content: '\e813'; } /* '' */
+.ign-top-etoile:before { content: '\e814'; } /* '' */
+.ign-top-golf:before { content: '\e815'; } /* '' */
+.ign-top-montagne:before { content: '\e816'; } /* '' */
+.ign-top-mouillage:before { content: '\e817'; } /* '' */
+.ign-top-natation:before { content: '\e818'; } /* '' */
+.ign-top-nautique:before { content: '\e819'; } /* '' */
+.ign-top-piscine:before { content: '\e81a'; } /* '' */
+.ign-top-refuge:before { content: '\e81b'; } /* '' */
+.ign-top-ski:before { content: '\e81c'; } /* '' */
+.ign-top-tennis:before { content: '\e81d'; } /* '' */
+.ign-top-voile:before { content: '\e81e'; } /* '' */
+.ign-tourisme-caravane:before { content: '\e81f'; } /* '' */
+.ign-tourisme-chateau:before { content: '\e820'; } /* '' */
+.ign-tourisme-curiosite:before { content: '\e821'; } /* '' */
+.ign-tourisme-gite:before { content: '\e822'; } /* '' */
+.ign-tourisme-historique:before { content: '\e823'; } /* '' */
+.ign-tourisme-hotel:before { content: '\e824'; } /* '' */
+.ign-tourisme-moulin:before { content: '\e825'; } /* '' */
+.ign-tourisme-phare:before { content: '\e826'; } /* '' */
+.ign-tourisme-phare2:before { content: '\e827'; } /* '' */
+.ign-tourisme-photo:before { content: '\e828'; } /* '' */
+.ign-tourisme-pique_nique:before { content: '\e829'; } /* '' */
+.ign-tourisme-plage:before { content: '\e82a'; } /* '' */
+.ign-tourisme-point_de_vue:before { content: '\e82b'; } /* '' */
+.ign-tourisme-point_de_vue_3:before { content: '\e82c'; } /* '' */
+.ign-tourisme-tente:before { content: '\e82d'; } /* '' */
+.ign-tourisme-tour:before { content: '\e82e'; } /* '' */
+.ign-transport-ancre:before { content: '\e82f'; } /* '' */
+.ign-transport-avion:before { content: '\e830'; } /* '' */
+.ign-transport-bateau:before { content: '\e831'; } /* '' */
+.ign-transport-bus:before { content: '\e832'; } /* '' */
+.ign-transport-parking:before { content: '\e833'; } /* '' */
+.ign-transport-sncf:before { content: '\e834'; } /* '' */
+.ign-transport-taxi:before { content: '\e835'; } /* '' */
+.ign-transport-train:before { content: '\e836'; } /* '' */
+.ign-transport-valise:before { content: '\e837'; } /* '' */
+.ign-transport-velo:before { content: '\e838'; } /* '' */
+.ign-transport-voiture:before { content: '\e839'; } /* '' */
+.ign-commerce-bar:before { content: '\e83a'; } /* '' */
+.ign-commerce-boutique:before { content: '\e83b'; } /* '' */
+.ign-commerce-caddy:before { content: '\e83c'; } /* '' */
+.ign-commerce-cafe:before { content: '\e83d'; } /* '' */
+.ign-commerce-cb:before { content: '\e83e'; } /* '' */
+.ign-commerce-essence:before { content: '\e83f'; } /* '' */
+.ign-commerce-garage:before { content: '\e840'; } /* '' */
+.ign-commerce-mecanique:before { content: '\e841'; } /* '' */
+.ign-commerce-monnaie:before { content: '\e842'; } /* '' */
+.ign-commerce-poste:before { content: '\e843'; } /* '' */
+.ign-commerce-restaurant:before { content: '\e844'; } /* '' */
+.ign-commerce-restauration:before { content: '\e845'; } /* '' */
+.ign-commerce-veterinaire:before { content: '\e846'; } /* '' */
+.ign-construction-immeuble:before { content: '\e847'; } /* '' */
+.ign-construction-maison:before { content: '\e848'; } /* '' */
+.ign-education-ecole:before { content: '\e849'; } /* '' */
+.ign-education-universite:before { content: '\e84a'; } /* '' */
+.ign-form-blazon:before { content: '\e84b'; } /* '' */
+.ign-form-bookmark:before { content: '\e84c'; } /* '' */
+.ign-form-bouclier:before { content: '\e84d'; } /* '' */
+.ign-form-bulle:before { content: '\e84e'; } /* '' */
+.ign-form-carre:before { content: '\e84f'; } /* '' */
+.ign-form-diamant:before { content: '\e850'; } /* '' */
+.ign-form-engrenage:before { content: '\e851'; } /* '' */
+.ign-form-fleche:before { content: '\e852'; } /* '' */
+.ign-form-hexagone:before { content: '\e853'; } /* '' */
+.ign-form-marker:before { content: '\e854'; } /* '' */
+.ign-form-poi:before { content: '\e855'; } /* '' */
+.ign-form-point:before { content: '\e856'; } /* '' */
+.ign-form-rond:before { content: '\e857'; } /* '' */
+.ign-form-triangle:before { content: '\e858'; } /* '' */
+.ign-form-virgule:before { content: '\e859'; } /* '' */
+.ign-industrie-engrenage:before { content: '\e85a'; } /* '' */
+.ign-industrie-nucleaire:before { content: '\e85b'; } /* '' */
+.ign-loisir-chapiteau:before { content: '\e85c'; } /* '' */
+.ign-loisir-drapeau:before { content: '\e85d'; } /* '' */
+.ign-loisir-jeux:before { content: '\e85e'; } /* '' */
+.ign-loisir-musee:before { content: '\e85f'; } /* '' */
+.ign-loisir-nature:before { content: '\e860'; } /* '' */
+.ign-loisir-theatre:before { content: '\e861'; } /* '' */
+.ign-meteo-neige:before { content: '\e862'; } /* '' */
+.ign-meteo-nuageux:before { content: '\e863'; } /* '' */
+.ign-meteo-orage:before { content: '\e864'; } /* '' */
+.ign-meteo-pluie:before { content: '\e865'; } /* '' */
+.ign-meteo-soleil:before { content: '\e866'; } /* '' */
+.ign-panneau-30:before { content: '\e867'; } /* '' */
+.ign-panneau-50:before { content: '\e868'; } /* '' */
+.ign-panneau-70:before { content: '\e869'; } /* '' */
+.ign-panneau-90:before { content: '\e86a'; } /* '' */
+.ign-panneau-110:before { content: '\e86b'; } /* '' */
+.ign-panneau-130:before { content: '\e86c'; } /* '' */
+.ign-panneau-autoroute:before { content: '\e86d'; } /* '' */
+.ign-panneau-barriere:before { content: '\e86e'; } /* '' */
+.ign-panneau-bus:before { content: '\e86f'; } /* '' */
+.ign-panneau-cerf:before { content: '\e870'; } /* '' */
+.ign-panneau-cyclomoteur:before { content: '\e871'; } /* '' */
+.ign-panneau-danger:before { content: '\e872'; } /* '' */
+.ign-panneau-depassement:before { content: '\e873'; } /* '' */
+.ign-panneau-derapage:before { content: '\e874'; } /* '' */
+.ign-panneau-dos_ane:before { content: '\e875'; } /* '' */
+.ign-panneau-double_sens:before { content: '\e876'; } /* '' */
+.ign-panneau-ebouli:before { content: '\e877'; } /* '' */
+.ign-panneau-feu:before { content: '\e878'; } /* '' */
+.ign-panneau-gravillon:before { content: '\e879'; } /* '' */
+.ign-panneau-historique:before { content: '\e87a'; } /* '' */
+.ign-panneau-interdit:before { content: '\e87b'; } /* '' */
+.ign-panneau-moto:before { content: '\e87c'; } /* '' */
+.ign-panneau-mouton:before { content: '\e87d'; } /* '' */
+.ign-panneau-passage_pieton:before { content: '\e87e'; } /* '' */
+.ign-panneau-pente:before { content: '\e87f'; } /* '' */
+.ign-panneau-pieton:before { content: '\e880'; } /* '' */
+.ign-panneau-piste_cyclable:before { content: '\e881'; } /* '' */
+.ign-panneau-pont:before { content: '\e882'; } /* '' */
+.ign-panneau-quai:before { content: '\e883'; } /* '' */
+.ign-panneau-reserve:before { content: '\e884'; } /* '' */
+.ign-panneau-retrecissement:before { content: '\e885'; } /* '' */
+.ign-panneau-rond_point:before { content: '\e886'; } /* '' */
+.ign-panneau-tracteur:before { content: '\e887'; } /* '' */
+.ign-panneau-train:before { content: '\e888'; } /* '' */
+.ign-panneau-travaux:before { content: '\e889'; } /* '' */
+.ign-panneau-vache:before { content: '\e88a'; } /* '' */
+.ign-panneau-virage:before { content: '\e88b'; } /* '' */
+.ign-panneau-virages:before { content: '\e88c'; } /* '' */
+.ign-panneau-zone_pieton:before { content: '\e88d'; } /* '' */
+.ign-religion-abbaye:before { content: '\e88e'; } /* '' */
+.ign-religion-calvaire:before { content: '\e88f'; } /* '' */
+.ign-religion-croix_chapelle:before { content: '\e890'; } /* '' */
+.ign-religion-croix_eglise:before { content: '\e891'; } /* '' */
+.ign-religion-eglise:before { content: '\e892'; } /* '' */
+.ign-religion-tombe:before { content: '\e893'; } /* '' */
+.ign-service-association:before { content: '\e894'; } /* '' */
+.ign-service-creche:before { content: '\e895'; } /* '' */
+.ign-service-emploie:before { content: '\e896'; } /* '' */
+.ign-service-handicap:before { content: '\e897'; } /* '' */
+.ign-service-hopital:before { content: '\e898'; } /* '' */
+.ign-service-i:before { content: '\e899'; } /* '' */
+.ign-service-intitution:before { content: '\e89a'; } /* '' */
+.ign-service-livre:before { content: '\e89b'; } /* '' */
+.ign-service-police:before { content: '\e89c'; } /* '' */
+.ign-service-pompier:before { content: '\e89d'; } /* '' */
+.ign-panneau-0:before { content: '\e89e'; } /* '' */
+.ign-panneau-10:before { content: '\e89f'; } /* '' */
+.ign-panneau-20:before { content: '\e8a0'; } /* '' */
+.ign-panneau-40:before { content: '\e8a1'; } /* '' */
+.ign-panneau-60:before { content: '\e8a2'; } /* '' */
+.ign-panneau-80:before { content: '\e8a3'; } /* '' */
+.ign-panneau-100:before { content: '\e8a4'; } /* '' */
+.ign-panneau-120:before { content: '\e8a5'; } /* '' */

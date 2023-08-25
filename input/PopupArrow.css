@@ -1,0 +1,55 @@
+.ol-popup.ol-arrow {
+  width: auto;
+  height: auto;
+  line-height: 2.2em;
+}
+
+.ol-popup.ol-arrow .ol-popup > div {
+  line-height: 2em;
+}
+.ol-popup.ol-arrow .ol-popup > div:hover,
+.ol-popup.ol-arrow .ol-popup > div.selected {
+  background-color: #ccc;
+}
+
+.ol-popup.ol-arrow .vignet,
+.ol-popup.ol-arrow .ol-popup > div div {
+  position: relative;
+  display: inline-block;
+  width: 5em;
+  height: 2px;
+  background-color: currentColor;
+  margin: 0 1em;
+  vertical-align: middle;
+}
+.ol-popup.ol-arrow .vignet {
+  width: 3em;
+  margin: 0 .7em 0 .5em;
+}
+.ol-popup.ol-arrow .vignet:before,
+.ol-popup.ol-arrow .ol-popup > div div:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -.1em;
+  transform: translateY(-50%);
+}
+.ol-popup.ol-arrow .arrow-none:before {
+  display: none;
+}
+.ol-popup.ol-arrow .arrow-triangle:before {
+  border: 0 solid transparent;
+  border-width: .5em 0 .5em .8em;
+  border-left-color: currentColor;
+}
+.ol-popup.ol-arrow .arrow-circle:before {
+  width: .8em;
+  height: .8em;
+  background-color: currentColor;
+  border-radius: 50%;
+}
+.ol-popup.ol-arrow .arrow-square:before {
+  width: .8em;
+  height: .8em;
+  background-color: currentColor;
+}

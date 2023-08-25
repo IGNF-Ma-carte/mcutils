@@ -1,0 +1,35 @@
+.ol-control.ol-cgu {
+  font: 11px Roboto, Arial, sans-serif;
+  bottom: 0;
+  right: 0;
+  padding: 0 .5em;
+  margin: 0;
+  font-size: .8em;
+  list-style: none;
+  border-radius: 4px 0 0 0;
+  letter-spacing: -.04em;
+  white-space: nowrap;
+}
+
+.ol-control.ol-cgu li {
+  display: inline-block;
+}
+.ol-control.ol-cgu li:before {
+  content: "|";
+  margin: 0 .25em;
+}
+.ol-control.ol-cgu li:first-child:before {
+  content: none;
+}
+
+.ol-control.ol-cgu .small {
+  display: none;
+}
+@media (max-width: 420px) {
+  .ol-control.ol-cgu .large {
+    display: none;
+  }
+  .ol-control.ol-cgu .small {
+    display: inline-block;
+  }
+}

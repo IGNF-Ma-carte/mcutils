@@ -1,0 +1,58 @@
+[data-page="site"][data-univers=institut] h1,
+[data-univers=institut] .ol-ext-dialog > form .ol-buttons input,
+[data-univers=institut] .colored,
+[data-univers=institut] .button-ghost,
+[data-univers=institut] a,
+[data-univers=institut] .hoverColored:hover {
+  color: #90C149;
+}
+[data-univers=institut] .ol-ext-dialog > form .ol-buttons input[type="submit"],
+[data-univers=institut] .ol-ext-dialog > form .ol-buttons input,
+[data-univers=institut] .input-placeholder.focus,
+[data-univers=institut] .accordion li > div,
+[data-univers=institut] input:focus,
+[data-univers=institut] select:focus,
+[data-univers=institut] textarea:focus {
+    border-color: #90C149;
+}
+[data-univers=institut] .ol-ext-dialog > form .ol-buttons input[type="submit"],
+[data-univers=institut] .backColored,
+[data-univers=institut] a.article:before,
+[data-univers=institut] .breadcrumb a:before,
+[data-univers=institut] .button-colored {
+  background-color: #90C149;
+}
+[data-univers=institut] .ol-ext-dialog > form .ol-buttons input[type="submit"]:hover,
+[data-univers=institut] .button-colored:hover {
+  background-color: #7AA43E;
+  border-color: #7AA43E;
+}
+[data-univers=institut] .button-colored:active {
+  background-color: #B6D688;
+}
+[data-univers=institut] .lightBackColored,
+[data-univers=institut] .ol-ext-check.ol-ext-radio input:checked ~ span,
+[data-univers=institut] .ol-ext-check input:checked ~ span {
+  background-color: #EEF5E3;
+}
+[data-univers=institut] .lightColored {
+  color: #EEF5E3;
+}
+[data-univers=institut] .ol-ext-check span,
+[data-univers=institut] .darkColored,
+[data-univers=institut] .button-ghost:hover {
+  color: #90C149;
+}
+[data-univers=institut] .button-ghost:active,
+[data-univers=institut] a:hover,
+[data-univers=institut] .secondColored {
+  color: #B6D688;
+}
+[data-univers="institut"] [data-role="tabs"] [data-title] > div.selected {
+  color: #90C149;
+  border-color: #90C149;
+  background-color: #EEF5E3;
+}
+[data-univers="institut"] .accordion > li.accordion-title label {
+  background-color: #EEF5E3;
+}

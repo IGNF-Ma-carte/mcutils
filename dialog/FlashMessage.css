@@ -1,0 +1,84 @@
+[data-role="flashMessage"] {
+  position: fixed;
+  top: 5rem;
+  right: 0;
+  z-index: 100;
+  margin: .5em 1em;
+  max-width: calc(100% - 2em);
+  min-width: 10em;
+  pointer-events: none;
+  font-size: 1.5rem;
+}
+[data-page="site"] [data-role="flashMessage"] {
+  top: 7rem;
+}
+
+
+[data-role="flashMessage"] > div {
+  position: relative;
+  top: 0;
+  width: 30em;
+  max-width: 100%;
+  min-height: 4em;
+  background-color: #fff;
+  border: 1px solid #dde1e6;
+  box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+  margin-bottom: .5em;
+  transition: .3s, opacity .4s .1s;
+  padding: .5em 2em .5em 3em;
+  box-sizing: border-box;
+  pointer-events: all;
+  transform: scale(0);
+}
+[data-role="flashMessage"] > div[data-visible] {
+  transform: scale(1);
+}
+
+[data-role="flashMessage"] > div:before {
+  position: absolute;
+  content: '\ea13';
+  font-family: font-ign;
+  font-size: 1.2em;
+  left: 0;
+  top: 0;
+  margin: .41em .8em;
+  color: #3993f3;
+}
+[data-role="flashMessage"] > div.flash-success:before {
+  content: "\e905";
+  color: #90c149;
+}
+[data-role="flashMessage"] > div.flash-error:before {
+  content: "\f06a";
+  font-family: FontAwesome;
+  color: #b30f00;
+}
+[data-role="flashMessage"] > div.flash-warning:before {
+  content: "\f071";
+  font-family: FontAwesome;
+  color: #f45648;
+}
+[data-access] [data-role="flashMessage"] > div:before {
+  color: #091625!important;
+}
+
+[data-role="flashMessage"] > div.hide {
+  opacity: 0;
+  top: -3em;
+  pointer-events: none;
+}
+
+[data-role="flashMessage"] .fi-close {
+  position: absolute;
+  padding: .5em;
+  margin: 0 .5em;
+  right: 0;
+  top: 0;
+  color: #788089;
+  cursor: pointer;
+}
+
+[data-role="flashMessage"] img {
+  max-width: 100%;
+  max-height: 10em;
+}

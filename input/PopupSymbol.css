@@ -1,0 +1,78 @@
+.ol-popup.popup-symbol {
+  width: 3em;
+  height: 2.2em;
+}
+.ol-popup.popup-symbol .ol-popup {
+  border: 1px solid #999;
+  z-index: 99;
+}
+.ol-popup.popup-symbol h2 {
+  margin: 0 1em;
+}
+.ol-popup.popup-symbol .filter {
+  margin: 0 .25em .5em;
+}
+.ol-popup.popup-symbol select {
+  display: inline-block;
+  margin-bottom: .5em;
+  padding: .5rem 1.5rem;
+  width: calc(50% - .5em);
+  border-radius: 1em;
+  margin: 0 .25em;
+}
+.ol-popup.popup-symbol select option:first-child {
+  font-style: italic;
+  color: #999;
+}
+
+.ol-popup.popup-symbol i {
+  font-size: 2.2em;
+  padding: 0;
+  position: relative;
+  margin-left: -.2rem;
+  color: #3993f3;
+  width: 1.5em;
+  text-align: center;
+}
+.ol-popup.popup-symbol input {
+  display: block;
+  margin: .5em .5em;
+  border-radius: 2em;
+  padding: .5em .5em .5em 2.5em;
+  width: calc(100% - 1em);
+  box-sizing: border-box;
+}
+
+.ol-popup.popup-symbol .ol-popup:before {
+  content: "\e914";
+  font-family: font-ign;
+  position: absolute;
+  left: 1.5em;
+  top: 1em;
+  color: #999;
+}
+.ol-popup.popup-symbol .ol-popup ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 20em;
+  max-height: 20em;
+  overflow: auto;
+  font-size: 1.3em;
+  padding: .8em;
+}
+.ol-popup.popup-symbol .ol-popup li {
+  display: inline-block;
+  width: 1.8em;
+  height: 1.8em;
+  line-height: 1.8em;
+  margin: .1em;
+  text-align: center;
+  cursor: pointer;
+  color: #777;
+}
+.ol-popup.popup-symbol .ol-popup li:hover {
+  transform: scale(2);
+  background-color: #3993f3;
+  color: #fff;
+}

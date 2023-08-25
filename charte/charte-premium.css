@@ -1,0 +1,37 @@
+[data-user-role*="EDUGEO"] [data-role="header"] > h1 {
+  width: 0;
+  color: transparent!important;
+  padding: 0;
+  margin: 0;
+}
+
+[data-user-role*="EDUGEO"] [data-role="header"] > h1:before {
+  content: "";
+  position: absolute;
+  background: url(./logo-edugeo.png) no-repeat 50% 50%;
+  background-size: 87% auto;
+  height: 3em;
+  width: 11rem;
+  top: 50%;
+  margin-left: 1rem;
+  transform: translateY(-50%);
+}
+
+/* Remove footer on Edugeo */
+[data-user-role*="EDUGEO"] [data-role="footer"] form {
+  display: none;
+}
+[data-user-role*="EDUGEO"][data-page="site"] [data-role="footer"] {
+  padding: 0;
+}
+[data-user-role*="EDUGEO"][data-page="site"] [data-role="footer"] .footer-info,
+[data-user-role*="EDUGEO"][data-page="site"] [data-role="subfooter"] {
+  display: none;
+}
+[data-user-role*="EDUGEO"][data-page="site"] [data-role="footer"] .copy  {
+  border: 0;
+}
+
+[data-user-role*="ELEVE"] [data-id="atlas"] {
+  display: none;
+}

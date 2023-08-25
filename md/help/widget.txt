@@ -1,0 +1,306 @@
+L'ajout de widgets se fait en encadrant le code entre trois `&#96;&#96;&#96;`
+
+## Codes
+
+Il est possible d'afficher des blocs de code sur avec coloration syntaxique selon le langage mis en préfixe.
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``javascript
+var val = 1;
+// Fontion de test
+function test(param) {
+  return param === val;
+}
+&#96;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+```javascript
+var val = 1;
+// Fontion de test
+function test(param) {
+  return param === val;
+}
+```
+[----]
+
+## Comparateur d'images
+
+Vous pouvez ajouter un comparateur d'images sur votre page en utilisant `&#96;&#96;&#96;imageSlider`.
+On peut préciser la taille des images (sous la forme `largeur`x`hauteur`). Si la largeur ou la hauteur n'est pas précisée elle sera calculée par rapport à l'autre dimension.
+Il faut lui fournir deux images à afficher. Il est préférable que les deux images aient la même taille.
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``imageSlider
+img1: https://upload.wikimedia.org/wikipedia/commons/5/53/Shadow_2752.jpg
+img2: https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png
+fullscreen: true
+&#96;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+```imageSlider
+img1: https://upload.wikimedia.org/wikipedia/commons/5/53/Shadow_2752.jpg
+img2: https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png
+fullscreen: true
+```
+[----]
+
+## Les diagrammes
+
+Pour afficher des **diagrammes** sur une page, il faut commencer la ligne par `&#96;&#96;&#96;chart`. 
+Il faut ensuite préciser le type de diagramme que l'on veut `line`, `bar`, `pie`, `doughnut` ou `donut`, `radar` ou `polar`. 
+On peut ensuite préciser la taille du diagramme (sous la forme `largeur`x`hauteur`) et la méthode de centrage (`left`, `right` ou `center`).
+Il faut lui fournir des données à afficher en commençant une ligne par `data:` et une suite de valeurs séparées par un point-virgule (`;`).
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``chart pie x200 center
+data:   3;1;5
+&#96;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+```chart pie x200 center
+data:   3;1;5
+```
+[----]
+
+### Personnalisation
+
+Vous pouvez définir vos propres couleurs (`colors:`) au [format du web](https://fr.wikipedia.org/wiki/Couleur_du_Web) :
+* soit avec une couleur nommée (`red`, `green`, etc.), 
+* soit au format hexadecimal (`#ff0000` ou `#0f0`) 
+* Soit au format rgb (`rgb(255,0,0)`) ou hsl avec la variante rgba (`rgba(255,0,0,.5)`).
+
+Il est également possible de définir :
+* le titre du diagramme (`title:`)
+* le titre des données (`data-title`)
+* l'affichage d'une légende et sa position (`top`, `left`, `bottom` ou `right`)
+* le titre de la légende (`legend-title`)
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``chart donut x200 center
+title:  Titre
+data-title:  Données
+data:   3;1;5
+labels: rouge; bleu; jaune
+colors: red; #0A0; rgba(255,255,0,.5)
+legend: right
+legend-title: Légende
+&#96;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+```chart donut x200 center
+title:  Titre
+data-title:  Données
+data:   3;1;5
+labels: rouge; bleu; jaune
+colors: red; #00A; rgba(255,255,0,.5)
+legend: right
+legend-title: Légende
+```
+[----]
+
+Par défaut l'axe des ordonnées commence à zéro.
+Il est possible de définir la valeur min et max des ordonnées (`min:` et `max:`).
+Utilisez `min: auto` pour un calcul automatique en fonction des données fournies. 
+`xlabel:` et `ylabel:` permettent de définir un label pour les axes du graphique.
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``chart line x200 center
+title:  Titre
+data-title:  Données
+data:   3;1;5
+labels: rouge; bleu; jaune
+legend: right
+min: -1
+max: 6
+xlabel: couleurs
+ylabel: valeurs
+&#96;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+```chart line x200 center
+title:  Titre
+data-title:  Données
+data:   3;1;5
+labels: rouge; bleu; jaune
+legend: right
+min: -1
+max: 6
+xlabel: couleurs
+ylabel: valeurs
+```
+[----]
+
+### Utilisation d'attributs
+
+Vous pouvez utiliser les attributs les attributs fournis (si disponibles sur l'objet sélectionné), avec la syntaxe (`%attr%`). Si les labels ne sont pas précisé, le nom des attributs sera utilisé en lieu et place.
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``chart bar x200 center
+data-title: Données
+data:   %valeur_1%; %valeur_2%; %valeur_3%; %valeur_4%; %valeur_5%
+legend: right
+&#96;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+```chart bar x200 center
+data-title: Données
+data:   %valeur_1%; %valeur_2%; %valeur_3%; %valeur_4%; %valeur_5%
+legend: right
+```
+[----]
+
+### Jeux multiples
+
+Pour afficher plusieurs jeux de données sur le même graphe, il suffit d'ajouter plusieurs `data:` (et `data-title:` correspondant).
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``chart line x200 center
+labels: rouge; bleu; jaune
+----
+data-title:  Données 1
+data:   3;1;5
+----
+data-title:  Données 2
+data:   1;3;6
+----
+data-title:  Données 3
+data:   2;4;3
+----
+legend: right
+xlabel: couleurs
+ylabel: valeurs
+&#96;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+```chart line x200 center
+labels: rouge; bleu; jaune
+----
+data-title:  Données 1
+data:   3;1;5
+----
+data-title:  Données 2
+data:   1;3;6
+----
+data-title:  Données 3
+data:   2;4;3
+----
+legend: right
+xlabel: couleurs
+ylabel: valeurs
+```
+[----]
+
+Il est possible de mixer les types de diagrammes (lorsqu'ils sont compatibles, par exemple des barres et des lignes) sur un même graphique en précisant le `data-type:` des données.
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``chart line x200 center
+labels: rouge; bleu; jaune
+----
+data-title:  Données 1
+data-type:  bar
+data:   3;1;5
+----
+data-title:  Données 2
+data-type:  line
+data:   1;3;6
+----
+data-title:  Données 3
+data:   2;4;3
+----
+legend: right
+&#96;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+```chart line x200 center
+labels: rouge; bleu; jaune
+----
+data-title:  Données 1
+data-type:  bar
+data:   3;1;5
+----
+data-title:  Données 2
+data-type:  line
+data:   1;3;6
+----
+data-title:  Données 3
+data:   2;4;3
+----
+legend: right
+```
+[----]
+
+### Couleurs et thèmes
+
+Plusieurs thèmes couleur sont disponibles pour les diagrammes (`standard`, `classic`, `hue`, `excel`).
+Ils sont également fournis en couleur pleine (`standard-2`, `classic-2`, `hue-2`, `excel-2`).
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``chart pie 150x150
+title: standard
+data: 1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+&#96;``
+&#96;``chart pie 150x150 
+title: standard-2
+data: 1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+theme: standard-2
+&#96;``
+&#96;``chart pie 150x150 
+title: classic
+data: 1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+theme: classic
+&#96;``
+&#96;``chart pie 150x150 
+title: hue
+data: 1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+theme: hue
+&#96;``
+&#96;``chart pie 150x150 
+title: excel
+data: 1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+theme: excel
+&#96;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+```chart pie 150x150 
+title: standard
+data: 1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+```
+```chart pie 150x150 
+title: standard-2
+data: 1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+theme: standard-2
+```
+```chart pie 150x150 
+title: classic
+data: 1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+theme: classic
+```
+```chart pie 150x150 
+title: hue
+data: 1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+theme: hue
+```
+```chart pie 150x150 
+title: excel
+data: 1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+theme: excel
+```
+[----]

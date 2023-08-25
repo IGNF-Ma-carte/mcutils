@@ -1,0 +1,67 @@
+.mc-list-carte[data-mode="gallery"] .mc-ul li {
+  position: relative;
+  width: calc(33.33% - 1em);
+  padding: 8.3em 0.5em 0.5em;
+  border: 0;
+  display: inline-block;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+  margin: 0.5em;
+  height: 15em;
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.mc-list-carte[data-mode="gallery"] .mc-ul li > * {
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.mc-list-carte[data-mode="gallery"] .mc-ul .mc-icon {
+  top: 0;
+  left: 0;
+  right: 0;
+  width: auto;
+  border: 0;
+  box-shadow: none;
+  height: 7.8em;
+}
+.mc-list-carte[data-mode="gallery"] .mc-ul .mc-icon img {
+  max-height: none;
+  width: 100%;
+}
+.mc-list-carte[data-mode="gallery"] .mc-ul li:hover .mc-icon:before {
+  content: '';
+  position: absolute;
+  top: 0%;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #000;
+  opacity: .1;
+  z-index: 1;
+}
+.mc-list-carte[data-mode="gallery"] .mc-ul .mc-title,
+.mc-list-carte[data-mode="gallery"] .mc-ul .mc-theme {
+  display: block;
+  max-width: 100%;
+}
+
+.mc-list-carte[data-mode="gallery"] .mc-ul .mc-desc {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5em;
+  background-color: #eee;
+  width: 100%;
+  max-height: 4.5em;
+  white-space: normal;
+  padding: 0 .5em;
+  box-sizing: border-box;
+  transition: bottom .2s;
+  overflow: hidden;
+}
+.mc-list-carte[data-mode="gallery"] .mc-ul li:hover .mc-desc {
+  bottom: 0;
+  box-shadow: 0 -.3em #eee, 0 -.4em #ccc;
+}

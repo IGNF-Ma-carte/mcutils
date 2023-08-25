@@ -1,0 +1,138 @@
+.mc-legend-control > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+.mc-legend-control > .title {
+  width: 100%;
+  text-align: right;
+}
+.mc-legend-control a {
+  margin: 0 .5em;
+}
+.mc-legend-control a:before {
+  display: none;
+}
+
+.mc-legend-control h3 {
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+.mc-legend-control > ul {
+  width: calc(50% - 1.5em);
+  border: 1px solid #eee;
+  box-sizing: border-box;
+  max-height: calc(100vh - 15em);
+  overflow: auto;
+  border: 3px solid #7EB9F7;
+  border-width: 0 0 0 3px;
+  min-height: 1em;
+}
+.mc-legend-control > ul:empty {
+  background-color: #eee;
+  color: #aaa;
+  border: 0;
+  font-style: italic;
+}
+.mc-legend-control > ul:empty::before {
+  content: 'Pas de légende...';
+  display: block;
+  padding: 1em;
+  text-align: center;
+}
+.mc-legend-control > ul.symbol:empty::before {
+  content: 'Pas de symboles à afficher...';
+}
+
+
+.mc-legend-control > ul.symbol {
+  border-width: 0 3px 0 0;
+}
+
+.mc-legend-control > .mc-control {
+  width: 3em;
+  text-align: center;
+}
+.mc-legend-control > .mc-control button {
+  min-width: unset;
+  margin: 0;
+  padding: .5em 0 .5em .2em;
+  box-sizing: border-box;
+  width: 2em;
+  filter: grayscale(1);
+  opacity: .5;
+  margin: .25em 0;
+  pointer-events: none;
+}
+.mc-legend-control > .mc-control button.playback {
+  transform: rotate(180deg);
+}
+.mc-legend-control[data-symbol] > .mc-control button.play,
+.mc-legend-control[data-legend] > .mc-control button.playback {
+  filter: unset;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mc-legend-control .mcSymbol span {
+  position: unset;
+  width: 100%;
+}
+.mc-legend-control .mcSymbol canvas {
+  height: 45px;
+}
+.mc-legend-control .mcSymbol.title canvas {
+  width: 1px;
+  height: 45px;
+}
+.mc-legend-control .mcSymbol.title span {
+  font-weight: bold;
+}
+.mc-legend-control .mcSymbol.layer span:before {
+  content: "\ea85";
+  font-family: "font-gis";
+  font-size: 2em;
+  margin: 0 .5em;
+  color: #999;
+  vertical-align: middle;
+}
+
+.ol-collection-list.mcSymbolLib .mcSymbol > textarea {
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 60px;
+  bottom: 0;
+  right: 0;
+  min-height: 45px;
+  max-height: 45px;
+  max-width: calc(100% - 60px);
+  min-width: calc(100% - 60px);
+  z-index: 1;
+  display: none;
+  overflow: hidden;
+  transform: translateY(-50%);
+}
+.ol-collection-list.mcSymbolLib .mcSymbol.title > textarea {
+  left: 0;
+  max-width: 100%;
+  min-width: 100%;
+}
+
+.ol-collection-list.mcSymbolLib .mcSymbol > textarea:focus {
+  display: block;
+}
+
+.ol-ext-dialog.legendConfig .mc-legend-control ul {
+  max-height: calc(100vh - 20em);
+  min-height: 10em;
+}
+
+.ol-ext-dialog.legendConfig .layerLegend {
+  text-align: center;
+  border-top: 1px solid #999;
+  margin-top: .5em;
+  padding-top: .5em;
+}

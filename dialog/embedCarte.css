@@ -1,0 +1,104 @@
+.ol-ext-dialog.mc-embed-map > form {
+  min-width: min(50em, 60%);
+}
+.ol-ext-dialog.mc-embed-map .iframe-container {
+  margin: 0 -.5em;
+  background-color: #333;
+  border: 8px solid transparent;
+  padding: 0 1em;
+  overflow: auto;
+  box-sizing: border-box;
+}
+.ol-ext-dialog.mc-embed-map iframe {
+  border: 0;
+  box-sizing: border-box;
+  background-color: #fff;
+  max-width: 100%;
+  max-height: max(380px, calc(100vh - 32em));
+}
+.ol-ext-dialog.mc-embed-map label input {
+  cursor: pointer;
+}
+.ol-ext-dialog.mc-embed-map label.input-placeholder {
+  user-select: all;
+  display: inline-block;
+  margin: 0;
+  margin-bottom: .5em;
+  width: calc(100% - 3em);
+  font-size: 1em;
+  height: 3em;
+  user-select: none;
+  cursor: pointer;
+}
+.ol-ext-dialog.mc-embed-map label.input-placeholder:after {
+  position: absolute;
+  content: "\f0ea";
+  font-family: FontAwesome;
+  background-color: #3993f3;
+  color: #fff;
+  display: inline-block;
+  width: 3em;
+  height: 3em;
+  line-height: 3em;
+  text-align: center;
+}
+.ol-ext-dialog.mc-embed-map .container {
+  position: relative;
+}
+
+.ol-ext-dialog.mc-embed-map .copy {
+  display: inline-block;
+  position: relative;
+  width: 3em;
+  height: 3em;
+  min-width: auto;
+  box-sizing: border-box;
+  font-size: 1em;
+  line-height: 3em;
+}
+
+.ol-ext-dialog.mc-embed-map input[type="number"] {
+  width: 8em;
+}
+.ol-ext-dialog.mc-embed-map select {
+  padding: .7rem 1.5rem;
+}
+.ol-ext-dialog.mc-embed-map .ol-ext-check {
+  display: inline-block;
+  margin: .5em 0 0;
+}
+
+.ol-ext-dialog.mc-embed-map .position {
+  margin-bottom: .5em;
+}
+.ol-ext-dialog.mc-embed-map .position > div {
+  margin-left: 1em;
+  padding-left: 1em;
+  border-left: 3px solid #3993f3;
+  opacity: .5;
+  pointer-events: none;
+}
+.ol-ext-dialog.mc-embed-map .position.checked > div {
+  opacity: 1;
+  pointer-events: all;
+}
+.ol-ext-dialog.mc-embed-map .position > div input {
+  margin: 0 .5em;
+}
+.ol-ext-dialog.mc-embed-map .position > div .zoom {
+  width: 4em;
+}
+.ol-ext-dialog.mc-embed-map .position.hidden {
+  display: none;
+}
+
+.ol-ext-dialog.mc-embed-map .locate {
+  display: inline-block;
+}
+.ol-ext-dialog.mc-embed-map .CGU {
+  font-style: italic;
+  margin-top: 1em;
+}
+.ol-ext-dialog.mc-embed-map .CGU a {
+  font-style: normal;
+}

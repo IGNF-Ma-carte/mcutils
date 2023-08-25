@@ -1,0 +1,187 @@
+/* Layer switcher */
+.ol-layerswitcher {
+  z-index: 0;
+}
+.ol-control.ol-layerswitcher.mainSwitcher .panel li > div {
+  max-width: calc(100% - 2.7em);
+}
+.ol-control.ol-layerswitcher.mainSwitcher .ol-bar {
+  display: none;
+}
+.ol-control.ol-layerswitcher.mainSwitcher .panel-container {
+  max-height: calc(100% - 5em);
+  border: 0;
+}
+.ol-control.ol-layerswitcher.mainSwitcher .ol-title-bar {
+  display: none;
+}
+.ol-control.ol-layerswitcher.mainSwitcher .ol-scroll {
+  top: 2.5em;
+}
+
+.ol-touch .ol-layerswitcher button {
+  font-size: 2em;
+}
+.ol-layerswitcher .layerup:before {
+  border: 0;
+  height: 2px;
+  background-color: #fff;
+  width: .8em;
+  top: 50%;
+  box-shadow: 0 -5px, 0 5px;
+}
+.ol-layerswitcher .layerup:after {
+  content: none;
+}
+
+/* inview layer */
+[data-switcher-model="inview"] .ol-control.ol-layerswitcher.mainSwitcher .panel li {
+  display: none;
+}
+[data-switcher-model="inview"] .ol-control.ol-layerswitcher.mainSwitcher .panel li[data-inview] {
+  display: block;
+}
+[data-switcher-model="inview"] .ol-control.ol-layerswitcher.mainSwitcher.ol-forceopen .ol-bottom-bar {
+  display: block;
+}
+[data-switcher-model="inview"] .ol-control.ol-layerswitcher.mainSwitcher .ol-bottom-bar button {
+  width: auto;
+  display: block;
+  margin: auto;
+  cursor: pointer;
+  height: 2em;
+  line-height: 2em;
+}
+
+/* dialog */
+.ol-ext-dialog.layer-inview form {
+  width: 60em;
+}
+.ol-ext-dialog.layer-inview h3 {
+  position: relative;
+  padding: 1em;
+  margin: 0 -1em;
+  background-color: rgba(128,128,255,.1);
+  cursor: pointer;
+  border-bottom: 1px solid #999;
+}
+.ol-ext-dialog.layer-inview h3:before {
+  content: "\e903";
+  font-family: font-ign;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: normal;
+  padding: 0 1em;
+  width: 1.5em;
+  text-align: center;
+}
+.ol-ext-dialog.layer-inview [data-expended] h3:before {
+  content: "\e904";
+}
+.ol-ext-dialog.layer-inview ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ol-ext-dialog.layer-inview .fa {
+  transform: scale(1.8);
+  margin: 0 .5em;
+  opacity: .8;
+}
+
+.ol-ext-dialog.layer-inview ul div {
+  max-height: 3em;
+  overflow: hidden;
+  margin-left: 2.5em;
+}
+.ol-ext-dialog.layer-inview .ol-content > ul > li {
+  position: relative;
+  padding: 0 1em;
+}
+.ol-ext-dialog.layer-inview ul ul {
+  margin: 0 -1em;
+  display: none;
+}
+.ol-ext-dialog.layer-inview [data-expended] ul {
+  display: block;
+}
+.ol-ext-dialog.layer-inview ul ul li {
+  position: relative;
+  padding: .5em 1em;
+  background-color: #fff;
+}
+.ol-ext-dialog.layer-inview .ol-ext-check {
+  position: unset;
+}
+.ol-ext-dialog.layer-inview .ol-ext-check span {
+  position: absolute;
+  left: .5em;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.ol-ext-dialog.layer-inview .ol-content h3 {
+  padding-right: 6em;
+}
+.ol-ext-dialog.layer-inview .ol-content li {
+  position: relative;
+}
+.ol-ext-dialog.layer-inview .ol-content li .count {
+  position: absolute;
+  font-size: 1.17em;
+  line-height: 3em;
+  text-align: center;
+  border-radius: 50%;
+  top: 0;
+  right: 2em;
+}
+.ol-ext-dialog.layer-inview .ol-content li.selall {
+  text-align: right;
+}
+.ol-ext-dialog.layer-inview .ol-content li.selall button {
+  border: 0;
+  background: none;
+}
+.ol-ext-dialog.layer-inview .ol-content li.selall button:hover {
+  text-decoration: underline;
+}
+
+
+
+.ol-ext-dialog.layer-inview .ol-content ul ul li:after {
+  content: '';
+  clear: both;
+  display: block;
+}
+.ol-ext-dialog.layer-inview .ol-content ul ul li:hover {
+  /* background-color: rgba(128,128,255,.1); */
+}
+.ol-ext-dialog.layer-inview .ol-content li[data-hidden] {
+  display: none;
+}
+.ol-ext-dialog.layer-inview .ol-content li > label {
+  display: block;
+  padding-left: 2.5em;
+  font-weight: bold;
+}
+.ol-ext-dialog.layer-inview .ol-content li > .img {
+  float: left;
+  display: block;
+  width: 5em;
+  height: 3.5em;
+  background-color: #eee;
+  margin-right: .5em;
+}
+.ol-ext-dialog.layer-inview .ol-content li > .img img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.ol-ext-dialog.layer-inview input[type="search"] {
+  width: 100%;
+  display: block;
+  padding: .25em .5em;
+  font-size: 1.2em;
+  margin-bottom: .5em
+}

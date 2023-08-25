@@ -1,0 +1,13 @@
+body > .ol-notification {
+  position: fixed;
+}
+body .ol-notification > div,
+body .ol-notification > div:hover {
+  bottom: 1em;
+  padding: .5em 1em;
+  border-radius: 2em;
+}
+
+body > .ol-notification a.cancel {
+  margin: 0 0 0 .5em;
+}

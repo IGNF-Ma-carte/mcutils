@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Macarte-utils</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="description" content="Maps" />
+  <meta name="keywords" content="" />
+
+  <link rel="icon" type="image/png" href="./img/logo.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="translucent-black">
+  <link rel="apple-touch-icon" href="./img/logo.png">
+  <link rel="apple-touch-startup-image" href="./img/logo.png">
+
+  <meta name="format-detection" content="telephone=no"> 
+  <meta name="msapplication-tap-highlight" content="no">   
+  
+</head>
+<body data-page="site">
+  <div data-role="content">
+    <label> mode: </label>
+    <select>
+      <option value="list">Liste</option>
+      <option value="gallery">Galerie</option>
+      <option value="mini">Mini</option>
+    </select>
+    <label class="ol-ext-check ol-ext-checkbox"><input type="checkbox"><span></span>hasCheck</label>
+    <br/>
+    <input placeholder="rechercher..." type="search">
+    <br/>
+    <button type="button" class="button button-colored"><i class="fi-map-alt fi-2x"></i> Mes cartes</button>
+    <button type="button" class="button button-colored"><i class="fi-storymap fi-2x"></i> Mes narrations</button>
+    <button type="button" class="button button-colored"><i class="fi-map fi-2x"></i> Les deux</button>
+    <button type="button" class="button button-colored"><i class="fi-save fi-2x"></i> Sauvegarder</button>
+  </div>
+  <script src="./listCarte/index.js"></script>
+</body>
+</html>

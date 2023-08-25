@@ -1,0 +1,190 @@
+Ma carte utilise le [Markdown](https://fr.wikipedia.org/wiki/Markdown) pour formater le texte et le présenter à l'utilisateur.    
+La syntaxe Markdown est très intuitive et est basé sur l'utilisation de balises.
+La syntaxe a été étendue pour permettre des affichages spécifique et la gestion d'attributs.
+
+## Gras et italique
+
+Pour écrire en gras et en italique il suffit d’utiliser les **étoiles**, appelées aussi **astérisques**, une seule pour l'italique et deux pour la gras (trois pour le gras italique). Pour souligner un texte, on utilise deux **tirets bas**. Pour barrer un texte, on utilise deux **tildes**.
+Il est possible d'échapper le caratère \\* avec un \\ ou en utilisant `&#42;`.
+[++ :fa-code:fw: Code ++]
+```md
+un texte en *italique*
+un text en **gras**
+un text en ***gras et italique***
+un text __souligné__
+un text ~~barré~~
+un astérix en gras : **\\***
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+un texte en *italique*
+un text en **gras**
+un text en ***gras et italique***
+un text __souligné__
+un text ~~barré~~
+un astérix en gras : **\\***
+[----]
+
+## Exposants et autre
+
+La syntaxe `^&lpar;texte)` permet de mettre du texte en exposant et `^&lpar;_texte)` pour du texte en indice.
+On utilise trois signes moins ou plus pour afficher une séparation horizontale.
+On peut utiliser la syntaxe **`<kbd>`** pour afficher un caractère clavier.
+
+[++ :fa-code:fw: Code ++]
+```txt
+1^(er) exposant
+formule du glucose (C^(_6)H^(_12)O^(_6))
+-----
+Copier: <kbd Ctrl>+<kbd C>
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+1^(er) exposant
+formule du glucose (C^(_6)H^(_12)O^(_6))
+-----
+Copier: <kbd Ctrl>+<kbd C>
+[----]
+
+## Titres
+
+Pour rédiger un titre avec Markdown, on utilise le **dièse**. 
+Utilisze **`&lt;br&gt;`** pour forcer un saut de ligne.
+[++ :fa-code:fw: Code ++]
+```md
+#  Titre 1
+## Titre 2<br>sur 2 lignes
+###  Titre 3
+#### Titre 4
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+#  Titre 1
+## Titre 2<br>sur 2 lignes
+###  Titre 3
+#### Titre 4
+[----]
+
+## Hyper-liens
+
+Ma carte reconnait les liens et les rend automatiquement cliquable.
+On peut utiliser la syntaxe complète pour nommer un lien :
+`[Nom du lien]&lpar;&#104;ttps://example.com/ titre de lien optionnel)`. 
+On peut aussi créer des liens vers un mail (mailto://) ou un numéro de téléphone (tel://).
+[++ :fa-code:fw: Code ++]
+```md
+Un lien automatique https://geoservice.ign.fr
+Un lien vers [Géoservice](https://geoservice.ign.fr les services de l'IGN)
+Lien vers un mail mailto:toto.dupont@ign.fr
+Envoyer un mail : [Toto](mailto:toto.dupont@ign.fr)
+Téléphone: (tel:0143988000)
+[Appeler la maintenance](tel:+33143988000)
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+Un lien automatique https://geoservice.ign.fr
+Un lien vers [Géoservice](https://geoservice.ign.fr les services de l'IGN)
+Lien vers un mail mailto:toto.dupont@ign.fr
+Envoyer un mail : [Toto](mailto:toto.dupont@ign.fr)
+Téléphone: (tel:0143988000)
+[Appeler la maintenance](tel:+33143988000)
+[----]
+
+### Liens spécifiques
+
+Il est possible de créer des liens pour se déplacer sur une carte avec la syntaxe [Nom du lien](app://moveTo?{lon},{lat},{zoom} titre du lien optionnel) 
+Dans ce cas la dernière carte ouverte se centrera sur les coordonnées en longitude et latiture fournies dans le lien (lon, lat). Si le zoom est fourni, il sera utilisé pour ajuster celui de la carte.
+Il est également possible d'utiliser app://flyTo pour aller à une coordonnée en mode survol.
+[++ :fa-code:fw: Code ++]
+```md
+[Aller à Paris](app://moveTo?2.351828,48.856578,9 Aller à Paris)
+[Voler à Paris](app://flyTo?2.351828,48.856578,9 Aller à Paris)
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+[Aller à Paris](app://moveTo?2.351828,48.856578,9 Aller à Paris)
+[Voler à Paris](app://flyTo?2.351828,48.856578,9 Aller à Paris)
+[----]
+
+Dans une carte narrative en mode étape vous pouvez aller à une étape en utilisant la syntaxe [Nom du lien](app://stepTo?{numero_etape} titre du lien optionnel) 
+[++ :fa-code:fw: Code ++]
+```md
+[Aller à Paris](app://stepTo?5 Aller à l'étape 5)
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+[Aller à Paris](app://stepTo?5 Aller à l'étape 5)
+[----]
+
+## Code
+
+Pour écrire un morceau de code dans un texte, Markdown l’identifie au moyen du caractère **apostrophe inversée**. Trois apostrophes inversées au début et à la fin du bloc permettent une coloration syntaxique selon le langage mis en préfixe.
+[++ :fa-code:fw: Code ++]
+```md
+Un morceau de `code` dans une ligne
+&grave;``javascript
+ for (var i = 0, i<10, i++) {
+  console.log(i);
+ };
+&grave;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+Un morceau de `code` dans une ligne
+```javascript
+for (var i = 0, i<10, i++) {
+  console.log(i);
+};
+```
+[----]
+
+## Alignement
+
+Il est possible d'aligner le texte en ajoutant un `|` en début de ligne puis :
+* à gauche un signe supérieur (`|>`)
+* à droite un signe inférieur (`|<`) 
+* ou au center une tablulation (`|&#8633;`)
+[++ :fa-code:fw: Code ++]
+```md
+|< Aligné à gauche
+|	Aligné au centre
+|> Aligné à droite
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+|< Aligné à gauche
+|	Aligné au centre
+|> Aligné à droite
+[----]
+
+Pour aligner un titre au centre, il faut ajouter une tabulation après le `#` :
+[++ :fa-code:fw: Code ++]
+```md
+###	Titre centré
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+###	Titre centré
+[----]
+
+#### Alignement des images
+
+Il est également possible d'aligner les images par rapport au texte.
+[++ :fa-code:fw: Code ++]
+```md
+Image centrée
+|	![squirrel](https://tinyurl.com/2pfk2s5y x100)
+|<![squirrel](https://tinyurl.com/2pfk2s5y x100)
+|>![squirrel](https://tinyurl.com/2pfk2s5y x100)
+Images alignés à gauche ou à droite 
+avec le texte entre les deux.
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+Image centrée
+|	![squirrel](https://tinyurl.com/2pfk2s5y x100)
+|<![squirrel](https://tinyurl.com/2pfk2s5y x100)
+|>![squirrel](https://tinyurl.com/2pfk2s5y x100)
+Images alignés à gauche ou à droite 
+avec le texte entre les deux.
+[----]

@@ -1,0 +1,24 @@
+.ol-popup > div {
+  padding: .5em 0 .5em .5em;
+}
+.ol-popup .ol-popup-content {
+  margin: 0;
+  padding: 0;
+  padding-right: 8px;
+  padding-bottom: -1px;
+}
+
+.ol-popup.tooltips .os-content {
+  max-width: 15em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.ol-popup .closeBox {
+  z-index: 1;
+}
+
+.os-scrollbar-handle {
+  background: currentColor;
+  opacity: .5;
+}
