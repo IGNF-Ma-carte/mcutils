@@ -49,10 +49,29 @@ function joursFeries(an, alsace){
 // Decode params
 function getParams(data) {
   const lines = data.split('\n');
-  const atts = {}
+  const atts = { open: {}, close: {} }
   lines.forEach(d => {
     const i = d.indexOf(':');
-    atts[d.substr(0,i)] = d.substr(i+1).trim();
+    const k = d.substr(0,i);
+    let val = d.substr(i+1).trim();
+    switch(k) {
+      case 'open':
+      case 'close': {
+        val = val.split(' ');
+        const date = val.shift().split(/\/|-/);
+        date[1] = (date[1] || '0').replace(/^0/, '');
+        date[2] = (date[2] || '0').replace(/^0/, '');
+        val = val.join(' ');
+        if (!atts[k][date[0]]) atts[k][date[0]] = {}
+        if (!atts[k][date[0]][date[1]]) atts[k][date[0]][date[1]] = {}
+        atts[k][date[0]][date[1]][date[2]] = val.trim() || true;
+        break;
+      }
+      default: {
+        atts[k] = val;
+        break;
+      }
+    }
   })
   return atts;
 }
@@ -68,9 +87,32 @@ function prepareCalendar(type, data) {
 
   // Decode dates
   try {
+    // Date attribute
     atts.dates = JSON.parse(atts.dates)
-    ol_ext_element.create('TEXTAREA', { text: JSON.stringify(atts), parent: content })
-  } catch(e) { /* ok */ }
+    ol_ext_element.create('TEXTAREA', { text: JSON.stringify(atts.dates), parent: content })
+  } catch(e) {
+    let dates;
+    if (atts.type==='date-week') {
+      dates = {
+        type: 'date-week',
+        week: {
+          Mon: atts.Mon,
+          Tue: atts.Tue,
+          Wed: atts.Wed,
+          Thu: atts.Thu,
+          Fri: atts.Fri,
+          Sat: atts.Sat,
+          Sun: atts.Sun,
+        }
+      }
+    } else {
+      dates = {
+        type: 'date-year',
+        years: atts.open
+      }
+    }
+    ol_ext_element.create('TEXTAREA', { text: JSON.stringify(dates), parent: content })
+  }
 
   return '<div class="mdCalendar">' + content.innerHTML + '</div>';
 }
@@ -95,18 +137,19 @@ function isCheck(date, dates) {
   return false
 }
 
+// Format date
+const optDate = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+}
+
 /** Create calendar from element
  * @namespace md2html
  * @param {Element} element
  */
 function mdCalendar(element) {
-  // Format date
-  const optDate = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }
   // Format calendars
   element.querySelectorAll('.mdCalendar').forEach(calendar => {
     const txt = calendar.querySelector('textarea')
@@ -116,55 +159,78 @@ function mdCalendar(element) {
       // Mark as done
       txt.remove();
 
-      const dates = atts.dates
-
-      console.log(dates)
-
+      const dates = atts || {};
       const today = new Date()
       const lang = navigator.userLanguage;
 
       // Show calendar
       const content = ol_ext_element.create('DIV', { parent: calendar })
-      // Title
-      ol_ext_element.create('h3', { text: today.toLocaleDateString(lang, { month: 'long' }), parent: content });
-      const header = ol_ext_element.create('DIV', { className: 'mdHeader', parent: content });
-      ['L','M','M','J','V','S','D'].forEach(d => {
-        ol_ext_element.create('DIV', { 
-          className: 'mdTitle', 
-          text: d,
-          parent: header
-        })
-      })
-      // Calendar
-      const oneDay = 1000*60*60*24;
-      // First day of the current month
-      const firstDay = new Date(today.getTime())
-      firstDay.setDate(1)
-      // Start calendar at
-      const startDate = new Date(firstDay.getTime() - oneDay * firstDay.getDay())
-      // Show current month
-      for (let d = 1; d <= 7*7; d++) {
-        const date = new Date(startDate.getTime() + d * oneDay)
-        const day = ol_ext_element.create('DIV', { 
-          className: 'mdDay mdDay'+ date.getDay(), 
-          text: date.getDate(),
-          title: date.toLocaleDateString(lang, optDate), 
-          parent: content 
-        })
-        // Today
-        if (date.getTime() === today.getTime()) day.classList.add('today')
-        // Tomonth
-        if (date.getMonth() === today.getMonth()) day.classList.add('tomonth')
-        // is check ?
-        if (isCheck(date, dates)) day.classList.add('check')
-        // Last day of the week
-        if (!date.getDay()) {
-          if (date.getMonth() > today.getMonth()) break;
-          ol_ext_element.create('BR', { parent: content })
-        }
-      }
+
+      showCalendar(content, dates, today, lang);
     }
   })
+}
+
+function showCalendar(content, dates, yet, lang) {
+  const today = new Date()
+  // Clear
+  content.innerHTML = '';
+  // Title
+  ol_ext_element.create('H3', { text: yet.toLocaleDateString(lang, { month: 'long' }), parent: content });
+  ol_ext_element.create('BUTTON', { 
+    className: 'prev', 
+    click: () => {
+      const next = new Date(yet.getTime() - 31*oneDay)
+      showCalendar(content, dates, next, lang)
+    },
+    parent: content
+  });
+  ol_ext_element.create('BUTTON', { 
+    className: 'next', 
+    click: () => {
+      const next = new Date(yet.getTime() + 31*oneDay)
+      showCalendar(content, dates, next, lang)
+    },
+    parent: content
+  });
+
+  const header = ol_ext_element.create('DIV', { className: 'mdHeader', parent: content });
+  ['L','M','M','J','V','S','D'].forEach(d => {
+    ol_ext_element.create('DIV', { 
+      className: 'mdTitle', 
+      text: d,
+      parent: header
+    })
+  })
+  // Calendar
+  const oneDay = 1000*60*60*24;
+  // First day of the current month
+  const firstDay = new Date(yet.getTime())
+  firstDay.setDate(0)
+  // Start calendar at
+  const startDate = new Date(firstDay.getTime() - oneDay * firstDay.getDay())
+  // Show current month
+  for (let d = 1; d <= 7*7; d++) {
+    const date = new Date(startDate.getTime() + d * oneDay)
+      // Last day of the week
+      if (d !== 1 && date.getDay()===1) {
+        if (date.getMonth() > yet.getMonth()) break;
+        if (date.getYear() > yet.getYear()) break;
+        ol_ext_element.create('BR', { parent: content })
+      }
+    const day = ol_ext_element.create('DIV', { 
+      className: 'mdDay mdDay'+ date.getDay(), 
+      text: date.getDate(),
+      title: date.toLocaleDateString(lang, optDate), 
+      parent: content 
+    })
+    // Today
+    if (date.getTime() === today.getTime()) day.classList.add('today')
+    // Tomonth
+    if (date.getMonth() === yet.getMonth()) day.classList.add('tomonth')
+    // is check ?
+    if (isCheck(date, dates)) day.classList.add('check')
+  }
 }
 
 export { prepareCalendar, joursFeries }

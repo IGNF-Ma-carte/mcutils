@@ -1,3 +1,38 @@
+.md .mdCalendar h3 {
+  text-align: center;
+}
+.md .mdCalendar button {
+  position: absolute;
+  top: 0;
+  border: 0;
+  background: unset;
+  cursor: pointer;
+}
+.md .mdCalendar button.prev {
+  left: 0;
+  padding-left: 0;
+  padding: .2em .5em .2em 0;
+}
+.md .mdCalendar button.next {
+  right: 0;
+  padding: .2em 0 .2em .5em;
+}
+.md .mdCalendar button.prev:before {
+  content: '\f053';
+  font-family: FontAwesome, serif;
+  line-height: 2em;
+}
+.md .mdCalendar button.next:before {
+  content: '\f054';
+  font-family: FontAwesome, serif;
+  line-height: 2em;
+}
+
+.md .mdCalendar > div {
+  position: relative;
+  margin: auto;
+  width: fit-content;
+ }
 .md .mdCalendar .mdTitle,
 .md .mdCalendar .mdDay {
   width: 1em;

@@ -15,6 +15,10 @@ const page = charte.getAppElement();
 const md = `## titre ^([:fi-info:](# une info))
 !(https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png 200)
 
+\`\`\`calendar
+dates: { "type": "date-year", "years": { "2023": { "8": { "29": true } } } }
+\`\`\`
+
 ##	Un graphique
 \`\`\`chart pie x300 center
 title: Titre
