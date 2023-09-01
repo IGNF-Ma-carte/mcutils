@@ -35,7 +35,7 @@ Legend.prototype.read = function(legend, options, append, layers) {
   if (!options) return;
   if (!append) {
     legend.getItems().clear();
-    legend.setTitle(options.title || '');
+    legend.setTitle(options.title || options.legendtitle || '');
     // Size / lineheight
     legend.set('lineHeight', options.lineHeight)
     if (options.type) legend.set('type', options.type)
@@ -84,14 +84,13 @@ Legend.prototype.read = function(legend, options, append, layers) {
  * @return {Object}
  */
 Legend.prototype.write = function(legend) {
-  const options = {
-    legendtitle: legend.getTitle(),
-    lineHeight: legend.get('lineHeight'),
-    legendWidth: 300,
-    legendParam: { width: 300, lineHeight: legend.get('lineHeight') }
-    // legendPos: "bottom-left"
-  };
+  const options = {};
   
+  options.legendtitle = legend.getTitle();
+  options.lineHeight = legend.get('lineHeight');
+  options.legendWidth = 300;
+  options.legendParam = { width: 300, lineHeight: options.lineHeight }
+  // options.legendPos = "bottom-left"
   if (legend.get('type')) options.type = legend.get('type');
 
   // Get legend items

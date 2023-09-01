@@ -217,7 +217,7 @@ function addDrawTools(carte, tools, layer) {
     }))
   }
   
-  // Load button
+  // Download button
   if (!tools || tools.indexOf('Export') >= 0) {
     ctrl.getSubBar().addControl(new Button({
       title: 'Charger le croquis...',
@@ -232,6 +232,35 @@ function addDrawTools(carte, tools, layer) {
           const blob = new Blob([data], {type: "text/plain;charset=utf-8"});
           FileSaver.saveAs(blob, 'carte.geojson');
         }
+      }
+    }))
+  }
+
+  // Upload button
+  if (!tools || tools.indexOf('Import') >= 0) {
+    ctrl.getSubBar().addControl(new Button({
+      title: 'Importer un croquis...',
+      html: '<i class="fa fa-upload"></i>',
+      handleClick: () => {
+        dialogImportFile(e => {
+          if (e.features.length) {
+            drawLayer.getSource().addFeatures(e.features);
+            notification.cancel(
+              e.features.length + ' objects chargés',
+              () => {
+                carte.getMap().getView().fit(drawLayer.getSource().getExtent());
+                if (carte.getMap().getView().getZoom() > 16) {
+                  carte.getMap().getView().setZoom(16)
+                } else {
+                  carte.getMap().getView().setZoom(carte.getMap().getView().getZoom() - 0.2)
+                }
+              }, '<i class="fi-fullscreen-alt"></i> center sur les données')
+          } else {
+            notification.show('Impossible de charger le fichier...')
+          }
+        }, {
+          extractStyles: true
+        })
       }
     }))
   }
@@ -305,7 +334,11 @@ function addOptionImport(carte) {
             e.features.length + ' objects chargés',
             () => {
               carte.getMap().getView().fit(layer.getSource().getExtent());
-              if (carte.getMap().getView().getZoom() > 16) carte.getMap().getView().setZoom(16)
+              if (carte.getMap().getView().getZoom() > 16) {
+                carte.getMap().getView().setZoom(16)
+              } else {
+                carte.getMap().getView().setZoom(carte.getMap().getView().getZoom() - 0.2)
+              }
             }, '<i class="fi-fullscreen-alt"></i> center sur les données')
         } else {
           notification.show('Impossible de charger le fichier...')

@@ -324,7 +324,11 @@ md2html.doData = function(md, data) {
       md = md.replace(new RegExp('URL\\[%'+i+'%\\]','g'), d);
     } else if (typeof(param) === 'object') {
       // Objects
-      param = JSON.stringify(param)
+      try {
+        param = JSON.stringify(param)
+      } catch(e) {
+        param = '{}'
+      }
     }
     md = md.replace(new RegExp('%' + this.doSecure(i) + '%','g'), param);
   }
@@ -679,8 +683,6 @@ md2html.text = function(md, data, escapeHTML) {
   element.innerHTML = md2html(md, data).replace(/<\//g,' </').replace(/<br ?\/>/ig,' <br/>');
   // Remove widgets (charts)
   element.querySelectorAll('.md-chart').forEach(d => d.remove());
-  // Remove calendar
-  element.querySelectorAll('.mdCalendar').forEach(d => d.remove());
   // Return text
   if (escapeHTML) {
     return element.innerText.replace(/</g, '&lt');

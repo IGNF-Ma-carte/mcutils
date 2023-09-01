@@ -50,7 +50,10 @@ function getLayerSwitcher() {
   layerSwitcher.set('selection', false);
   // Inview layers
   layerSwitcher.on('drawlist', e => {
-    if (e.layer.get('inview') || e.layer.getVisible()) e.li.dataset.inview = '';
+    if (e.layer.get('inview') || e.layer.getVisible()) {
+      if (!e.layer.get('inview')) e.layer.set('inview', true)
+      e.li.dataset.inview = '';
+    }
   })
   // Add layers inview
   ol_ext_element.create('BUTTON', {
