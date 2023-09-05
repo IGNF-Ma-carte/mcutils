@@ -582,4 +582,106 @@ MacarteAPI.prototype.getNotifications =  function(callback) {
   }, false);
 }
 
+/** Get my organization list
+ * @param {function} [options.callback] callback function
+ */
+MacarteAPI.prototype.getOrganizations =  function(callback) {
+  this._send('GET', _apiURL+'organizations/me', {}, (r) => {
+    callback(r);
+  });
+}
+
+/** Get my organization list
+ * @param {string} id organization id
+ * @param {function} [options.callback] callback function
+ */
+MacarteAPI.prototype.getOrganization =  function(id, callback) {
+  this._send('GET', _apiURL+'organizations/' + id, {}, resp => {
+    if (typeof(callback) === 'function') callback(resp);
+  });
+}
+
+/** Set organization attribute
+ * @param {string} id organization id
+ * @param {string} attr attribute to change (name, presentation, image)
+ * @param {string} value attribute values
+ * @param {function} [options.callback] callback function
+ */
+MacarteAPI.prototype.setOrganization =  function(id, attr, value, callback) {
+  this._send('PUT', _apiURL+'organizations/' + id +'/' + attr, { value: value }, resp => {
+    if (typeof(callback) === 'function') callback(resp);
+  });
+}
+
+/** Create a new organization
+ * @param {Object} options
+ *  @param {string} options.name organisation name
+ *  @param {string} [options.presentation] organization description
+ *  @param {string} [options.image] image url for the organisation
+ * @param {function} [options.callback] callback function
+ */
+MacarteAPI.prototype.newOrganization =  function(options, callback) {
+  const opt = {
+    name: options.name,
+    presentation: options.presentation,
+    image: options.image
+  }
+  this._send('POST', _apiURL + 'organizations', opt, resp => {
+    if (typeof(callback) === 'function') callback(resp);
+  })
+}
+
+/** Create a new organization
+ * @param {Object} options
+ *  @param {string} options.name organisation name
+ *  @param {string} [options.presentation] organization description
+ *  @param {string} [options.image] image url for the organisation
+ * @param {function} [options.callback] callback function
+ */
+MacarteAPI.prototype.deleteOrganization =  function(id, callback) {
+  this._send('DELETE', _apiURL + 'organizations/' + id, {}, resp => {
+    if (typeof(callback) === 'function') callback(resp);
+  })
+}
+
+/** Create a new organization
+ * @param {string} id organization id
+ * @param {string} userId user id
+ * @param {string} role user role (editor, owner, member)
+ * @param {function} [options.callback] callback function
+ */
+MacarteAPI.prototype.addOrganizationMember =  function(id, userId, role, callback) {
+  this._send('POST', _apiURL + 'organizations/' + id + '/members/' + userId, {
+    role: role
+  }, resp => {
+    if (typeof(callback) === 'function') callback(resp);
+  })
+}
+
+/** Create a new organization
+ * @param {string} id organization id
+ * @param {string} userId user id
+ * @param {string} role user role (editor, owner, member)
+ * @param {function} [options.callback] callback function
+ */
+MacarteAPI.prototype.setOrganizationMember =  function(id, userId, role, callback) {
+  this._send('PUT', _apiURL + 'organizations/' + id + '/members/' + userId + '/role', {
+    value: role
+  }, resp => {
+    if (typeof(callback) === 'function') callback(resp);
+  })
+}
+
+/** Create a new organization
+ * @param {string} id organization id
+ * @param {string} userId user id
+ * @param {string} role user role (editor, owner, member)
+ * @param {function} [options.callback] callback function
+ */
+MacarteAPI.prototype.removeOrganizationMember =  function(id, userId, callback) {
+  this._send('DELETE', _apiURL + 'organizations/' + id + '/members/' + userId, {}, resp => {
+    if (typeof(callback) === 'function') callback(resp);
+  })
+}
+
 export default MacarteAPI
