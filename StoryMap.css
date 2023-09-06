@@ -283,6 +283,14 @@
   font-weight: bold;
   margin: 0 -.5em;
 }
+
+[data-role="storymap"][data-model="etape"][data-no-step] .volet .steps {
+  display: none;
+}
+[data-role="storymap"][data-model="etape"][data-no-step] .volet .md.content {
+  top: 0;
+}
+
 /* show page number? */
 [data-role="storymap"] .volet .steps span.step {
   width: 1.5em;

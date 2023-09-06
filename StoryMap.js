@@ -226,7 +226,12 @@ class StoryMap extends ol_Object {
 
     // Set step on arrow left/right
     document.addEventListener('keyup', (e) => {
-        if (!this.get('freezeStep') && this.get('model') === 'etape' && !/INPUT|TEXTAREA/.test(e.target.tagName)) {
+      if (
+        !this.get('noStep') 
+        && !this.get('freezeStep') 
+        && this.get('model') === 'etape' 
+        && !/INPUT|TEXTAREA/.test(e.target.tagName)
+      ) {
         switch (e.code) {
           case 'ArrowRight':
           case 'ArrowDown': {
@@ -968,6 +973,11 @@ StoryMap.prototype.setModel = function(model) {
     this.target.dataset.volet = this.get('voletPosition') || 'right';
   } else {
     this.target.dataset.volet = 'none';
+  }
+  if (this.get('noStep')) {
+    this.target.dataset.noStep = '';
+  } else {
+    delete this.target.dataset.noStep;
   }
   // Remove old controls / add new
   if (this.cartes[1]) {

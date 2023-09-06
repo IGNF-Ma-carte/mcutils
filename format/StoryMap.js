@@ -33,6 +33,7 @@ StoryMap.prototype.read = function(story, options) {
   }
   console.log('V4', options)
 
+  story.set('noStep', options.noStep);
   story.setModel(options.type);
   story.setTitle(options.param);
   story.showTitle(options.param.showTitle);
@@ -176,6 +177,7 @@ StoryMap.prototype.write = function(story) {
   }
   options.etapes.sort = Object.keys(options.etapes);
   options.etapes.anim = !!story.get('animStep');
+  if (story.get('model')==='etape') options.noStep = !!this.get('noStep');
 
   // Bulles
   options.bulle = story.get('popup');
