@@ -399,6 +399,7 @@ MacarteAPI.prototype.getMapFile =  function(id, success) {
  *  @param {string} carte.type
  *  @param {string} carte.title
  *  @param {string} carte.description
+ *  @param {string} carte.organization_id
  *  @param {number} carte.theme_id
  *  @param {string} carte.premium 'default' or 'edugeo'
  *  @param {boolean} carte.active=true
@@ -652,7 +653,7 @@ MacarteAPI.prototype.deleteOrganization =  function(id, callback) {
  */
 MacarteAPI.prototype.addOrganizationMember =  function(id, userId, role, callback) {
   this._send('POST', _apiURL + 'organizations/' + id + '/members/' + userId, {
-    role: role
+    role: role || 'member'
   }, resp => {
     if (typeof(callback) === 'function') callback(resp);
   })

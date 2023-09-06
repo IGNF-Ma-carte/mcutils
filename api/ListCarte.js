@@ -10,6 +10,7 @@ import md2html from '../md/md2html';
 import urls, { getMediaURL } from './serviceURL'
 import _T from '../i18n/i18n'
 import { getThemeID } from "../format/theme";
+import UserInput from "./UserInput";
 
 /** Control to display a list of Cartes
  */
@@ -155,6 +156,7 @@ class ListCarte extends ListTable {
     });
     this._filters.theme = ol_ext_element.create('UL', { className: 'theme', parent: filter });
 
+    // Auteurs
     ol_ext_element.create('H2', { 
       className: 'author selected', 
       html: 'Auteurs', 
@@ -163,25 +165,24 @@ class ListCarte extends ListTable {
       },
       parent: filter
     });
-    const user = ol_ext_element.create('DIV', { className: 'author', parent: filter });
-    const searchAut = ol_ext_element.create('INPUT', { 
-      type: 'text', 
-      className: 'author', 
-      placeholder: 'chercher un auteur...',
-      parent: user 
-    });
-    searchAut.addEventListener('keyup', () => {
-      this.autocompleteAuthor(searchAut.value, autolist);
-    });
-    searchAut.addEventListener('focus', () => {
-      autolist.style.display = 'block';
+    const user = new UserInput(api, { target: filter });
+    user.on('select', u => {
+      this.removeFilter('user')
+      this.setFilter('user', u.public_name);
+      this.showPage();
     })
-    searchAut.addEventListener('focusout', () => {
-      setTimeout(() => autolist.style.display = 'none', 200);
-    })
-    const autolist = ol_ext_element.create('UL', { className: 'autocomplete', parent: user });
-    this._authorList = ol_ext_element.create('DIV', { parent: user });
-    this._filters.user = ol_ext_element.create('UL', { className: 'author', parent: user });
+    this._filters.user = ol_ext_element.create('UL', { className: 'author', parent: user.element });
+
+    // Organisations
+    ol_ext_element.create('H2', { 
+      className: 'organization selected', 
+      html: 'Organisations', 
+      click: (e) => {
+        e.target.classList.toggle('selected')
+      },
+      parent: filter
+    });
+    this._filters.organization = ol_ext_element.create('UL', { className: 'organization', parent: filter });
 
     // Add filters
     const filters = {
@@ -210,34 +211,6 @@ class ListCarte extends ListTable {
     }
   }
 }
-
-/** Autocomplete author list
- * @param {string} value
- */
-ListCarte.prototype.autocompleteAuthor = function(value, autolist) {
-  if (autocompleteTout) clearTimeout(autocompleteTout);
-  autocompleteTout = setTimeout(() => {
-    this.api.searchUsers({
-      public_name: value
-    }, (users) => {
-      autolist.innerHTML = '';
-      if (users && users.forEach) {
-        users.forEach(u => {
-          ol_ext_element.create('LI', {
-            html: u,
-            click: () => {
-              this.removeFilter('user')
-              this.setFilter('user', u);
-              this.showPage();
-            },
-            parent: autolist
-          })
-        })
-      }
-    })
-  }, 500);
-};
-let autocompleteTout;
 
 /** Show the map list
  * @param {element} li list element
@@ -425,7 +398,7 @@ ListCarte.prototype.updatePermalink = function() {
     search.split('&').map(s => s.split('=')).forEach(s => perma[s[0]] = s[1]);
   }
   // Filters
-  ['theme', 'user', 'type', 'premium', 'sort', 'query'].forEach(q => {
+  ['theme', 'user', 'organization', 'type', 'premium', 'share', 'sort', 'query'].forEach(q => {
     if (this.get(q)) perma[q] = encodeURIComponent(this.get(q));
     else delete perma[q];
   })
@@ -455,7 +428,7 @@ ListCarte.prototype.getPermalink = function() {
   if (search) {
     search.split('&').map(s => s.split('=')).forEach(s => perma[s[0]] = decodeURIComponent(s[1]));
   }
-  ['theme', 'user', 'type', 'premium', 'sort'].forEach(q => {
+  ['theme', 'user', 'organization', 'share', 'type', 'premium', 'sort'].forEach(q => {
     if (perma[q]) this.setFilter(q, perma[q], q==='theme' ? 'fi-theme-' + getThemeID(perma[q]) : '');
   });
   if (perma.filter==='off') this.element.classList.remove('mc-filter')
@@ -472,15 +445,17 @@ const attributesStr = {
   true: 'oui',
   false: 'non',
   private: 'privée',
+  public: 'public',
   macarte: 'carte',
   storymap: 'narration',
 }
 /** Get attribute value as string (translated)
  * @param string} filter
  * @param {*} value
+ * @param {string} valdef
  * @return {string}
  */
-ListCarte.prototype.getStrAttributeValue = function(filter, value) {
+ListCarte.prototype.getStrAttributeValue = function(filter, value, valdef) {
   switch (filter) {
     case 'active': {
       return value ? 'active' : 'inactive'
@@ -489,7 +464,7 @@ ListCarte.prototype.getStrAttributeValue = function(filter, value) {
       return value ? 'valide' : 'invalide'
     }
     default: {
-      return attributesStr[value] || value || 'inconnu'
+      return attributesStr[value] || value || valdef || 'inconnu'
     }
   }
 }
@@ -505,6 +480,7 @@ ListCarte.prototype.showPage = function(page) {
     context: this.get('context'),
     offset: (page * this.get('size')) || 0,
     theme: this.get('theme') || '',
+    organization: this.get('organization') || '',
     limit: this.get('size'),
     user: this.get('user') || '',
     type: this.get('type') || '',
@@ -519,6 +495,7 @@ ListCarte.prototype.showPage = function(page) {
       if (this._filters) {
         this.element.querySelector('.mapCount').innerHTML = maps.count + ' carte' + (maps.count > 1 ? 's':'');
         this._filters.theme.innerHTML = '';
+        // Themes
         maps.themes.forEach(th => {
           const icon = getThemeID(th.theme)
           const li = ol_ext_element.create('LI', { 
@@ -534,26 +511,31 @@ ListCarte.prototype.showPage = function(page) {
           ol_ext_element.create('SPAN', { html: th.theme === 'undefined' ? 'inconnu' : th.theme, parent: li });
         });
         // For each filters
-        ['user', 'type', 'share', 'active', 'valid', 'premium'].forEach(attr => {
+        ['user', 'organization', 'type', 'share', 'active', 'valid', 'premium'].forEach(attr => {
           const as = (attr==='valid' ? 'valides' : attr + 's');
           // Reset filter html
           this._filters[attr].innerHTML = '';
           if (!maps[as]) return;
           // Show filters
-          maps[as].forEach(map => {
+          maps[as].forEach(filt => {
             // Add filter list item
             const li = ol_ext_element.create('LI', { 
               click: () => {
-                if (this.setFilter(attr, map[attr])) {
+                let val = filt[attr];
+                if (as==='organizations') {
+                  val = filt.public_id;
+                  if (!val) return;
+                }
+                if (this.setFilter(attr, val)) {
                   this.showPage();
                 }
               },
               parent: this._filters[attr] 
             });
             // Counter
-            ol_ext_element.create('SPAN', { className: 'count', html: map.count, parent: li });
+            ol_ext_element.create('SPAN', { className: 'count', html: filt.count, parent: li });
             // Show in list
-            ol_ext_element.create('SPAN', { html: this.getStrAttributeValue(attr, map[attr]), parent: li });
+            ol_ext_element.create('SPAN', { html: this.getStrAttributeValue(attr, filt[attr], as==='organizations' ? '-' : ''), parent: li });
           })
         })
       }

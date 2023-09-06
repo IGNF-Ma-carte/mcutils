@@ -411,6 +411,10 @@
 .mc-list .filter-user:before {
   content: '\e91a';
 }
+.mc-list .filters h2.organization:before,
+.mc-list .filter-organization:before {
+  content: '\ea31';
+}
 .mc-list .filters h2.type:before,
 .mc-list .filter-type:before {
   content: '\e915';
@@ -437,14 +441,6 @@
 .mc-list.mc-atlas .share,
 .mc-list.mc-profile .author {
   display: none;
-}
-
-.mc-list .author .autocomplete {
-  position: absolute;
-  background-color: #fff;
-  box-shadow: 1px 1px 3px #000;
-  width: 20em;
-  z-index: 1;
 }
 
 .fi-theme-undefined:before {

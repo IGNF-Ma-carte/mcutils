@@ -3,25 +3,36 @@ import api from '../../api/api'
 import charte from '../../charte/macarte'
 import dialog from '../../dialog/dialog';
 import md2html from '../../md/md2html';
+import UserInput from '../../api/UserInput'
 
 import './index.css'
 
 charte.setApp('api', 'Organizations');
 
+// Organization list
 const list = ol_ext_element.create('UL', {
   parent: charte.getAppElement().querySelector('.organizations')
 })
 
-import UserInput from '../../api/UserInput'
 
 function addUser(orga) {
   dialog.show({
     title: 'Ajouter un membre',
-    content: ' '
+    content: '<input type="text" class="userId" />',
+    buttons: { ok: 'ok', cancel: 'annuler'},
+    onButton: (b, inputs) => {
+      if (b==='ok') {
+        dialog.showWait('ajout...')
+        api.addOrganizationMember(orga.organization_id, inputs.userId.value, 'member', () => {
+          showOrga(orga);
+        });
+      }
+    }
   })
-  new UserInput(api, {
-    parent: dialog.getContentElement()
+  const user = new UserInput(api, {
+    target: dialog.getContentElement()
   })
+  user.on('select', console.log)
 }
 
 function showList() {
@@ -33,66 +44,68 @@ function showList() {
         text: o.organization_name + ' (' + o.user_role + ')',
         click: () => {
           dialog.showWait('Organisation ' + o.organization_name + '...')
-          function showOrga()  {
-            api.getOrganization(o.organization_id, orga => {
-              dialog.show({
-                title: orga.name,
-                content: md2html(orga.presentation),
-                buttons: { delete: 'Supprimer', addUser: 'Ajouter un membre', cancel: 'annuler' },
-                onButton: b => {
-                  if (b === 'delete') {
-                    dialog.showWait('Suppression');
-                    api.deleteOrganization(o.organization_id, () => {
-                      dialog.hide();
-                      showList();
-                    })
-                  }
-                  if (b === 'addUser') {
-                    addUser(orga)
-                  }
-                }
-              })
-              const ul = ol_ext_element.create('UL', {
-                parent: dialog.getContentElement()
-              })
-              orga.members.forEach(user => {
-                const li = ol_ext_element.create('LI', {
-                  html: ol_ext_element.create('SPAN', { text: user.public_name }),
-                  parent: ul
-                })
-                // Promote
-                const sel = ol_ext_element.create('SELECT', {
-                  on: { change: () => {
-                    dialog.showWait('modification...')
-                    api.setOrganizationMember(orga.public_id, user.public_id, sel.value, showOrga)
-                  }},
-                  parent: li 
-                });
-                ['member', 'editor', 'owner'].forEach(role => {
-                  const opt = ol_ext_element.create('OPTION', {
-                    text: role,
-                    parent: sel
-                  })
-                  if (role === user.role) opt.selected = true
-                })
-                // Remove user
-                ol_ext_element.create('I', {
-                  className: 'fi-delete button-colored',
-                  click: () => {
-                    api.removeOrganizationMember(orga.public_id, user.public_id, showOrga)
-                  },
-                  parent: li
-                });
-
-              })
-            })
-          }
-          showOrga();
+          showOrga(o);
         },
         parent: list
       })
-      dialog.hide();
     });
+    dialog.hide();
+  })
+}
+
+function showOrga(o)  {
+  api.getOrganization(o.organization_id, orga => {
+    dialog.show({
+      title: orga.name,
+      content: md2html(orga.presentation),
+      buttons: { delete: 'Supprimer', addUser: 'Ajouter un membre', cancel: 'annuler' },
+      onButton: b => {
+        if (b === 'delete') {
+          dialog.showWait('Suppression');
+          api.deleteOrganization(o.organization_id, () => {
+            dialog.hide();
+            showList();
+          })
+        }
+        if (b === 'addUser') {
+          addUser(o)
+        }
+      }
+    })
+    const ul = ol_ext_element.create('UL', {
+      parent: dialog.getContentElement()
+    })
+    orga.members.forEach(user => {
+      const li = ol_ext_element.create('LI', {
+        html: ol_ext_element.create('SPAN', { text: user.public_name }),
+        parent: ul
+      })
+      // Promote
+      const sel = ol_ext_element.create('SELECT', {
+        on: { change: () => {
+          dialog.showWait('modification...')
+          api.setOrganizationMember(orga.public_id, user.public_id, sel.value, () => showOrga(o))
+        }},
+        parent: li 
+      });
+      ['member', 'editor', 'owner'].forEach(role => {
+        const opt = ol_ext_element.create('OPTION', {
+          text: role,
+          parent: sel
+        })
+        if (role === user.role) opt.selected = true
+      })
+      // Remove user
+      ol_ext_element.create('I', {
+        className: 'fi-delete button-colored',
+        click: () => {
+          dialog.showWait('suppression...')
+          api.removeOrganizationMember(orga.public_id, user.public_id, () => showOrga(o))
+        },
+        parent: li
+      });
+
+    })
   })
 }
 

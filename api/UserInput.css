@@ -1,0 +1,25 @@
+.author-list .autocomplete {
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 1px 1px 3px #000;
+  width: 20em;
+  z-index: 1;
+}
+.author-list input.author {
+  margin-bottom: 0!important;
+}
+.author-list ul {
+  margin: 0;
+  padding: 0;
+  cursor: default;
+}
+.author-list ul li {
+  padding: 0.5em 1em;
+  border: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.author-list li:hover {
+  background-color: #eee;
+}
