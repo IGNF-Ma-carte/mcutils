@@ -102,11 +102,10 @@ function embedCarte(options) {
       noZoom: inputs.nozoom.checked,
       position: pos
     })
-    inputs.url.value = '<iframe src="' 
-      + carteURL
-      + '"'
+    inputs.url.value = '<iframe src="' + carteURL + '"'
       + ' width="' + inputs.width.value + inputs.wunit.value +'"'
       + ' height="' + inputs.height.value + inputs.hunit.value +'"'
+      + ' allow="geolocation clipboard-read; clipboard-write"'
       + '></iframe>';
     // Update iframe
     if (iframe.src !== carteURL) {
