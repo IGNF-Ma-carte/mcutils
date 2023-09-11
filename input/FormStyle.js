@@ -405,6 +405,20 @@ FormStyle.prototype._initFormPointText = function(element) {
   })
   this.setDispatch('textBaseline');
 
+  // textFillColor
+  this._inputs.textBgFill = new ColorInput({
+    input: element.querySelector('[data-attr="textBgFill"] input'),
+    position: 'fixed'
+  })
+  this.setDispatch('textBgFill', true);
+  
+  // textBgStroke
+  this._inputs.textBgStroke = new ColorInput({
+    input: element.querySelector('[data-attr="textBgStroke"] input'),
+    position: 'fixed'
+  })
+  this.setDispatch('textBgStroke', true);
+  
   // textPlacement
   this._inputs.textPlacement = element.querySelector('[data-attr="textPlacement"] input');
   this._inputs.textPlacement.addEventListener('change', () => {

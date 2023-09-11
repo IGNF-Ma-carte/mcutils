@@ -110,8 +110,10 @@ function getStyleId(s, clustered) {
     shadow: 'shad:'+s.poointRadius,
     arrow: 'arrow:'+s.strokeWidth+'-'+s.strokeArrow+'-'+s.strokeColor+'-',
     text: 'text:'+s.pointRadius+'-'+s.textColor+'-'+s.textStyle+'-'+s.textSize+'-'+s.textFont
-			+'-'+s.textOutlineColor+'-'+s.textOutlineWidth+'-'
-			+'-'+s.textAlign+'-'+s.textBaseline+'-'+s.textPlacement+'-'+s.textOverflow+'-',
+			+'-'+s.textOutlineColor+'-'+s.textOutlineWidth
+			+'-'+s.textAlign+'-'+s.textBaseline
+      +'-'+s.textBgFill+'-'+s.textBgStroke+'-'+s.textBgStrokeWidth
+      +'-'+s.textPlacement+'-'+s.textOverflow,
    };
 }
 
@@ -428,15 +430,21 @@ function getStyleLabel(s) {
     }
   }
   // options
+  const hasBackground = s.textBgFill !=='rgba(0, 0, 0, 0)'; 
+  const hasBackBorder = s.textBgStroke !=='rgba(0, 0, 0, 0)'; 
+  console.log(hasBackground, hasBackBorder)
   const options = {
     font: s.textStyle + ' ' + s.textSize + 'px ' + s.textFont,
     fill: new ol_style_Fill({color: s.textColor}),
-    stroke: new ol_style_Stroke({color: s.textOutlineColor, width: s.textOutlineWidth}),
+    stroke: !hasBackground ? new ol_style_Stroke({color: s.textOutlineColor, width: s.textOutlineWidth}) : undefined,
     textAlign: s.textAlign,
     maxAngle: 3,
     textBaseline: s.textBaseline,
     placement: s.textPlacement,
     overflow: s.textOverflow,
+    backgroundFill: hasBackground ? new ol_style_Fill({color: s.textBgFill}) : undefined,
+    backgroundStroke: hasBackBorder ? new ol_style_Stroke({color: s.textBgStroke, width: s.textBgStrokeWidth}) : undefined,
+    padding: hasBackground || hasBackBorder ? [4,2,2,4] : 0,
   }
   if (s.textPlacement==='point') {
     options.offsetX = (s.textAlign=='left') ? s.pointRadius : (s.textAlign=='right') ? -s.pointRadius : 0;
