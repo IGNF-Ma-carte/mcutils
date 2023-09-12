@@ -303,6 +303,7 @@ function getImage(id, s, f, ghost, label) {
       }),
       declutterMode: 'none'
     });
+    img.declutterMode_ = 'none';
     // Check cors
     const internalImg = img.getPhoto();
     internalImg.addEventListener('error', () => {
