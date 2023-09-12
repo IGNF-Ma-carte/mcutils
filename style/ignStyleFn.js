@@ -432,7 +432,7 @@ function getStyleLabel(s) {
   // options
   const hasBackground = s.textBgFill !=='rgba(0, 0, 0, 0)'; 
   const hasBackBorder = s.textBgStroke !=='rgba(0, 0, 0, 0)'; 
-  console.log(hasBackground, hasBackBorder)
+  const padding = hasBackground || hasBackBorder ? [4,2,2,4] : [0,0,0,0]
   const options = {
     font: s.textStyle + ' ' + s.textSize + 'px ' + s.textFont,
     fill: new ol_style_Fill({color: s.textColor}),
@@ -444,11 +444,11 @@ function getStyleLabel(s) {
     overflow: s.textOverflow,
     backgroundFill: hasBackground ? new ol_style_Fill({color: s.textBgFill}) : undefined,
     backgroundStroke: hasBackBorder ? new ol_style_Stroke({color: s.textBgStroke, width: s.textBgStrokeWidth}) : undefined,
-    padding: hasBackground || hasBackBorder ? [4,2,2,4] : 0,
+    padding: padding,
   }
   if (s.textPlacement==='point') {
-    options.offsetX = (s.textAlign=='left') ? s.pointRadius : (s.textAlign=='right') ? -s.pointRadius : 0;
-    options.offsetY = /^top|^hanging/.test(s.textBaseline) ? s.pointRadius : /^bottom|^alphabetic/.test(s.textBaseline) ? -s.pointRadius : 0;
+    options.offsetX = (s.textAlign=='left') ? s.pointRadius + padding[3] : (s.textAlign=='right') ? - s.pointRadius - padding[1] : 0;
+    options.offsetY = /^top|^hanging/.test(s.textBaseline) ? s.pointRadius + padding[0] : /^bottom|^alphabetic/.test(s.textBaseline) ? - s.pointRadius - padding[2] : 0;
   }
   // Style
   return new ol_style_Style({
