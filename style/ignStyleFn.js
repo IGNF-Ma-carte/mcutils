@@ -19,6 +19,9 @@ import ol_style_Shadow from 'ol-ext/style/Shadow'
 import style2IgnStyle from './style2IgnStyle'
 import serviceURL from '../api/serviceURL'
 
+import SelectBase from 'ol-ext/control/SelectBase'
+import md2html from '../md/md2html' 
+
 import { ignStyleDef, defaultIgnStyle } from './ignStyle'
 
 /** @namespace ignStyle
@@ -216,6 +219,7 @@ function clusterImage(options) {
     fill: new ol_style_Fill({
       color: 'rgba('+color.join(',')+',1)',
     }),
+    declutterMode: 'none'
   });
 }
 
@@ -234,12 +238,12 @@ function getClusterStyle(cluster, optId, clusterColor, clusterDash, clusterTextC
   if (!style) {
     style = _cacheStyle[styleid] = new ol_style_Style({
       image: clusterImage({ size: size, color: clusterColor, dash: clusterDash }),
-        text: new ol_style_Text({
-          text: size.toString(),
-            fill: new ol_style_Fill({
-              color: clusterTextColor,
-            }),
-        }),
+      text: new ol_style_Text({
+        text: size.toString(),
+          fill: new ol_style_Fill({
+            color: clusterTextColor,
+          }),
+      }),
     });
   }
   return [style];
@@ -297,6 +301,7 @@ function getImage(id, s, f, ghost, label) {
         width: width,
         color: s.pointFrame ? s.pointColor : 'transparent',
       }),
+      declutterMode: 'none'
     });
     // Check cors
     const internalImg = img.getPhoto();
@@ -316,7 +321,8 @@ function getImage(id, s, f, ghost, label) {
         stroke: new ol_style_Stroke({
           color: 'rgba(255,255,255,1)',
           width: 1.5,
-        })
+        }),
+        declutterMode: 'none',
       });
   } else {
     const fillColor = ol_color_asArray(s.pointGlyph ? s.pointColor : s.symbolColor);
@@ -337,7 +343,10 @@ function getImage(id, s, f, ghost, label) {
         color: s.pointStrokeWidth ? s.pointStrokeColor : 'transparent',
         width: Math.min(s.pointStrokeWidth, s.pointRadius/2),
       }),
+      declutterMode: 'none',
     });
+    // BUG missing declutter mode
+    img.declutterMode_ = 'none'
   }
   return img
 }
@@ -382,13 +391,17 @@ function getClusterGeom(f) {
  * @private
  */
 function getStyleShadow(s) {
-  return new ol_style_Style({
+  const shadow = new ol_style_Style({
     image: new ol_style_Shadow({
       radius: s.pointRadius * 0.5,
+      declutterMode: 'none',
     }),
     zIndex: -1,
     geometry: getClusterGeom
   });
+  // BUG: 
+  shadow.getImage().declutterMode_ = 'none';
+  return shadow;
 }
 
 /** Get Shadow style
@@ -398,17 +411,22 @@ function getStyleShadow(s) {
  */
 function getStyleArrow(s) {
   var width = s.strokeWidth + 6;
-  return new ol_style_Style({
-    image: new ol_style_FontSymbol({
-      form: s.strokeArrow,
-      radius: width,
-      offsetY: s.strokeArrow==='triangle' ? -5 : 0,
-      rotation: 0,
-      rotateWithView: true,
-      fill: new ol_style_Fill({
-        color: s.strokeColor,
-      }),
+  const img = new ol_style_FontSymbol({
+    form: s.strokeArrow,
+    radius: width,
+    offsetY: s.strokeArrow==='triangle' ? -5 : 0,
+    rotation: 0,
+    rotateWithView: true,
+    fill: new ol_style_Fill({
+      color: s.strokeColor,
     }),
+    declutterMode: 'none',
+  });
+  // BUG: 
+  img.declutterMode_ = 'none';
+  // arrow style
+  return new ol_style_Style({
+    image: img,
     geometry: function(f) {
       // Cluster ?
       return (f.get('features')) ? new ol_geom_Point(f.get('features')[0].getGeometry().getLastCoordinate()) : new ol_geom_Point(f.getGeometry().getLastCoordinate());
@@ -473,8 +491,6 @@ function setArrowRotation(st, f) {
   st.getImage().setRotation(rot);
 }
 
-import SelectBase from 'ol-ext/control/SelectBase'
-import md2html from '../md/md2html' 
 const selectBase = new SelectBase;
 
 const matchGeom = {
@@ -650,6 +666,7 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
         fill: new ol_style_Fill({
           color: '#ffcc33',
         }),
+        declutterMode: 'none'
       }),
       geometry: getClusterGeom
     })];
@@ -693,6 +710,7 @@ function getSelectStyleFn(options) {
       width: 1,
     }),
     radius: 5,
+    declutterMode: 'none',
   });
   var ptsStyle = new ol_style_Style({
     image: pts,
@@ -715,6 +733,7 @@ function getSelectStyleFn(options) {
       stroke: stroke,
       fill: fill,
       radius: radius,
+      declutterMode: 'none',
     }),
     stroke: stroke,
     fill: fill,
@@ -750,13 +769,15 @@ function getSelectStyleFn(options) {
         if (points) s.push(ptsStyle);
         return s;
       }
-      case 'overlay': {	// Feature style
+      case 'overlay': {	
+        // Feature style
         s = showObject ? style(f, res) : [];
         s.push(overlay);
         if (points) s.push(ptsStyle);
         return s;
       }
-      default: {	// Feature style
+      default: {	
+        // Feature style
         s = showObject ? style(f, res) : [];
         // Add
         var g = f.getGeometry();
@@ -769,8 +790,9 @@ function getSelectStyleFn(options) {
           const r = (cluster ? getClusterRadius(cluster.length) : (f.getIgnStyle('pointRadius') || 5)) + radius;
           s.unshift(new ol_style_Style({
             image: new ol_style_Circle({
-            stroke: strokePoint,
+              stroke: strokePoint,
               radius: r,
+              declutterMode: 'none',
             }),
             zIndex: Infinity
           }));

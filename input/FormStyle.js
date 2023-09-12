@@ -341,7 +341,7 @@ FormStyle.prototype._initFormPointText = function(element) {
   })
 
   // labelAttribute 
-  this._inputs.labelAttribute = element.querySelector('[data-attr="labelAttribute"] input');
+  this._inputs.labelAttribute = element.querySelector('[data-attr="labelAttribute"] textarea');
   this.setDispatch('labelAttribute');
 
   // textColor 
@@ -509,8 +509,10 @@ FormStyle.prototype.setDispatch = function(name, isinput) {
   }
   const listener = input.on ? 'on' : 'addEventListener';
   input[listener]('change', () => {
+    let val = input.getValue ? input.getValue() : input.value;
+    if (name === 'labelAttribute') val = val.replace(/\n{1,}$/g, '');
     if (!this.silence) {
-      this.dispatchEvent({ type:'change', attr: name, value: input.getValue ? input.getValue() : input.value })
+      this.dispatchEvent({ type:'change', attr: name, value: val })
     }
   })
 }
