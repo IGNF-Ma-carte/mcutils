@@ -58,6 +58,9 @@
   transform: translate(-50%, -50%);
 }
 .ol-collection-list.mcSymbolLib .mcSymbol i.fi-pencil {
+  right: 4em;
+}
+.ol-collection-list.mcSymbolLib .mcSymbol i.fg-color {
   right: 2em;
 }
 

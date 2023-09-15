@@ -13,6 +13,7 @@ import './SymbolLibInput.css'
  * @fires item:remove
  * @fires item:select
  * @fires item:dblclick
+ * @fires item:duplicate
  * @fires item:order
  * @api
  */
@@ -63,6 +64,7 @@ class SymbolLibInput extends InputCollection {
           // Edit mode
           ol_ext_element.create('I', {
             className: 'fi-pencil',
+            title: 'modifier le nom',
             click: () => {
               content.dataset.edit = '';
               editor.focus();
@@ -72,9 +74,19 @@ class SymbolLibInput extends InputCollection {
             },
             parent: content
           })
+          // Duplicate
+          ol_ext_element.create('I', {
+            className: 'fg-color',
+            title: 'modifier / dupliquer le style',
+            click: () => {
+              this.dispatchEvent({ type: 'item:duplicate', item: item });
+            },
+            parent: content
+          })
           // Remove element from llist
           ol_ext_element.create('i', {
             className: 'fi-delete',
+            title: 'supprimer le style',
             click: () => {
               symbolLib.remove(item);
               this.dispatchEvent({ type: 'item:remove' });

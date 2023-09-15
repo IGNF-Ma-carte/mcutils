@@ -24,6 +24,8 @@ import _T from '../i18n/i18n';
 import './page-FormStyle.css'
 import content from './page-FormStyle.html'
 
+const tab = { point: 'Point', line: 'LineString', polygon: 'Polygon' };
+
 /** Form to update Macarte styles
  * @memberof mcutils.input
  * @extends {olObject}
@@ -64,7 +66,6 @@ class FormStyle extends olObject {
     // Symbol lib
     if (options.symbolLib) {
       helpDialog(element.querySelector('.symbolLib h3'), _T('mc-help-symbolLib'), { className: 'medium' });
-      const tab = { point: 'Point', line: 'LineString', polygon: 'Polygon' };
       // Select symbol 
       element.querySelector('.symbolLib button.lib').addEventListener('click', () => {
         const symbolList = new SymbolLibInput({
@@ -105,27 +106,7 @@ class FormStyle extends olObject {
       });
       // Add symbol to lib
       element.querySelector('.symbolLib button.add').addEventListener('click', () => {
-        const type = tab[element.className];
-        if (!type) return;
-        const symb = new SymbolLib({
-          name: '',
-          style: this.getStyle(),
-          type: type
-        });
-        dialog.show({
-          title: 'Ajouter à la bibliothèque',
-          content: 'Nom du symbole : <input class="name" type="text" />',
-          className: 'addSymbolLib',
-          buttons: { submit: 'ajouter', cancel: 'annuler'},
-          onButton: (b, inputs) => {
-            if (b==='submit') {
-              symb.set('name', inputs.name.value);
-              options.symbolLib.push(symb);
-              dialog.hide();
-            }
-          }
-        })
-        dialog.getContentElement().appendChild(symb.getImage());
+        this.addSymbol(options.symbolLib)
       });
       // Create a new symbol in the lib
       element.querySelector('.symbolLib .lib button.lib').addEventListener('click', () => {
@@ -185,6 +166,33 @@ class FormStyle extends olObject {
       });
     })
   }
+}
+
+/** Add a new symbol to the symbol lib
+ * @param {Collection<SymbolLib>} symbolLib SymbolLib to update
+ */
+FormStyle.prototype.addSymbol = function(symbolLib) {
+  const type = tab[this.element.className];
+  if (!type) return;
+  const symb = new SymbolLib({
+    name: '',
+    style: this.getStyle(),
+    type: type
+  });
+  dialog.show({
+    title: 'Ajouter à la bibliothèque',
+    content: 'Nom du symbole : <input class="name" type="text" />',
+    className: 'addSymbolLib',
+    buttons: { submit: 'ajouter', cancel: 'annuler'},
+    onButton: (b, inputs) => {
+      if (b==='submit') {
+        symb.set('name', inputs.name.value);
+        symbolLib.push(symb);
+        dialog.hide();
+      }
+    }
+  })
+  dialog.getContentElement().appendChild(symb.getImage());
 }
 
 /** Dispatch event (if not silence)
@@ -604,14 +612,23 @@ FormStyle.addSymbolLibDialog = function(symbolLib, symbol) {
   const select = ol_ext_element.create('SELECT');
   ['Point', 'LineString', 'Polygon'].forEach(k => ol_ext_element.create('OPTION', { text: 'Géométrie : ' + _T('geom_'+k), value: k, parent: select }))
   select.addEventListener('change', () => form.setTypeGeom(select.value))
+  // Buttons
+  const buttons = symbol ? { submit: 'modifier', add: 'ajouter', cancel: 'annuler' } : { submit: 'ajouter', cancel: 'annuler' };
   // Show dialog
   dialog.show({
     className: 'symbolLibEditor',
     content: select,
-    buttons: { submit: 'ajouter', cancel: 'annuler' },
+    buttons: buttons,
     onButton: b => {
-      if (b==='submit') {
-        form.element.querySelector('button.add').click();
+      if (b==='submit' && symbol) {
+        // Update symbol
+        const st = form.getStyle();
+        Object.keys(st).forEach(k => {
+          symbol.setIgnStyle(k, st[k]);
+        })
+      } else if (b==='submit' || b==='add') {
+        // New Symbol
+        form.addSymbol(symbolLib)
       }
     }
   })
@@ -655,7 +672,7 @@ FormStyle.showDialogEditor = function(symbolLib) {
     }
   })
   // Set symbol on dblclick
-  symbolList.on('item:dblclick', e => {
+  symbolList.on(['item:dblclick', 'item:duplicate'], e => {
     FormStyle.addSymbolLibDialog(symbolLib, e.item)
   })
   // Remove collection on finish
