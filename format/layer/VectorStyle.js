@@ -45,6 +45,7 @@ VectorStyle.prototype.read = function (options) {
   const source = new VectorSource();
   const layer = new VectorStyleLayer({ source: source });
   this.readOptions(layer, options);
+  layer.setDeclutter(options.declutter);
   return this.readFeatures(layer, options);
 }
 
@@ -93,6 +94,8 @@ VectorStyle.prototype.write = function (layer, uncompressed) {
   if (layer.get('type') !== 'Vector') return null;
   const options = this.writeOptions(layer, {
     dessin: true,
+    // Declutter
+    declutter: layer.getDeclutter(),
     // Attributes
     attributes: Object.values(layer.getAttributes()),
     // fixAttributes: layer.get('fixAttributes')

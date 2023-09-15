@@ -220,10 +220,25 @@ const ignStyleDef = {
     short: 'tbl',
     defaultValue: 'middle'
   },
+  textBgFill: {
+    geom: /Point/,
+    short: 'tbf',
+    defaultValue: 'rgba(0, 0, 0, 0)'
+  },
+  textBgStroke: {
+    geom: /Point/,
+    short: 'tbs',
+    defaultValue: 'rgba(0, 0, 0, 0)'
+  },
+  textBgStrokeWidth: {
+    geom: /Point/,
+    short: 'tbw',
+    defaultValue: 1.5
+  },
   textOverflow: {
     geom: /LineString|Polygon/,
     short: 'to',
-    defaultValue: false
+    defaultValue: '#000'
   },
   textPlacement: {
     geom: /LineString/,

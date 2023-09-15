@@ -19,7 +19,7 @@ import { getStyleFn, defaultIgnStyle, clearCache, getIgnStyle, ordering } from '
  * @memberof ol.layer
  * @constructor
  * @extends {ol.layer.Vector}
- * @param {olx.layer.VectorOptions=} options Options, extend olx.layer.VectorOptions.
+ * @param {ol.layer.VectorOptions=} options Options, extend olx.layer.VectorOptions.
  *	@param {boolean} options.ghostStyle true to show a ghost feature when size=0
  */
 const VectorStyle = function(options) {
@@ -373,6 +373,21 @@ VectorStyle.prototype.getLayer = function() {
     case 'image': return this.layerImage_;
     default: return this.layerVector_;
   }
+}
+
+/** Get layer declutter 
+ * @param {boolean} b
+ */
+VectorStyle.prototype.setDeclutter = function(b) {
+  this.layerVector_.declutter_ = !!b;
+  this.layerImage_.declutter_ = !!b;
+}
+
+/** Get layer declutter 
+ * @returns {boolean}
+ */
+VectorStyle.prototype.getDeclutter = function() {
+  return this.layerVector_.getDeclutter();
 }
 
 /** Activate cluster calculation. Deactivate calculation before doing large operation on source

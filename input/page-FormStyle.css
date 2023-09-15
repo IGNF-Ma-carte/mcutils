@@ -101,6 +101,19 @@
 [data-formstyle] [data-show] input{
   cursor: pointer;
 }
+[data-formstyle] [data-attr="labelAttribute"] label:last-child {
+  width: 100%;
+  text-align: left;
+  padding: 0;
+}
+[data-formstyle] [data-attr="labelAttribute"] label > .mc-help {
+  position: absolute;
+}
+
+[data-formstyle] [data-attr="labelAttribute"] textarea {
+  width: 100%;
+  max-width: unset;
+}
 
 [data-formstyle] [data-attr="textFont"] option {
   font-size: 1.5em;
