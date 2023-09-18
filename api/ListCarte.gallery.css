@@ -29,6 +29,10 @@
 .mc-list-carte[data-mode="gallery"] .mc-ul .mc-icon img {
   max-height: none;
   width: 100%;
+  transition: .5s;
+}
+.mc-list-carte[data-mode="gallery"] .mc-ul li:hover .mc-icon img {
+  transform: translate(-50%, -50%) scale(1.1);
 }
 .mc-list-carte[data-mode="gallery"] .mc-ul li:hover .mc-icon:before {
   content: '';
