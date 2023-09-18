@@ -91,26 +91,12 @@ function prepareCalendar(type, data) {
     atts.dates = JSON.parse(atts.dates)
     ol_ext_element.create('TEXTAREA', { text: JSON.stringify(atts.dates), parent: content })
   } catch(e) {
-    let dates;
-    if (atts.type==='date-week') {
-      dates = {
-        type: 'date-week',
-        week: {
-          Mon: atts.Mon,
-          Tue: atts.Tue,
-          Wed: atts.Wed,
-          Thu: atts.Thu,
-          Fri: atts.Fri,
-          Sat: atts.Sat,
-          Sun: atts.Sun,
-        }
+    const dates = { week: {}, years: atts.open };
+    ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(d => {
+      if (atts.hasOwnProperty(d)) {
+        dates.week[d] = atts[d]
       }
-    } else {
-      dates = {
-        type: 'date-year',
-        years: atts.open
-      }
-    }
+    })
     ol_ext_element.create('TEXTAREA', { text: JSON.stringify(dates), parent: content })
   }
 
@@ -119,19 +105,17 @@ function prepareCalendar(type, data) {
 
 // Check if the date match
 function isCheck(date, dates) {
-  switch(dates.type) {
-    case 'date-week': {
-      const day = date.toLocaleString('en-US', { weekday: 'short' })
-      return dates.week[day]
+  // Week or year
+  if (dates.week && Object.keys(dates.week).length) {
+    const day = date.toLocaleString('en-US', { weekday: 'short' })
+    return dates.week[day]
+  } else if (dates.years){
+    const year = date.getFullYear()
+    const month = date.getMonth() +1;
+    if (dates.years[year] && dates.years[year][month]) {
+      return dates.years[year][month][date.getDate()]
     }
-    case 'date-year': {
-      const year = date.getFullYear()
-      const month = date.getMonth() +1;
-      if (dates.years[year] && dates.years[year][month]) {
-        return dates.years[year][month][date.getDate()]
-      }
-      return false;
-    }
+    return false;
   }
   // nothing
   return false
@@ -171,6 +155,7 @@ function mdCalendar(element) {
   })
 }
 
+/** Create calendar */
 function showCalendar(content, dates, yet, lang) {
   const today = new Date()
   // Clear
@@ -212,16 +197,15 @@ function showCalendar(content, dates, yet, lang) {
   // Show current month
   for (let d = 1; d <= 7*7; d++) {
     const date = new Date(startDate.getTime() + d * oneDay)
-      // Last day of the week
-      if (d !== 1 && date.getDay()===1) {
-        if (date.getMonth() > yet.getMonth()) break;
-        if (date.getYear() > yet.getYear()) break;
-        ol_ext_element.create('BR', { parent: content })
-      }
+    // Last day of the week
+    if (d !== 1 && date.getDay()===1) {
+      if (date.getMonth() > yet.getMonth()) break;
+      if (date.getYear() > yet.getYear()) break;
+      ol_ext_element.create('BR', { parent: content })
+    }
     const day = ol_ext_element.create('DIV', { 
       className: 'mdDay mdDay'+ date.getDay(), 
       text: date.getDate(),
-      title: date.toLocaleDateString(lang, optDate), 
       parent: content 
     })
     // Today
@@ -229,7 +213,11 @@ function showCalendar(content, dates, yet, lang) {
     // Tomonth
     if (date.getMonth() === yet.getMonth()) day.classList.add('tomonth')
     // is check ?
-    if (isCheck(date, dates)) day.classList.add('check')
+    const checked = isCheck(date, dates);
+    if (checked) {
+      day.classList.add('check')
+      day.title = checked.length > 3 ? checked : date.toLocaleDateString(lang, optDate);
+    }
   }
 }
 

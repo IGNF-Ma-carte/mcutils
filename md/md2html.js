@@ -683,6 +683,8 @@ md2html.text = function(md, data, escapeHTML) {
   element.innerHTML = md2html(md, data).replace(/<\//g,' </').replace(/<br ?\/>/ig,' <br/>');
   // Remove widgets (charts)
   element.querySelectorAll('.md-chart').forEach(d => d.remove());
+  // Remove widgets (calendar)
+  element.querySelectorAll('.mdCalendar').forEach(d => d.remove());
   // Return text
   if (escapeHTML) {
     return element.innerText.replace(/</g, '&lt');

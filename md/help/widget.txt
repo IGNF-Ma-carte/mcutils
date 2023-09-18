@@ -48,6 +48,78 @@ fullscreen: true
 ```
 [----]
 
+## Calendrier
+
+Vous pouvez ajouter un calendrier en précisant des jours et des horaires d'ouverture par exemple.
+Trois possibilité s'offrent à vous, soit préciser les jours de la semaine ouvrable, soit proposer une liste de jours ouverts, soit définir les dates d'ouverture sous forme de JSON.
+
+[-- :fa-code:fw: Jours de la semaine --]
+```md
+&#96;``calendar
+Mon: 9h-12h
+Tue: 9h-12h 14h-18h
+Wed: 
+Thu: 9h-12h 14h-18h
+Fri: 14h-18h
+Sat: 9h-18h
+Sun: 
+&#96;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+```calendar
+Mon: 9h-12h
+Tue: 9h-12h 14h-18h
+Wed: 
+Thu: 9h-12h 14h-18h
+Fri: 14h-18h
+Sat: 9h-18h
+Sun: 
+```
+[----]
+
+[-- :fa-code:fw: Code par dates --]
+```md
+&#96;``calendar
+open: 2023-09-19 Journée Internationale du Parler Pirate
+open: 2023-09-21 Journée Internationale de la paix
+open: 2023-10-20 Journée mondiale de la statistique
+open: 2023-12-25 Journée mondiale des Kdo
+&#96;``
+```
+[----]
+[-- :fa-desktop:fw: Résultat --]
+```calendar
+open: 2023-09-19 Journée Internationale du Parler Pirate
+open: 2023-09-21 Journée Internationale de la paix
+open: 2023-10-20 Journée mondiale de la statistique
+open: 2023-12-25 Journée mondiale des Kdo
+```
+[----]
+
+[-- :fa-code:fw: Code en JSON --]
+```md
+Liste de dates
+&#96;``calendar
+dates: { "years": { "2023": { "9": { "19": "Journée Internationale du Parler Pirate" }, "12": { "25": "C'est Noël" }}}}
+&#96;``
+Ouvertures dans la semaine
+&#96;``calendar
+dates: { "week": { "Mon": "9h-12h", "Tue": "9h-12h 14h-18h", "Thu": "9h-12h 14h-18h", "Fri": "14h-18h", "Sat": "9h-18h" }}
+&#96;``
+```
+[----]
+[-- :fa-desktop:fw: Résultat --]
+Liste de dates
+```calendar
+dates: { "years": { "2023": { "9": { "19": "Journée Internationale du Parler Pirate" }, "12": { "25": "C'est Noël" }}}}
+```
+Ouvertures dans la semaine
+```calendar
+dates: { "week": { "Mon": "9h-12h", "Tue": "9h-12h 14h-18h", "Thu": "9h-12h 14h-18h", "Fri": "14h-18h", "Sat": "9h-18h" }}
+```
+[----]
+
 ## Les diagrammes
 
 Pour afficher des **diagrammes** sur une page, il faut commencer la ligne par `&#96;&#96;&#96;chart`. 
