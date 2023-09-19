@@ -33,7 +33,8 @@ function loadFile(file, onload, options) {
     name: name,
     fileName: file.name,
     style: options.useStyle,
-    layer: options.useLayer
+    layer: options.useLayer,
+    replace: options.replace
   }
 
   // Read
@@ -126,7 +127,8 @@ function dialogImportFile(onImport, options) {
       useStyle: extract.checked,
       useLayer: useLayer.checked, 
       ignStyle: options.ignStyle !== false, 
-      projection: options.projection
+      projection: options.projection,
+      replace: replace.checked
     })
   }
   // Input file
@@ -158,6 +160,14 @@ function dialogImportFile(onImport, options) {
   })
   // Force use current layer
   if (!options.useLayer) useLayer.parentNode.style.display = 'none';
+
+  // Remove current
+  const replace = ol_ext_element.createCheck({
+    after: 'remplacer le contenu existant',
+    parent: content
+  })
+  // Force use current layer
+  if (!options.replace) replace.parentNode.style.display = 'none';
 }
 
 /** Test geometry and returns the valid features
