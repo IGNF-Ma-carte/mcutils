@@ -815,6 +815,17 @@ MDEditorBase.prototype.setTools = function (minibar) {
         className: ' small',
         parent: div
       })
+      ol_ext_element.create('LABEL', {
+        text: 'Séparateur : ',
+        className: 'sep',
+        parent: div
+      })
+      const separator = ol_ext_element.create('INPUT', {
+        type: 'text',
+        className: 'sep',
+        value: '; ',
+        parent: div
+      })
       dialog.show({
         title: 'Insérer un attribut',
         className: options.className,
@@ -832,7 +843,7 @@ MDEditorBase.prototype.setTools = function (minibar) {
             })
             // insert
             if (val.length) {
-              val = val.join('; ')+' ';
+              val = val.join(separator.value)+' ';
               if (p.start !== p.end) text = removeAt(text, p.start, p.end - p.start);
               text = insertAt(text, p.start, val);
               elt.value = text;

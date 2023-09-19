@@ -236,11 +236,21 @@
   color: #E1EEFD;
 }
 
-.ol-ext-dialog.mdedit-attr label {
+.ol-ext-dialog.mdedit-attr label.ol-ext-check {
   margin-top: .5em;
   border-top: 1px solid #999;
   padding-top: .5em;
 }
+.ol-ext-dialog.mdedit-attr label.sep {
+  display: inline-block;
+}
+.ol-ext-dialog.mdedit-attr input.sep {
+  width: 2.5em;
+  padding: .7rem .5rem;
+  text-align: center;
+  margin: 0 1em;
+}
+
 
 /* Editor */
 .mdEditDialog {
