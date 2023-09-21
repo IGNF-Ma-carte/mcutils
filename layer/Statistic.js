@@ -405,6 +405,7 @@ Statistic.prototype._cloneStatistic = function(stat) {
     symbol: stat.symbol || stat0.symbol || '',
     rmin: stat.rmin || stat0.rmin || 3,
     rmax: stat.rmax || stat0.rmax || 20,
+    rProp: stat.rProp || stat0.rProp || 'length',
     stroke: stat.stroke===undefined ? (stat0.stroke === undefined ? true : stat0.stroke) : stat.stroke,
     limits: (stat.limits || stat0.limits || []).slice(),
     alpha: stat.alpha || stat0.alpha || 1,
@@ -616,7 +617,12 @@ Statistic.prototype.setStatistic = function(stat, delay) {
       var smax = Math.sqrt(max);
       if (stat.rmin < 0) {
         stat.radius = function(v) {
-          var r = stat.rmax * Math.sqrt(v) / smax;
+          let r;
+          if (stat.rProp === 'area') {
+            r = Math.sqrt(v * stat.rmax*stat.rmax / max)
+          } else {
+            r = stat.rmax * v / max;
+          }
           return r > 0 ? r : 0;
         };
       } else {
@@ -636,7 +642,12 @@ Statistic.prototype.setStatistic = function(stat, delay) {
       // Proportional radius?
       if (stat.rmin < 0) {
         stat.radius = function(v) {
-          var r = stat.rmax * v / max;
+          let r;
+          if (stat.rProp === 'area') {
+            r = Math.sqrt(v * stat.rmax*stat.rmax / max)
+          } else {
+            r = stat.rmax * v / max;
+          }
           return r > 0 ? r : 0;
         };
       } else {
