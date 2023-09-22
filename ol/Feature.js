@@ -210,19 +210,19 @@ Feature.prototype.getMDProperties = function() {
   switch (geom.getType()) {
     case 'LineString':
     case 'MultiLineString':
+      pt = geom.getClosestPoint(ol_extent_getCenter(geom.getExtent()));
       if (!list.LENGTH) {
-        pt = geom.getClosestPoint(ol_extent_getCenter(geom.getExtent()));
         list.LENGTH = formatLength(geom);
       }
       break;
     case 'Polygon':
     case 'MultiPolygon':
+      if (geom.getInteriorPoint) {
+        pt = geom.getInteriorPoint().getCoordinates();
+      } else {
+        pt = geom.getInteriorPoints().getCoordinates()[0];
+      }
       if (!list.AREA) {
-        if (geom.getInteriorPoint) {
-          pt = geom.getInteriorPoint().getCoordinates();
-        } else {
-          pt = geom.getInteriorPoints().getCoordinates()[0];
-        }
         list.AREA = formatArea(geom);
       }
       break;
