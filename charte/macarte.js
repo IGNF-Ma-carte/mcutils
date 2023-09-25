@@ -384,14 +384,16 @@ charte.on('user', () => {
   }
 });
 charte.on('user:logout', () => {
-  api.logout();
-  // Force unload
-  setTimeout(() => {
-    window.onbeforeunload = null;
-    location.reload()
-  }, 100)
+  api.logout(() => {
+    // Force unload on logout
+    setTimeout(() => {
+      window.onbeforeunload = null;
+      location.reload()
+    }, 100)
+  });
 });
 charte.on('header:title', () => document.location = serviceURL.home);
+
 
 /* Update user on login */
 api.on(['login', 'me'], (e) => {
