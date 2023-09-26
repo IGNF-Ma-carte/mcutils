@@ -1,5 +1,11 @@
 # Macarte-utils
-Library to use with Ma carte
+*Library to use with Ma carte*
+
+![](https://img.shields.io/github/v/release/IGNF-Ma-carte/mcutils)
+![](https://img.shields.io/github/stars/IGNF-Ma-carte/mcutils)
+![](https://img.shields.io/github/commit-activity/m/IGNF-Ma-carte/mcutils)
+![](https://img.shields.io/github/contributors/IGNF-Ma-carte/mcutils)
+![](https://img.shields.io/github/license/IGNF-Ma-carte/mcutils)
 
 ## About
 
