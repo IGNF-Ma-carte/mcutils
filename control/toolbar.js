@@ -324,7 +324,7 @@ function addOptionImport(carte) {
     handleClick: () => {
       dialogImportFile(e => {
         if (e.features.length) {
-          const layer = new VectorLayer({ 
+          const layer = new VectorStyle({ 
             title: e.name,
             source: new VectorSource()
           })
