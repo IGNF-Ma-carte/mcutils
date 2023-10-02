@@ -105,19 +105,20 @@ function isDarkColor(color, max) {
  * @return {string}
  * @private
  */
-function getStyleId(s, clustered) {
+function getStyleId(s, clustered, sel) {
+  sel = sel ? 'sel' : ''
   return {
-    main: (clustered?'mainc':'main:')+s.pointRadius+'-'+s.pointIcon+'-'+s.pointFrame+'-'+s.pointCrop+'-'+s.pointGlyph+'-'+s.pointForm+'-'+s.symbolColor+'-'+s.pointColor+'-'+s.pointStrokeColor+'-'
+    main: sel + (clustered?'mainc':'main:')+s.pointRadius+'-'+s.pointIcon+'-'+s.pointFrame+'-'+s.pointCrop+'-'+s.pointGlyph+'-'+s.pointForm+'-'+s.symbolColor+'-'+s.pointColor+'-'+s.pointStrokeColor+'-'
 			+s.pointStrokeWidth+'-'+s.pointRotation+'-'+s.pointGradient+'-'+s.strokeWidth+'-'+s.strokeDash+'-'+s.strokeColor+'-'
 			+s.fillColor+'-'+s.fillPattern+'-'+s.sizePattern+'-'+s.spacingPattern+'-'+s.anglePattern+'-'+s.offsetPattern+'-'+s.scalePattern+'-'+s.fillColorPattern+'-',
-    shadow: 'shad:'+s.poointRadius,
-    arrow: 'arrow:'+s.strokeWidth+'-'+s.strokeArrow+'-'+s.strokeColor+'-',
-    text: 'text:'+s.pointRadius+'-'+s.textColor+'-'+s.textStyle+'-'+s.textSize+'-'+s.textFont
+    shadow: sel + 'shad:'+s.poointRadius,
+    arrow: sel + 'arrow:'+s.strokeWidth+'-'+s.strokeArrow+'-'+s.strokeColor+'-',
+    text: sel + 'text:'+s.pointRadius+'-'+s.textColor+'-'+s.textStyle+'-'+s.textSize+'-'+s.textFont
 			+'-'+s.textOutlineColor+'-'+s.textOutlineWidth
 			+'-'+s.textAlign+'-'+s.textBaseline
       +'-'+s.textBgFill+'-'+s.textBgStroke+'-'+s.textBgStrokeWidth
       +'-'+s.textPlacement+'-'+s.textOverflow,
-   };
+  };
 }
 
 /** Get ignStyle for a feature 
@@ -594,7 +595,7 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
   var label = f.get(s.labelAttribute) || s.labelAttribute;
 
   // Cache id for the style
-  var id = getStyleId(s, clustered);
+  var id = getStyleId(s, clustered, options.select);
   // Main style
   var st;
   if (!(st = _cacheStyle[id.main])) {
@@ -689,7 +690,7 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
  */
 function getSelectStyleFn(options) {
   options = options || {};
-  var style = options.styleFn || getStyleFn({ zIndex: Infinity });
+  var style = options.styleFn || getStyleFn({ zIndex: Infinity, select: true });
   const selColor = options.color ? asArray(options.color) : [255,0,0];
   const selColorFill = selColor.slice();
   selColorFill[3] = .5;
@@ -750,9 +751,8 @@ function getSelectStyleFn(options) {
         // Feature style
         s0 = style(f, res);
         s = [];
-        //for (var i=0, si0; si0=s0[i]; i++) 
         s0.forEach((si0) => {
-          var si = si0.clone();
+          var si = si0;
           if (si.getImage()) {
             si.getImage().setScale(1.25);
             si.getImage().setRotation(si0.getImage().getRotation());
