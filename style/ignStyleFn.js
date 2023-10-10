@@ -613,6 +613,9 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
       width: s.strokeWidth || ((options.ghost && /line/i.test(typeGeom)) ? 0.5 : 0),
       lineDash: strokeDash,
     });
+    if (options.select && /highlight|zoom/.test(options.select)) {
+      stroke.setWidth(stroke.getWidth() + Math.max(3, stroke.getWidth()*1.2));
+    }
     st = _cacheStyle[id.main] = new ol_style_Style({
       image: img,
       fill: fill,
@@ -690,7 +693,7 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
  */
 function getSelectStyleFn(options) {
   options = options || {};
-  var style = options.styleFn || getStyleFn({ zIndex: Infinity, select: true });
+  var style = options.styleFn || getStyleFn({ zIndex: Infinity, select: options.type });
   const selColor = options.color ? asArray(options.color) : [255,0,0];
   const selColorFill = selColor.slice();
   selColorFill[3] = .5;
@@ -759,10 +762,6 @@ function getSelectStyleFn(options) {
           } 
           if (!si.getStroke() && !si.getFill() && si.getText()) {
             si.getText().setScale(1.2);
-          }
-          var a = si.getStroke();
-          if (a) {
-            a.setWidth(a.getWidth() + Math.max(3, a.getWidth()*1.2));
           }
           s.push(si);
         });
