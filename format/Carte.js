@@ -146,12 +146,13 @@ Carte.prototype.readLayer = function(options, key) {
 
 /** Write layers
  * @param {Array<ol/layer/Layer>}
+ * @param {boolean} [uncompressed=false]
  * @returns {Object} options json object
  */
-Carte.prototype.writeLayers = function(layers) {
+Carte.prototype.writeLayers = function(layers, uncompressed) {
   const data = [];
   layers.forEach(l => {
-    const layer = this.writeLayer(l);
+    const layer = this.writeLayer(l, uncompressed);
     if (layer) {
       data.push(layer);
     } else {
@@ -166,10 +167,10 @@ Carte.prototype.writeLayers = function(layers) {
  * @param {ol/layer/Layer}
  * @returns {Object} options layer options (json object)
  */
-Carte.prototype.writeLayer = function(layer) {
+Carte.prototype.writeLayer = function(layer, uncompressed) {
   for (let i=0; i < Carte.layerFormats.length; i++) {
     const format = new Carte.layerFormats[i];
-    const options = format.write(layer);
+    const options = format.write(layer, uncompressed);
     if (options) return options;
   }
   return null;
@@ -177,9 +178,10 @@ Carte.prototype.writeLayer = function(layer) {
 
 /** Write method
  * @param {mcutils.Carte} carte
+ * @param {boolean} [uncompressed=false]
  * @return {Object|boolean}
  */
-Carte.prototype.write = function(carte) {
+Carte.prototype.write = function(carte, uncompressed) {
   const c = {
     param: {
       titre: carte.get('title'),
@@ -209,7 +211,7 @@ Carte.prototype.write = function(carte) {
   // Write legend
   c.legende = (new LegendFormat).write(carte.getControl('legend'));
   // Write layers
-  c.layers = this.writeLayers(carte.getMap().getLayers());
+  c.layers = this.writeLayers(carte.getMap().getLayers(), uncompressed);
   // Write symbol lib
   c.symbolLib = [];
   carte.getSymbolLib().forEach(s => {

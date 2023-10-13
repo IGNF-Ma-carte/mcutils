@@ -112,7 +112,7 @@ VectorStyle.prototype.write = function (layer, uncompressed) {
 VectorStyle.prototype.writeFeatures = function (layer, options, uncompressed) {
   // Write features
   const features = layer.getSource().getFeatures();
-  if (uncompressed === false) {
+  if (uncompressed) {
     options.features = [];
     features.forEach(f => {
       const feat = {

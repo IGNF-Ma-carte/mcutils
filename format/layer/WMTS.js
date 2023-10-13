@@ -49,10 +49,9 @@ WMTS.prototype.read = function (options) {
 
 /* Writel layer params
  * @param {ol.layer.Image} 
- * @param {} options
  * @return {object} source
  */
-WMTS.prototype.write = function (layer /*, options */) {
+WMTS.prototype.write = function (layer) {
   if (layer.get('type') !== 'WMTS') return null;
   var s = this.writeOptions(layer, {});
   s.wmtsparam = layer.get('wmtsparam') || layer.wmtsparams;

@@ -44,10 +44,9 @@ WMS.prototype.read = function (options) {
 
 /* Write layer
  * @param {ol.layer.Image} 
- * @param {} options
  * @return {object} source
  */
-WMS.prototype.write = function (layer /*, options */) {
+WMS.prototype.write = function (layer) {
   if (layer.get('type') !== 'WMS') return null;
   var s = this.writeOptions(layer, { 
     wms: true  // ???

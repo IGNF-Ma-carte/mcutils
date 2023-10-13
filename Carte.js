@@ -753,11 +753,12 @@ Carte.prototype.addSymbolLib = function(options) {
 }
 
 /** Save a storymap
+ * @param {boolean} [uncompressed=false]
  * @returns {Object}
  */
-Carte.prototype.write = function() {
+Carte.prototype.write = function(uncompressed) {
   const format = new CarteFormat;
-  return format.write(this);
+  return format.write(this, uncompressed);
 };
 
 /** Authenticate carte when layers are private / Espace co

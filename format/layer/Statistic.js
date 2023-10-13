@@ -61,7 +61,7 @@ Statistic.prototype.read = function (options) {
 
 /** Ecriture
  *	@param {StatisticLayer} layer
- *  @param {boolean} [uncompressed=true]
+ *  @param {boolean} [uncompressed=false]
  *	@return {object} options
  */
 Statistic.prototype.write = function (layer, uncompressed) {
@@ -74,7 +74,7 @@ Statistic.prototype.write = function (layer, uncompressed) {
 
   const features = layer.getSource().getFeatures();
   // Compress data
-  if (uncompressed === false) {
+  if (uncompressed) {
     // Uncompressed features
     s.features = [];
     features.forEach((f) => {
