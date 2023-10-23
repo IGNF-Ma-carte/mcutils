@@ -85,7 +85,7 @@ function getViewerURL(carte, tab) {
   const id = carte.view_id || carte.id;
   if (!id) return '';
   // Title
-  let title = encodeTitleURL(carte.title || 'carte')
+  let title = encodeTitleURL(carte.title || 'macarte')
   // Get Viewer
   let url = options.viewer
     .replace('$ID', id)

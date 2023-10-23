@@ -96,7 +96,7 @@ function embedCarte(options) {
     }
     const carteURL = getViewerURL({
       view_id: carte.get ? carte.get('id') : carte.view_id || carte.id,
-      title: carte.get ? carte.get('title') : carte.title,
+      title: carte.getTitle ? carte.getTitle() : carte.title || 'macarte',
       type: carte.type || carte instanceof Carte ? 'macarte' : 'storymap',
       showTitle: !inputs.notitle.checked,
       noZoom: inputs.nozoom.checked,

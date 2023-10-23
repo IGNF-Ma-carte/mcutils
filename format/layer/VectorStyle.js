@@ -134,7 +134,9 @@ VectorStyle.prototype.writeFeatures = function (layer, options, uncompressed) {
     features.forEach(f => {
       const st = f.getIgnStyle();
       const short = {};
-      Object.keys(st).forEach(k => short[ignStyleDef[k].short] = st[k])
+      Object.keys(st).forEach(k => {
+        if (ignStyleDef[k]) short[ignStyleDef[k].short] = st[k]
+      })
       options.data.style.push(short);
       // Popup
       const popup = f.getPopupContent();

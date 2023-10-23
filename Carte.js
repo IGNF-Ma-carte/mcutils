@@ -493,6 +493,16 @@ Carte.prototype.getControl = function(name) {
   return this._controls[name];
 };
 
+/** Get carte title
+ * @return {string}
+ */
+Carte.prototype.getTitle = function() {
+  if (this.get('atlas')) {
+    return this.get('atlas').title || 'macarte';
+  } 
+  return this.get('title') || 'macarte';
+}
+
 /** Get Tool bar
  * @return {Control}
  */

@@ -696,6 +696,13 @@ StoryMap.prototype.setDescription = function(description) {
   }
 };
 
+/** Get Title 
+ * @returns {string}
+ */
+StoryMap.prototype.getTitle = function() {
+  return this.get('title') || 'macarte';
+}
+
 /** Set Title 
  * @param {Object} options
  *  @param {string} [options.title]
