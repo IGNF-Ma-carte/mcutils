@@ -81,6 +81,8 @@ Layer.prototype.readOptions = function(layer, options) {
   // Zoom
   if (options.minZoom) layer.setMinZoom(options.minZoom);
   if (options.maxZoom) layer.setMaxZoom(options.maxZoom);
+  // Declutter
+  if (layer.setDeclutter) layer.setDeclutter(options.declutter);
   // Styles
   if (layer.setIgnStyle) layer.setIgnStyle(options.style || {});
   if (layer.setConditionStyle && options.conditionStyle) {
@@ -170,6 +172,8 @@ Layer.prototype.writeOptions = function(layer, options) {
   // Zoom
   options.minZoom = layer.getMinZoom();
   options.maxZoom = layer.getMaxZoom();
+  // Declutter
+  if (layer.getDeclutter) options.declutter = layer.getDeclutter();
   // Styles 
   if (layer.getIgnStyle) options.style = layer.getIgnStyle();
   if (layer.getConditionStyle) {
