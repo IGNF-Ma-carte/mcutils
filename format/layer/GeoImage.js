@@ -35,7 +35,8 @@ GeoImage.prototype.read = function (options) {
     "imageCenter": options.imageCenter,
     "imageRotate": options.imageRotate,
     "imageScale": options.imageScale,
-    "imageMask": options.imageMask
+    "imageMask": options.imageMask,
+    crossOrigin: options.crossOrigin
   });
   var layer = new ol_layer_Image({
     source: source
@@ -55,7 +56,8 @@ GeoImage.prototype.write = function (layer) {
     imageCenter: layer.getSource().getCenter(),
     imageRotate: layer.getSource().getRotation(),
     imageScale: layer.getSource().getScale(),
-    imageMask: layer.getSource().getMask()
+    imageMask: layer.getSource().getMask(),
+    crossOrigin: layer.getSource().getGeoImage().crossOrigin
   });
 };
 
