@@ -64,7 +64,7 @@ function getMediaURL(id) {
   // No media
   if (!id) return '';
   // Url is media
-  if (/^https?:\/\//.test(id)) return id;
+  if (/^https?:\/\//.test(id) || /^data:image\//.test(id)) return id;
   // API media url
   return serviceURL.media + '/' +id;
 }
