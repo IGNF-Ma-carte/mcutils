@@ -553,10 +553,10 @@ md2html.rules = [
     '<iframe class="video" frameborder="0" width="300" height="180" style="width:$4px; height:$5px;" src="https://player.vimeo.com/video/$3" allowfullscreen></iframe>'],
 
   // Audio
-  [/\!(\[([^\[\]]+)?\])?\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=\(\)]*)\.mp3) ?(\d+)?x?(\d+)?( autoplay)?\)/g,
+  [/\!(\[([^\[\]]+)?\])?\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=\(\)]*)\.[mM][pP]3) ?(\d+)?x?(\d+)?( autoplay)?\)/g,
     '<audio controls style="width:$6px; height:$7px;" $8 title="$2"><source src="$3" type="audio/mpeg">Your browser does not support the audio element.</audio>'],
   // Video
-  [/\!(\[([^\[\]]+)?\])?\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=\(\)]*)\.mp4) ?(\d+)?x?(\d+)?( autoplay)?\)/g,
+  [/\!(\[([^\[\]]+)?\])?\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=\(\)]*)\.[mM][pP]4) ?(\d+)?x?(\d+)?( autoplay)?\)/g,
     '<video controls style="width:$6px; height:$7px;" $8 title="$2"><source src="$3" type="video/mp4">Your browser does not support the video tag.</video>'],
 
   // Images
