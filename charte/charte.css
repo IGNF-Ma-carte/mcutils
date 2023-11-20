@@ -480,6 +480,7 @@ body > [data-role="storymap"] > * {
   width: 5rem;
   height: 100%;
   margin: 0 0 0 1em;
+  cursor: pointer;
 }
 
 [data-role="header"] .help,

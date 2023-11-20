@@ -157,7 +157,7 @@ const menuBurger = createElement('DIV', {
   parent: header
 });
 
-createElement('DIV', {
+const logoElt = createElement('DIV', {
   className: 'logoIGN',
   click: () => {
     dispatchEvent('header:title', { logo: true })
@@ -165,7 +165,7 @@ createElement('DIV', {
   parent: header
 });
 
-const title = createElement('H1', {
+const titleElt = createElement('H1', {
   className: 'colored',
   title: 'Accueil',
   click: () => {
@@ -566,12 +566,14 @@ const charte = {
    */
   setUnivers: (name) => { document.body.dataset.univers = name },
   /** Set the app name
-   * @param {string} name
+   * @param {string} name application name
+   * @param {string} [title] link title, default 'Acceuil - ' + name
    * @instance
    */
-  setName: (name) => { 
-    title.title = 'Accueil - ' + name,
-    title.innerText = name;
+  setName: (name, title) => { 
+    title = title || ('Acceuil - ' + name);
+    logoElt.title = titleElt.title = title;
+    titleElt.innerText = name;
   },
   /** Set the user name in the bar and add a connected dataset to the body
    * @param {object} user
