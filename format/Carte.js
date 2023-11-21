@@ -18,6 +18,8 @@ import WFS from '../format/layer/WFS';
 import MVT from '../format/layer/MVT';
 import PBF from '../format/layer/PBF';
 import Eco from '../format/layer/ECo';
+import Color from '../format/layer/Color';
+import Pattern from '../format/layer/Pattern';
 
 /** Base class for reading / writing .macarte
  * @memberof mcutils.format
@@ -48,7 +50,9 @@ Carte.layerFormats = [
   WFS,
   MVT,
   PBF,
-  Eco
+  Eco,
+  Color,
+  Pattern
 ];
 
 /** Read method
