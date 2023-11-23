@@ -47,9 +47,9 @@ import setContact from './setContact'
 import setPiwik from './setPiwik.js'
 import setCarousel from './carousel'
 
-import './html/access.fr.js'
-import './html/footer.fr.js'
-import './html/subfooter.fr.js'
+import './i18n/access.fr.js'
+import './i18n/footer.fr.js'
+import './i18n/subfooter.fr.js'
 import _T from '../i18n/i18n'
 
 import ol_ext_element from 'ol-ext/util/element'
