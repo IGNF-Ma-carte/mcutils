@@ -1,4 +1,7 @@
-export default `<div class="ign">
+import { i18n } from "../../i18n/i18n"
+
+i18n.set('fr', { 'footerHTML': `
+<div class="ign">
   <h2>Où nous trouver</h2>
   <p>
     Institut National de l’Information Géographique et Forestière,
@@ -44,3 +47,4 @@ export default `<div class="ign">
     </li>
   </ul>
 </div>`
+})

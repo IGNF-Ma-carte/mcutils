@@ -1,4 +1,7 @@
-export default `<div class="">
+import { i18n } from "../../i18n/i18n"
+
+i18n.set('fr', { 'accessDialogHTML': `
+<div class="">
   <h1>Paramètres d'accessibilité</h1>
   <button type="button" class="btn-close" title="Fermer : Paramètres d'accessibilité">
   </button>
@@ -14,3 +17,4 @@ export default `<div class="">
   </p>
 </div>
 `
+})

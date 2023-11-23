@@ -5,7 +5,7 @@ import txt from '../Carte.fr.js'
  * @param {string} lang default language
  */
 const I18N = function(lang) {
-  this.setLanguage(lang||'en');
+  this.setLanguage(lang || 'fr');
 }
 
 /** Set default language
@@ -62,7 +62,7 @@ i18n.set('fr', txt);
  * @return {string} the translated string or the string itself or empty string if empty=true
  */
 function _T(s, empty) {
-  return i18n[i18n.language][s] || (empty ? '' : s);
+  return i18n[i18n.language][s] || (empty ? '' : i18n['fr'][s] || s);
 }
 
 export { I18N }

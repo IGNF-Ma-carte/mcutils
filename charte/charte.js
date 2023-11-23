@@ -47,10 +47,9 @@ import setContact from './setContact'
 import setPiwik from './setPiwik.js'
 import setCarousel from './carousel'
 
-import accessDialog from './html/access'
-import footerDiv from './html/footer'
-import subfooterDiv from './html/subfooter'
-
+import './html/access.fr.js'
+import './html/footer.fr.js'
+import './html/subfooter.fr.js'
 import _T from '../i18n/i18n'
 
 import ol_ext_element from 'ol-ext/util/element'
@@ -373,12 +372,12 @@ if (document.body.dataset.page === 'site') {
   /**/
   createElement('DIV', {
     className: 'backColored',
-    html: subfooterDiv,
+    html: _T('subfooterHTML', true),
     parent: subfooter
   })
   footer.insertBefore(createElement('DIV', {
     className: 'footer-info',
-    html: footerDiv,
+    html: _T('footerHTML', true),
   }), footer.children[0])
 
   // Footer logo
@@ -392,7 +391,7 @@ if (document.body.dataset.page === 'site') {
   // Access page
   const accessd = createElement('DIV', {
     'data-role': 'access-dialog',
-    html: accessDialog,
+    html: _T('accessDialogHTML'),
     parent: document.body
   })
   accessd.querySelector('button.btn-close').addEventListener('click', () => {

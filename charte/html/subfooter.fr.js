@@ -1,4 +1,6 @@
-export default `
+import { i18n } from "../../i18n/i18n"
+
+i18n.set('fr', { 'subfooterHTML': `
 <div class="newsletter">
   <h2>La Newsletter</h2>
   <i>Chaque trimestre, recevez par mail le meilleur de nos actualités</i>
@@ -35,3 +37,4 @@ export default `
   </ul>
 </div>
 `
+})
