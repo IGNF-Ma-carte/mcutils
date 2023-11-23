@@ -1,4 +1,4 @@
-import LayerFormat from 'mcutils/format/layer/Layer';
+import LayerFormat from './Layer';
 import XYZ from 'ol/source/XYZ'
 import TileLayer from 'ol/layer/Tile';
 
