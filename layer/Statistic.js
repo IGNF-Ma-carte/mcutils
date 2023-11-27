@@ -25,6 +25,8 @@ import chroma from 'chroma-js'
 import ol_layer_VectorStyle from './VectorStyle'
 
 import getInteriorPoint from '../geom/getInteriorPoint'
+import SymbolLib from '../style/SymbolLib'
+import { style2IgnStyle } from '../style/ignStyleFn'
 
 /** Layer with statitic symbolization
  * The layer is a layer group with a vector layer or a heatmap
@@ -764,9 +766,10 @@ Statistic.prototype.getStatLegend = function() {
 
 /** Convert to an ol_layer_VectorStyle layer 
  * returns false if none (heatmap, sectoriel)
+ * @param {boolean} param create parametric conditional styles (if possible)
  * @return {ol_layer_VectorStyle|false} 
  */
-Statistic.prototype.getVectorStyle = function() {
+Statistic.prototype.getVectorStyle = function(param) {
   const stat = this.getStatistic();
   if (stat.typeMap === 'heatmap') return false
   if (stat.typeMap === 'sectoriel') return false
@@ -774,18 +777,66 @@ Statistic.prototype.getVectorStyle = function() {
   const source = new ol_source_Vector();
   const features = this.getSource().getFeatures();
   const styleFn = this.getLayers().item(0).getStyleFunction();
+
+  // Get parametric styles
+  const condStyle = [];
+  if (param) {
+    const att = stat.cols[0]
+    const legend = this.getStatLegend().reverse();
+    legend.forEach(l => {
+      l.feature.setIgnStyle(style2IgnStyle(l.feature))
+    })
+    switch (stat.typeMap) {
+      case 'categorie':
+      case 'choroplethe':
+      case 'symbol': {
+        legend.forEach((l,i) => {
+          // Conditions
+          let conditions;
+          if (stat.typeMap === 'categorie') {
+            conditions = [{ attr: att,op: '=', val: l.title }]
+          } else {
+            if (i<legend.length-1) {
+              conditions = [{ attr: att, op: '<', val: stat.limits[i+1] }]
+            } else {
+              conditions = [{ attr: '', op: '=', val: '' }];
+            }
+          }
+          // New param condition
+          condStyle.push({
+            title: l.title,
+            condition: { all: true, conditions: conditions },
+            symbol: new SymbolLib(l)
+          })
+        })
+        break;
+      }
+    }
+  }
+  // Check condition
+  param = (condStyle.length > 0);
+
+  // Copy features
   features.forEach(f => {
     const style = styleFn(f);
     const ignStyle = {};
     if (stat.typeMap === 'symbol') {
-      const geom = getInteriorPoint(f.getGeometry())
-      if (geom !== f.getGeometry()) {
-        f = f.clone();
-        f.setGeometry(geom);
+      // Convert points
+      if (!/LineString/.test(f.getGeometry().getType())) {
+        const geom = getInteriorPoint(f.getGeometry())
+        if (geom !== f.getGeometry()) {
+          f = f.clone();
+          f.setGeometry(geom);
+        }
       }
       const img = style[style.length-1]
-      ignStyle.symbolColor = ol_color_asString(img.getImage().getFill().getColor());
-      ignStyle.pointRadius = Math.round((img.getImage().getRadius() || 0) * 10) / 10;
+      if (img.getImage()) {
+        ignStyle.symbolColor = ol_color_asString(img.getImage().getFill().getColor());
+        ignStyle.pointRadius = Math.round((img.getImage().getRadius() || 0) * 10) / 10;
+      } else {
+        ignStyle.strokeColor = ol_color_asString(style[0].getStroke().getColor());
+        ignStyle.strokeWidth = style[0].getStroke().getWidth();
+      }
     } else {
       if (style[0].getFill()) {
         ignStyle.fillColor = ol_color_asString(style[0].getFill().getColor());
@@ -797,9 +848,13 @@ Statistic.prototype.getVectorStyle = function() {
         ignStyle.strokeColor = 'rgba(255,255,255,0)';
       }
     }
-    f.setIgnStyle(ignStyle);
+    // Parametric style?
+    if (!param) {
+      f.setIgnStyle(ignStyle);
+    }
     source.addFeature(f);
   });
+
   // New layer based on the current one
   const layer = new ol_layer_VectorStyle({ 
     id: this.get('id'),
@@ -809,6 +864,9 @@ Statistic.prototype.getVectorStyle = function() {
     maxZoom: this.getMaxZoom(),
     source: source
   });
+  layer.set('type', 'Vector');
+  layer.setPopupContent(this.getPopupContent())
+  layer._legend = this._legend;
   layer.setMode('image');
   if (this.getSource().getAttributions()) {
     layer.getSource().setAttributions(this.getSource().getAttributions()());
@@ -820,6 +878,9 @@ Statistic.prototype.getVectorStyle = function() {
   layer.setIgnStyle('pointGlyph',stat.symbol || 'ign-form-rond');
   layer.setIgnStyle('strokeWidth', stat.stroke ? 1.25 : 0);
   layer.setIgnStyle('pointStrokeWidth', stat.stroke ? 1.25 : 0);
+  
+  // Conditional styles
+  layer.setConditionStyle(condStyle)
   return layer;
 };
 
