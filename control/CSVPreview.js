@@ -47,9 +47,16 @@ CSVPreview.prototype.showData = function(papaOptions, selected0) {
   }
   papaOptions = papaOptions || {}
   if (papaOptions.dynamicTyping === undefined) papaOptions.dynamicTyping = true;
-  
+  // Skip lines
+  let skip = 0;
+  if (papaOptions.skipLines) {
+    for (let i=0; i<papaOptions.skipLines; i++) {
+      skip = this.csv.indexOf('\n', skip) +1;
+    }
+  }
+
   // Parse file
-  const result = this.result = papa.parse(this.csv, papaOptions);
+  const result = this.result = papa.parse(this.csv.substr(skip), papaOptions);
   const header = result.meta.fields;
   const datas = result.data;
   
