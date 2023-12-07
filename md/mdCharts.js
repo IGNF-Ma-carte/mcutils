@@ -202,7 +202,7 @@ function mdCharts(element) {
       })
     })
     try {
-      new Chart(canvas.getContext('2d'), {
+      const opt = {
         type: type,
         responsive: true,
         data: {
@@ -236,7 +236,9 @@ function mdCharts(element) {
             }
           }
         }
-      });
+      }
+      console.log(opt);
+      new Chart(canvas.getContext('2d'), opt);
     } catch(e) {
       // Chart is not set
       canvas.remove();
