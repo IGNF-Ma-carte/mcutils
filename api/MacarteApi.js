@@ -271,7 +271,10 @@ MacarteAPI.prototype.login =  function(user, pwd, callback) {
  */
 MacarteAPI.prototype.logout =  function(callback) {
   this.setToken();
-  this._send('POST', _apiURL+'logout', {}, resp => {
+  // Session deconnection
+  // this._send('POST', _apiURL+'logout', {}, resp => {
+  this._send('GET', _apiURL.replace(/api\/$/,'')+'deconnexion', {}, resp => {
+    alert ('ok')
     // Clear user
     this._user = {
       username: this._user.username
