@@ -4,13 +4,14 @@ import md2html from '../md/md2html'
 import dialog from '../dialog/dialog'
 import ol_ext_input_Checkbox from 'ol-ext/util/input/Checkbox';
 import removeDiacritics from "../config/removeDiacritics";
+import GeoJSON from "ol/format/GeoJSON"
+import FileSaver from 'file-saver'
+import notification from '../dialog/notification'
 
 import './layerSwitcher.css'
 import { getMediaURL } from '../api/serviceURL'
 
-
-
-function showInfo(layer) {
+function showInfo(layer, map) {
   window.layer = layer
   const content = ol_ext_element.create('DIV', { className: 'md' });
   // Description
@@ -28,13 +29,38 @@ function showInfo(layer) {
   }
   // Show
   dialog.show({
-    className: 'layer-info',
+    className: 'layer-info' + (layer.get('exportable') ? ' exportable' : ''),
     title: layer.get('title'),
     content: content,
-    buttons: ['ok']
+    buttons: { pk: 'ok' }
   })
-  //
+
+  // Render content
   md2html.renderWidget(content);
+
+  // Export layer
+  ol_ext_element.create('BUTTON', {
+    html: '<i class="fi-download"></i> télécharger',
+    className: 'button, button-ghost',
+    click: () => {
+      // Features to save
+      const features = layer.getSource().getFeatures();
+      if (!features.length) {
+        dialogMessage.showAlert('Aucune données à enregistrer<br/>dans ce calque...')
+        return;
+      }
+      const format = new GeoJSON;
+      const data = format.writeFeatures(features, {
+        featureProjection: map.getView().getProjection(),
+        rightHanded: true
+      })
+      var blob = new Blob([data], {type: "text/plain;charset=utf-8"});
+      FileSaver.saveAs(blob, layer.get('title') + '.geojson');
+      dialog.close();
+      notification.show(features.length + ' objets enregistrés...')
+    },
+    parent: dialog.element.querySelector('.ol-buttons')
+  })
 }
 
 /** Return the layers switcher
@@ -42,7 +68,7 @@ function showInfo(layer) {
 function getLayerSwitcher() {
   const layerSwitcher = new LayerSwitcher({
     switcherClass: 'mainSwitcher ol-layer-shop ol-layerswitcher',
-    oninfo: showInfo,
+    oninfo: (layer) => { showInfo(layer, layerSwitcher.getMap()) },
     selection: false,
     minibar: true
   })

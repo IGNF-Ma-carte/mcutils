@@ -60,6 +60,7 @@ Layer.prototype.readOptions = function(layer, options) {
   if (options.description) layer.set('desc', options.description);
   if (options.logo) layer.set('logo', options.logo);
   if (options.theme) layer.set('theme', options.theme);
+  if (options.exportable) layer.set('exportable', true);
   if (layer.getSource()) {
     if (options.attributions) {
       layer.getSource().setAttributions(options.attributions);
@@ -142,6 +143,7 @@ Layer.prototype.writeOptions = function(layer, options) {
   options.description = layer.get('desc') || layer.get('description');
   options.logo = layer.get('logo');
   options.theme = layer.get('theme');
+  if (layer.get('exportable')) options.exportable = true;
   // Copyright
   if (layer.get('attributions')) options.attributions = layer.get('attributions');
   if (layer.get('type')==='Geoportail'

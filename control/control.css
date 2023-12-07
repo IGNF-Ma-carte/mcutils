@@ -87,6 +87,18 @@
   width: 40em;
   font-size: 16px;
 }
+.ol-ext-dialog.layer-info.exportable .ol-buttons button {
+  border: 0.1rem solid currentColor;
+  font-size: 1em;
+  padding: 0 1em;
+  line-height: 2em;
+  background-color: transparent;
+  box-sizing: border-box;
+  height: 2em;
+  vertical-align: middle;
+  margin-left: 1em;
+}
+
 .ol-ext-dialog.layer-info > form .md > .copy {
   margin: .5em 0 0;
 }
