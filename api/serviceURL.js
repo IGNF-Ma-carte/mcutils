@@ -18,6 +18,7 @@ const serviceURL = {
   signal: options.server + 'signaler',
   contact: options.server + 'nous-contacter',
   accessibility: options.server + 'declaration-daccessibilite-rgaa.pdf',
+  logout: options.server + 'deconnexion',
 
   /// API url
   api: options.server + 'api',

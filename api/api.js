@@ -4,7 +4,7 @@ import serviceURL from './serviceURL';
 /** Singleton API object to access the API
  * @memberof MacarteAPI
  */ 
-const api = new MacarteAPI(serviceURL.api);
+const api = new MacarteAPI(serviceURL.api, serviceURL.logout);
 
 api.on(['login', 'logout', 'me'], () => {
   const user = api.getMe();

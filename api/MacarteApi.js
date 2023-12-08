@@ -1,4 +1,5 @@
 let _apiURL = '';
+let _logoutURL = '';
 
 const MCToken = 'MC@token';
 const MCRefreshToken = 'MC@refreshToken';
@@ -13,8 +14,9 @@ class MacarteAPI {
   /** Constructor 
    * @param {string} apiURL
    */
-  constructor(apiURL) {
+  constructor(apiURL, logoutURL) {
     _apiURL = apiURL;
+    _logoutURL = logoutURL;
     if (!/\/$/.test(apiURL)) _apiURL += '/';
     // Read current token
     this._token = localStorage.getItem(MCToken);
@@ -273,8 +275,7 @@ MacarteAPI.prototype.logout =  function(callback) {
   this.setToken();
   // Session deconnection
   // this._send('POST', _apiURL+'logout', {}, resp => {
-  this._send('GET', _apiURL.replace(/api\/$/,'')+'deconnexion', {}, resp => {
-    alert ('ok')
+  this._send('GET', _logoutURL, {}, resp => {
     // Clear user
     this._user = {
       username: this._user.username
