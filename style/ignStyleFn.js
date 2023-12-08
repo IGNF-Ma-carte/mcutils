@@ -17,7 +17,7 @@ import ol_style_FillPattern from 'ol-ext/style/FillPattern'
 import ol_style_Shadow from 'ol-ext/style/Shadow'
 
 import style2IgnStyle from './style2IgnStyle'
-import serviceURL from '../api/serviceURL'
+import { getMediaURL } from '../api/serviceURL'
 
 import SelectBase from 'ol-ext/control/SelectBase'
 import md2html from '../md/md2html' 
@@ -278,7 +278,7 @@ function getStrokeDash(s) {
 function getImage(id, s, f, ghost, label) {
   var img;
   if (s.pointIcon && s.pointRadius) {
-    const icon = /^https?:\/\//.test(s.pointIcon) ? s.pointIcon : serviceURL.media + '/' + s.pointIcon;
+    const icon = getMediaURL(s.pointIcon);
     const opacity = ol_color_asArray(s.pointColor || 'transparent')[3];
     const shadow = s.pointFrame && opacity && s.pointStrokeWidth !== 0;
     const offset = shadow ? 2 : 0;
