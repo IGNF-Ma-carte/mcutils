@@ -39,28 +39,30 @@ function showInfo(layer, map) {
   md2html.renderWidget(content);
 
   // Export layer
-  ol_ext_element.create('BUTTON', {
-    html: '<i class="fi-download"></i> télécharger',
-    className: 'button, button-ghost',
-    click: () => {
-      // Features to save
-      const features = layer.getSource().getFeatures();
-      if (!features.length) {
-        dialogMessage.showAlert('Aucune données à enregistrer<br/>dans ce calque...')
-        return;
-      }
-      const format = new GeoJSON;
-      const data = format.writeFeatures(features, {
-        featureProjection: map.getView().getProjection(),
-        rightHanded: true
-      })
-      var blob = new Blob([data], {type: "text/plain;charset=utf-8"});
-      FileSaver.saveAs(blob, layer.get('title') + '.geojson');
-      dialog.close();
-      notification.show(features.length + ' objets enregistrés...')
-    },
-    parent: dialog.element.querySelector('.ol-buttons')
-  })
+  if (layer.get('exportable')) {
+    ol_ext_element.create('BUTTON', {
+      html: '<i class="fi-download"></i> télécharger',
+      className: 'button, button-ghost',
+      click: () => {
+        // Features to save
+        const features = layer.getSource().getFeatures();
+        if (!features.length) {
+          dialogMessage.showAlert('Aucune données à enregistrer<br/>dans ce calque...')
+          return;
+        }
+        const format = new GeoJSON;
+        const data = format.writeFeatures(features, {
+          featureProjection: map.getView().getProjection(),
+          rightHanded: true
+        })
+        var blob = new Blob([data], {type: "text/plain;charset=utf-8"});
+        FileSaver.saveAs(blob, layer.get('title') + '.geojson');
+        dialog.close();
+        notification.show(features.length + ' objets enregistrés...')
+      },
+      parent: dialog.element.querySelector('.ol-buttons')
+    })
+  }
 }
 
 /** Return the layers switcher
