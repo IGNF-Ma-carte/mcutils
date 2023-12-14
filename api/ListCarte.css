@@ -335,6 +335,7 @@
 .mc-list.mc-filter .filters h2.selected + div,
 .mc-list.mc-filter .filters h2.selected + ul {
   max-height: 40em;
+  overflow: auto;
 }
 .mc-list.mc-filter .filters ul li {
   min-height: 0;

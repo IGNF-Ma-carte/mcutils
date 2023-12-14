@@ -2,6 +2,9 @@
   width: 45em;
 }
 
+.ol-ext-dialog.mc-upload-media form {
+  overflow: visible;
+}
 .ol-ext-dialog.mc-upload-media .upload {
   position: relative;
   height: 15em;
