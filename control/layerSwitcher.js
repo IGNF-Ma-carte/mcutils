@@ -12,16 +12,15 @@ import './layerSwitcher.css'
 import { getMediaURL } from '../api/serviceURL'
 
 function showInfo(layer, map) {
-  window.layer = layer
   const content = ol_ext_element.create('DIV', { className: 'md' });
   // Description
-  ol_ext_element.create('div', {
+  ol_ext_element.create('DIV', {
     html: md2html(layer.get('desc') || layer.get('description'), layer.getProperties()),
     parent: content
   })
   // Copyright
   if (layer.getSource().getAttributions()) {
-    ol_ext_element.create('div', {
+    ol_ext_element.create('DIV', {
       className: 'copy',
       html: layer.getSource().getAttributions()({ extent: [-Infinity,-Infinity,Infinity,Infinity] }).join(' - '),
       parent: content

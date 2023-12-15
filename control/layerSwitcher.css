@@ -155,8 +155,6 @@
   text-decoration: underline;
 }
 
-
-
 .ol-ext-dialog.layer-inview .ol-content ul ul li:after {
   content: '';
   clear: both;
