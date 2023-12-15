@@ -225,12 +225,14 @@ function addDrawTools(carte, tools, layer) {
       handleClick: () => {
         const features = drawLayer.getSource().getFeatures();
         if (features.length) {
+          ctrl.dispatchEvent({ type: 'export:start' })
           const data = (new GeoJSON()).writeFeatures(features, {
             featureProjection: carte.getMap().getView().getProjection(),
             rightHanded: true
           })
           const blob = new Blob([data], {type: "text/plain;charset=utf-8"});
           FileSaver.saveAs(blob, 'carte.geojson');
+          ctrl.dispatchEvent({ type: 'export:end', nb: features.length })
         }
       }
     }))
@@ -244,6 +246,7 @@ function addDrawTools(carte, tools, layer) {
       handleClick: () => {
         dialogImportFile(e => {
           if (e.features.length) {
+            ctrl.dispatchEvent({ type: 'import:start' })
             drawLayer.getSource().addFeatures(e.features);
             notification.cancel(
               e.features.length + ' objects chargés',
@@ -255,6 +258,7 @@ function addDrawTools(carte, tools, layer) {
                   carte.getMap().getView().setZoom(carte.getMap().getView().getZoom() - 0.2)
                 }
               }, '<i class="fi-fullscreen-alt"></i> center sur les données')
+            ctrl.dispatchEvent({ type: 'import:end', nb: e.features.length })
           } else {
             notification.show('Impossible de charger le fichier...')
           }
