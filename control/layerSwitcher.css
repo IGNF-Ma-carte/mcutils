@@ -85,16 +85,24 @@
   padding: 0;
   list-style: none;
 }
-.ol-ext-dialog.layer-inview .fa {
+.ol-ext-dialog.layer-inview h3 .fa {
   transform: scale(1.8);
   margin: 0 .5em;
   opacity: .8;
 }
 
 .ol-ext-dialog.layer-inview ul div {
-  max-height: 3em;
   overflow: hidden;
   margin-left: 2.5em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.2em;
+  max-height: 3.6em;
+}
+.ol-ext-dialog.layer-inview ul div * {
+  margin: 0!important;
+  padding: 0!important;
 }
 .ol-ext-dialog.layer-inview .ol-content > ul > li {
   position: relative;
