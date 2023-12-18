@@ -31,10 +31,11 @@ worker.postMessage(`
 var toto = 2 + Math.pow(2,2);
 toto
 `)
-/* Test Function clear context */
+/* Test Function clear context * /
+
 'use strict'
 
-const ctxFn = [ 'eval', 'Math', 'parseInt', 'parseFloat', 'isNaN', 'isFinite']
+const ctxFn = [ 'eval', 'Math', 'parseInt', 'parseFloat', 'isNaN', 'isFinite' ]
 function getFormula() {
   // Remove context
   const keys = ['attr', 'code']
@@ -79,8 +80,12 @@ res
 /*
 https://github.com/NeilFraser/JS-Interpreter
 https://github.com/hacksparrow/safe-eval
-*/
+* /
 getFormula()(
   {x:12, y:15}, `
 Math.sqrt(attr.x) + attr.y;
 `)
+*/
+import Formula from '../../utils/Formula.js'
+window.Formula = Formula;
+
