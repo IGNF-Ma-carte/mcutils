@@ -1,6 +1,6 @@
 ## Les Médias
 
-La syntaxe permettant d’insérer un média est semblable à celle des liens. On commence cependant par insérer un point d’exclamation. Suivent ensuite des crochets pour un texte alternatif, puis l’URL du média entre parenthèses. 
+La syntaxe permettant d'insérer un média est semblable à celle des liens. On commence cependant par insérer un point d’exclamation. Suivent ensuite des crochets pour un texte alternatif, puis l’URL du média entre parenthèses. 
 La description est facultative mais vivement recommandée.
 On peut de manière facultative ajouter la largeur et la hauteur du média avec un signe x entre les deux. Si l'une l'autre des valeur n'est pas fournie, le media est redimentionner de manière proportionnelle.
 ```md
@@ -46,6 +46,10 @@ Vous pouvez ajouter un lien pour afficher une image en plein écran au clic, en 
 ## Les sons
 
 Si le média est un son (extension mp3) il s'affiche sous forme de barre de lecture audio.
+On peut de manière facultative ajouter la largeur et la hauteur du média avec un signe x entre les deux et un attribut `autoplay` pour lancer le démarrage automatique de lecture.
+```md
+![texte alternatif](url_du_media lxh autoplay)
+```
 [++ :fa-code:fw: Code ++]
 ```md
 ![Little pleasures 1N72](https://www.freesound.org/data/previews/350/350572_2244250-lq.mp3)
@@ -58,6 +62,8 @@ Si le média est un son (extension mp3) il s'affiche sous forme de barre de lect
 ### Les vidéos
 
 Si vous avez une url de vidéo. On peut généralement récupérer les url dans les liens de partage sur les sites proposant des vidéos.
+On peut de manière facultative ajouter la largeur et la hauteur du média avec un signe x entre les deux.
+L'attribut `autoplay` pour lancer le démarrage automatique de lecture est également disponible pour les fichiers au format mp4.
 [++ :fa-code:fw: Code ++]
 ```md
 ###### Video Youtube :
@@ -220,7 +226,7 @@ Pour ajouter un bouton de like facebook sur la page, il faut utiliser l'url de l
 [----]
 
 Il est également possible de partager des contenus facebook :
-[-- :fa-code:fw: Code --]
+[++ :fa-code:fw: Code ++]
 ```md
 ### Facebook d'un utilisateur
 !(https://www.facebook.com/ignfr/ 400x400)

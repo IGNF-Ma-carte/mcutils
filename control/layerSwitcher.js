@@ -234,6 +234,8 @@ function showThemeDialog(layerSwitcher) {
       layerSwitcher.drawPanel();
     }
   })
+  dialog.set('hideOnBack', true);
+  dialog.once('hide', () => { dialog.set('hideOnBack', false) })
 }
 
 export default getLayerSwitcher
