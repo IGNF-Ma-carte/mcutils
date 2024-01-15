@@ -116,6 +116,19 @@ Dans une carte narrative en mode étape vous pouvez aller à une étape en utili
 [Aller à Paris](app://stepTo?5 Aller à l'étape 5)
 [----]
 
+### Description au survol
+
+Dans le même esprit, on peut générer un lien sur la page pour juste afficher une information au survol en utilisant `#` comme url.
+
+[++ :fa-code:fw: Code ++]
+```md
+[:fa-info-circle: Description au survol](# un texte d'information)
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+[:fa-info-circle: Description au survol](# un texte d'information)
+[----]
+
 ## Code
 
 Pour écrire un morceau de code dans un texte, Markdown l’identifie au moyen du caractère **apostrophe inversée**. Trois apostrophes inversées au début et à la fin du bloc permettent une coloration syntaxique selon le langage mis en préfixe.
