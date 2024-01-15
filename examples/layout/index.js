@@ -1,5 +1,6 @@
 import 'ol/ol.css'
 import 'ol-ext/dist/ol-ext.css'
+import config from '../../config/config'
 import '../index.css'
 import setLayout from '../../layout/layout'
 
@@ -7,12 +8,12 @@ import Carte from '../../Carte'
 
 const carte = new Carte({ 
   target: 'map', 
-  key: '0gd4sx9gxx6ves3hf3hfeyhw',
-  url: '../data/JeudiPhoto.carte',
+  key: config.gppKey,
+  id: 'b8d7c7f37733d992051adb4c2dbb8a2d'
+  //url: '../data/JeudiPhoto.carte',
   //url: '../data/georef.carte',
   //url: '../data/stat.carte',
-  //url: '../data/camembert.carte',
-//  cgu: document.body
+  //url: '../data/camembert.carte'
 });
 carte.getSelect().on('select', (e) => {
   let feature = e.selected[0];
