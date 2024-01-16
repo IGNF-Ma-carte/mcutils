@@ -180,6 +180,19 @@ class StoryMap extends ol_Object {
         parent: this.target
       })
     }
+    // Header select
+    this.element.tabSelector = ol_ext_element.create('SELECT', {
+      className: 'selector',
+      change: () => {
+        const o = this.element.tabSelector.options[this.element.tabSelector.selectedIndex];
+        this.tabs.forEach((t,i) => {
+          if (t.option === o) {
+            this.selectTab(i)
+          }
+        })
+      },
+      parent: this.element.tabs
+    });
     // Header content
     this.element.tabHeader = ol_ext_element.create('DIV', {
       className: 'header',
@@ -1153,6 +1166,7 @@ StoryMap.prototype.clearTabs = function() {
   });
   this.tabs.clear();
   this.element.tabHeader.innerHTML = '';
+  this.element.tabSelector.innerHTML = '';
   this.changed('tabs');
 };
 
@@ -1163,6 +1177,7 @@ StoryMap.prototype.removeTab = function(index) {
   const t = this.tabs.removeAt(index);
   if (t) {
     t.button.remove();
+    t.option.remove();
     t.iframe.remove();
     if (t.button.className === 'selected') {
       this.selectTab(0);
@@ -1180,13 +1195,21 @@ StoryMap.prototype.selectTab = function(index) {
   if (t) {
     t.button.click();
   }
+  // Reset tab selector
+  this.element.tabSelector.value = '';
 };
 
 /** Reorder tab */
 StoryMap.prototype.reorderTabs = function() {
   this.element.tabHeader.innerHTML = '';
-  this.tabs.forEach(t => this.element.tabHeader.appendChild(t.button));
+  this.element.tabSelector.innerHTML = '';
+  this.tabs.forEach(t => {
+    this.element.tabHeader.appendChild(t.button)
+    this.element.tabSelector.appendChild(t.option)
+  });
   this.changed('tab');
+  // Reset tab selector
+  this.element.tabSelector.value = '';
 };
 
 /** Change tab title
@@ -1199,6 +1222,7 @@ StoryMap.prototype.setTabTitle = function(index, title, description) {
   if (t) {
     t.button.innerText = t.title = title || '';
     t.button.title = t.description = description || '';
+    t.option.innerText = t.title = title || '';
   }
   this.changed('tab:title');
 };
@@ -1253,6 +1277,14 @@ StoryMap.prototype.addTab = function(options, select) {
     parent: this.element.tabHeader
   });
   o.button.innerText = o.title;
+  // select option
+  o.option = ol_ext_element.create('OPTION', {
+    text: o.title,
+    value: o.id,
+    parent: this.element.tabSelector
+  })
+  // Reset tab selector
+  this.element.tabSelector.value = '';
   // Iframe
   o.view_id = o.id;
   o.type = 'storymap';  // Compatibility MCV3
