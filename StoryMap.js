@@ -1272,6 +1272,11 @@ StoryMap.prototype.addTab = function(options, select) {
       })
       o.iframe.dataset.hidden = 0;
       o.button.className = 'selected';
+      // Center tab
+      const b = this.element.tabHeader.querySelector('.selected').getBoundingClientRect();
+      const b2 = this.element.tabHeader.getBoundingClientRect();
+      this.element.tabHeader.scrollLeft += b.x - b2.width / 2
+      // Dispatch event
       this.dispatchEvent({ type: 'change:tab', position: pos, tab: o })
     },
     parent: this.element.tabHeader
@@ -1279,7 +1284,7 @@ StoryMap.prototype.addTab = function(options, select) {
   o.button.innerText = o.title;
   // select option
   o.option = ol_ext_element.create('OPTION', {
-    text: o.title,
+    text: o.title + '\u00a0\u00a0',
     value: o.id,
     parent: this.element.tabSelector
   })
