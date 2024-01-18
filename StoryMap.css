@@ -454,6 +454,7 @@
   height: 2em;
   overflow: hidden;
   white-space: nowrap;
+  scroll-behavior: smooth;
 }
 [data-role="storymap"] .tabs:before {
   content: "";
