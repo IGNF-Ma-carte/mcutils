@@ -464,6 +464,7 @@
   height: 2em;
   background: linear-gradient(90deg, currentColor, transparent);
   z-index: 1;
+  pointer-events: none;
 }
 [data-role="storymap"] .tabs .header > div {
   display: inline-block;

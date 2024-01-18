@@ -190,6 +190,8 @@ class StoryMap extends ol_Object {
             this.selectTab(i)
           }
         })
+        // Reset tab selector
+        this.element.tabSelector.value = '';
       },
       parent: this.element.tabs
     });
@@ -1273,9 +1275,10 @@ StoryMap.prototype.addTab = function(options, select) {
       o.iframe.dataset.hidden = 0;
       o.button.className = 'selected';
       // Center tab
-      const b = this.element.tabHeader.querySelector('.selected').getBoundingClientRect();
-      const b2 = this.element.tabHeader.getBoundingClientRect();
-      this.element.tabHeader.scrollLeft += b.x - b2.width / 2
+      const rsel = this.element.tabHeader.querySelector('.selected').getBoundingClientRect();
+      const rhead = this.element.tabHeader.getBoundingClientRect();
+      const rtab = this.element.tabs.getBoundingClientRect();
+      this.element.tabHeader.scrollLeft += rsel.left - rhead.width / 2 - rtab.left;
       // Dispatch event
       this.dispatchEvent({ type: 'change:tab', position: pos, tab: o })
     },
