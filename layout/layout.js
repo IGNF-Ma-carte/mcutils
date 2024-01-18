@@ -14,6 +14,9 @@ const rules = {
     'color': 'COLOR',
     'background-color': 'BGCOLOR',
   },
+  '[data-role="storymap"] .tabs:before': {
+    'color': 'BGCOLOR',
+  },
   '[data-role="storymap"] .tabs .header > div': {
     'color': 'COLOR',
     'background-color': 'BGCOLOR',

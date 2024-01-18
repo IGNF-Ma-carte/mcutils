@@ -417,37 +417,52 @@
   bottom: 0;
 }
 [data-role="storymap"] .tabs .selector {
+  font-size: 1em;
   width: 1.8em;
   height: 2em;
   border-radius: 0.5em 0.5em 0 0;
   margin: 0 .2em;
-  padding: 0;
+  padding: 0 .5em;
   box-sizing: border-box;
-  border-color: currentColor;
+  border: 1px solid currentColor;
   border-bottom-width: 0;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  font-size: 1em;
-}
-[data-role="storymap"] .tabs .selector {
   background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
     linear-gradient(135deg,  currentColor 50%, transparent 50%);
   background-position: calc(50% - 3px) 50%, calc(50% + 3px) 50%;
   background-size: 6px 6px, 6px 6px;
   background-repeat: no-repeat;
+  z-index: 2;
 }
+[data-role="storymap"] .tabs .selector:hover {
+  border-top-width: 3px;
+}
+[data-role="storymap"] .tabs .selector option {
+  font-size: 1em;
+  padding: .5em 0;
+}
+
 [data-role="storymap"] .tabs .header {
   position: absolute;
   top: 0;
-  left: 2.2em;
+  left: 2em;
   right: 0;
+  padding-left: .2em;
   height: 2em;
   overflow: hidden;
   white-space: nowrap;
+}
+[data-role="storymap"] .tabs:before {
+  content: "";
+  position: absolute;
+  left: 2em;
+  width: .5em;
+  height: 2em;
+  background: linear-gradient(90deg, currentColor, transparent);
+  z-index: 1;
 }
 [data-role="storymap"] .tabs .header > div {
   display: inline-block;
