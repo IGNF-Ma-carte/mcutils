@@ -2,7 +2,8 @@ import options from '../../config/config'
 import charte from '../../charte/macarte'
 import '../../Carte'
 import '../../dialog/notification'
-import './index.css'
+
+import './charte.scss'
 
 import saveCarte from '../../dialog/saveCarte'
 import shareCarte from '../../dialog/shareCarte'

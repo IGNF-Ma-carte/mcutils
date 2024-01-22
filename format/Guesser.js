@@ -1,5 +1,3 @@
-import ol_ext_inherits from 'ol-ext/util/ext'
-
 import ol_format_GPX from 'ol/format/GPX'
 import ol_format_GeoJSON from 'ol/format/GeoJSON'
 import ol_format_IGC from 'ol/format/IGC'
@@ -16,10 +14,11 @@ import ol_format_Feature from 'ol/format/Feature'
  * @extends {ol_format_Feature}
  * @param {Object} options
  */
-var ol_format_Guesser = function(options) {
-  ol_format_Feature.call(this, options)
+class ol_format_Guesser extends ol_format_Feature {
+  constructor (options) {
+    super(options)
+  }
 }
-ol_ext_inherits(ol_format_Guesser, ol_format_Feature);
 
 /** List of accepted format constructors
  */

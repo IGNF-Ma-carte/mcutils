@@ -3,6 +3,8 @@ import loader from '../../dialog/loader'
 
 import md2html from "../../md/md2html";
 import StoryMap  from "../../StoryMap";
+
+import './narration.scss'
 import '../index.css'
 
 const story = new StoryMap({ 

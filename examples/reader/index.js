@@ -1,10 +1,9 @@
-import 'ol/ol.css'
-import 'ol-ext/dist/ol-ext.css'
 import md2html from '../../md/md2html'
 import ol_filter_Colorize from 'ol-ext/filter/Colorize'
 import CanvasFilter from 'ol-ext/filter/CanvasFilter'
 import CSSFilter from 'ol-ext/filter/CSS'
 
+import './reader.scss'
 import '../index.css'
 
 // App i18n
@@ -24,7 +23,7 @@ const carte = new Carte({
   key: '0gd4sx9gxx6ves3hf3hfeyhw',
   // url: '../data/JeudiPhoto.carte',
   id: 'f41eb1e858922dc6d4a4a60e96362604',
-  id : '3e13f9216726fc580dfac84c292e7242',
+  id : '85110b95a26e57fd07d9cdcb915f5c1e',
   //url: '../data/BUG.carte',
   //url: '../data/georef.carte',
   //url: '../data/stat.carte',

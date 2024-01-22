@@ -93,8 +93,7 @@
 
 .md-toolbar > i.add:before {
   content: 'Plus...';
-};
-
+}
 
 /* Dialog */
 .ol-ext-dialog.help.md-help > form {

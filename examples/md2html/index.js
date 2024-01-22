@@ -4,7 +4,7 @@ import md2html from '../../md/md2html';
 import MDEditor from '../../md/MDEditor';
 import '../../Carte'
 
-import './index.css'
+import './md2html.scss'
 
 charte.setApp('md', 'Markdown');
 

@@ -136,8 +136,8 @@ stroke.addEventListener('change', e => {
 const carte = new Carte({
   target: 'map', 
   // id: '32abd17790a2c94c703a9e7a2b8269ab',
-  id: '81dd3298118b6cc4704c11726e065092',
-  // url: './data/stat.carte'
+  // id: '81dd3298118b6cc4704c11726e065092',
+  url: './data/stat.carte'
 })
 carte.showControl('legend');
 

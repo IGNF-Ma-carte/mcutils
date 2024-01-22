@@ -4,7 +4,7 @@ import dialog from '../../dialog/dialog'
 import dialogMessage from '../../dialog/dialogMessage'
 import notification from '../../dialog/notification'
 
-import './index.css'
+import './charteSite.scss'
 
 charte.setApp('macarte', 'Ma carte');
 // charte.setApp('atlas', 'Ma carte');

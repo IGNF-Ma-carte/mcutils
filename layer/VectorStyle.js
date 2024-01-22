@@ -1,5 +1,4 @@
-﻿import ol_inherits from 'ol-ext/util/ext'
-import ol_layer_Group from 'ol/layer/Group'
+﻿import ol_layer_Group from 'ol/layer/Group'
 import ol_layer_Vector from 'ol/layer/Vector'
 import ol_layer_VectorImage from 'ol/layer/VectorImage'
 import ol_source_Cluster from '../ol/source/Cluster'
@@ -22,105 +21,107 @@ import { getStyleFn, defaultIgnStyle, clearCache, getIgnStyle, ordering } from '
  * @param {ol.layer.VectorOptions=} options Options, extend olx.layer.VectorOptions.
  *	@param {boolean} options.ghostStyle true to show a ghost feature when size=0
  */
-const VectorStyle = function(options) {
-  options = options || {};
+ class VectorStyle extends ol_layer_Group {
+  constructor(options) {
 
-  // Constructor
-  ol_layer_Group.call(this, options);
+    options = options || {};
 
-  // Render order based on the zindex
-  options.renderOrder = ordering;
-  // Style function for the layer
-  options.style = getStyleFn({ ghost: options.ghostStyle });
-  //
-  options.displayInLayerSwitcher = false;
-  options.dessin = true;
-  options.popupHoverSelect = false;
+    // Constructor
+    super(options);
 
-  // Create layer vector
-  this.layerVector_ = new ol_layer_Vector(options);
-  this.layerVector_.set('parent', this);
-  this.getSource().setAttributions(options.copyright || '');
-  // Selectable
-  this.layerVector_.selectable = () => {
-    return this.selectable();
-  }
-  this.layerVector_.set('name', 'vector');
-  this.getLayers().push(this.layerVector_);
+    // Render order based on the zindex
+    options.renderOrder = ordering;
+    // Style function for the layer
+    options.style = getStyleFn({ ghost: options.ghostStyle });
+    //
+    options.displayInLayerSwitcher = false;
+    options.dessin = true;
+    options.popupHoverSelect = false;
 
-  // Create a vector image
-  this.layerImage_ = new ol_layer_VectorImage(options);
-  this.layerImage_.set('parent', this);
-  this.layerImage_.set('name', 'image');
-  this.getLayers().push(this.layerImage_);
-  // Selectable
-  this.layerImage_.selectable = () => {
-    return this.selectable();
-  }
-  // Handle filter on layerImage element when show
-  this.layerImage_.on(['filter', 'change:visible'], () => {
-    setTimeout(() => {
-      if (this._mcFilter && this.layerImage_.getVisible()) {
-        const elt = document.body.querySelector('.ol-viewport .ol-layers .' + this.layerImage_.getClassName());
-        if (elt) {
-          const style = [];
-          const blend = [];
-          if (this._mcFilter.get('filter')) style.push(this._mcFilter.get('filter'));
-          if (this._mcFilter.get('blend')) blend.push(this._mcFilter.get('blend'));
-          elt.style.filter = style.join(' ');
-          elt.style.mixBlendMode = blend.join(' ');
-        }
-      }
-    })
-  })
-  this.on('change:visible', () => this.layerImage_.dispatchEvent('filter'));
+    // Create layer vector
+    this.layerVector_ = new ol_layer_Vector(options);
+    this.layerVector_.set('parent', this);
+    this.getSource().setAttributions(options.copyright || '');
+    // Selectable
+    this.layerVector_.selectable = () => {
+      return this.selectable();
+    }
+    this.layerVector_.set('name', 'vector');
+    this.getLayers().push(this.layerVector_);
 
-  // Features
-  var features = this.getSource().getFeatures();
-  features.forEach(f => f._layer = this );
-
-  this.setMode('vector');
-
-  // Handle membership
-  this.getSource().on('addfeature', (function(e) {
-    const f = e.feature;
-    // Feature layer
-    f._layer = this;
-    // Layer attributes
-    const layerAttr = Object.values(this.getAttributes())
-    if (layerAttr.length) {
-      const attr = f.getProperties();
-      layerAttr.forEach(a => {
-        if (!Object.prototype.hasOwnProperty.call(attr, a.name)) {
-          f.set(a.name, a.default)
+    // Create a vector image
+    this.layerImage_ = new ol_layer_VectorImage(options);
+    this.layerImage_.set('parent', this);
+    this.layerImage_.set('name', 'image');
+    this.getLayers().push(this.layerImage_);
+    // Selectable
+    this.layerImage_.selectable = () => {
+      return this.selectable();
+    }
+    // Handle filter on layerImage element when show
+    this.layerImage_.on(['filter', 'change:visible'], () => {
+      setTimeout(() => {
+        if (this._mcFilter && this.layerImage_.getVisible()) {
+          const elt = document.body.querySelector('.ol-viewport .ol-layers .' + this.layerImage_.getClassName());
+          if (elt) {
+            const style = [];
+            const blend = [];
+            if (this._mcFilter.get('filter')) style.push(this._mcFilter.get('filter'));
+            if (this._mcFilter.get('blend')) blend.push(this._mcFilter.get('blend'));
+            elt.style.filter = style.join(' ');
+            elt.style.mixBlendMode = blend.join(' ');
+          }
         }
       })
-    }
-    // Others?
-    if (options.onaddfeature) {
-      options.onaddfeature(e);
-    }
-  }).bind(this));
-  this.getSource().on('removefeature', (function(e) {
-    delete e.feature._layer;
-  }).bind(this));
+    })
+    this.on('change:visible', () => this.layerImage_.dispatchEvent('filter'));
 
-  // Clear the cache and force redraw when fonts are loaded
-  loadFonts(() => {
-    this.clearCache();
-    this.layerVector_.changed();
-  });
+    // Features
+    var features = this.getSource().getFeatures();
+    features.forEach(f => f._layer = this );
 
-  // Handle cluster maxZoom
-  this.layerVector_.on('prerender', (e) => {
-    if (this.getMode() === 'cluster' && e.frameState.viewState.zoom <= this.get('maxZoomCluster')) {
-      this.layerVector_.setVisible(false);
-      this.layerCluster_.setVisible(true);
-      this.activateCluster(true);
-    }
-  })
+    this.setMode('vector');
+
+    // Handle membership
+    this.getSource().on('addfeature', (function(e) {
+      const f = e.feature;
+      // Feature layer
+      f._layer = this;
+      // Layer attributes
+      const layerAttr = Object.values(this.getAttributes())
+      if (layerAttr.length) {
+        const attr = f.getProperties();
+        layerAttr.forEach(a => {
+          if (!Object.prototype.hasOwnProperty.call(attr, a.name)) {
+            f.set(a.name, a.default)
+          }
+        })
+      }
+      // Others?
+      if (options.onaddfeature) {
+        options.onaddfeature(e);
+      }
+    }).bind(this));
+    this.getSource().on('removefeature', (function(e) {
+      delete e.feature._layer;
+    }).bind(this));
+
+    // Clear the cache and force redraw when fonts are loaded
+    loadFonts(() => {
+      this.clearCache();
+      this.layerVector_.changed();
+    });
+
+    // Handle cluster maxZoom
+    this.layerVector_.on('prerender', (e) => {
+      if (this.getMode() === 'cluster' && e.frameState.viewState.zoom <= this.get('maxZoomCluster')) {
+        this.layerVector_.setVisible(false);
+        this.layerCluster_.setVisible(true);
+        this.activateCluster(true);
+      }
+    })
+  }
 };
-ol_inherits(VectorStyle, ol_layer_Group);
 
 /** Add a filter to a VectorLayer
  *	@param {ol/filter}

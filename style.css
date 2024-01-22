@@ -3,10 +3,11 @@
   top: auto;
   left: auto;
 }
+/*
 .ol-layerswitcher > button {
   background-color: rgba(0,60,136,0.5);
 }
-
+*/
 .ol-layerswitcher > button:before,
 .ol-control.ol-legend > button:first-child:before,
 .ol-control.ol-search button:before,

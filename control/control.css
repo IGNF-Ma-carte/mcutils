@@ -1,3 +1,8 @@
+.ol-viewport .ol-control {
+  padding: 2px;
+  background-color: hsla(0,0%,100%,.4);
+}
+
 .ol-layerswitcher {
   color: #036;
 }

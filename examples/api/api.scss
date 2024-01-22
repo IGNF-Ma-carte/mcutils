@@ -1,0 +1,27 @@
+[data-example="api"] {
+  [data-role="content"] {
+    margin-top: 11rem!important;
+  }
+
+  [data-role="toolBar"] {
+    border-bottom: 1px solid #ccc;
+  }
+
+  [data-role="toolBar"] input[type="search"] {
+    padding-left: 1.5em;
+  }
+  [data-role="toolBar"] .search {
+    position: relative;
+    display: inline-block;
+  }
+  [data-role="toolBar"] .search:before {
+    content: '\ea5f';
+    font-family: font-gis;
+    position: absolute;
+    left: .3em;
+  }
+
+  [data-role="content"] img {
+    max-height: 5em;
+  }
+}

@@ -1,6 +1,3 @@
-// Import ol styles
-import 'ol/ol.css'
-import 'ol-ext/dist/ol-ext.css'
 import './dialog.css'
 import Dialog from 'ol-ext/control/Dialog'
 import fakemap from './fakeMap'

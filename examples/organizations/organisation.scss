@@ -1,0 +1,35 @@
+[data-example="organizations"] {
+  [data-role="content"] ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  [data-role="content"] ul li {
+    padding: .5em 1em;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+  }
+  [data-role="content"] ul li:hover {
+    background-color: #e1eefd;
+  }
+  
+  .ol-ext-dialog i.button-colored {
+    min-width: 2.5em;
+    line-height: 2.5em;
+    margin: 0 .5em;
+    text-align: center;
+  }
+  .ol-ext-dialog li span { 
+    display: inline-block;
+    width: 8em;
+  }
+  .ol-ext-dialog li select {
+    margin: 0 .5em;
+  }
+  .ol-ext-dialog .ol-content textarea,
+  .ol-ext-dialog .ol-content input {
+    display: block;
+    width: 20em;
+    margin: .5em 0;
+  }  
+}

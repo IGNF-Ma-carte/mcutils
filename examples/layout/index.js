@@ -1,10 +1,10 @@
-import 'ol/ol.css'
-import 'ol-ext/dist/ol-ext.css'
 import config from '../../config/config'
-import '../index.css'
 import setLayout from '../../layout/layout'
 
 import Carte from '../../Carte'
+
+import '../index.css'
+import './layout.scss'
 
 const carte = new Carte({ 
   target: 'map', 

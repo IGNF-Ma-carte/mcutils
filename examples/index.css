@@ -4,9 +4,9 @@ html {
 * {
   -webkit-tap-highlight-color: transparent;
 }
-h1 {
+body > h1 {
   background-color: rgb(215, 215, 255);
-  padding: .5em 1em;
+  padding: .5em;
 }
 p {
   padding: 0 1em;

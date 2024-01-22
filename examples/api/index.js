@@ -6,7 +6,6 @@ import md2html from '../../md/md2html';
 
 import '../../font/loadFonts'
 import 'font-gis/css/font-gis.css'
-import './api.css'
 
 import dialogSave from '../../dialog/saveCarte'
 import emptyCarte from './emptyCarte'
@@ -14,6 +13,8 @@ import emptyCarte from './emptyCarte'
 import '../../api/ListCarte.responsive.css'
 import notification from '../../dialog/notification';
 import {getMediaURL} from '../../api/serviceURL';
+
+import './api.scss'
 
 function log(what) {
   if (what instanceof Element) {

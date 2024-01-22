@@ -5,7 +5,7 @@ import dialog from '../../dialog/dialog';
 import md2html from '../../md/md2html';
 import UserInput from '../../api/UserInput'
 
-import './index.css'
+import './organisation.scss'
 
 charte.setApp('api', 'Organizations');
 
