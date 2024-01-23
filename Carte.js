@@ -82,6 +82,7 @@ import VectorStyle from './layer/VectorStyle'
 import './ol/source/getFeatureInfo'
 import { Feature } from 'ol'
 import { LineString } from 'ol/geom'
+import RenderFeature from 'ol/render/Feature'
 
 loadFont();
 
@@ -190,12 +191,33 @@ class Carte extends ol_Object {
       type: 'zoom',
       points: true
     };
+
     // Image layer selection
     this.getMap().on('singleclick', e => {
       if (!this.getSelect().getActive()) return;
       // Is a feature at pixel ?
       const vectors = []
-      this.getMap().getFeaturesAtPixel(e.pixel, { hitTolerance: 3 }).forEach(f => {
+      const features = this.getMap().getFeaturesAtPixel(e.pixel, { hitTolerance: 3 })
+      // Select MVT
+      if (features[0] instanceof RenderFeature) {
+        const f0 = features[0];
+        if (f0.getLayer().selectable()) {
+          const attr = f0.getProperties();
+          attr.geometry = new LineString([e.coordinate, e.coordinate])
+          const f = new Feature(attr)
+          f.setLayer(f0.getLayer())
+
+          this.dispatchEvent({
+            type: 'layer:featureInfo',
+            coordinate: e.coordinate,
+            layer: f.getLayer(),
+            feature: f
+          })
+          return;
+        }
+      }
+      // Layers that have features
+      features.forEach(f => {
         if (f.getLayer()) vectors.push(f.getLayer())
       })
       // Get layer at pixel
@@ -203,7 +225,7 @@ class Carte extends ol_Object {
       for (let i = layers.length - 1; i>=0; i--) {
         const l = layers[i];
         if (l instanceof VectorStyle || l instanceof MVT) {
-          if (vectors.indexOf(l) >= 0) return
+          if (vectors.indexOf(l) >= 0) return;
         }
         // Image layer
         if (l.getData) {
@@ -239,6 +261,7 @@ class Carte extends ol_Object {
         }
       }
     })
+
     // Add interactions
     this._interactions = {
       select: new Select({
