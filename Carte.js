@@ -243,16 +243,24 @@ class Carte extends ol_Object {
               this.getMap().getView().getResolution(), {
                 INFO_FORMAT: 'application/json',
                 callback: resp => {
-                  const attr = JSON.parse(resp).features[0].properties
-                  attr.geometry = new LineString([e.coordinate, e.coordinate])
-                  const f = new Feature(attr)
-                  f.setLayer(l)
-                  this.dispatchEvent({
-                    type: 'layer:featureInfo',
-                    coordinate: e.coordinate,
-                    layer: l,
-                    feature: f
-                  })
+                  const features = JSON.parse(resp).features;
+                  if (features.length) {
+                    const attr = JSON.parse(resp).features[0].properties
+                    attr.geometry = new LineString([e.coordinate, e.coordinate])
+                    const f = new Feature(attr)
+                    f.setLayer(l)
+                    this.dispatchEvent({
+                      type: 'layer:featureInfo',
+                      coordinate: e.coordinate,
+                      layer: l,
+                      feature: f
+                    })
+                  } else {
+                    this.dispatchEvent({
+                      type: 'layer:featureInfo',
+                      coordinate: e.coordinate,
+                    })
+                  }
                 }
               }
             );
