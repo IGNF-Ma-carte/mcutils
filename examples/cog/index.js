@@ -5,6 +5,7 @@ import TileLayer from 'ol/layer/WebGLTile.js';
 import GeoTIFF from 'ol/source/GeoTIFF.js';
 import View from 'ol/View';
 import { buffer } from 'ol/extent'
+import { fromUrl } from 'geotiff';
 
 import './cog.scss'
 
@@ -33,9 +34,53 @@ const map = new Map({
 map.getViewport().classList.add('ol-ready');
 
 
+/** Get vignette */
+const canvas = document.querySelector('#vignette canvas');
+
+function getVignette(url) {
+  fromUrl(url).then(geoTiffFile => {
+    console.log(geoTiffFile)
+    geoTiffFile.getImageCount().then(nb => {
+      console.log(nb)
+      geoTiffFile.getImage(nb-1).then(image => {
+        console.log(image.getWidth() + 'x' + image.getHeight())
+        /* Convert image to RGB / canvas */
+        image.readRGB().then(geoTiffDataRGB => {
+          const width = geoTiffDataRGB.width;
+          const height = geoTiffDataRGB.height;
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d', {willReadFrequently: true});
+          const imageData = ctx.getImageData(0, 0, width, height);
+          const data = imageData.data;  // array of RGBA values
+        
+          // convert GeoTiff's RGB values to ImageData's RGBA values
+          for (let i = 0; i < height; i++) {
+            for (let j = 0; j < width; j++) {
+              const srcIdx = 3 * i * width + 3 * j;
+              const idx = 4 * i * width + 4 * j;
+              data[idx] = geoTiffDataRGB[srcIdx];
+              data[idx + 1] = geoTiffDataRGB[srcIdx + 1];
+              data[idx + 2] = geoTiffDataRGB[srcIdx + 2];
+              data[idx + 3] = 255;  // fully opaque
+            }
+          }
+          ctx.putImageData(imageData, 0, 0);
+          console.log('ok')
+        })
+        /**/
+      });
+    });
+  });
+}
+
 // Load new COG
 const cogInput = document.querySelector('input')
 cogInput.addEventListener('change', e => {
+  // Get a vignette
+  getVignette(e.target.value)
+
   map.removeLayer(layer)
   // New COG
   const source = new GeoTIFF({
@@ -49,14 +94,14 @@ cogInput.addEventListener('change', e => {
   document.body.dataset.loading = '';
   source.getView().then(v => {
     // Add zoom levels
-    v.resolutions.unshift(v.resolutions[0] * 2)
     v.resolutions.push(v.resolutions[v.resolutions.length-1] / 2)
     // Extent buffer
-    v.extent = buffer(v.extent, (v.extent[2]-v.extent[0])/4)
+    v.extent = buffer(v.extent, (v.extent[2] - v.extent[0])/4)
     // Set view
     map.setView(new View(v))
     delete document.body.dataset.loading;
   })
+  window.source = source
 })
 
 // Select
@@ -64,6 +109,7 @@ document.querySelector('select').addEventListener('change', e => {
   cogInput.value = e.target.value;
   cogInput.dispatchEvent(new Event('change'));
 })
+document.querySelector('select').value = '';
 
 window.map = map;
 window.geotiff = source;

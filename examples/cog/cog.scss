@@ -40,4 +40,25 @@
     top: 2em;
     background-color: #eee;
   }
+
+  canvas {
+    display: block;
+    max-width: 200px;
+  }
+  #vignette {
+    position: fixed;
+    top: 2em;
+    left: 0;
+    border: 5px solid #fff;
+  }
+  #vignette:before {
+    content: "vignette";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    background-color: #fff;
+    padding: 0 .25em 0 .5em;
+    line-height: 1em;
+  }
+
 }
