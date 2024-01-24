@@ -18,8 +18,23 @@
   <meta name="msapplication-tap-highlight" content="no">   
   
 </head>
-<body>
+<body data-example="COG">
+  <input type="text" placeholder="geotiff url" />
+  <select>
+    <option disabled>Sélectionnez un COG</option>
+    <option value="https://data-pprd.priv.geopf.fr/telechargement/download/perf_rlt/P15000222/IGNF_PVA_1-0__2015-09-10__CP15000222_15FD2725x00005_01874.tif">
+      IGNF_PVA_1-0__2015-09-10
+    </option>
+    <option value="https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/Q/WD/2020/7/S2A_36QWD_20200701_0_L2A/TCI.tif">
+      Sentinel
+    </option>
+    <option value="https://openlayers.org/data/raster/no-overviews.tif">
+      Atoll (Openlayers)
+    </option>
+  </select>
   <div id="map" class="map"></div>
+
+  <div id="loading">Chargement</div>
 
   <script type="module" src="./cog/index.js"></script>
 </body>
