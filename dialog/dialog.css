@@ -97,10 +97,7 @@ body > .ol-ext-dialog form > h2 {
 
 .ol-ext-dialog.page404 form {
   position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  inset: 0!important;
   max-width: 100%;
   transform: none;
   border: 0;
