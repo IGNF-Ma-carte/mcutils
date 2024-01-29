@@ -1,4 +1,4 @@
-/** @module version/toV4
+/** @module version
  * @description Convert to V4 format
  */
 import { layout } from "../../layout/layout";

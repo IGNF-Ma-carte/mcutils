@@ -10,7 +10,7 @@ import WMTS from './layer/WMTS';
 import MousePositionFormat from './control/MousePosition';
 import LegendFormat from './control/Legend';
 
-import {carteV4} from './version/toV4'
+import { upgradeCarte } from './version/version.js'
 import File from '../format/layer/File';
 import ECReport from '../format/layer/ECReport';
 import XYZ from '../format/layer/XYZ';
@@ -61,7 +61,7 @@ Carte.layerFormats = [
  * @return {mcutils.Carte}
  */
 Carte.prototype.read = function(carte, options) {
-  carteV4(options);
+  upgradeCarte(options);
   const map = carte.map;
   // Reset layer ID
   carte.layerId_ = 0;

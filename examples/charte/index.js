@@ -27,7 +27,7 @@ const story = new StoryMap({
   // id: '7675e0fc5332260f4b565ef62201c1db', // Transport Toulouse
   // id: '68d880fea6c1f763aa112988326ad1a7', // Tour du monde 80 jours
   // target: document.querySelector('[data-role="map"]'),
-  key: options.gppKey
+  key: options.apikey
 });
 
 // Start loading

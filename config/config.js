@@ -10,6 +10,7 @@ let options = {
   tuto: 'https://server/aide/tuto/$ARTICLE',
   version: 'https://server/aide/notes-de-version/$ARTICLE',
   sitePiwik: 239,
+  apikey: 'ign_scan_ws',
   gppKey: '0gd4sx9gxx6ves3hf3hfeyhw',
   edugeoKey: '1mgehldv90vifl6s5ksf900i'
 };

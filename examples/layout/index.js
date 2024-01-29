@@ -8,7 +8,7 @@ import './layout.scss'
 
 const carte = new Carte({ 
   target: 'map', 
-  key: config.gppKey,
+  key: config.apikey,
   id: 'b8d7c7f37733d992051adb4c2dbb8a2d'
   //url: '../data/JeudiPhoto.carte',
   //url: '../data/georef.carte',
