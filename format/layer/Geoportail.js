@@ -1,4 +1,4 @@
-import GeoportailLayer from 'ol-ext/layer/Geoportail'
+import GeoportailLayer from 'mcutils/layer/Geoportail'
 import LayerFormat from './Layer';
 
 /** Geoportail layer format reader/writer.
@@ -37,12 +37,10 @@ Geoportail.prototype.read = function (options, key) {
       break;
     }
   }
-  const capabilities = window.geoportailConfig.capabilities[key]
-  const gppKey = capabilities && capabilities[options.layer] ? key : null
   // Create
   try {
     const layer = new GeoportailLayer({
-      gppKey: gppKey,
+      gppKey: key,
       layer: options.layer,
       preload: 10
     });
