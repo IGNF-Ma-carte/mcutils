@@ -118,6 +118,9 @@
   user-select: text;
 }
 
+.md .fa-middle {
+  vertical-align: middle;
+}
 .md .fa.left,
 .md .fa.fa-left {
   float: left;
