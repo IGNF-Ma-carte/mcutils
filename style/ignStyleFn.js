@@ -781,7 +781,7 @@ function getSelectStyleFn(options) {
         s = showObject ? style(f, res) : [];
         // Add
         var g = f.getGeometry();
-        if (g.getType() === 'Point') {
+        if (/Point/.test(g.getType())) {
           var cluster = f.get('features');
           if (cluster && cluster.length==1) {
             f = cluster[0];
