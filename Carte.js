@@ -230,7 +230,7 @@ class Carte extends ol_Object {
         if (l.getData) {
           const pix = l.getData(e.pixel);
           // Get feature info ?
-          if (l.getSource().getFeatureInfo && pix && pix[3]) {
+          if (l.getSource() && l.getSource().getFeatureInfo && pix && pix[3]) {
             const content = l.getPopupContent();
             // No content
             if (!content) return;
