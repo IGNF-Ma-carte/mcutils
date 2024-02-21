@@ -220,6 +220,7 @@
   float: left;
   margin: 0 .5em 0 0;
 }
+.md video,
 .md iframe {
   max-width: 100%;
 }

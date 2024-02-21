@@ -111,8 +111,10 @@ function prepareImageSlider(type, data) {
  */
 function clipElement (elt, position) {
   const max = elt.previousElementSibling.getBoundingClientRect().width;
+  if (position === -1) {
+    position = max/2;
+  }
   elt.style.left = Math.min(max-2, Math.max(2, position)) + 'px';
-  elt.nextElementSibling.style.clip = 'rect(0, ' + elt.style.left + ', 1000px, 0)';
   elt.nextElementSibling.style.clip = 'rect(0, 10000px, 10000px, ' + elt.style.left + ')';
 }
 
@@ -142,15 +144,13 @@ function mdImageSlider(element) {
       e.preventDefault();
       // handle move
       window.addEventListener('pointermove', onPointerMove);
-      window.addEventListener('pointerup', onPointerUp);
       ol_ext_element.addListener(window, ['pointerup','pointercancel'], onPointerUp);
       elt = s;
       pageX = e.pageX;
       position = s.offsetLeft;
     })
-    // Current position
-    position = s.offsetLeft;
-    clipElement(s, position)
+    // Initial position
+    setTimeout(() => clipElement(s, -1));
     // Reset position if outside
     s.parentNode.addEventListener('click', (e) => {
       if (e.target.tagName === 'BUTTON') {

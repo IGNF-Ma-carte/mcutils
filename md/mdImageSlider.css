@@ -10,12 +10,14 @@
   max-width: 100%;
 }
 .md .md-image-slider img.md-img-2 {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
   max-width: unset;
-  clip: rect(0, 250px, 1000px, 0px);
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  border: 0 solid #000;
+  border-width: 1000px 0px;
 }
 
 .md .md-image-slider .md-image-slider {
@@ -75,15 +77,15 @@
   position: absolute;
   width: 7px;
   height: 7px;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
 }
 .md .md-image-slider .md-image-fullscreen:before {
-  border-width: 1px 1px 0 0;
+  border-width: 2px 2px 0 0;
   top: 3px;
   right: 3px;
 }
 .md .md-image-slider .md-image-fullscreen:after {
-  border-width: 0 0 1px 1px;
+  border-width: 0 0 2px 2px;
   left: 3px;
   bottom: 3px;
 }
