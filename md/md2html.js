@@ -447,6 +447,7 @@ md2html.cleanUp = function(md) {
 
   // Image server
   md = md.replace(/src="image\/voir/g, 'src="' + serviceURL.media);
+
   return md;
 }
 
@@ -495,6 +496,8 @@ md2html.rules = [
   [/<\/ul>\n([^<ul])/g, '</ul>$1'],						// fix
   [/<\/ol>\n([^<ol])/g, '</ol>$1'],						// fix
 
+  // Anchor links
+  [/\[([a-z,A-Z,0-9,\-,\_]+)\]\(#\)/g, '<a id="$1" class="anchor" href="#$1" tabindex="-1" aria-hidden="true"></a>'],
   // Automatic links
   [/([^\(])(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=()\u00E0-\u00FC$]*))/g, '$1<a href=\'$2\' target="_blank">$2</a>'],
   // Mailto

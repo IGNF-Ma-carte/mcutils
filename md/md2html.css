@@ -322,3 +322,33 @@ iframe.video,
 .md a.stepTo {
   cursor: pointer;
 }
+
+/* anchor links */
+.md a.anchor {
+  text-decoration: none;
+  font-size: .5em;
+  vertical-align: text-top;
+}
+.md h1 a.anchor,
+.md h2 a.anchor,
+.md h3 a.anchor,
+.md h4 a.anchor,
+.md h5 a.anchor {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+}
+.md h1:hover a.anchor:before,
+.md h2:hover a.anchor:before,
+.md h3:hover a.anchor:before,
+.md h4:hover a.anchor:before,
+.md h5:hover a.anchor:before {
+  content: "\f0c1";
+  font-family: FontAwesome;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: none;
+  opacity: .7;
+}
