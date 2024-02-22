@@ -1,4 +1,4 @@
-import GeoportailLayer from 'mcutils/layer/Geoportail'
+import GeoportailLayer from '../../layer/Geoportail'
 import LayerFormat from './Layer';
 
 /** Geoportail layer format reader/writer.
