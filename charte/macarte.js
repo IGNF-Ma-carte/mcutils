@@ -6,6 +6,7 @@ import Dialog from 'ol-ext/control/Dialog'
 import fakeMap from '../dialog/fakeMap'
 import serviceURL, { getDocumentationURL } from "../api/serviceURL";
 import config from '../config/config'
+import organization from '../api/organization';
 
 import './macarte.css'
 
@@ -189,6 +190,8 @@ charte.setApp = function (id, name) {
     checkNotification(id);
   })
 
+  // User organization
+  setOrganization();
 };
 
 charte.addUserMenuItem(ol_ext_element.create('A', {
@@ -396,15 +399,36 @@ charte.on('header:title', () => document.location = serviceURL.home);
 
 
 /* Update user on login */
-api.on(['login', 'me'], (e) => {
+api.on(['login', 'me'], e => {
   if (e.user) {
     charte.setUser(e.user);
   }
 });
 /* Update user on logout / disconnect */
-api.on(['logout', 'disconnect'], () => {
+api.on(['logout', 'disconnect'], e => {
   charte.setUser();
 });
+
+/* Handle organization */
+function setOrganization() {
+  charte.setName(organization.getName());
+}
+organization.on('change', setOrganization)
+api.on('logout', () => {
+  // remove current orga
+  organization.set();
+})
+api.on('login', e => {
+  // Check if user is in current orga
+  if (e.user.orga) {
+    // Check if user is still in the organization
+    organization.check(ok => {
+      if (!ok) organization.set()
+    })
+  } else {
+    organization.set();
+  }
+})
 
 export { connectDialog }
 

@@ -60,7 +60,7 @@
     "webfontloader": "^1.6.28"
   },
   "staticFiles": {
-    "staticPath": "./examples/assets",
+    "staticPath": "examples/assets",
     "watcherGlob": "**"
   }
 }

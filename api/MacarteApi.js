@@ -1,3 +1,5 @@
+import organization from "./organization";
+
 let _apiURL = '';
 let _logoutURL = '';
 
@@ -354,6 +356,7 @@ MacarteAPI.prototype.getMaps =  function(options, callback) {
   if (!options.context) options.context = 'profile';
   if (options.context==='profile' && !options.limit) options.limit = 'all';
   if (!options.query) options.query = '';
+  if (options.context !== 'atlas') options.organization = organization.getId();
   this._send('GET', _apiURL+'maps', options, callback, options.context !== 'atlas');
 };
 
@@ -680,13 +683,26 @@ MacarteAPI.prototype.setOrganizationMember =  function(id, userId, role, callbac
 /** Create a new organization
  * @param {string} id organization id
  * @param {string} userId user id
- * @param {string} role user role (editor, owner, member)
- * @param {function} [options.callback] callback function
+ * @param {function} [callback] callback function
  */
 MacarteAPI.prototype.removeOrganizationMember =  function(id, userId, callback) {
   this._send('DELETE', _apiURL + 'organizations/' + id + '/members/' + userId, {}, resp => {
     if (typeof(callback) === 'function') callback(resp);
   })
+}
+
+/** Check if current organization is still valid (the user belong to it)
+ * @param {function} [callback] callback function that takes a boolean
+ */
+MacarteAPI.prototype.checkOrganization = function(callback) {
+  if (organization.getId()) {
+    this.getOrganizations(orga => {
+      const isok = organization.checkIn(orga)
+      if (typeof(callback) === 'function') callback(isok)
+    })
+  } else {
+    return true
+  }
 }
 
 export default MacarteAPI

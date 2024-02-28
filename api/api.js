@@ -8,6 +8,7 @@ const api = new MacarteAPI(serviceURL.api, serviceURL.logout);
 
 api.on(['login', 'logout', 'me'], () => {
   const user = api.getMe();
+  // Set user role
   if (user && user.roles) {
     document.body.dataset.userRole = user.roles.join(' ')
   } else {

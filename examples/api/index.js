@@ -146,8 +146,20 @@ api.on(['login', 'logout', 'error', 'disconnect'], (e) => {
   log(e.type.toUpperCase() + (e.type==='login' ? ' > '+e.user.public_name : ''));
 });
 
+/* Handle organizations */
+import organization from '../../api/organization';
+import { organizationSelector } from '../../api/ListOrganization'
+
+const selctrl = organizationSelector(charte.getAppElement()).onselect(orga => {
+  organization.set(orga);
+})
+// Reset the options on login
+api.on('login', () => { selctrl.setOptions() })
+
+
 /**/
 window.api = api;
 window.charte = charte;
 window.dialog = dialog;
+window.organization = organization
 /**/

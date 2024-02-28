@@ -158,13 +158,14 @@ function addDrawTools(carte, tools, layer) {
     DrawPoint: 'Dessiner un point', 
     DrawLine: 'Dessiner une ligne', 
     DrawPolygon: 'Dessiner une surface', 
-    DrawHole: false,
+    DrawHole: 'Dessiner un trou',
     DrawRegular: 'Dessiner un polygone',
     Transform: transform,
-    Split: false,
-    Offset: false
+    Split: 'Découper une ligne',
+    Offset: 'Décaller une ligne'
   }
   // User tools
+  if (!tools) tools = ['Select','DrawPoint','DrawLine','DrawPolygon','DrawRegular','Transform','Delete','Export','Import']
   if (tools) {
     Object.keys(interactions).forEach(itool => {
       if (tools.indexOf(itool) < 0) {

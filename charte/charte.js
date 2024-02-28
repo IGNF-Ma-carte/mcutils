@@ -57,9 +57,12 @@ import serviceURL from '../api/serviceURL'
 
 const ismap = (document.body.dataset.page !== 'site');
 
+// Local variables
 let menuTabId = 0;
 let menuId = 0;
 let accordionId = 0;
+let initName = '';
+
 /** Check accordion 
  * @param {Element} elt label element of the accordion
  * @param {boolean} [check]
@@ -569,10 +572,21 @@ const charte = {
    * @param {string} [title] link title, default 'Acceuil - ' + name
    * @instance
    */
-  setName: (name, title) => { 
+  setName: (name, title) => {
+    if (!initName && name) initName = name;
+    if (!name) name = initName;
     title = title || ('Acceuil - ' + name);
     logoElt.title = titleElt.title = title;
     titleElt.innerText = name;
+  },
+  /** Set the app logo
+   * @param {string} name application name
+   * @param {string} [title] link title, default 'Acceuil - ' + name
+   * @instance
+   */
+  setLogo: (url) => { 
+    logoElt.className = url ? '' : 'logoIGN';
+    // logoElt.innerText = name;
   },
   /** Set the user name in the bar and add a connected dataset to the body
    * @param {object} user
