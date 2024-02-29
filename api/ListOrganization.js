@@ -66,11 +66,11 @@ function organizationSelector(parent) {
     element: orgasel,
     setOptions: setOptions,
     onselect: fn => {
-      if (typeof(fn)) onselect = fn
+      if (typeof(fn) === 'function') onselect = fn
       return selectCtrl;
     },
     onready: fn => {
-      if (typeof(fn)) onready = fn
+      if (typeof(fn) === 'function') onready = fn
       return selectCtrl;
     }
   }

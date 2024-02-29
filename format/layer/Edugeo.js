@@ -37,12 +37,14 @@ Edugeo.prototype.read = function (options) {
       break;
     }
   }
+  /*
   const capabilities = window.geoportailConfig.capabilities[key]
   const gppKey = capabilities && capabilities[options.layer] ? key : null
+  */
   // Create
   try {
     const layer = new GeoportailLayer({
-      gppKey: gppKey,
+      // gppKey: gppKey,
       layer: options.layer,
       preload: 10
     });

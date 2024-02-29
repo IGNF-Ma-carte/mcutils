@@ -405,7 +405,7 @@ api.on(['login', 'me'], e => {
   }
 });
 /* Update user on logout / disconnect */
-api.on(['logout', 'disconnect'], e => {
+api.on(['logout', 'disconnect'], () => {
   charte.setUser();
 });
 

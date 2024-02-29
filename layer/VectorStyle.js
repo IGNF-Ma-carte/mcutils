@@ -121,7 +121,7 @@ import { getStyleFn, defaultIgnStyle, clearCache, getIgnStyle, ordering } from '
       }
     })
   }
-};
+}
 
 /** Add a filter to a VectorLayer
  *	@param {ol/filter}

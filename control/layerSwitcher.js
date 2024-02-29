@@ -38,7 +38,7 @@ function showInfo(layer, map) {
   md2html.renderWidget(content);
 
   // Export layer
-  if (layer.get('exportable')) {
+  if (layer.get('exportable') && layer.getSource().getFeatures().length) {
     ol_ext_element.create('BUTTON', {
       html: '<i class="fi-download"></i> télécharger',
       className: 'button, button-ghost',
@@ -46,7 +46,7 @@ function showInfo(layer, map) {
         // Features to save
         const features = layer.getSource().getFeatures();
         if (!features.length) {
-          dialogMessage.showAlert('Aucune données à enregistrer<br/>dans ce calque...')
+          dialog.showAlert('Aucune données à enregistrer<br/>dans ce calque...')
           return;
         }
         const format = new GeoJSON;

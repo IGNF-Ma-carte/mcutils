@@ -93,7 +93,7 @@ function prepareCalendar(type, data) {
   } catch(e) {
     const dates = { week: {}, years: atts.open };
     ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(d => {
-      if (atts.hasOwnProperty(d)) {
+      if (Object.prototype.hasOwnProperty.call(atts, d)) {
         dates.week[d] = atts[d]
       }
     })
