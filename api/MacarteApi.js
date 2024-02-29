@@ -344,6 +344,7 @@ MacarteAPI.prototype.getPremium =  function() {
  *  @param {string} [options.context=profile] search context atlas|profile|admin, default profile
  *  @param {string} [options.query] Query string
  *  @param {string} [options.theme]
+ *  @param {string} [options.organization]
  *  @param {string} [options.premium='default'] Premium 'default' or 'edugeo')
  *  @param {string} [options.user] User public name
  *  @param {string} [options.sort='date'] 'date', 'rank' or 'views'
@@ -356,7 +357,13 @@ MacarteAPI.prototype.getMaps =  function(options, callback) {
   if (!options.context) options.context = 'profile';
   if (options.context==='profile' && !options.limit) options.limit = 'all';
   if (!options.query) options.query = '';
-  if (options.context !== 'atlas') options.organization = organization.getId();
+  if (options.organization === undefined) {
+    if (options.context !== 'atlas') {
+      options.organization = organization.getId();
+    } else {
+      options.organization = '';
+    }
+  } 
   this._send('GET', _apiURL+'maps', options, callback, options.context !== 'atlas');
 };
 

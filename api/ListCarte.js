@@ -480,7 +480,7 @@ ListCarte.prototype.showPage = function(page) {
     context: this.get('context'),
     offset: (page * this.get('size')) || 0,
     theme: this.get('theme') || '',
-    organization: this.get('organization') || '',
+    organization: this.get('organization') || undefined,
     limit: this.get('size'),
     user: this.get('user') || '',
     type: this.get('type') || '',

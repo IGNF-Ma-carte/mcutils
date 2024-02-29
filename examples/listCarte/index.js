@@ -59,9 +59,9 @@ charte.getAppElement().querySelectorAll('button').forEach((b, i) => {
 
 // Create list
 const list = new ListCarte(api, { 
-  context: 'profile',
-  context: 'organization',
-  // context: 'atlas',
+  // context: 'profile',
+  // context: 'organization',
+  context: 'atlas',
   selection: true,
   search: true,
   permalink: true,
