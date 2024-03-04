@@ -20,7 +20,6 @@ function organizationSelector(parent) {
   let onready =  function() {}
   // Select new Organization
   const orgasel = ol_ext_element.create('SELECT', {
-    style: { display: 'block' },
     disabled: true,
     change: () => {
       onselect(myOrga[orgasel.value])

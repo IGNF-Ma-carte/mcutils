@@ -1,4 +1,13 @@
 [data-example="organizations"] {
+  .links,
+  .selector {
+    margin: 1em 0;
+    background-color: #e1eefd;
+    padding: 0.5em;
+    border: 1px solid #999;
+    border-width: 1px 0;
+  }
+
   [data-role="content"] ul {
     list-style: none;
     margin: 0;
@@ -12,7 +21,7 @@
   [data-role="content"] ul li:hover {
     background-color: #e1eefd;
   }
-  
+    
   .ol-ext-dialog i.button-colored {
     min-width: 2.5em;
     line-height: 2.5em;
@@ -31,5 +40,5 @@
     display: block;
     width: 20em;
     margin: .5em 0;
-  }  
+  }
 }

@@ -9,11 +9,20 @@ import './organisation.scss'
 
 charte.setApp('api', 'Organizations');
 
-// Organization list
+/* Change organizations */
+import organization from '../../api/organization';
+import { organizationSelector } from '../../api/ListOrganization'
+
+const selctrl = organizationSelector(charte.getAppElement().querySelector('.selector')).onselect(orga => {
+  organization.set(orga);
+})
+// Reset the options on login
+api.on('login', () => { selctrl.setOptions() })
+
+/* Organization list */
 const list = ol_ext_element.create('UL', {
   parent: charte.getAppElement().querySelector('.organizations')
 })
-
 
 function addUser(orga) {
   dialog.show({
@@ -141,4 +150,5 @@ charte.getAppElement().querySelector('[data-role="add"]').addEventListener('clic
 window.api = api;
 window.charte = charte;
 window.dialog = dialog;
+window.organization = organization
 /**/
