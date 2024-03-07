@@ -22,7 +22,7 @@ const story = new StoryMap({
   id: '5aea2d2515d03442521ddc91347e8427', // Nautilus
 /**/
   target: 'narration',
-  key: options.apikey
+  key: options.gppKey
 });
 
 story.on('read:start', () => {

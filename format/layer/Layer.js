@@ -149,6 +149,7 @@ Layer.prototype.writeOptions = function(layer, options) {
   if (layer.get('type')==='Geoportail'
     || (layer.get('type')==='WMS' && layer.get('wmsparam').source.attributions && layer.get('wmsparam').source.attributions.length)
     || (layer.get('type')==='WMTS' && layer.get('wmtsparam').source.attributions.length)
+    || !layer.getSource()
     || !layer.getSource().getAttributions()
   ) {
     options.copyright = ''

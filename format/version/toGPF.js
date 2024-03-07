@@ -28,6 +28,10 @@ function carteGPF(options) {
         l.url = l.url.replace(/^https:\/\/wxs.ign.fr\/([^\/]*)\/geoportail\/wfs/, 'https://data.geopf.fr/wfs/ows')
         break;
       }
+      case 'MVT': {
+        l.url = l.url.replace(/^https:\/\/wxs.ign.fr\/static/, 'https://data.geopf.fr/annexes/ressources').replace(/\/essentiels/, '')
+        break;
+      }
       default: {
         break;
       }

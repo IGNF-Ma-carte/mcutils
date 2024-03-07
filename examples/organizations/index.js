@@ -48,16 +48,18 @@ function showList() {
   list.innerHTML = '';
   dialog.showWait('Chargement...');
   api.getOrganizations(orga => {
-    orga.forEach(o => {
-      ol_ext_element.create('LI', {
-        text: o.organization_name + ' (' + o.user_role + ')',
-        click: () => {
-          dialog.showWait('Organisation ' + o.organization_name + '...')
-          showOrga(o);
-        },
-        parent: list
-      })
-    });
+    if (!orga.error) {
+      orga.forEach(o => {
+        ol_ext_element.create('LI', {
+          text: o.organization_name + ' (' + o.user_role + ')',
+          click: () => {
+            dialog.showWait('Organisation ' + o.organization_name + '...')
+            showOrga(o);
+          },
+          parent: list
+        })
+      });
+    }
     dialog.hide();
   })
 }

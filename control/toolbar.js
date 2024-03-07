@@ -221,7 +221,7 @@ function addDrawTools(carte, tools, layer) {
   // Download button
   if (!tools || tools.indexOf('Export') >= 0) {
     ctrl.getSubBar().addControl(new Button({
-      title: 'Charger le croquis...',
+      title: 'Exporter le croquis...',
       html: '<i class="fi-download"></i>',
       handleClick: () => {
         const features = drawLayer.getSource().getFeatures();
