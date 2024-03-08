@@ -7,7 +7,7 @@ class Organization extends ol_Object {
   constructor() {
     super();
     try {
-      _organization = JSON.parse(localStorage.getItem('MC@organization'))
+      _organization = JSON.parse(localStorage.getItem('MC@organization')) || {}
     } catch(e) {
       _organization = {};
     }
