@@ -241,7 +241,6 @@ function mdCharts(element) {
           }
         }
       }
-      console.log(opt);
       new Chart(canvas.getContext('2d'), opt);
     } catch(e) {
       // Chart is not set

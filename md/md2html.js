@@ -19,6 +19,7 @@ import 'highlight.js/styles/github.css';
 
 import mdCharts, { prepareCharts } from './mdCharts';
 import mdImageSlider, { prepareImageSlider } from './mdImageSlider';
+import mdDiaporama, { prepareDiaporama } from './mdDiaporama';
 import mdCalendar, { prepareCalendar } from './mdCalendar.js';
 import { prepareCard } from './mdCardPrinter';
 
@@ -123,6 +124,10 @@ md2html.doWidget = function (md, data) {
     // Image slide
     case 'imageSlider': {
       return prepareImageSlider(type, md2html.doData(md, data));
+    }
+    // Image slide
+    case 'diaporama': {
+      return prepareDiaporama(type, md2html.doData(md, data));
     }
     // Cards
     case 'card': {
@@ -718,9 +723,10 @@ md2html.renderWidget = function(element) {
   mdCharts(element);
   // Create Slider
   mdImageSlider(element);
+  // Create Diaporama
+  mdDiaporama(element);
   // Create Calendar
   mdCalendar(element);
-
 }
 
 /** Render icons in a markdown text

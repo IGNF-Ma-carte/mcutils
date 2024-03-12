@@ -1,27 +1,25 @@
 L'ajout de widgets se fait en encadrant le code entre trois `&#96;&#96;&#96;`
 
-## Codes
+## Diaporama
 
-Il est possible d'afficher des blocs de code sur avec coloration syntaxique selon le langage mis en préfixe.
+Vous pouvez ajouter un diaporama à partir d'image en utilisant `&#96;&#96;&#96;diaporama`.
 
 [++ :fa-code:fw: Code ++]
 ```md
-&#96;``javascript
-var val = 1;
-// Fontion de test
-function test(param) {
-  return param === val;
-}
+&#96;``diaporama
+img: https://upload.wikimedia.org/wikipedia/commons/5/53/Shadow_2752.jpg
+img: https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png
+img: https://upload.wikimedia.org/wikipedia/commons/6/6d/Bibliotheque_nationale_boul.jpg
+fullscreen: true
 &#96;``
 ```
 [----]
 [++ :fa-desktop:fw: Résultat ++]
-```javascript
-var val = 1;
-// Fontion de test
-function test(param) {
-  return param === val;
-}
+```diaporama
+img: https://upload.wikimedia.org/wikipedia/commons/5/53/Shadow_2752.jpg
+img: https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png
+img: https://upload.wikimedia.org/wikipedia/commons/6/6d/Bibliotheque_nationale_boul.jpg
+fullscreen: true
 ```
 [----]
 
@@ -374,5 +372,30 @@ theme: hue
 title: excel
 data: 1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
 theme: excel
+```
+[----]
+
+## Codes
+
+Il est possible d'afficher des blocs de code sur avec coloration syntaxique selon le langage mis en préfixe.
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``javascript
+var val = 1;
+// Fontion de test
+function test(param) {
+  return param === val;
+}
+&#96;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+```javascript
+var val = 1;
+// Fontion de test
+function test(param) {
+  return param === val;
+}
 ```
 [----]

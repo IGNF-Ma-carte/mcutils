@@ -44,7 +44,7 @@ function carteV4(options) {
   //if (ctrl.legend == 1 || ctrl.legend === true) {
   if (!options.legende) options.legende = {}
   options.controls.legend = {
-    title: options.legende.title || options.legende.legendtitle || 'Légende',
+    title: options.legende.title || options.legende.legendtitle,
     visible: ctrl.legend || false,
     collapsed: options.legende.legendVisible || false,
     width: options.legende.legendWidth || 300,

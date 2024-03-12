@@ -60,35 +60,20 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 20px;
-  height: 20px;
-  margin: .5em;
+  color: #fff;
   background-color: rgba(0,0,0,.4);
   border: 0;
   border-radius: 2px;
   opacity: .5;
   cursor: pointer;
+  font-size: 1.5em;
 }
 .md .md-image-slider .md-image-fullscreen:hover {
   opacity: 1;
 }
-.md .md-image-slider .md-image-fullscreen:before,
-.md .md-image-slider .md-image-fullscreen:after {
-  content: '';
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  border: 2px solid #fff;
-}
 .md .md-image-slider .md-image-fullscreen:before {
-  border-width: 2px 2px 0 0;
-  top: 3px;
-  right: 3px;
-}
-.md .md-image-slider .md-image-fullscreen:after {
-  border-width: 0 0 2px 2px;
-  left: 3px;
-  bottom: 3px;
+  content: '\e91e';
+  font-family: font-ign;
 }
 
 .md-fullscreen-image-slider {
