@@ -11,7 +11,6 @@ const fscreen = ol_ext_element.create('DIV', {
  * @private
  */
 function prepareDiaporama(type, data) {
-  console.log(type, data)
   // Get params
   const lines = data.split('\n');
   const atts = {
@@ -38,20 +37,26 @@ function prepareDiaporama(type, data) {
   const content = ol_ext_element.create('DIV');
   const diapo = ol_ext_element.create('DIV', {
     className: 'mdDiaporama',
+    'data-rotate': (atts.rotate && atts.rotate !== 'no') ? 'rotate' : '',
+    style: {
+      backgroundColor: atts.backgroundColor || 'unset'
+    },
     parent: content
   });
   atts.img.forEach((img, i) => {
-    ol_ext_element.create('IMG', {
-      src: img,
-      className: 'diapo',
-      parent: diapo
-    });
-    ol_ext_element.create('DIV', {
-      text: atts.title[i] || '',
-      title: atts.title[i] || '',
-      class: 'diapo-title',
-      parent: diapo
-    })
+    if (img) {
+      ol_ext_element.create('IMG', {
+        src: img,
+        className: 'diapo',
+        parent: diapo
+      });
+      ol_ext_element.create('DIV', {
+        text: atts.title[i] || '',
+        title: atts.title[i] || '',
+        class: 'diapo-title',
+        parent: diapo
+      })
+    }
   })
   ol_ext_element.create('BUTTON', {
     className: 'leftButton',
@@ -85,31 +90,39 @@ function mdDiaporama(element) {
 }
 
 function diaporama(elt) {
+  const rotate = elt.dataset.rotate
   const leftBt = elt.querySelector('button.leftButton')
   const rightBt = elt.querySelector('button.rightButton')
   const images = elt.querySelectorAll('img.diapo')
   const titles = elt.querySelectorAll('.diapo-title')
   function updateButton() {
-    leftBt.dataset.visible = (currentImg === 0 ? 0 : 1)
-    rightBt.dataset.visible = (currentImg === images.length-1 ? 0 : 1)
+    if (!rotate) {
+      leftBt.dataset.visible = (currentImg === 0 ? 0 : 1)
+      rightBt.dataset.visible = (currentImg === images.length-1 ? 0 : 1)
+    }
   }
   let currentImg = 0;
   // next
   leftBt.addEventListener('click', () => {
-    images[currentImg].dataset.visible = 0;
-    titles[currentImg].dataset.visible = 0;
-    currentImg = Math.max(currentImg-1, 0);
-    images[currentImg].dataset.visible = 1;
-    titles[currentImg].dataset.visible = 1;
+    images[currentImg].dataset.visible = titles[currentImg].dataset.visible = 0;
+    if (rotate) {
+      currentImg = (images.length + currentImg - 1) % images.length;
+      console.log(currentImg)
+    } else {
+      currentImg = Math.max(currentImg - 1, 0);
+    }
+    images[currentImg].dataset.visible = titles[currentImg].dataset.visible = 1;
     updateButton()
   })
   // prev
   rightBt.addEventListener('click', () => {
-    images[currentImg].dataset.visible = 0;
-    titles[currentImg].dataset.visible = 0;
-    currentImg = Math.min(currentImg+1, images.length-1);
-    images[currentImg].dataset.visible = 1;
-    titles[currentImg].dataset.visible = 1;
+    images[currentImg].dataset.visible = titles[currentImg].dataset.visible = 0;
+    if (rotate) {
+      currentImg = (currentImg + 1) % images.length;
+    } else {
+      currentImg = Math.min(currentImg + 1, images.length-1);
+    }
+    images[currentImg].dataset.visible = titles[currentImg].dataset.visible = 1;
     updateButton()
   })
   // Fullscreen

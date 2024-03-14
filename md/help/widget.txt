@@ -13,6 +13,8 @@ title: Jeanne Paquin Gown © George Barbier (1882 - 1932)
 img: https://upload.wikimedia.org/wikipedia/commons/6/6e/Paquin3.jpg
 title: Restauration de la Bibliothèque nationale © BnF
 img: https://upload.wikimedia.org/wikipedia/commons/6/6d/Bibliotheque_nationale_boul.jpg
+backgroundColor: rgba(0,0,0,0.5)
+rotate: true
 fullscreen: true
 &#96;``
 ```
@@ -25,6 +27,8 @@ title: Jeanne Paquin Gown © George Barbier (1882 - 1932)
 img: https://upload.wikimedia.org/wikipedia/commons/6/6e/Paquin3.jpg
 title: Restauration de la Bibliothèque nationale © BnF
 img: https://upload.wikimedia.org/wikipedia/commons/6/6d/Bibliotheque_nationale_boul.jpg
+backgroundColor: rgba(0,0,0,0.5)
+rotate: true
 fullscreen: true
 ```
 [----]

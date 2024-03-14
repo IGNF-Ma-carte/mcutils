@@ -92,11 +92,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
   max-height: 100%;
-  display: none;
-}
-.mdDiaporama img[data-visible="1"] {
   display: block;
+  opacity: 0;
+  transition: opacity 0.5s;
 }
+
 .mdDiaporama .diapo-title {
   position: absolute;
   bottom: 0;
@@ -105,11 +105,11 @@
   color: #fff;
   line-height: 1.4em;
   text-align: center;
-  display: none;
   z-index: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: none;
 }
 .mdDiaporama .diapo-title:first-of-type {
   display: block;
@@ -125,13 +125,16 @@
 }
 
 .mdDiaporama img:first-child {
-  display: block;
+  opacity: 1;
   position: unset;
   transform: unset;
   margin: auto;
 }
 .mdDiaporama img[data-visible="0"] {
   opacity: 0;
+}
+.mdDiaporama img[data-visible="1"] {
+  opacity: 1;
 }
 
 .md-fullscreen-diaporama {
