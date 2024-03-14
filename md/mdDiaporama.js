@@ -15,31 +15,43 @@ function prepareDiaporama(type, data) {
   // Get params
   const lines = data.split('\n');
   const atts = {
-    img: []
+    img: [],
+    title: []
   }
   //
   lines.forEach(d => {
     const i = d.indexOf(':');
     const att = d.substr(0,i);
-    if (att==='img') {
-      atts.img.push(d.substr(i+1).trim());
-    } else {
-      atts[d.substr(0,i)] = d.substr(i+1).trim();
+    switch (att) {
+      case 'img':
+      case 'title': {
+        atts[att].push(d.substr(i+1).trim());
+        break;
+      }
+      default: {
+        atts[att] = d.substr(i+1).trim();
+        break;
+      }
     }
   })
-  console.log(atts)
   // Element
   const content = ol_ext_element.create('DIV');
   const diapo = ol_ext_element.create('DIV', {
     className: 'mdDiaporama',
     parent: content
   });
-  atts.img.forEach(img => {
+  atts.img.forEach((img, i) => {
     ol_ext_element.create('IMG', {
       src: img,
       className: 'diapo',
       parent: diapo
     });
+    ol_ext_element.create('DIV', {
+      text: atts.title[i] || '',
+      title: atts.title[i] || '',
+      class: 'diapo-title',
+      parent: diapo
+    })
   })
   ol_ext_element.create('BUTTON', {
     className: 'leftButton',
@@ -51,10 +63,12 @@ function prepareDiaporama(type, data) {
   })
   ol_ext_element.create('BUTTON', {
     className: 'closeBox',
+    'data-fullscreen': atts.fullscreen || 'no',
     parent: diapo
   })
   ol_ext_element.create('BUTTON', {
     className: 'fullscreen',
+    'data-fullscreen': atts.fullscreen || 'no',
     parent: diapo
   })
   return content.innerHTML;
@@ -74,6 +88,7 @@ function diaporama(elt) {
   const leftBt = elt.querySelector('button.leftButton')
   const rightBt = elt.querySelector('button.rightButton')
   const images = elt.querySelectorAll('img.diapo')
+  const titles = elt.querySelectorAll('.diapo-title')
   function updateButton() {
     leftBt.dataset.visible = (currentImg === 0 ? 0 : 1)
     rightBt.dataset.visible = (currentImg === images.length-1 ? 0 : 1)
@@ -82,20 +97,25 @@ function diaporama(elt) {
   // next
   leftBt.addEventListener('click', () => {
     images[currentImg].dataset.visible = 0;
+    titles[currentImg].dataset.visible = 0;
     currentImg = Math.max(currentImg-1, 0);
     images[currentImg].dataset.visible = 1;
+    titles[currentImg].dataset.visible = 1;
     updateButton()
   })
   // prev
   rightBt.addEventListener('click', () => {
     images[currentImg].dataset.visible = 0;
+    titles[currentImg].dataset.visible = 0;
     currentImg = Math.min(currentImg+1, images.length-1);
     images[currentImg].dataset.visible = 1;
+    titles[currentImg].dataset.visible = 1;
     updateButton()
   })
   // Fullscreen
   elt.querySelector('button.fullscreen').addEventListener('click', () => {
     fscreen.innerHTML = elt.innerHTML
+    fscreen.style.display = 'block'
     // Show image slider
     setTimeout(() => {
       fscreen.dataset.visible = '';
@@ -104,6 +124,7 @@ function diaporama(elt) {
   })
   elt.querySelector('button.closeBox').addEventListener('click', () => {
     fscreen.innerHTML = elt.innerHTML
+    fscreen.style.display = 'none'
     delete fscreen.dataset.visible;
     elt.innerHTML = ''
   })

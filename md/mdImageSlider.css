@@ -68,6 +68,9 @@
   cursor: pointer;
   font-size: 1.5em;
 }
+.md .md-image-slider .md-image-fullscreen[data-fullscreen="no"] {
+  display: none;
+}
 .md .md-image-slider .md-image-fullscreen:hover {
   opacity: 1;
 }

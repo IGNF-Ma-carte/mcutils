@@ -40,6 +40,11 @@ function fullscreen(elt) {
 
 /* Create images and slider */
 function createElement(content, atts, width, height) {
+  // Nothing
+  if (!atts.img1 || !atts.img2) {
+    return ol_ext_element.create('DIV');
+  }
+  // New slider
   const element = ol_ext_element.create('DIV', {
     className: 'md-image-slider',
     style: {
@@ -95,12 +100,11 @@ function prepareImageSlider(type, data) {
   const content = ol_ext_element.create('DIV');
   // Container
   const element = createElement(content, atts, width, height)
-  if (atts.fullscreen) {
-    ol_ext_element.create('BUTTON', {
-      className: 'md-image-fullscreen',
-      parent: element
-    })
-  }
+  ol_ext_element.create('BUTTON', {
+    className: 'md-image-fullscreen',
+    'data-fullscreen': atts.fullscreen || 'no',
+    parent: element
+  })
   return content.innerHTML;
 }
 
