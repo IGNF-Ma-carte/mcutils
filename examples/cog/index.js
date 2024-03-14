@@ -22,9 +22,7 @@ const source = new GeoTIFF({
   ],
   convertToRGB: true,
 });
-let layer = new TileLayer({
-  source: source,
-});
+let layer = new TileLayer({});
 
 const map = new Map({
   target: 'map',

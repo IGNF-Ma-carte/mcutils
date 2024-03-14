@@ -1,11 +1,11 @@
 {
   "server": "https://qlf-macarte.ign.fr/",
-  "server-local": "https://localhost.ign.fr/macartegpf-api/",
+  "server-qlf": "https://localhost.ign.fr/macartegpf-api/",
   "viewer": "https://ignf.gitlab.io/macarte/mcviewer/?map=$ID&$NOTITLE",
   "editor": "https://qlf-macarte.ign.fr/$TYPE/$ID",
   "userProfile": "https://qlf-macarte.ign.fr/utilisateur/$NAME",
   "faq": "https://qlf-macarte.ign.fr/aide/faq/$ARTICLE",
   "tuto": "https://qlf-macarte.ign.fr/aide/tuto/$ARTICLE",
   "version": "https://qlf-macarte.ign.fr/aide/notes-de-version/$ARTICLE",
-  "gppKey": "0gd4sx9gxx6ves3hf3hfeyhw"
+  "gppKey": "ign_scan_ws"
 }
