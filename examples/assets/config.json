@@ -1,6 +1,6 @@
 {
-  "server": "https://qlf-macarte.ign.fr/",
-  "server-qlf": "https://localhost.ign.fr/macartegpf-api/",
+  "server-0": "https://qlf-macarte.ign.fr/",
+  "server": "https://localhost.ign.fr/macartegpf-api/",
   "viewer": "https://ignf.gitlab.io/macarte/mcviewer/?map=$ID&$NOTITLE",
   "editor": "https://qlf-macarte.ign.fr/$TYPE/$ID",
   "userProfile": "https://qlf-macarte.ign.fr/utilisateur/$NAME",

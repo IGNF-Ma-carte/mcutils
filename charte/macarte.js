@@ -410,21 +410,24 @@ api.on(['logout', 'disconnect'], () => {
 });
 
 /* Handle organization */
+// Update organization name and image
 function setOrganization() {
   charte.setName(organization.getName());
+  charte.setLogo(organization.getImage());
 }
 organization.on('change', setOrganization)
+
+// Remove current organization on logout
 api.on('logout', () => {
-  // remove current orga
   organization.set();
 })
+// On login check if the current organization is still valid
 api.on('login', e => {
-  // Check if user is in current orga
-  if (e.user.orga) {
-    // Check if user is still in the organization
-    organization.check(ok => {
-      if (!ok) organization.set()
-    })
+  // Check if user is still in the current organization
+  if (e.user.organizations) {
+    if (!organization.checkIn(e.user.organizations)) {
+      organization.set()
+    }
   } else {
     organization.set();
   }

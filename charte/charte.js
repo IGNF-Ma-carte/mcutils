@@ -585,8 +585,19 @@ const charte = {
    * @instance
    */
   setLogo: (url) => { 
-    logoElt.className = url ? '' : 'logoIGN';
-    // logoElt.innerText = name;
+    logoElt.className = url ? 'organization' : 'logoIGN';
+    logoElt.innerHTML = '';
+    if (url) {
+      // Show Image
+      const img = ol_ext_element.create('IMG', {
+        src: url,
+        parent: logoElt
+      })
+      // No image
+      img.addEventListener('error', () => {
+        img.remove()
+      })
+    }
   },
   /** Set the user name in the bar and add a connected dataset to the body
    * @param {object} user

@@ -17,9 +17,16 @@
     padding: .5em 1em;
     border-bottom: 1px solid #eee;
     cursor: pointer;
+    clear: both;
   }
   [data-role="content"] ul li:hover {
     background-color: #e1eefd;
+  }
+  [data-role="content"] ul li img {
+    float: left;
+    max-height: 2em;
+    max-width: 5em;
+    margin-right: .5em;
   }
     
   .ol-ext-dialog i.button-colored {
@@ -38,7 +45,10 @@
   .ol-ext-dialog .ol-content textarea,
   .ol-ext-dialog .ol-content input {
     display: block;
-    width: 20em;
+    width: 100%;
+    min-width: 20em;
+    max-width: 100%;
+    min-height: 2.5em;
     margin: .5em 0;
   }
 }

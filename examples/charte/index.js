@@ -123,17 +123,17 @@ charte.addTool('new', 'fi-map', 'Ajouter un vecteur tuilé', () => {
   })
   ol_ext_element.create('OPTION', {
     text: 'PLAN IGN : standard',
-    value: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json',
+    value: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/standard.json',
     parent: sel
   })
   ol_ext_element.create('OPTION', {
     text: 'PLAN IGN : gris',
-    value: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/gris.json',
+    value: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/gris.json',
     parent: sel
   })
   ol_ext_element.create('OPTION', {
     text: 'PLAN IGN : classique',
-    value: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/classique.json',
+    value: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/classique.json',
     parent: sel
   })
   ol_ext_element.create('OPTION', {

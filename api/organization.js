@@ -29,19 +29,25 @@ class Organization extends ol_Object {
     localStorage.setItem('MC@organization', JSON.stringify(_organization))
     this.dispatchEvent({ type: 'change', organization: _organization })
   }
-  /** Get the current organization
+  /** Get organization
    * @return {Object}
    */
   get() {
     return _organization
   }
-  /** Get the current organization name
+  /** Get organization name
    * @return {string}
    */
   getName() {
     return _organization.organization_name || ''
   }
-  /** Get the current organization id
+  /** Get organization image url
+   * @return {string}
+   */
+  getImage() {
+    return _organization.organization_image || ''
+  }
+  /** Get organization id
    * @return {string}
    */
   getId() {

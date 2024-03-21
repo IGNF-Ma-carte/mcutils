@@ -46,24 +46,28 @@ function addUser(orga) {
 
 function showList() {
   list.innerHTML = '';
-  dialog.showWait('Chargement...');
-  api.getOrganizations(orga => {
-    if (!orga.error) {
-      orga.forEach(o => {
-        ol_ext_element.create('LI', {
-          text: o.organization_name + ' (' + o.user_role + ')',
-          click: () => {
-            dialog.showWait('Organisation ' + o.organization_name + '...')
-            showOrga(o);
-          },
-          parent: list
+  const orga = api.getMe().organizations;
+  if (orga) {
+    orga.forEach(o => {
+      const li = ol_ext_element.create('LI', {
+        text: o.organization_name + ' (' + o.user_role + ')',
+        click: () => {
+          dialog.showWait('Organisation ' + o.organization_name + '...')
+          showOrga(o);
+        },
+        parent: list
+      })
+      if (o.organization_image) {
+        ol_ext_element.create('IMG', {
+          src: o.organization_image,
+          parent: li
         })
-      });
-    }
-    dialog.hide();
-  })
+      }
+    });
+  }
 }
 
+/** Show organization by ID */
 function showOrga(o)  {
   api.getOrganization(o.organization_id, orga => {
     dialog.show({
@@ -82,6 +86,15 @@ function showOrga(o)  {
           addUser(o)
         }
       }
+    })
+    console.log(orga)
+    const img = ol_ext_element.create('INPUT', {
+      value: orga.image || '',
+      on: { change: () => {
+        dialog.showWait('modification...')
+        api.setOrganization(orga.public_id, 'image', img.value, () => showOrga(o))
+      }},
+      parent: dialog.getContentElement()
     })
     const ul = ol_ext_element.create('UL', {
       parent: dialog.getContentElement()

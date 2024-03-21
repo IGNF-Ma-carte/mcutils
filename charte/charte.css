@@ -479,8 +479,13 @@ body > [data-role="storymap"] > * {
   background-size: 100%;
   width: 5rem;
   height: 100%;
-  margin: 0 0 0 1em;
+  margin: 0 0 0 1rem;
   cursor: pointer;
+}
+[data-role="header"] .organization img {
+  max-width: 7rem;
+  max-height: 6rem;
+  margin: 0 0 0 1rem;
 }
 
 [data-role="header"] .help,
