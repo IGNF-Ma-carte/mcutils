@@ -316,6 +316,8 @@ md2html.doData = function(md, data) {
   
   // Encode URI?
   const hasURL = /URL\[%(.*)%\]/.test(md);
+  // Remove tags
+  const hasTag = /HTML\[%(.*)%\]/.test(md);
   
   for (let i in data) if (data[i]) {
     // Conditional display
@@ -327,6 +329,9 @@ md2html.doData = function(md, data) {
     if (hasURL && typeof(param) === 'string') {
       const d = md2html.encodeURI(param);
       md = md.replace(new RegExp('URL\\[%'+i+'%\\]','g'), d);
+    } else if (hasTag && typeof(param) === 'string') {
+      const d = param.replace(/(<([^>]+)>)/ig, '');
+      md = md.replace(new RegExp('HTML\\[%'+i+'%\\]','g'), d);
     } else if (typeof(param) === 'object') {
       // Objects
       try {

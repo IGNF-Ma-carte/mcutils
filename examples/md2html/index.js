@@ -42,6 +42,7 @@ const data = {
   valeur_3: 3,
   valeur_4: 6,
   valeur_5: 1,
+  html: '<a href="https://www.ign.fr/">Site IGN</a>',
   img: 'https://upload.wikimedia.org/wikipedia/commons/7/70/Hurel-Dubois_HD-34,_IGN_-_Institut_Geographique_National_AN1286808.jpg',
   img2: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Rue_des_Marchands_depuis_le_Ko%C3%AFfhus_%28Colmar%29_%284%29.jpg/640px-Rue_des_Marchands_depuis_le_Koïfhus_(Colmar)_(4).jpg'
 };

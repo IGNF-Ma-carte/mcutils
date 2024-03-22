@@ -927,6 +927,7 @@ MDEditorBase.prototype.setTools = function (minibar) {
       valeur_3: 3,
       valeur_4: 6,
       valeur_5: 1,
+      html: '<a href="https://www.ign.fr/">Site IGN</a>',
       url: 'https://www.ign.fr/visitez-le-georoom',
       img: 'https://upload.wikimedia.org/wikipedia/commons/7/70/Hurel-Dubois_HD-34,_IGN_-_Institut_Geographique_National_AN1286808.jpg'
     },
