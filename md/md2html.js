@@ -335,7 +335,7 @@ md2html.doData = function(md, data) {
         param = '{}'
       }
     }
-    md = md.replace(new RegExp('%' + this.doSecure(i) + '%','g'), param);
+    md = md.replace(new RegExp('%' + i + '%','g'), this.doSecure(String(param)));
   }
 
   // Display attributs
