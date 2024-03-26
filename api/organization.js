@@ -16,12 +16,16 @@ class Organization extends ol_Object {
     window.addEventListener('focus', () => {
       localStorage.setItem('MC@organization', JSON.stringify(_organization))
     })
-    this.dispatchEvent({ type: 'change', organization: _organization })
+    // Dispatch event when ready
+    setTimeout(() => {
+      this.dispatchEvent({ type: 'change', organization: _organization })
+    })
   }
   /** Set the current organization
    * @param {Object} [orga]
    */
   set(orga) {
+    console.log(orga)
     if (orga && orga.organization_id) {
       _organization = orga;
     } else {
@@ -70,6 +74,17 @@ class Organization extends ol_Object {
       this.set();
     }
     return isok;
+  }
+  /** Get user role in organization
+   * @return {string}
+   */
+  getUserRole() {
+    return _organization.user_role
+  }
+  /** Is admin?
+   */
+  isOwner() {
+    return _organization.user_role === 'owner'
   }
 }
 

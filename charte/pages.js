@@ -26,20 +26,13 @@ class Pages extends ol_Object {
       parent: parent
     })
     // Hide if not current
-    if (id !== this.current()) {
+    if (id !== this.getId()) {
       page.dataset.hidden = '';
     }
     // Top page
     const top = page.querySelector(".breadcrumb .link-macarte")
     if (top) {
       top.setAttribute('href', config.server);
-    }
-    // Home page
-    const gohome = page.querySelector('.breadcrumb .link-home')
-    if (gohome) {
-      gohome.addEventListener('click', () => {
-        this.show();
-      })
     }
     return page
   }
@@ -52,18 +45,26 @@ class Pages extends ol_Object {
   /** Get current page id
    * @return {string}
    */
-  current() {
+  getId() {
     const id = window.location.hash.replace('#', '');
     return id || 'home'
+  }
+  /** Get page element
+   * @param {string} [id='home'] 
+   * @returns {Element}
+   */
+  getPage(id) {
+    return document.querySelector('[data-role="page"]#' + (id || 'home'))
   }
   /** Page change event
    * @private
    */
   _onpage() {
-    const id = this.current();
-    let current = document.getElementById(id);
-    if (current) {
-      document.body.dataset.show = id;
+    const id = this.getId();
+    let current = this.getPage(id)
+    if (!current) {
+      this.show();
+      return;
     }
     document.querySelectorAll('[data-role="page"]').forEach(p => {
       if (p===current) {
