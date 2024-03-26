@@ -10,7 +10,7 @@ let options = {
   tuto: 'https://server/aide/tuto/$ARTICLE',
   version: 'https://server/aide/notes-de-version/$ARTICLE',
   guichetURL: 'https://qlf-collaboratif.cegedim-hds.fr/collaboratif-4.0/',
-  sitePiwik: 39,
+  // sitePiwik: 39,
   gppKey: 'k1RSRVIYRxteMEcPK9A5c7g0C6KRw4KX',
 };
 

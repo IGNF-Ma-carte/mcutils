@@ -147,7 +147,9 @@ MacarteAPI.prototype.refreshToken =  function(callback) {
       } catch(e) { /* ok */ }
       if (callback) callback(true);
     } else {
-      if (request.status === 401) {
+      if (request.status === 0) {
+        this.dispatchEvent({ type: 'error' });
+      } else if (request.status === 401) {
         this.dispatchEvent({ type: 'disconnect' });
         this.setToken();
       }
