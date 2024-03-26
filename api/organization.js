@@ -1,4 +1,5 @@
 import ol_Object from 'ol/Object'
+import './organization.fr'
 
 // Current organization
 let _organization = {};
