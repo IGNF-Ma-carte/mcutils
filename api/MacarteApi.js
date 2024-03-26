@@ -675,7 +675,7 @@ MacarteAPI.prototype.addOrganizationMember =  function(id, userId, role, callbac
   })
 }
 
-/** Create a new organization
+/** Modify member role in the organization
  * @param {string} id organization id
  * @param {string} userId user id
  * @param {string} role user role (editor, owner, member)
@@ -689,7 +689,7 @@ MacarteAPI.prototype.setOrganizationMember =  function(id, userId, role, callbac
   })
 }
 
-/** Create a new organization
+/** Remove member from organization
  * @param {string} id organization id
  * @param {string} userId user id
  * @param {function} [callback] callback function
