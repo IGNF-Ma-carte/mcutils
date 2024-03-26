@@ -37,6 +37,7 @@ class ListTable extends ol_Object {
       if (e.deltaY < 0) try { this.element.querySelector('.prev').click(); } catch(e) {}
     });
     */
+    this._actions = [];
     this._errorElement = ol_ext_element.create('DIV', {
       className: 'mc-list-error',
       style: {
@@ -154,6 +155,24 @@ ListTable.prototype.drawList = function(maps, offset, max) {
       this.dispatchEvent(e);
     });
     this.drawItem(m, li);
+    if (this._actions.length) {
+      const opt = ol_ext_element.create('DIV', {
+        parent: li,
+        className: 'li-actions',
+      });
+      this._actions.forEach(a => {
+        ol_ext_element.create('SPAN', {
+            html: a.html,
+            title : a.title || a.html,
+            className: a.className || '',
+            click: () => {
+                a.action(m)
+            },
+            parent: opt,
+        });
+    
+      })
+    }
     this.dispatchEvent({ type: 'draw:item', item: m, element: li });
   });
   this.dispatchEvent({ type: 'draw:list', list: maps, offset: offset, max: max });
@@ -328,6 +347,22 @@ ListTable.prototype.getChecked = function() {
     })
   }
   return checked;
+}
+
+/** Add action button on selected item
+ * @param {object} options
+ *  @param {string|Element} options.html
+ *  @param {function} options.action
+ *  @param {string} [options.title]
+ *  @param {string} [options.className]
+ */
+ListTable.prototype.addAction = function(options) {
+  this._actions.push({
+    html: options.html,
+    title: options.title || options.html,
+    action: typeof(options.action) === 'function' ? options.action : function(){},
+    className: options.className || ''
+  })
 }
 
 export default ListTable

@@ -121,3 +121,29 @@
   content: '\e918';
   font-family: font-ign;
 }
+
+/* actions */
+.mc-list li .li-actions {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0,.5);
+  display: none;
+  border-radius: 0 0 1em 1em;
+  padding: 0 .5em;
+  color: #788089;
+}
+.mc-list li .li-actions span {
+  padding: 0 .5em;
+  font-weight: bold;
+}
+.mc-list li .li-actions span:hover {
+  color: #307ccd;
+}
+.mc-list li.mc-select .li-actions,
+.mc-list li:hover .li-actions0 {
+    display: block;
+    z-index: 1;
+}
