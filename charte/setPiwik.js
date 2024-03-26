@@ -1,4 +1,7 @@
 function setPiwik(siteId) {
+  // No piwik defined
+  if (!siteId) return;
+  // Add piwik
   window._paq = window._paq || [];
   window._paq.push(['trackPageView']);
   window._paq.push(['enableLinkTracking']);
