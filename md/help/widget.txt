@@ -160,6 +160,7 @@ Il est également possible de définir :
 * le titre des données (`data-title`)
 * l'affichage d'une légende et sa position (`top`, `left`, `bottom` ou `right`)
 * le titre de la légende (`legend-title`)
+* la couleur du fond du widget (`backgroundColor`)
 
 [++ :fa-code:fw: Code ++]
 ```md
@@ -171,6 +172,7 @@ labels: rouge; bleu; jaune
 colors: red; #0A0; rgba(255,255,0,.5)
 legend: right
 legend-title: Légende
+backgroundColor: #eef
 &#96;``
 ```
 [----]
@@ -183,6 +185,7 @@ labels: rouge; bleu; jaune
 colors: red; #00A; rgba(255,255,0,.5)
 legend: right
 legend-title: Légende
+backgroundColor: #eef
 ```
 [----]
 

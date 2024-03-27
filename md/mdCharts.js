@@ -144,9 +144,7 @@ function mdCharts(element) {
       return;
     }
     // Background-color
-    if (param['background-color']) {
-      dchart.style.backgroundColor = param['background-color'];
-    }
+    dchart.style.backgroundColor = param['backgroundColor'] || param['background-color'] || '';
     // not visible
     if ((Object.prototype.hasOwnProperty.call(param, 'visible') && !param.visible)) {
       dchart.classList.add('md-chart-hidden');
