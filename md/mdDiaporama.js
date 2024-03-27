@@ -132,6 +132,7 @@ function diaporama(elt) {
     // Show image slider
     setTimeout(() => {
       fscreen.dataset.visible = '';
+      fscreen.dataset.rotate = elt.dataset.rotate;
       diaporama(fscreen);
     }, 200)
   })
