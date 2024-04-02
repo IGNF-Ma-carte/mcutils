@@ -286,8 +286,14 @@ ol_style_Collaboratif.getFeatureStyleFn = function(featureType) {
       const p = feature.getProperties();
       delete p.geometry;
       for (let i=0; i < featureType.style.children.length; i++) {
-        const fi=featureType.style.children[i]
+        const fi = featureType.style.children[i]
+        // Mongo rule
         if (!fi.mongo || !fi.mongo.matches) {
+          if (typeof(fi.condition) === 'string') {
+            try {
+              fi.condition = JSON.parse(fi.condition)
+            } catch(e) { /* oops */ }
+          }
           fi.mongo = mongo.parse(fi.condition)
         }
         if (fi.mongo.matches(p)) {

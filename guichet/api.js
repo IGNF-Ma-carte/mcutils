@@ -4,6 +4,7 @@ let apiLogin, apiPwd;
 
 const apiPath = config.guichetURL + 'gcms/api/'
 
+/* Fetch response as get */
 function get(root, cback) {
   cback = cback || console.log;
 
@@ -37,38 +38,63 @@ function get(root, cback) {
   })
 }
 
+/** Guichet API to login and get 
+ */
 class GuichetAPI {
   /** Constructor 
    */
-  constructor() {
-  }
+  constructor() {}
   
+  /** Login 
+   * @param {string} login
+   * @param {string} pwd
+   * @param {function} callback
+   */
   login(login, pwd, cback) {
     apiLogin = login;
     apiPwd = pwd;
     get('users/me', cback)
   }
 
+  /** Get user informations
+   * @param {function} callback
+   */
   getMe(cback) {
     get('users/me', cback)
   }
 
+  /** Remove credentials
+   */
   logout() {
     apiPwd = null;
   }
 
+  /** Has credentials
+   */
   isConnected() {
     return !!apiPwd
   }
   
+  /** Get user comuunity info
+   * @param {string} comId community ID
+   * @param {function} callback
+   */
   getCommunity(comId, cback) {
     get('communities/' + comId, cback)
   }
 
+  /** Get comuunity layers list
+   * @param {string} comId community ID
+   * @param {function} callback
+   */
   getLayers(comId, cback) {
     get('communities/' + comId + '/layers', cback)
   }
 
+  /** Get comuunity layers (full info)
+   * @param {string} comId community ID
+   * @param {function} callback
+   */
   getFullLayers(comId, cback) {
     this.getLayers(comId, layers => {
       // No layers
@@ -103,10 +129,19 @@ class GuichetAPI {
     })
   }
 
+  /** Get comuunity layer info
+   * @param {string} comId community ID
+   * @param {string} layerId layer ID
+   * @param {function} callback
+   */
   getLayer(comId, layerId, cback) {
     get('communities/' + comId + '/layers/' + layerId, cback)
   }
 
+  /** Get geoservice info
+   * @param {string} id geoservice ID
+   * @param {function} callback
+   */
   getGeoservice(id, cback) {
     get('geoservices/' + id, g => {
       if (g.style) {
@@ -114,27 +149,40 @@ class GuichetAPI {
       } else {
         // Try to get the style...
         const url = g.url.split('?')[0] + '?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetCapabilities'
-        fetch(url).then(resp => {
-          return resp.text()
-        }).then(str => {
-          return new window.DOMParser().parseFromString(str, "text/xml")
-        })
-        .then(data => {
-          const layers = data.querySelectorAll('Contents Layer');
-          const layer = Array.prototype.find.call(layers, l => l.querySelector('Identifier').textContent === g.layers);
-          if (layer) {
-            let style = layer.querySelector('Style')
-            if (style) {
-              style = style.querySelector('Identifier')
-              g.style = style ? style.textContent : null;
+        try {
+          fetch(url).catch(e => {
+            console.log('ERROR', e)
+          }).then(resp => {
+            if (!resp) return '';
+            return resp.text()
+          }).then(str => {
+            return new window.DOMParser().parseFromString(str, "text/xml")
+          })
+          .then(data => {
+            const layers = data.querySelectorAll('Contents Layer');
+            const layer = Array.prototype.find.call(layers, l => l.querySelector('Identifier').textContent === g.layers);
+            if (layer) {
+              let style = layer.querySelector('Style')
+              if (style) {
+                style = style.querySelector('Identifier')
+                g.style = style ? style.textContent : null;
+              }
             }
-          }
-          cback(g)
-        });
+            cback(g)
+          });
+        } catch(error) {
+          console.log('ERROR', g, error)
+          cback(null)
+        }
       }
     })
   }
 
+  /** Get table info
+   * @param {string} base
+   * @param {string} table
+   * @param {function} callback
+   */
   getTable(base, table, cback) {
     get('databases/' + base + '/tables/' + table, cback)
   }
@@ -149,6 +197,7 @@ function getAuth() {
   return btoa(apiLogin + ':' + apiPwd)
 }
 
+/** Singleton */
 const guichetAPI = new GuichetAPI()
 
 export { getAuth }
