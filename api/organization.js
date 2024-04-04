@@ -25,7 +25,6 @@ class Organization extends ol_Object {
    * @param {Object} [orga]
    */
   set(orga) {
-    console.log(orga)
     if (orga && orga.organization_id) {
       _organization = orga;
     } else {
@@ -51,6 +50,12 @@ class Organization extends ol_Object {
    */
   getImage() {
     return _organization.organization_image || ''
+  }
+  /** Get organization info
+   * @return {string}
+   */
+  getPresentation() {
+    return _organization.organization_presentation || ''
   }
   /** Get organization id
    * @return {string}
