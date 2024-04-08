@@ -14,12 +14,25 @@
   cursor: default;
 }
 .author-list ul li {
+  position: relative;
   padding: 0.5em 1em;
   border: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.author-list ul li.full {
+  line-height: 1.5em;
+  padding-left: 4.5em;
+}
 .author-list li:hover {
   background-color: #eee;
+}
+.author-list ul img {
+  position: absolute;
+  left: 2em;
+  top: 50%;
+  max-width: 3em;
+  max-height: 2.5em;
+  transform: translate(-50%, -50%);
 }

@@ -467,17 +467,24 @@ MacarteAPI.prototype.getUser =  function(public_id, success) {
   this._send('GET', _apiURL + 'users/public/' + public_id, {}, success, false);
 };
 
-/** Search for users
- * @param {string} name user name
+/** Search for users that publish a map
  * @param {Object} options
- *  @param {string} [public_name] string contains in the public user name
- *  @param {number} [theme]
- *  @param {number} [limit=15]
+ *  @param {string} [options.public_name] string contains in the public user name
+ *  @param {number} [options.theme]
+ *  @param {number} [options.limit=15]
  * @param {function} callback
  */
-MacarteAPI.prototype.searchUsers =  function(options, callback) {
+MacarteAPI.prototype.searchMapUsers =  function(options, callback) {
   options = options || {};
   this._send('GET', _apiURL+'maps/users', options, callback, false);
+};
+
+/** Autocomplete users
+ * @param {string} name public user name
+ * @param {function} callback
+ */
+MacarteAPI.prototype.getUsers =  function(name, callback) {
+  this._send('GET', _apiURL+'users', { query: name }, callback, false);
 };
 
 /** Get user media
@@ -666,13 +673,14 @@ MacarteAPI.prototype.deleteOrganization =  function(id, callback) {
  * @param {string} userId user id
  * @param {string} role user role (editor, owner, member)
  * @param {function} [options.callback] callback function
+ * @param {boolean} [options.refresh] get a refresh token
  */
-MacarteAPI.prototype.addOrganizationMember =  function(id, userId, role, callback) {
+MacarteAPI.prototype.addOrganizationMember =  function(id, userId, role, callback, refresh) {
   this._send('POST', _apiURL + 'organizations/' + id + '/members/' + userId, {
     role: role || 'member'
   }, resp => {
     if (typeof(callback) === 'function') callback(resp);
-  })
+  }, refresh)
 }
 
 /** Modify member role in the organization

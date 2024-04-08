@@ -3,6 +3,8 @@ import ol_ext_element from "ol-ext/util/element";
 
 import './UserInput.css'
 
+let autocompleteTout;
+
 /** User input to get public name with autocomplete list
  */
 class UserInput extends ol_Object {
@@ -11,10 +13,12 @@ class UserInput extends ol_Object {
    * @param {MacarteAPI} api
    * @param {Object} options
    *  @param {Element} [options.target] element to place in
+   *  @param {boolean} [full] get full information (id and picture)
    */
   constructor(api, options) {
     super();
     options = options || {};
+    this.set('full', !!options.full)
 
     this.api = api;
     const user = this.element = ol_ext_element.create('DIV', { className: 'author-list', parent: options.target });
@@ -47,30 +51,54 @@ UserInput.prototype.setUser = function(public_name) {
   this.searchInput.value = public_name;
 }
 
-let autocompleteTout;
-
 /** Autocomplete author list
  * @param {string} value
  */
 UserInput.prototype.autocompleteAuthor = function(value, autolist) {
   if (autocompleteTout) clearTimeout(autocompleteTout);
   autocompleteTout = setTimeout(() => {
-    this.api.searchUsers({
-      public_name: value
-    }, (users) => {
-      autolist.innerHTML = '';
-      if (users && users.forEach) {
-        users.forEach(u => {
-          ol_ext_element.create('LI', {
-            html: u,
-            click: () => {
-              this.dispatchEvent({ type: 'select', public_name: u })
-            },
-            parent: autolist
+    // Get full user info
+    if (this.get('full')) {
+      this.api.getUsers(value, users => {
+        autolist.innerHTML = '';
+        if (users && users.forEach) {
+          users.forEach(u => {
+            const li = ol_ext_element.create('LI', {
+              text: u.public_name,
+              className: 'full',
+              click: () => {
+                this.dispatchEvent({ type: 'select', user: u })
+              },
+              parent: autolist
+            })
+            if (u.profile_picture) {
+              ol_ext_element.create('IMG', { 
+                src: u.profile_picture,
+                parent: li
+              })
+            }
           })
-        })
-      }
-    })
+        }
+      })
+    } else {
+      // Get user name
+      this.api.searchMapUsers({
+        public_name: value
+      }, (users) => {
+        autolist.innerHTML = '';
+        if (users && users.forEach) {
+          users.forEach(u => {
+            ol_ext_element.create('LI', {
+              html: u,
+              click: () => {
+                this.dispatchEvent({ type: 'select', public_name: u })
+              },
+              parent: autolist
+            })
+          })
+        }
+      })
+    }
   }, 500);
 };
 
