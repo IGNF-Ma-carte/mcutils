@@ -1,5 +1,6 @@
 import MacarteAPI from './MacarteApi'
 import serviceURL from './serviceURL';
+import organization from './organization';
 
 /** Singleton API object to access the API
  * @memberof MacarteAPI
@@ -14,6 +15,7 @@ api.on(['login', 'logout', 'me'], () => {
   } else {
     document.body.dataset.userRole = ''
   }
+  organization.setUser(user);
 })
 
 export default api;

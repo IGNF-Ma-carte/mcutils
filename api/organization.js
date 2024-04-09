@@ -91,6 +91,20 @@ class Organization extends ol_Object {
   isOwner() {
     return _organization.user_role === 'owner'
   }
+  /** Set the user
+   * @param {Object}
+   */
+  setUser(user) {
+    if (user && user.organizations) {
+      const corg = user.organizations.find(o => o.organization_id === this.getId())
+      if (corg) {
+        _organization.user_role = corg.user_role
+        this.changed()
+      } else {
+        this.set();
+      }
+    }
+  }
 }
 
 /* Set organization when exist */
