@@ -60,7 +60,8 @@ class Pages extends ol_Object {
    * @private
    */
   _onpage() {
-    const id = this.getId();
+    const fromPage = this.previous || ''
+    const id = this.previous = this.getId();
     let current = this.getPage(id)
     if (!current) {
       this.show();
@@ -73,7 +74,7 @@ class Pages extends ol_Object {
         p.dataset.hidden = '';
       }
     })
-    this.dispatchEvent({ type: 'change', id: id, page: current })
+    this.dispatchEvent({ type: 'change', id: id, page: current, from: fromPage })
   }
 }
 
