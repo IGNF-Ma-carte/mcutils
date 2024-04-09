@@ -349,6 +349,13 @@ ListTable.prototype.getChecked = function() {
   return checked;
 }
 
+/** Get the list items
+ * @returns {Array<Object>}
+ */
+ListTable.prototype.getItems = function() {
+  return this._currentList
+}
+
 /** Add action button on selected item
  * @param {object} options
  *  @param {string|Element} options.html
