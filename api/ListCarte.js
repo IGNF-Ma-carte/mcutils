@@ -278,11 +278,12 @@ ListCarte.prototype.drawItem = function(m, li) {
   // Atlas
   ol_ext_element.create('I', {
     title: m.share,
-    className: m.share==='atlas' ? 'mc-share' : 'mc-unshare',
+    className: 'mc-share mc-'+m.share,
     parent: info
   });
   // Active
   ol_ext_element.create('I', {
+    title:  m.active ? 'active' : 'inactive',
     className: m.active ? 'mc-active' : 'mc-inactive',
     parent: info
   });

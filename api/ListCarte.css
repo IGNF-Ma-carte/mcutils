@@ -158,10 +158,17 @@
   display: none;
 }
 .mc-list-carte li .mc-info > i.mc-share:before {
-  content: "\ea3c";
-  font-size: 1.2em;
   float: right;
 }
+.mc-list-carte li .mc-info > i.mc-atlas:before {
+  content: "\ea3c";
+  font-size: 1.2em;
+}
+.mc-list-carte li .mc-info > i.mc-private:before {
+  content: "\ea18";
+  font-size: 0.8em;
+}
+
 .mc-list-carte li .mc-info > i.mc-inactive:before {
   content: "\f05e";
   font-family: "fontawesome";

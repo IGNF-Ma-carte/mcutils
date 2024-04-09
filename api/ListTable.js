@@ -114,67 +114,8 @@ ListTable.prototype.drawList = function(maps, offset, max) {
   offset = offset || 0;
   if (max === undefined) max = Infinity;
   this.clear();
-  const ul = this._listElement;
-  // List head
-  const title = ol_ext_element.create('LI', {
-    class: 'mc-list-head',
-    parent: ul
-  });
-  this.drawHead(title);
   // Draw list
-  maps.forEach(m => {
-    const li = ol_ext_element.create('LI', {
-      className: m.type,
-      on: {
-        click: (e) => {
-          this.dispatchEvent({ type: 'click', item: m, checked: check.isChecked(), originalEvent: e });
-          if (this._selection !== m) {
-            if (e.target !== check.element) {
-              this.dispatchEvent({ type: 'select', item: m, checked: check.isChecked() });
-            }
-            const sel = ul.querySelector('.mc-select')
-            if (sel) sel.classList.remove('mc-select');
-            li.classList.add('mc-select');
-            this._selection = m;
-          }
-        },
-        dblclick: (e) => {
-          this.dispatchEvent({ type: 'dblclick', item: m, checked: check.isChecked(), originalEvent: e });
-          /* Prevent selection?
-          const sel = window.getSelection();
-          if (sel) sel.removeAllRanges();
-          */
-        }
-      },
-      parent: ul
-    });
-    const check = new input({ className: ' small', parent: li, type:'checkbox' });
-    check.input.addEventListener('click', e => e.stopPropagation() );
-    check.on('check', e => {
-      e.item = m;
-      this.dispatchEvent(e);
-    });
-    this.drawItem(m, li);
-    if (this._actions.length) {
-      const opt = ol_ext_element.create('DIV', {
-        parent: li,
-        className: 'li-actions',
-      });
-      this._actions.forEach(a => {
-        ol_ext_element.create('SPAN', {
-            html: a.html,
-            title : a.title || a.html,
-            className: a.className || '',
-            click: () => {
-                a.action(m)
-            },
-            parent: opt,
-        });
-    
-      })
-    }
-    this.dispatchEvent({ type: 'draw:item', item: m, element: li });
-  });
+  this.refresh()
   this.dispatchEvent({ type: 'draw:list', list: maps, offset: offset, max: max });
   // Display pages header / footer
   if (!max || max === Infinity || this.get('size') === 'all') return;
@@ -247,6 +188,75 @@ ListTable.prototype.drawList = function(maps, offset, max) {
     });
   });
 };
+
+/** Refresh the list
+ */
+ListTable.prototype.refresh = function() {
+  this.clearSelection();
+  const ul = this._listElement;
+  ul.innerHTML = '';
+  // List head
+  const title = ol_ext_element.create('LI', {
+    class: 'mc-list-head',
+    parent: ul
+  });
+  this.drawHead(title);
+  // Draw items
+  const maps = this._currentList
+  maps.forEach(m => {
+    const li = ol_ext_element.create('LI', {
+      className: m.type,
+      on: {
+        click: (e) => {
+          this.dispatchEvent({ type: 'click', item: m, checked: check.isChecked(), originalEvent: e });
+          if (this._selection !== m) {
+            if (e.target !== check.element) {
+              this.dispatchEvent({ type: 'select', item: m, checked: check.isChecked() });
+            }
+            const sel = ul.querySelector('.mc-select')
+            if (sel) sel.classList.remove('mc-select');
+            li.classList.add('mc-select');
+            this._selection = m;
+          }
+        },
+        dblclick: (e) => {
+          this.dispatchEvent({ type: 'dblclick', item: m, checked: check.isChecked(), originalEvent: e });
+          /* Prevent selection?
+          const sel = window.getSelection();
+          if (sel) sel.removeAllRanges();
+          */
+        }
+      },
+      parent: ul
+    });
+    const check = new input({ className: ' small', parent: li, type:'checkbox' });
+    check.input.addEventListener('click', e => e.stopPropagation() );
+    check.on('check', e => {
+      e.item = m;
+      this.dispatchEvent(e);
+    });
+    this.drawItem(m, li);
+    if (this._actions.length) {
+      const opt = ol_ext_element.create('DIV', {
+        parent: li,
+        className: 'li-actions',
+      });
+      this._actions.forEach(a => {
+        ol_ext_element.create('SPAN', {
+            html: a.html,
+            title : a.title || a.html,
+            className: a.className || '',
+            click: () => {
+              a.action(m)
+            },
+            parent: opt,
+        });
+    
+      })
+    }
+    this.dispatchEvent({ type: 'draw:item', item: m, element: li });
+  });
+}
 
 /** Add a loading
  * @param {boolean} [b=true]
