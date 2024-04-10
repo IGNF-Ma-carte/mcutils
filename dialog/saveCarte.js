@@ -10,28 +10,28 @@ import md2html from '../md/md2html';
 
 const html = `
 <ul>
-  <li>
+  <li class="info">
     Pour enregistrer une carte dans votre espace personnel, remplissez le formulaire.
   </li>
   <li class="accent">
     Vous devez renseigner les champs obligatoires...
   </li>
-  <li>
+  <li data-attr="title">
     <input class="title input-placeholder required" type="text" placeholder="Titre de la carte">
   </li>
-  <li>
+  <li data-attr="description">
     <textarea class="description input-placeholder" type="text" placeholder="Description"></textarea>
   </li>
-  <li>
+  <li data-attr="theme">
     <span class="required">Thème</span> :
     <select class="theme"></select>
   </li>
-  <li>
+  <li data-attr="img_url">
     Image d'illustration :
     <br/>
     <input type="text" class="image" />
   </li>
-  <li>
+  <li data-attr="share">
     Publier dans l'atlas :
     <div>
       <label class="ol-ext-check ol-ext-radio"><input class="atlas" type="radio" name="publie" checked=""><span></span>oui</label>
@@ -47,6 +47,7 @@ let themesList;
  * @param {function} callback a callback function that takes the current carte and save optionsCarte 
  * @param {Object} options
  *  @param {string} [options.prompt='Enregistrer une carte']
+ *  @param {string} [options.className]
  *  @param {boolean} [options.saveAs=false]
  */
 function saveCarte(carte, callback, options) {
@@ -72,7 +73,7 @@ function saveCarte(carte, callback, options) {
   if (optionsCarte.active === undefined) optionsCarte.active = true;
   dialog.show({
     title: options.prompt || 'Enregistrer une carte',
-    className: 'mc-save-map',
+    className: ('mc-save-map ' + (options.className || '')).trim(),
     content: html,
     buttons: { submit: 'Enregistrer', cancel: 'annuler' },
     onButton: (b, inputs) => {
@@ -157,6 +158,8 @@ function saveCarte(carte, callback, options) {
     add: true,
     input: dialog.getContentElement().querySelector('input.image')
   });
+
+  return dialog
 }
 
 export default saveCarte;
