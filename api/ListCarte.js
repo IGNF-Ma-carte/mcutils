@@ -353,30 +353,12 @@ ListCarte.prototype.removeFilter = function(filter) {
 /** Set search filter
  * @param {string} filter the filter name user|theme|type|premium...
  * @param {string} value
- * @param {string} icon icon name (for themes)
  */
-ListCarte.prototype.setFilter = function(filter, value, icon) {
-  const options = this.element.querySelector('.filterOptions');
+ListCarte.prototype.setFilter = function(filter, value) {
   if (this.get(filter)===value) {
-    /*
-    this.set(filter, '');
-    options.querySelector('.filter-'+filter).remove();
-    return true;
-    */
     return false;
   }
   this.set(filter, value);
-  const optDiv = ol_ext_element.create('DIV', {
-    className: 'filter button-colored'+(filter ? ' filter-'+filter : ''),
-    html: (icon ? '<i class="'+icon+'"></i>' : '') + this.getStrAttributeValue(filter, value),
-    title: 'supprimer...',
-    click: () => {
-      this.set(filter, '');
-      optDiv.remove();
-      this.showPage();
-    },
-    parent: options
-  })
   return true;
 };
 
@@ -421,7 +403,7 @@ ListCarte.prototype.getPermalink = function() {
   }
   ['theme', 'user', 'organization', 'share', 'type', 'premium', 'sort'].forEach(q => {
     if (perma[q]) {
-      this.setFilter(q, perma[q], q==='theme' ? 'fi-theme-' + getThemeID(perma[q]) : '');
+      this.setFilter(q, perma[q]);
     }
   });
   if (perma.filter==='off') this.element.classList.remove('mc-filter')
@@ -487,24 +469,8 @@ ListCarte.prototype.showPage = function(page) {
     if (!maps.error) {
       if (this._filters) {
         this.element.querySelector('.mapCount').innerHTML = maps.count + ' carte' + (maps.count > 1 ? 's':'');
-        this._filters.theme.innerHTML = '';
-        // Themes
-        maps.themes.forEach(th => {
-          const icon = getThemeID(th.theme)
-          const li = ol_ext_element.create('LI', { 
-            click: () => {
-              if (this.setFilter('theme', th.theme, 'fi-theme-'+icon)) {
-                this.showPage();
-              }
-            },
-            parent: this._filters.theme 
-          });
-          ol_ext_element.create('SPAN', { className: 'count', html: th.count, parent: li });
-          ol_ext_element.create('I', { className: 'fi-theme-'+icon, parent: li });
-          ol_ext_element.create('SPAN', { html: th.theme === 'undefined' ? 'inconnu' : th.theme, parent: li });
-        });
         // For each filters
-        ['user', 'organization', 'type', 'share', 'active', 'valid', 'premium'].forEach(attr => {
+        ['theme', 'user', 'organization', 'type', 'share', 'active', 'valid', 'premium'].forEach(attr => {
           const as = (attr==='valid' ? 'valides' : attr + 's');
           // Reset filter html
           this._filters[attr].innerHTML = '';
@@ -512,14 +478,13 @@ ListCarte.prototype.showPage = function(page) {
           // Show filters
           maps[as].forEach(filt => {
             // Add filter list item
+            let val = filt[attr];
+            if (as==='organizations') {
+              val = filt.public_id;
+              if (!val) val = 'out';
+            }
             const li = ol_ext_element.create('LI', { 
               click: () => {
-                let val = filt[attr];
-                console.log(val)
-                if (as==='organizations') {
-                  val = filt.public_id;
-                  if (!val) val = 'out';
-                }
                 if (this.setFilter(attr, val)) {
                   this.showPage();
                 }
@@ -528,11 +493,30 @@ ListCarte.prototype.showPage = function(page) {
             });
             // Counter
             ol_ext_element.create('SPAN', { className: 'count', html: filt.count, parent: li });
+            // Theme icon
+            if (attr === 'theme') {
+              const icon = getThemeID(filt.theme)
+              ol_ext_element.create('I', { className: 'fi-theme-'+icon, parent: li });
+            }
             // Show in list
             ol_ext_element.create('SPAN', { 
               html: this.getStrAttributeValue(attr, filt[attr], as==='organizations' ? '<span class="undef">Hors organisation</span>' : ''), 
               parent: li 
             });
+            // Filter
+            if (this.get(attr) === val) {
+              ol_ext_element.create('A', { 
+                className: 'remove', 
+                title: 'supprmer...',
+                click: e => {
+                  this.set(attr, '');
+                  this.showPage()
+                  e.stopPropagation()
+                  e.preventDefault()
+                },
+                parent: li 
+              });
+            }
           })
         })
       }
