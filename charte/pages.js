@@ -37,9 +37,12 @@ class Pages extends ol_Object {
     return page
   }
   /** Show current page
+   * @param {string} id page id
+   * @param {boolean} [nohistory=false]
    */
-  show(id) {
+  show(id, nohistory) {
     if (id==='home') id = '';
+    if (nohistory) this.previous = null;
     window.location.hash = '#' + (id || '');
   }
   /** Get current page id
@@ -56,10 +59,19 @@ class Pages extends ol_Object {
   getPage(id) {
     return document.querySelector('[data-role="page"]#' + (id || 'home'))
   }
+  /** Set title */
+  setTitle(title) {
+    title = title || document.title.split(' - ')[0];
+    const id = window.location.hash.replace('#', '');
+    if (id) title += ' - ' + id
+    document.title = title;
+  }
   /** Page change event
    * @private
    */
   _onpage() {
+    this.setTitle();
+    window.scrollTo(0,0);
     const fromPage = this.previous || ''
     const id = this.previous = this.getId();
     let current = this.getPage(id)

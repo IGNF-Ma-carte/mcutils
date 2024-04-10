@@ -445,8 +445,11 @@
 }
 
 .mc-list.mc-atlas .valid,
+.mc-list.mc-organization .valid,
 .mc-list.mc-atlas .active,
+.mc-list.mc-organization .active,
 .mc-list.mc-atlas .share,
+.mc-list.mc-organization .organization,
 .mc-list.mc-profile .author {
   display: none;
 }
