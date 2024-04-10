@@ -28,7 +28,8 @@ class WFS extends LayerFormat {
     source: new ol_source_WFS({
       url: options.url,
       typeName: options.typeName,
-      tileZoom: options.tileZoom
+      tileZoom: options.tileZoom,
+      version: options.version || '2.0.0'
     }),
   })
   layer.setMinZoom(options.tileZoom)
@@ -36,6 +37,7 @@ class WFS extends LayerFormat {
   layer.getSource().set('url', options.url)
   layer.getSource().set('typeName', options.typeName)
   layer.getSource().set('tileZoom', options.tileZoom)
+  layer.getSource().set('version', options.version || '2.0.0')
   // Options
   this.readOptions(layer, options);
   return layer;
@@ -51,6 +53,7 @@ WFS.prototype.write = function (layer) {
   return this.writeOptions(layer, {
     url: source.get('url'),
     typeName: source.get('typeName'),
+    version: source.get('version'),
     tileZoom: source.get('tileZoom')
   });
 };
