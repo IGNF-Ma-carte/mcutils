@@ -173,19 +173,9 @@ class ListCarte extends ListTable {
     })
     this._filters.user = ol_ext_element.create('UL', { className: 'author', parent: user.element });
 
-    // Organisations
-    ol_ext_element.create('H2', { 
-      className: 'organization selected', 
-      html: 'Organisations', 
-      click: (e) => {
-        e.target.classList.toggle('selected')
-      },
-      parent: filter
-    });
-    this._filters.organization = ol_ext_element.create('UL', { className: 'organization', parent: filter });
-
     // Add filters
     const filters = {
+      organization : 'Organisations',
       type : 'Type',
       share: 'Partage',
       valid: 'Valide',
@@ -430,7 +420,9 @@ ListCarte.prototype.getPermalink = function() {
     search.split('&').map(s => s.split('=')).forEach(s => perma[s[0]] = decodeURIComponent(s[1]));
   }
   ['theme', 'user', 'organization', 'share', 'type', 'premium', 'sort'].forEach(q => {
-    if (perma[q]) this.setFilter(q, perma[q], q==='theme' ? 'fi-theme-' + getThemeID(perma[q]) : '');
+    if (perma[q]) {
+      this.setFilter(q, perma[q], q==='theme' ? 'fi-theme-' + getThemeID(perma[q]) : '');
+    }
   });
   if (perma.filter==='off') this.element.classList.remove('mc-filter')
   else this.element.classList.add('mc-filter')
@@ -523,9 +515,10 @@ ListCarte.prototype.showPage = function(page) {
             const li = ol_ext_element.create('LI', { 
               click: () => {
                 let val = filt[attr];
+                console.log(val)
                 if (as==='organizations') {
                   val = filt.public_id;
-                  if (!val) return;
+                  if (!val) val = 'out';
                 }
                 if (this.setFilter(attr, val)) {
                   this.showPage();
@@ -536,7 +529,10 @@ ListCarte.prototype.showPage = function(page) {
             // Counter
             ol_ext_element.create('SPAN', { className: 'count', html: filt.count, parent: li });
             // Show in list
-            ol_ext_element.create('SPAN', { html: this.getStrAttributeValue(attr, filt[attr], as==='organizations' ? '-' : ''), parent: li });
+            ol_ext_element.create('SPAN', { 
+              html: this.getStrAttributeValue(attr, filt[attr], as==='organizations' ? '<span class="undef">Hors organisation</span>' : ''), 
+              parent: li 
+            });
           })
         })
       }

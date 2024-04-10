@@ -355,6 +355,9 @@
 .mc-list.mc-filter .filters ul.theme li {
   padding-left: 0;
 }
+.mc-list.mc-filter .filters ul .undef {
+  font-style: italic;
+}
 .mc-list.mc-filter .filters ul i {
   float: unset;
   position: unset;
