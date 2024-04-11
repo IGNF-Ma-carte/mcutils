@@ -11,6 +11,7 @@ import urls, { getMediaURL } from './serviceURL'
 import _T from '../i18n/i18n'
 import { getThemeID } from "../format/theme";
 import UserInput from "./UserInput";
+import organization from "./organization";
 
 /** Control to display a list of Cartes
  */
@@ -455,7 +456,7 @@ ListCarte.prototype.showPage = function(page) {
     context: this.get('context'),
     offset: (page * this.get('size')) || 0,
     theme: this.get('theme') || '',
-    organization: this.get('organization') || undefined,
+    organization: this.get('organization') || organization.getId() || 'out',
     limit: this.get('size'),
     user: this.get('user') || '',
     type: this.get('type') || '',

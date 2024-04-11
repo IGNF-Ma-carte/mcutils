@@ -9,6 +9,7 @@ import saveCarte from '../../dialog/saveCarte'
 import shareCarte from '../../dialog/shareCarte'
 
 import StoryMap from '../../StoryMap'
+import Carte from '../../Carte'
 import openCarte from '../../dialog/openCarte'
 import dialogMessage from '../../dialog/dialogMessage'
 import loader from '../../dialog/loader'
@@ -18,6 +19,7 @@ import FlashMessage from '../../dialog/FlashMessage'
 import MacarteAPI from '../../api/MacarteApi'
 import MVT from '../../layer/MVT'
 import ol_ext_element from 'ol-ext/util/element'
+import organization from '../../api/organization'
 
 const story = new StoryMap({ 
   // id: 'e331581bad8927c6a6584d175d240e12',
@@ -29,6 +31,7 @@ const story = new StoryMap({
   // target: document.querySelector('[data-role="map"]'),
   key: options.gppKey
 });
+story.setCarte(new Carte)
 
 // Start loading
 story.on('read:start', () => loader.show(0, 'Chargement de la carte...') );
@@ -64,7 +67,7 @@ charte.addTool('help', 'fi-info', 'Aide', console.log)
 
 charte.addTool();
 
-
+// Save dialog 
 function doSave(story) {
   saveCarte(story, (carte, options) => {
     // Do something with the story / options
@@ -91,10 +94,12 @@ charte.addTool('print', 'fi-print', 'Imprimer', () => { story.print(); } );
 charte.addTool();
 charte.addTool('import', 'fi-share', 'Importer', console.log)
 
+// Save the map
 charte.addTool('save', 'fi-save', 'Enregistrer', () => {
   doSave(story);
 });
 
+// Open a new map
 charte.addTool('open', 'fi-open', 'Ouvrir', () => {
   openCarte({
     callback: (c) => {
@@ -103,6 +108,7 @@ charte.addTool('open', 'fi-open', 'Ouvrir', () => {
   })
 });
 
+// New map
 charte.addTool('new', 'fi-map', 'Ajouter un vecteur tuilé', () => {
   dialog.show({
     title: 'Vecteur tuilé',
@@ -123,37 +129,37 @@ charte.addTool('new', 'fi-map', 'Ajouter un vecteur tuilé', () => {
   })
   ol_ext_element.create('OPTION', {
     text: 'PLAN IGN : standard',
-    value: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/standard.json',
+    value: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/essentiels/standard.json',
     parent: sel
   })
   ol_ext_element.create('OPTION', {
     text: 'PLAN IGN : gris',
-    value: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/gris.json',
+    value: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/essentiels/gris.json',
     parent: sel
   })
   ol_ext_element.create('OPTION', {
     text: 'PLAN IGN : classique',
-    value: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/classique.json',
+    value: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/essentiels/classique.json',
     parent: sel
   })
   ol_ext_element.create('OPTION', {
     text: 'BDTOPO : classique',
-    value: 'https://wxs.ign.fr/static/vectorTiles/styles/BDTOPO/classique.json',
+    value: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/BDTOPO/classique.json',
     parent: sel
   })
   ol_ext_element.create('OPTION', {
     text: 'BDTOPO : bati étages',
-    value: 'https://wxs.ign.fr/static/vectorTiles/styles/BDTOPO/bati_etages.json',
+    value: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/BDTOPO/bati_etages.json',
     parent: sel
   })
   ol_ext_element.create('OPTION', {
     text: 'PCI : classique',
-    value: 'https://wxs.ign.fr/static/vectorTiles/styles/PCI/pci.json',
+    value: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PCI/pci.json',
     parent: sel
   })
   ol_ext_element.create('OPTION', {
     text: 'PCI : gris',
-    value: 'https://wxs.ign.fr/static/vectorTiles/styles/PCI/noir_et_blanc.json',
+    value: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PCI/noir_et_blanc.json',
     parent: sel
   })
 })
@@ -170,4 +176,5 @@ charte.on(['menu:list'], console.log);
 window.openCarte = openCarte;
 window.charte = charte;
 window.story = story;
+window.organization = organization
 /**/

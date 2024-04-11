@@ -7,6 +7,7 @@ import ol_ext_element from 'ol-ext/util/element';
 import StoryMap from '../StoryMap';
 import Carte from '../Carte'
 import md2html from '../md/md2html';
+import organization from '../api/organization';
 
 const html = `
 <ul>
@@ -61,6 +62,10 @@ function saveCarte(carte, callback, options) {
     if (!optionsCarte.img_url) optionsCarte.img_url = carte.get('logo') || '';
   } else {
     optionsCarte = carte;
+  }
+  // Use default organization
+  if (!optionsCarte.organization) {
+    optionsCarte.organization = organization.getId();
   }
   // Save as (remove props)
   if (options.saveAs) {

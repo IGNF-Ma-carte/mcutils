@@ -217,15 +217,14 @@ StoryMap.prototype.write = function(story) {
   }
 
   // Volet
-  // options.photo = layout.photo;
-  if (story.models[story.get('model')].volet) {
+  if (story.models[story.get('model') || 'standard'].volet) {
     options.volet = {
       position: story.get('voletPosition').replace('left', 'gauche').replace('right', 'droite'),
       width: story.get('voletWidth')
     }
   }
   // Theme
-  const theme = typeof(story.get('colors')) === 'string' ? story.get('colors') : 'custom';
+  const theme = typeof(story.get('colors') || 'default') === 'string' ? story.get('colors') : 'custom';
   // Model
   options.modele =  {
     type: story.get('model'), 
