@@ -92,21 +92,29 @@
   overflow: hidden;
 }
 
+.mc-list-carte .mc-organization,
 .mc-list-carte .mc-user {
   display: inline-block;
 }
+.mc-list-carte.mc-profile .mc-organization,
 .mc-list-carte.mc-profile .mc-user {
   display: none;
 }
+.mc-list-carte .mc-organization:hover,
 .mc-list-carte .mc-user:hover {
   box-shadow: inset 0 -2px #aaa;
 }
-
+.mc-list-carte .mc-organization:before {
+  content: "\ea37";
+  font-family: font-ign;
+  padding: 0 .5em 0 0;
+}
 .mc-list-carte .mc-user:before {
   content: "\e91a";
   font-family: font-ign;
   padding: 0 .5em 0 0;
 }
+
 .mc-list-carte li .mc-secondary > div {
   display: inline-block;
   padding-right: .5em;
@@ -373,6 +381,9 @@
   position: absolute;
   right: 2.5em;
   line-height: 2em;
+}
+.mc-list.mc-filter .filters ul a.remove:before {
+  display: none;
 }
 .mc-list.mc-filter .filters ul a.remove:after {
   content: '\e902';

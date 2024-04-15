@@ -615,14 +615,16 @@ MacarteAPI.prototype.getOrganizations =  function(callback) {
   });
 }
 
-/** Get my organization list
+/** Get organization list 
+ * NB: if not member, organization members are not listed, only a count is returned
  * @param {string} id organization id
  * @param {function} [options.callback] callback function
+ * @param {boolean} [options.publi] public information
  */
-MacarteAPI.prototype.getOrganization =  function(id, callback) {
+MacarteAPI.prototype.getOrganization =  function(id, callback, publi) {
   this._send('GET', _apiURL+'organizations/' + id, {}, resp => {
     if (typeof(callback) === 'function') callback(resp);
-  });
+  }, !publi);
 }
 
 /** Set organization attribute

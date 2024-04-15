@@ -132,9 +132,29 @@ function getEditorURL(carte) {
  */
 function getUserURL(user) {
   if (!user) return '';
+  // User object
+  if (user.public_name) {
+    user = encodeTitleURL(user.public_name) + '_' + user.public_id;
+  }
   // Get Viewer
   return options.userProfile
     .replace('$NAME', user);
+}
+
+/** Get organization url
+ * @memberof serviceURL
+ * @param {string} orga organization name
+ * @return {string} user url
+ */
+function getOrgaURL(orga) {
+  if (!orga) return '';
+  // Orga object
+  if (orga.name) {
+    orga = encodeTitleURL(orga.name) + '_' + orga.public_id;
+  }
+  // Get Viewer
+  return options.orgaProfile
+    .replace('$NAME', orga);
 }
 
 /** Encode a string as title to add in a url (only keep letters and digit)
@@ -163,7 +183,7 @@ function getDocumentationURL(page, category, article) {
 }
 
 export { encodeTitleURL }
-export { getUserURL }
+export { getUserURL, getOrgaURL }
 export { getMediaURL }
 export { getViewerURL }
 export { getEditorURL }

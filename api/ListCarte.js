@@ -297,13 +297,25 @@ ListCarte.prototype.drawItem = function(m, li) {
   // User
   ol_ext_element.create('DIV', {
     html: m.user,
-    className: 'mc-user',
+    className: 'mc-user' + (m.organization_id ? ' mc-user-orga' : ''),
     click: (e) => {
       this.dispatchEvent({ type: 'select:user', user: m.user, user_id: m.user_id, carte: m });
       e.stopPropagation();
     },
     parent: title
   });
+  // Organization
+  if (m.organization_id) {
+    ol_ext_element.create('DIV', {
+      html: m.organization_name,
+      className: 'mc-organization',
+      click: (e) => {
+        this.dispatchEvent({ type: 'select:organization', organization_name: m.organization_name, organization_id: m.organization_id, carte: m });
+        e.stopPropagation();
+      },
+      parent: title
+    });
+  }
   // Description
   if (!this.get('mini')) {
     ol_ext_element.create('DIV', {
@@ -456,7 +468,7 @@ ListCarte.prototype.showPage = function(page) {
     context: this.get('context'),
     offset: (page * this.get('size')) || 0,
     theme: this.get('theme') || '',
-    organization: this.get('organization') || organization.getId() || 'out',
+    organization: this.get('organization') || organization.getId() || '',
     limit: this.get('size'),
     user: this.get('user') || '',
     type: this.get('type') || '',
