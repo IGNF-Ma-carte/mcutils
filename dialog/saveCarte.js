@@ -64,8 +64,8 @@ function saveCarte(carte, callback, options) {
     optionsCarte = carte;
   }
   // Use default organization
-  if (!optionsCarte.organization) {
-    optionsCarte.organization = organization.getId();
+  if (!optionsCarte.organization_id) {
+    optionsCarte.organization_id = organization.getId();
   }
   // Save as (remove props)
   if (options.saveAs) {

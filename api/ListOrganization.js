@@ -44,18 +44,19 @@ function organizationSelector(parent) {
       none.innerText = 'hors organisation';
       myOrga = {};
       organisations.forEach(o => {
-        myOrga[o.organization_id] = o;
+        myOrga[o.public_id] = o;
         const opt = ol_ext_element.create('OPTION', {
-          text: o.organization_name,
-          value: o.organization_id,
+          text: o.name,
+          value: o.public_id,
           parent: orgasel
         })
-        if (organization.get().organization_id === o.organization_id) {
+        if (organization.get().public_id === o.public_id) {
           opt.selected = true;
         }
       });
       orgasel.disabled = false;
       onready(organisations);
+      onselect(myOrga[orgasel.value])
       organization.checkIn(organisations)
     })
   }
@@ -64,6 +65,8 @@ function organizationSelector(parent) {
   const selectCtrl = {
     element: orgasel,
     setOptions: setOptions,
+    getValue: () => orgasel.value,
+    getOrganization: () => myOrga[orgasel.value],
     onselect: fn => {
       if (typeof(fn) === 'function') onselect = fn
       return selectCtrl;

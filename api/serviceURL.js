@@ -39,6 +39,7 @@ const serviceURL = {
   profil: options.server + 'mon-compte/#profil',
   mescartes: options.server + 'mon-compte/#cartes',
   mesmedias: options.server + 'mon-compte/#medias',
+  mesorganizations: options.server + 'organizations',
 
   // editorial
   mention: options.server + 'mentions-legales',

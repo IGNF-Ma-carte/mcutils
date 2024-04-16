@@ -627,6 +627,8 @@ const charte = {
   },
   /** Add user menu item
    * @param {string|Element} content
+   * @param {Object} [options]
+   *  @param {string} [options.className]
    * @return {Element}
    */
   addUserMenuItem(content, options) {
@@ -634,6 +636,18 @@ const charte = {
     return ol_ext_element.create('LI', {
       html: content,
       className: options.className,
+      parent: userMenu.querySelector('ul')
+    })
+  },
+  /** Add user menu separator
+   * @param {Object} [options]
+   *  @param {string} [options.className]
+   * @return {Element}
+   */
+  addUserMenuSeparator(options) {
+    options = options || {};
+    return ol_ext_element.create('LI', {
+      className: options.className || 'separator',
       parent: userMenu.querySelector('ul')
     })
   },

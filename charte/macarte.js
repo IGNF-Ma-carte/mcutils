@@ -7,6 +7,7 @@ import fakeMap from '../dialog/fakeMap'
 import serviceURL, { getDocumentationURL } from "../api/serviceURL";
 import config from '../config/config'
 import organization from '../api/organization';
+import { organizationSelector } from '../api/ListOrganization'
 
 import './macarte.css'
 
@@ -210,6 +211,17 @@ charte.addUserMenuItem(ol_ext_element.create('A', {
   text: 'Mes images',
   href: serviceURL.mesmedias
 }))
+charte.addUserMenuSeparator();
+charte.addUserMenuItem(ol_ext_element.create('A', {
+  text: 'Mes organizations',
+  href: serviceURL.mesorganizations
+}))
+charte.addUserMenuItem(ol_ext_element.create('A', {
+  text: 'Changer d\'organisation...',
+  click: () => {
+    changeOrganization()
+  }
+}))
 
 /** Connexion au services
  * @param {function} callback a function called when connected
@@ -410,6 +422,27 @@ api.on(['logout', 'disconnect'], () => {
 });
 
 /* Handle organization */
+function changeOrganization() {
+  dialog.show({
+    title: 'Organisation',
+    className: 'select-organization',
+    content: ' ',
+    buttons: { ok: 'ok', cancel: 'annuler' },
+    onButton: b => {
+      if (b) {
+        organization.set(sel.getOrganization());
+      }
+    }
+  })
+  const img = ol_ext_element.create('IMG', { 
+    parent: ol_ext_element.create('LABEL', { text : 'Choisir une organisations :', parent: dialog.getContentElement() })
+  })
+  const sel = organizationSelector(dialog.getContentElement())
+  sel.onselect(o => {
+    img.src = o ? o.profile_picture : '';
+  })
+}
+
 // Update organization name and image
 function setOrganization() {
   charte.setName(organization.getName());

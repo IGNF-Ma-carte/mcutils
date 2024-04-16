@@ -27,7 +27,9 @@ const list = new UserMedia(api, { thumb: false });
 // Select > callback
 list.on('select', (e) => {
   e.thumb = list.get('thumb');
-  currentOptions.callback(e);
+  if (typeof(currentOptions.callback) === 'function') {
+    currentOptions.callback(e);
+  }
   mediaDialog.close();
 });
 list.on('error', (e) => {
