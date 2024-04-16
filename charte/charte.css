@@ -296,6 +296,8 @@ body > [data-role="storymap"] > * {
   text-transform: uppercase;
   margin: 0 .6em;
   cursor: pointer;
+  max-width: 14rem;
+  overflow: hidden;
 }
 [data-role="header"] > h1:after {
   content: "";

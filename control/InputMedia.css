@@ -14,16 +14,7 @@
   position: relative;
   width: 6em;
   height: 5em;
-  background-image: linear-gradient(45deg, 
-    #ccc, #ccc 1em, 
-    transparent 1em, transparent 2em,
-    #ccc 2em, #ccc 3em ,
-    transparent 3em, transparent 4em,
-    #ccc 4em, #ccc 5em ,
-    transparent 5em, transparent 6em,
-    #ccc 6em, #ccc 7em ,
-    transparent 5em
-  );
+  background-image: repeating-linear-gradient(45deg, #ccc, #ccc 1em, #0000 1em 2em, #ccc 2em);
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;

@@ -25,7 +25,7 @@ class Organization extends ol_Object {
    * @param {Object} [orga]
    */
   set(orga) {
-    if (orga && orga.organization_id) {
+    if (orga && orga.public_id) {
       _organization = orga;
     } else {
       _organization = {}
@@ -43,25 +43,31 @@ class Organization extends ol_Object {
    * @return {string}
    */
   getName() {
-    return _organization.organization_name || ''
+    return _organization.name || ''
   }
   /** Get organization image url
    * @return {string}
    */
   getImage() {
-    return _organization.organization_image || ''
+    return _organization.profile_picture || ''
+  }
+  /** Get organization cover image url
+   * @return {string}
+   */
+  getCoverImage() {
+    return _organization.cover_picture || ''
   }
   /** Get organization info
    * @return {string}
    */
   getPresentation() {
-    return _organization.organization_presentation || ''
+    return _organization.presentation || ''
   }
   /** Get organization id
    * @return {string}
    */
   getId() {
-    return _organization.organization_id || '';
+    return _organization.public_id || '';
   }
   /** Check if organization is in the list if not remove the organization
    * @param {Array<Object>} list
@@ -70,7 +76,7 @@ class Organization extends ol_Object {
   checkIn(list) {
     let i;
     for (i=0; i < list.length; i++) {
-      if (list[i].organization_id === _organization.organization_id) {
+      if (list[i].public_id === _organization.public_id) {
         break;
       }
     }
@@ -96,7 +102,7 @@ class Organization extends ol_Object {
    */
   setUser(user) {
     if (user && user.organizations) {
-      const corg = user.organizations.find(o => o.organization_id === this.getId())
+      const corg = user.organizations.find(o => o.public_id === this.getId())
       if (corg) {
         _organization.user_role = corg.user_role
         this.changed()
