@@ -149,7 +149,9 @@ function getUserURL(user) {
 function getOrgaURL(orga) {
   if (!orga) return '';
   // Orga object
-  if (orga.name) {
+  if (orga.getName) {
+    orga = encodeTitleURL(orga.getName()) + '_' + orga.getId();
+  } else if (orga.name) {
     orga = encodeTitleURL(orga.name) + '_' + orga.public_id;
   }
   // Get Viewer
