@@ -115,6 +115,7 @@ class Organization extends ol_Object {
       const corg = user.organizations.find(o => o.public_id === this.getId())
       if (corg) {
         _organization.user_role = corg.user_role
+        document.body.dataset.orgaRole = corg.user_role
         this.changed()
       } else {
         this.set();

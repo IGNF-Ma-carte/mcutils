@@ -33,11 +33,12 @@ const html = `
     <input type="text" class="image" />
   </li>
   <li data-attr="share">
-    Publier dans l'atlas :
-    <div>
-      <label class="ol-ext-check ol-ext-radio"><input class="atlas" type="radio" name="publie" checked=""><span></span>oui</label>
-      <label class="ol-ext-check ol-ext-radio"><input class="private" type="radio" name="publie" checked="checked"><span></span>non</label>
-    </div>
+    Partage :
+    <select class="share">
+      <option value="private">Privée</option>
+      <option value="public">Publique</option>
+      <option value="atlas">Atlas</option>
+    </select>
   </li>
 `;
 
@@ -71,7 +72,7 @@ function saveCarte(carte, callback, options) {
   if (options.saveAs) {
     const tmp = optionsCarte;
     optionsCarte = {};
-    ['active','description','img_url','share','theme','theme_id','title','type','premium'].forEach(i => {
+    ['active','description','img_url','theme','theme_id','title','type','premium'].forEach(i => {
       optionsCarte[i] = tmp[i];
     });
   }
@@ -99,7 +100,7 @@ function saveCarte(carte, callback, options) {
       optionsCarte.theme_id = inputs.theme.value;
       optionsCarte.theme = themesList[inputs.theme.value];
       optionsCarte.img_url = inputs.image.value;
-      optionsCarte.share = inputs.atlas.checked ? 'atlas' : 'private';
+      optionsCarte.share = inputs.share.value;
       if (carte instanceof StoryMap || carte instanceof Carte) {
         carte.set('atlas', optionsCarte)
       }
@@ -114,8 +115,10 @@ function saveCarte(carte, callback, options) {
   inputs.title.value = optionsCarte.title || '';
   inputs.description.value = optionsCarte.description || '';
   inputs.image.value = optionsCarte.img_url || '';
-  inputs.atlas.checked = (optionsCarte.share === 'atlas');
-  inputs.private.checked = (optionsCarte.share !== 'atlas');
+  inputs.share.value = optionsCarte.share || 'private';
+  if (organization.getId() && !organization.isOwner()) {
+    inputs.share.disabled = true;
+  }
 
   // Handle invlid
   inputs.title.addEventListener('change', () => {
