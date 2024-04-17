@@ -359,7 +359,7 @@ MacarteAPI.prototype.getMaps =  function(options, callback) {
   if (!options.context) options.context = 'profile';
   if (options.context==='profile' && !options.limit) options.limit = 'all';
   if (!options.query) options.query = '';
-  if (options.organization === undefined) {
+  if (!options.organization) {
     if (options.context !== 'atlas') {
       options.organization = organization.getId();
     } else {
