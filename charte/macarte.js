@@ -429,7 +429,7 @@ function changeOrganization() {
     content: ' ',
     buttons: { ok: 'ok', cancel: 'annuler' },
     onButton: b => {
-      if (b) {
+      if (b === 'ok') {
         organization.set(sel.getOrganization());
       }
     }

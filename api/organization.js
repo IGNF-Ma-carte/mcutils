@@ -23,15 +23,25 @@ class Organization extends ol_Object {
   }
   /** Set the current organization
    * @param {Object} [orga]
+   * @param {boolean} [force] true to force change
    */
-  set(orga) {
-    if (orga && orga.public_id) {
-      _organization = orga;
-    } else {
-      _organization = {}
+  set(orga, force) {
+    if (!orga || !orga.public_id) {
+      if (!organization.getId()) return;
+      orga = {}
     }
-    localStorage.setItem('MC@organization', JSON.stringify(_organization))
-    this.dispatchEvent({ type: 'change', organization: _organization })
+    if (force || this.canChange(orga)) {
+      _organization = orga
+      localStorage.setItem('MC@organization', JSON.stringify(_organization))
+      this.dispatchEvent({ type: 'change', organization: _organization })
+    }
+  }
+  /** Test if organization can be changed
+   * @param {Objet} newOrga
+   * @returns {boolean}
+   */
+  canChange(/* newOrga */) {
+    return true;
   }
   /** Get organization
    * @return {Object}
