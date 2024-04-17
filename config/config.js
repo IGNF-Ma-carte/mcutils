@@ -5,6 +5,7 @@ let options = {
   server: 'https://server.ign.fr/',
   viewer: 'SERVER/$TYPE/$ID/$TITLE',
   userProfile: 'SERVER/user/$NAME',
+  orgaProfile: 'SERVER/organization/$NAME',
   editor: 'SERVER/edition/$TYPE/$ID',
   faq: 'SERVER/aide/faq/$ARTICLE',
   tuto: 'SERVER/aide/tuto/$ARTICLE',
@@ -25,7 +26,7 @@ if (window.maCarteOptions) {
   delete window.maCarteOptions;
   // Update server url
   for (let i in options) {
-    options[i] = options[i].replace(/^SERVER\//, options.server)
+    if (options[i].replace) options[i] = options[i].replace(/^SERVER\//, options.server)
   };
 } else {
   console.error('NO CONFIG FILE!\n Ajouter un fichier confg.json dans le répertoire des assets...');
