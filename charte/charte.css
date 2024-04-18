@@ -499,6 +499,7 @@ body > [data-role="storymap"] > * {
 
 [data-page="site"] [data-role="header"] .organization {
   line-height: 7rem;
+  height: 6.9rem;
 }
 [data-page="site"] [data-role="header"] .organization img {
   max-height: 7rem;
