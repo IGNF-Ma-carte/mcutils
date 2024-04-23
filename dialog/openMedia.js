@@ -24,8 +24,9 @@ let currentOptions = {};
 
 // Media list to display in dialog
 const list = new UserMedia(api, { thumb: false });
-// Select > callback
+// Select an item > callback
 list.on('select', (e) => {
+  if (!e.item) return;
   e.thumb = list.get('thumb');
   if (typeof(currentOptions.callback) === 'function') {
     currentOptions.callback(e);

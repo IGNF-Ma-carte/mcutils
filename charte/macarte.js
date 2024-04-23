@@ -424,7 +424,7 @@ api.on(['logout', 'disconnect'], () => {
 /* Handle organization */
 function changeOrganization() {
   dialog.show({
-    title: 'Organisation',
+    title: 'Organisations',
     className: 'select-organization',
     content: ' ',
     buttons: { ok: 'ok', cancel: 'annuler' },
@@ -435,12 +435,13 @@ function changeOrganization() {
     }
   })
   const img = ol_ext_element.create('IMG', { 
+    className: 'waiting',
+    src: "",
     parent: ol_ext_element.create('LABEL', { text : 'Choisir une organisations :', parent: dialog.getContentElement() })
   })
   const sel = organizationSelector(dialog.getContentElement())
-  sel.onselect(o => {
-    img.src = o ? o.profile_picture : '';
-  })
+  sel.onready(() => img.classList.remove('waiting'))
+  sel.onselect(o => img.src = o ? o.profile_picture : '')
 }
 
 // Update organization name and image

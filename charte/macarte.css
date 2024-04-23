@@ -81,3 +81,15 @@
   left: 2.4em;
   transform: translate(-50%, -50%);
 }
+.ol-ext-dialog.select-organization img.waiting {
+  overflow: visible;
+  animation: fa-spin 1s infinite steps(8);
+}
+.ol-ext-dialog.select-organization img.waiting:before {
+  content: "\f110";
+  font-family: fontawesome;
+  font-size: 3em;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  color: #aaa;
+}
