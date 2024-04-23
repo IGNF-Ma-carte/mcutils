@@ -12,24 +12,28 @@ function carteGPF(options) {
       case 'WMTS': {
         l.wmtsparam.source.url = l.wmtsparam.source.url.replace(/^https:\/\/wxs.ign.fr\/([^\/]*)\/geoportail\/wmts/, 'https://data.geopf.fr/wmts')
         // Legend
-        if (l.wmtsparam.data.legend && l.wmtsparam.data.legend.length) {
+        if (l.wmtsparam.data.legend && l.wmtsparam.data.legend.length && l.wmtsparam.data.legend[0].replace) {
           l.wmtsparam.data.legend[0] = l.wmtsparam.data.legend[0].replace(/^https:\/\/wxs.ign.fr\/static\/legends/,'https://data.geopf.fr/annexes/ressources/legendes')
         }
         break;
       }
       case 'WMS': {
         l.wmsparam.source.url = l.wmsparam.source.url.replace(/^https:\/\/wxs.ign.fr\/[^\/]*\/geoportail\/([r|v])\/wms/, 'https://data.geopf.fr/wms-$1/wms')
-        if (l.wmsparam.legend && l.wmsparam.legend.length) {
-          l.wmsparam.legend[0] = l.wmsparam.legend[0].replace(/^https:\/\/wxs.ign.fr\/static\/legends/,'https://data.geopf.fr/annexes/ressources/legendes')
+        if (l.wmsparam.legend && l.wmsparam.legend.length && l.wmsparam.legend[0].url && l.wmsparam.legend[0].url.replace) {
+          l.wmsparam.legend[0] = l.wmsparam.legend[0].url.replace(/^https:\/\/wxs.ign.fr\/static\/legends/,'https://data.geopf.fr/annexes/ressources/legendes')
         }
         break;
       }
       case 'WFS': {
-        l.url = l.url.replace(/^https:\/\/wxs.ign.fr\/([^\/]*)\/geoportail\/wfs/, 'https://data.geopf.fr/wfs/ows')
+        if (l.url && l.url.replace) {
+          l.url = l.url.replace(/^https:\/\/wxs.ign.fr\/([^\/]*)\/geoportail\/wfs/, 'https://data.geopf.fr/wfs/ows')
+        }
         break;
       }
       case 'MVT': {
-        l.url = l.url.replace(/^https:\/\/wxs.ign.fr\/static/, 'https://data.geopf.fr/annexes/ressources').replace(/\/essentiels/, '')
+        if (l.url && l.url.replace) {
+          l.url = l.url.replace(/^https:\/\/wxs.ign.fr\/static/, 'https://data.geopf.fr/annexes/ressources').replace(/\/essentiels/, '')
+        }
         break;
       }
       default: {
