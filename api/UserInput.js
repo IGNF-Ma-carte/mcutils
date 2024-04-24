@@ -56,7 +56,12 @@ UserInput.prototype.setUser = function(public_name) {
  * @param {string} value
  */
 UserInput.prototype.autocompleteAuthor = function(value, autolist) {
+  // Prevent search on same value
+  if (value === (this._currentSearch)) return;
+  this._currentSearch = value;
+  // Add delay call
   if (autocompleteTout) clearTimeout(autocompleteTout);
+  // Start autocomplete
   this.element.dataset.loading = '';
   autocompleteTout = setTimeout(() => {
     if (!value) {
