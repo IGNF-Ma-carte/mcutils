@@ -202,7 +202,7 @@ ListTable.prototype.refresh = function() {
   });
   this.drawHead(title);
   // Draw items
-  const maps = this._currentList
+  const maps = this._currentList || [];
   maps.forEach(m => {
     const li = ol_ext_element.create('LI', {
       className: m.type,

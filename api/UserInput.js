@@ -27,9 +27,10 @@ class UserInput extends ol_Object {
     const searchAut = this.searchInput = ol_ext_element.create('INPUT', { 
       type: 'text', 
       className: 'author', 
-      placeholder: 'chercher un auteur...',
+      placeholder: 'chercher un membre...',
       parent: user 
     });
+    ol_ext_element.create('I', { className: 'loading', parent: user })
     const autolist = ol_ext_element.create('UL', { className: 'autocomplete', parent: user });
     // Autocomplete
     searchAut.addEventListener('keyup', () => {
@@ -56,10 +57,17 @@ UserInput.prototype.setUser = function(public_name) {
  */
 UserInput.prototype.autocompleteAuthor = function(value, autolist) {
   if (autocompleteTout) clearTimeout(autocompleteTout);
+  this.element.dataset.loading = '';
   autocompleteTout = setTimeout(() => {
+    if (!value) {
+      autolist.innerHTML = '';
+      delete this.element.dataset.loading;
+      return;
+    }
     // Get full user info
     if (this.get('full')) {
       this.api.getUsers(value, users => {
+        delete this.element.dataset.loading;
         autolist.innerHTML = '';
         if (users && users.forEach) {
           users.forEach(u => {
@@ -85,6 +93,7 @@ UserInput.prototype.autocompleteAuthor = function(value, autolist) {
       this.api.searchMapUsers({
         public_name: value
       }, (users) => {
+        delete this.element.dataset.loading;
         autolist.innerHTML = '';
         if (users && users.forEach) {
           users.forEach(u => {

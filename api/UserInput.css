@@ -1,9 +1,39 @@
+.author-list {
+  position: relative;
+}
 .author-list .autocomplete {
   position: absolute;
   background-color: #fff;
   box-shadow: 1px 1px 3px #000;
   width: 20em;
   z-index: 1;
+}
+.author-list i.loading {
+  display: none;
+  position: absolute;
+  left: 0;
+  background-color: #3993f3;
+  height: 2px;
+  right: 0;
+  transform: translateY(-3px);
+  animation: user-waiting 1s infinite;
+}
+@keyframes user-waiting {
+  0% {
+    left: 0;
+    right: 100%;
+  }
+  25% {
+    left: 0;
+    right: 50%;
+  }
+  100% {
+    left: 100%;
+    right: 0;
+  }
+}
+.author-list[data-loading] i.loading {
+  display: block;
 }
 .author-list input.author {
   margin-bottom: 0!important;
