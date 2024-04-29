@@ -11,7 +11,7 @@ import urls, { getMediaURL } from './serviceURL'
 import _T from '../i18n/i18n'
 import { getThemeID } from "../format/theme";
 import UserInput from "./UserInput";
-import organization from "mcutils/api/team";
+import team from "mcutils/api/team";
 
 /** Control to display a list of Cartes
  */
@@ -176,7 +176,7 @@ class ListCarte extends ListTable {
 
     // Add filters
     const filters = {
-      organization : 'Organisations',
+      organization : 'Equipes',
       type : 'Type',
       share: 'Partage',
       valid: 'Valide',
@@ -310,7 +310,7 @@ ListCarte.prototype.drawItem = function(m, li) {
       html: m.organization_name,
       className: 'mc-organization',
       click: (e) => {
-        this.dispatchEvent({ type: 'select:organization', organization_name: m.organization_name, organization_id: m.organization_id, carte: m });
+        this.dispatchEvent({ type: 'select:team', name: m.organization_name, id: m.organization_id, carte: m });
         e.stopPropagation();
       },
       parent: title
@@ -513,7 +513,7 @@ ListCarte.prototype.showPage = function(page) {
             }
             // Show in list
             ol_ext_element.create('SPAN', { 
-              html: this.getStrAttributeValue(attr, filt[attr], as==='organizations' ? '<span class="undef">Hors organisation</span>' : ''), 
+              html: this.getStrAttributeValue(attr, filt[attr], as==='organizations' ? '<span class="undef">Hors équipe</span>' : ''), 
               parent: li 
             });
             // Filter
