@@ -63,7 +63,7 @@ if (charte.getSubFooterElement()) {
  */
 charte.setApp = function (id, name, roles) {
   charte.roles = typeof(roles) === 'string' ? [roles] : roles;
-  // Check teams roles
+  // Check teams roles and remove the team if bad role
   if (roles.indexOf) {
     team.on('change', () => {
       if (roles.indexOf(team.getUserRole()) < 0) {
