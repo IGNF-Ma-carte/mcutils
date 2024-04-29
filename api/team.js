@@ -104,10 +104,15 @@ class Team extends ol_Object {
   getUserRole() {
     return _team.user_role
   }
-  /** Is admin?
+  /** Is owner?
    */
   isOwner() {
     return _team.user_role === 'owner'
+  }
+  /** Is redactor?
+   */
+  isRedactor() {
+    return _team.user_role === 'owner' || _team.user_role === 'editor'
   }
   /** Set the user
    * @param {Object}

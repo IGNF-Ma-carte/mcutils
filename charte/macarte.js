@@ -54,13 +54,23 @@ if (charte.getSubFooterElement()) {
  * @function
  * @param {string} id App id
  * @param {string} name App name (shown in the header)
+ * @param {string|Array<string>} [roles] a list of roles to limit the page view
  * @example
  * import charte from 'mcutils/charte/macarte'
  * // Create an app with a title
  * charte.setApp('macarte', 'Ma carte');
  * @instance
  */
-charte.setApp = function (id, name) {
+charte.setApp = function (id, name, roles) {
+  charte.roles = typeof(roles) === 'string' ? [roles] : roles;
+  // Check teams roles
+  if (roles.indexOf) {
+    team.on('change', () => {
+      if (roles.indexOf(team.getUserRole()) < 0) {
+        team.set();
+      }
+    })
+  }
   // Add Macarte menu
   charte.addMenuList([
     /*
@@ -439,7 +449,7 @@ function changeTeam() {
     src: "",
     parent: ol_ext_element.create('LABEL', { text : 'Choisir une équipe :', parent: dialog.getContentElement() })
   })
-  const sel = teamSelector(dialog.getContentElement())
+  const sel = teamSelector(dialog.getContentElement(), charte.roles)
   sel.onready(() => img.classList.remove('waiting'))
   sel.onselect(o => img.src = o ? o.profile_picture||'' : '')
 }

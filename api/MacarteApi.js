@@ -361,7 +361,7 @@ MacarteAPI.prototype.getMaps =  function(options, callback) {
   if (!options.query) options.query = '';
   if (!options.organization) {
     if (options.context !== 'atlas') {
-      options.organization = organization.getId();
+      options.organization = team.getId();
     } else {
       options.organization = '';
     }

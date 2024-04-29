@@ -14,7 +14,8 @@ import api from 'mcutils/api/api'
  * @param {Element} [parent]
  * @return {teamSelectorCtrl}
  */
-function teamSelector(parent) {
+function teamSelector(parent, roles) {
+  roles = roles;
   let myTeam = {};
   let onselect = function() {}
   let onready =  function() {}
@@ -44,6 +45,9 @@ function teamSelector(parent) {
       none.innerText = 'hors équipe';
       myTeam = {};
       teams.forEach(o => {
+        // Check role
+        if (roles && roles.indexOf(o.user_role) < 0) return;
+        // New options
         myTeam[o.public_id] = o;
         const opt = ol_ext_element.create('OPTION', {
           text: o.name,
