@@ -1,4 +1,4 @@
-import organization from "./organization";
+import team from "mcutils/api/team";
 
 let _apiURL = '';
 let _logoutURL = '';
@@ -606,22 +606,22 @@ MacarteAPI.prototype.getNotifications =  function(callback) {
   }, false);
 }
 
-/** Get my organization list
+/** Get my team list
  * @param {function} [options.callback] callback function
  */
-MacarteAPI.prototype.getOrganizations =  function(callback) {
+MacarteAPI.prototype.getTeams =  function(callback) {
   this._send('GET', _apiURL+'organizations/me', {}, (r) => {
     callback(r);
   });
 }
 
-/** Get organization list 
- * NB: if not member, organization members are not listed, only a count is returned
- * @param {string} id organization id
+/** Get team list 
+ * NB: if not member, team members are not listed, only a count is returned
+ * @param {string} id team id
  * @param {function} [options.callback] callback function
  * @param {boolean} [options.publi] public information (no connection required)
  */
-MacarteAPI.prototype.getOrganization =  function(id, callback, publi) {
+MacarteAPI.prototype.getTeam =  function(id, callback, publi) {
   if (!id) {
     callback({});
     return;
@@ -631,26 +631,26 @@ MacarteAPI.prototype.getOrganization =  function(id, callback, publi) {
   }, !publi);
 }
 
-/** Set organization attribute
- * @param {string} id organization id
+/** Set team attribute
+ * @param {string} id team id
  * @param {string} attr attribute to change (name, presentation, image)
  * @param {string} value attribute values
  * @param {function} [options.callback] callback function
  */
-MacarteAPI.prototype.setOrganization =  function(id, attr, value, callback) {
+MacarteAPI.prototype.setTeam =  function(id, attr, value, callback) {
   this._send('PUT', _apiURL+'organizations/' + id +'/' + attr, { value: value }, resp => {
     if (typeof(callback) === 'function') callback(resp);
   });
 }
 
-/** Create a new organization
+/** Create a new team
  * @param {Object} options
- *  @param {string} options.name organisation name
- *  @param {string} [options.presentation] organization description
- *  @param {string} [options.image] image url for the organisation
+ *  @param {string} options.name team name
+ *  @param {string} [options.presentation] team description
+ *  @param {string} [options.image] image url for the team
  * @param {function} [options.callback] callback function
  */
-MacarteAPI.prototype.newOrganization =  function(options, callback) {
+MacarteAPI.prototype.newTeam =  function(options, callback) {
   const opt = {
     name: options.name,
     presentation: options.presentation,
@@ -661,27 +661,24 @@ MacarteAPI.prototype.newOrganization =  function(options, callback) {
   })
 }
 
-/** Create a new organization
- * @param {Object} options
- *  @param {string} options.name organisation name
- *  @param {string} [options.presentation] organization description
- *  @param {string} [options.image] image url for the organisation
+/** Create a new team
+ * @param {string} id team id
  * @param {function} [options.callback] callback function
  */
-MacarteAPI.prototype.deleteOrganization =  function(id, callback) {
+MacarteAPI.prototype.deleteTeam =  function(id, callback) {
   this._send('DELETE', _apiURL + 'organizations/' + id, {}, resp => {
     if (typeof(callback) === 'function') callback(resp);
   })
 }
 
-/** Create a new organization
- * @param {string} id organization id
+/** Add members to the team
+ * @param {string} id team id
  * @param {string} userId user id
  * @param {string} role user role (editor, owner, member)
  * @param {function} [options.callback] callback function
  * @param {boolean} [options.refresh] get a refresh token
  */
-MacarteAPI.prototype.addOrganizationMember =  function(id, userId, role, callback, refresh) {
+MacarteAPI.prototype.addTeamMember =  function(id, userId, role, callback, refresh) {
   this._send('POST', _apiURL + 'organizations/' + id + '/members/' + userId, {
     role: role || 'member'
   }, resp => {
@@ -689,13 +686,13 @@ MacarteAPI.prototype.addOrganizationMember =  function(id, userId, role, callbac
   }, refresh)
 }
 
-/** Modify member role in the organization
- * @param {string} id organization id
+/** Modify member role in the team
+ * @param {string} id team id
  * @param {string} userId user id
  * @param {string} role user role (editor, owner, member)
  * @param {function} [options.callback] callback function
  */
-MacarteAPI.prototype.setOrganizationMember =  function(id, userId, role, callback) {
+MacarteAPI.prototype.setTeamMemberRole =  function(id, userId, role, callback) {
   this._send('PUT', _apiURL + 'organizations/' + id + '/members/' + userId + '/role', {
     value: role
   }, resp => {
@@ -703,24 +700,24 @@ MacarteAPI.prototype.setOrganizationMember =  function(id, userId, role, callbac
   })
 }
 
-/** Remove member from organization
- * @param {string} id organization id
+/** Remove member from team
+ * @param {string} id team id
  * @param {string} userId user id
  * @param {function} [callback] callback function
  */
-MacarteAPI.prototype.removeOrganizationMember =  function(id, userId, callback) {
+MacarteAPI.prototype.removeTeamMember =  function(id, userId, callback) {
   this._send('DELETE', _apiURL + 'organizations/' + id + '/members/' + userId, {}, resp => {
     if (typeof(callback) === 'function') callback(resp);
   })
 }
 
-/** Check if current organization is still valid (the user belong to it)
+/** Check if current team is still valid (the user belong to it)
  * @param {function} [callback] callback function that takes a boolean
  */
-MacarteAPI.prototype.checkOrganization = function(callback) {
-  if (organization.getId()) {
-    this.getOrganizations(orga => {
-      const isok = organization.checkIn(orga)
+MacarteAPI.prototype.checkTeam = function(callback) {
+  if (team.getId()) {
+    this.getTeams(list => {
+      const isok = team.checkIn(list)
       if (typeof(callback) === 'function') callback(isok)
     })
   } else {

@@ -7,7 +7,7 @@ import ol_ext_element from 'ol-ext/util/element';
 import StoryMap from '../StoryMap';
 import Carte from '../Carte'
 import md2html from '../md/md2html';
-import organization from '../api/organization';
+import organization from 'mcutils/api/team';
 
 const html = `
 <ul>

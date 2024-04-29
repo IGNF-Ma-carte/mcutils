@@ -57,22 +57,22 @@
 }
 
 /* select dialog */
-.ol-ext-dialog.select-organization h2 {
+.ol-ext-dialog.select-team h2 {
   margin: 0;
 }
-.ol-ext-dialog.select-organization label {
+.ol-ext-dialog.select-team label {
   position: relative;
   line-height: 5em;
   padding-left: 5em;
 }
-.ol-ext-dialog.select-organization select {
+.ol-ext-dialog.select-team select {
   display: block;
   width: calc(100% - 1em);
   min-width: 20em;
   margin: 0 0 .5em 1em;
   box-sizing: border-box;
 }
-.ol-ext-dialog.select-organization img {
+.ol-ext-dialog.select-team img {
   position: absolute;
   max-height: 5em;
   max-width: 5em;
@@ -81,11 +81,11 @@
   left: 2.4em;
   transform: translate(-50%, -50%);
 }
-.ol-ext-dialog.select-organization img.waiting {
+.ol-ext-dialog.select-team img.waiting {
   overflow: visible;
   animation: fa-spin 1s infinite steps(8);
 }
-.ol-ext-dialog.select-organization img.waiting:before {
+.ol-ext-dialog.select-team img.waiting:before {
   content: "\f110";
   font-family: fontawesome;
   font-size: 3em;

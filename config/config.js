@@ -4,8 +4,8 @@ import importConfig from '../config/import'
 let options = {
   server: 'https://server.ign.fr/',
   viewer: 'SERVER/$TYPE/$ID/$TITLE',
-  userProfile: 'SERVER/user/$NAME',
-  orgaProfile: 'SERVER/organization/$NAME',
+  userProfile: 'SERVER/utilisateur/$NAME',
+  teamProfile: 'SERVER/equipe/$NAME',
   editor: 'SERVER/edition/$TYPE/$ID',
   faq: 'SERVER/aide/faq/$ARTICLE',
   tuto: 'SERVER/aide/tuto/$ARTICLE',

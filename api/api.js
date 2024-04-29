@@ -1,6 +1,6 @@
 import MacarteAPI from './MacarteApi'
 import serviceURL from './serviceURL';
-import organization from './organization';
+import organization from 'mcutils/api/team';
 
 /** Singleton API object to access the API
  * @memberof MacarteAPI

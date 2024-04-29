@@ -41,6 +41,7 @@ class Pages extends ol_Object {
    * @param {boolean} [nohistory=false]
    */
   show(id, nohistory) {
+    // console.log('showpage', id)
     if (id==='home') id = '';
     if (nohistory) this.previous = null;
     window.location.hash = '#' + (id || '');

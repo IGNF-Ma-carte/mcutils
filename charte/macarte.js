@@ -6,8 +6,8 @@ import Dialog from 'ol-ext/control/Dialog'
 import fakeMap from '../dialog/fakeMap'
 import serviceURL, { getDocumentationURL } from "../api/serviceURL";
 import config from '../config/config'
-import organization from '../api/organization';
-import { organizationSelector } from '../api/ListOrganization'
+import team from '../api/team';
+import { teamSelector } from 'mcutils/api/ListTeams'
 
 import './macarte.css'
 
@@ -191,8 +191,8 @@ charte.setApp = function (id, name) {
     checkNotification(id);
   })
 
-  // User organization
-  setOrganization();
+  // User team
+  setTeam();
 };
 
 charte.addUserMenuItem(ol_ext_element.create('A', {
@@ -213,13 +213,13 @@ charte.addUserMenuItem(ol_ext_element.create('A', {
 }))
 charte.addUserMenuSeparator();
 charte.addUserMenuItem(ol_ext_element.create('A', {
-  text: 'Mes organizations',
-  href: serviceURL.mesorganizations
+  text: 'Mes équipes',
+  href: serviceURL.mesequipes
 }))
 charte.addUserMenuItem(ol_ext_element.create('A', {
-  text: 'Changer d\'organisation...',
+  text: 'Changer d\'équipe...',
   click: () => {
-    changeOrganization()
+    changeTeam()
   }
 }))
 
@@ -421,49 +421,49 @@ api.on(['logout', 'disconnect'], () => {
   charte.setUser();
 });
 
-/* Handle organization */
-function changeOrganization() {
+/* Handle team */
+function changeTeam() {
   dialog.show({
-    title: 'Organisations',
-    className: 'select-organization',
+    title: 'Equipes',
+    className: 'select-team',
     content: ' ',
     buttons: { ok: 'ok', cancel: 'annuler' },
     onButton: b => {
       if (b === 'ok') {
-        organization.set(sel.getOrganization());
+        team.set(sel.getTeam());
       }
     }
   })
   const img = ol_ext_element.create('IMG', { 
     className: 'waiting',
     src: "",
-    parent: ol_ext_element.create('LABEL', { text : 'Choisir une organisations :', parent: dialog.getContentElement() })
+    parent: ol_ext_element.create('LABEL', { text : 'Choisir une équipe :', parent: dialog.getContentElement() })
   })
-  const sel = organizationSelector(dialog.getContentElement())
+  const sel = teamSelector(dialog.getContentElement())
   sel.onready(() => img.classList.remove('waiting'))
-  sel.onselect(o => img.src = o ? o.profile_picture : '')
+  sel.onselect(o => img.src = o ? o.profile_picture||'' : '')
 }
 
-// Update organization name and image
-function setOrganization() {
-  charte.setName(organization.getName());
-  charte.setLogo(organization.getImage());
+// Update team name and image
+function setTeam() {
+  charte.setName(team.getName());
+  charte.setLogo(team.getImage());
 }
-organization.on('change', setOrganization)
+team.on('change', setTeam)
 
-// Remove current organization on logout
+// Remove current team on logout
 api.on('logout', () => {
-  organization.set();
+  team.set();
 })
-// On login check if the current organization is still valid
+// On login check if the current team is still valid
 api.on('login', e => {
-  // Check if user is still in the current organization
+  // Check if user is still in the current team
   if (e.user.organizations) {
-    if (!organization.checkIn(e.user.organizations)) {
-      organization.set()
+    if (!team.checkIn(e.user.organizations)) {
+      team.set()
     }
   } else {
-    organization.set();
+    team.set();
   }
 })
 

@@ -39,7 +39,7 @@ const serviceURL = {
   profil: options.server + 'mon-compte/#profil',
   mescartes: options.server + 'mon-compte/#cartes',
   mesmedias: options.server + 'mon-compte/#medias',
-  mesorganizations: options.server + 'mes-organisations',
+  mesequipes: options.server + 'mes-equipes',
 
   // editorial
   mention: options.server + 'mentions-legales',
@@ -142,22 +142,22 @@ function getUserURL(user) {
     .replace('$NAME', user);
 }
 
-/** Get organization url
+/** Get team url
  * @memberof serviceURL
- * @param {string} orga organization name
+ * @param {string} team team name
  * @return {string} user url
  */
-function getOrgaURL(orga) {
-  if (!orga) return '';
-  // Orga object
-  if (orga.getName) {
-    orga = encodeTitleURL(orga.getName()) + '_' + orga.getId();
-  } else if (orga.name) {
-    orga = encodeTitleURL(orga.name) + '_' + orga.public_id;
+function getTeamURL(team) {
+  if (!team) return '';
+  // Team object
+  if (team.getName) {
+    team = encodeTitleURL(team.getName()) + '_' + team.getId();
+  } else if (team.name) {
+    team = encodeTitleURL(team.name) + '_' + team.public_id;
   }
   // Get Viewer
-  return options.orgaProfile
-    .replace('$NAME', orga);
+  return options.teamProfile
+    .replace('$NAME', team);
 }
 
 /** Encode a string as title to add in a url (only keep letters and digit)
@@ -186,7 +186,7 @@ function getDocumentationURL(page, category, article) {
 }
 
 export { encodeTitleURL }
-export { getUserURL, getOrgaURL }
+export { getUserURL, getTeamURL }
 export { getMediaURL }
 export { getViewerURL }
 export { getEditorURL }

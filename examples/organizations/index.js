@@ -10,8 +10,8 @@ import './organisation.scss'
 charte.setApp('api', 'Organizations');
 
 /* Change organizations */
-import organization from '../../api/organization';
-import { organizationSelector } from '../../api/ListOrganization'
+import organization from '../../api/team';
+import { organizationSelector } from '../../api/ListTeams'
 
 const selctrl = organizationSelector(charte.getAppElement().querySelector('.selector')).onselect(orga => {
   organization.set(orga);
