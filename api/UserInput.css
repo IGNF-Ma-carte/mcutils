@@ -48,6 +48,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border: 0 solid #fff;
+  border-width: 1px 0;
 }
 .author-list ul li.full {
   line-height: 1.5em;
@@ -60,7 +62,6 @@
   position: absolute;
   left: 2em;
   top: 50%;
-  max-width: 3em;
-  max-height: 2.5em;
+  width: 3em;
   transform: translate(-50%, -50%);
 }
