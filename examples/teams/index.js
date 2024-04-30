@@ -5,26 +5,26 @@ import dialog from '../../dialog/dialog';
 import md2html from '../../md/md2html';
 import UserInput from '../../api/UserInput'
 
-import './organisation.scss'
+import './teams.scss'
 
-charte.setApp('api', 'Organizations');
+charte.setApp('api', 'Equipes');
 
-/* Change organizations */
-import organization from '../../api/team';
-import { organizationSelector } from '../../api/ListTeams'
+/* Change team */
+import team from '../../api/team';
+import { teamSelector } from '../../api/ListTeams'
 
-const selctrl = organizationSelector(charte.getAppElement().querySelector('.selector')).onselect(orga => {
-  organization.set(orga);
+const selctrl = teamSelector(charte.getAppElement().querySelector('.selector')).onselect(orga => {
+  team.set(orga);
 })
 // Reset the options on login
 api.on('login', () => { selctrl.setOptions() })
 
-/* Organization list */
+/* Team list */
 const list = ol_ext_element.create('UL', {
-  parent: charte.getAppElement().querySelector('.organizations')
+  parent: charte.getAppElement().querySelector('.teams')
 })
 
-function addUser(orga) {
+function addUser(t) {
   dialog.show({
     title: 'Ajouter un membre',
     content: '<input type="text" class="userId" />',
@@ -32,8 +32,8 @@ function addUser(orga) {
     onButton: (b, inputs) => {
       if (b==='ok') {
         dialog.showWait('ajout...')
-        api.addOrganizationMember(orga.organization_id, inputs.userId.value, 'member', () => {
-          showOrga(orga);
+        api.addTeamMember(t.id, inputs.userId.value, 'member', () => {
+          showOrga(t);
         });
       }
     }
@@ -50,16 +50,16 @@ function showList() {
   if (orga) {
     orga.forEach(o => {
       const li = ol_ext_element.create('LI', {
-        text: o.organization_name + ' (' + o.user_role + ')',
+        text: o.name + ' (' + o.user_role + ')',
         click: () => {
-          dialog.showWait('Organisation ' + o.organization_name + '...')
+          dialog.showWait('Organisation ' + o.name + '...')
           showOrga(o);
         },
         parent: list
       })
-      if (o.organization_image) {
+      if (o.profile_picture) {
         ol_ext_element.create('IMG', {
-          src: o.organization_image,
+          src: o.profile_picture,
           parent: li
         })
       }
@@ -67,9 +67,9 @@ function showList() {
   }
 }
 
-/** Show organization by ID */
+/** Show team by ID */
 function showOrga(o)  {
-  api.getOrganization(o.organization_id, orga => {
+  api.getTeam(o.public_id, orga => {
     dialog.show({
       title: orga.name,
       content: md2html(orga.presentation),
@@ -77,7 +77,7 @@ function showOrga(o)  {
       onButton: b => {
         if (b === 'delete') {
           dialog.showWait('Suppression');
-          api.deleteOrganization(o.organization_id, () => {
+          api.deleteTeam(o.public_id, () => {
             dialog.hide();
             showList();
           })
@@ -87,12 +87,11 @@ function showOrga(o)  {
         }
       }
     })
-    console.log(orga)
     const img = ol_ext_element.create('INPUT', {
-      value: orga.image || '',
+      value: orga.profile_picture || '',
       on: { change: () => {
         dialog.showWait('modification...')
-        api.setOrganization(orga.public_id, 'image', img.value, () => showOrga(o))
+        api.setTeam(orga.public_id, 'image', img.value, () => showOrga(o))
       }},
       parent: dialog.getContentElement()
     })
@@ -108,7 +107,7 @@ function showOrga(o)  {
       const sel = ol_ext_element.create('SELECT', {
         on: { change: () => {
           dialog.showWait('modification...')
-          api.setOrganizationMember(orga.public_id, user.public_id, sel.value, () => showOrga(o))
+          api.setTeamMemberRole(orga.public_id, user.public_id, sel.value, () => showOrga(o))
         }},
         parent: li 
       });
@@ -124,7 +123,7 @@ function showOrga(o)  {
         className: 'fi-delete button-colored',
         click: () => {
           dialog.showWait('suppression...')
-          api.removeOrganizationMember(orga.public_id, user.public_id, () => showOrga(o))
+          api.removeTeamMember(orga.public_id, user.public_id, () => showOrga(o))
         },
         parent: li
       });
@@ -151,7 +150,7 @@ charte.getAppElement().querySelector('[data-role="add"]').addEventListener('clic
     onButton: (b, inputs) => {
       if (b==='ok') {
         dialog.showWait('ajout en cours...')
-        api.newOrganization({
+        api.newTeam({
           name: inputs.name.value,
           presentation: inputs.presentation.value,
           image: inputs.image.value
@@ -165,5 +164,5 @@ charte.getAppElement().querySelector('[data-role="add"]').addEventListener('clic
 window.api = api;
 window.charte = charte;
 window.dialog = dialog;
-window.organization = organization
+window.team = team
 /**/

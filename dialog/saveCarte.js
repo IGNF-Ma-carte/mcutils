@@ -7,7 +7,7 @@ import ol_ext_element from 'ol-ext/util/element';
 import StoryMap from '../StoryMap';
 import Carte from '../Carte'
 import md2html from '../md/md2html';
-import organization from 'mcutils/api/team';
+import team from '../api/team';
 
 const html = `
 <ul>
@@ -64,9 +64,9 @@ function saveCarte(carte, callback, options) {
   } else {
     optionsCarte = carte;
   }
-  // Use default organization
+  // Use default team
   if (!optionsCarte.organization_id) {
-    optionsCarte.organization_id = organization.getId();
+    optionsCarte.organization_id = team.getId();
   }
   // Save as (remove props)
   if (options.saveAs) {
@@ -116,7 +116,7 @@ function saveCarte(carte, callback, options) {
   inputs.description.value = optionsCarte.description || '';
   inputs.image.value = optionsCarte.img_url || '';
   inputs.share.value = optionsCarte.share || 'private';
-  if (organization.getId() && !organization.isOwner()) {
+  if (team.getId() && !team.isOwner()) {
     inputs.share.disabled = true;
   }
 

@@ -19,7 +19,7 @@ import FlashMessage from '../../dialog/FlashMessage'
 import MacarteAPI from '../../api/MacarteApi'
 import MVT from '../../layer/MVT'
 import ol_ext_element from 'ol-ext/util/element'
-import organization from '../../api/organization'
+import organization from '../../api/team'
 
 const story = new StoryMap({ 
   // id: 'e331581bad8927c6a6584d175d240e12',

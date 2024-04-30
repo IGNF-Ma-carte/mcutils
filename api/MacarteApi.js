@@ -1,4 +1,4 @@
-import team from "mcutils/api/team";
+import team from "../api/team";
 
 let _apiURL = '';
 let _logoutURL = '';

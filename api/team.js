@@ -1,5 +1,5 @@
 import ol_Object from 'ol/Object'
-import 'mcutils/api/team.fr'
+import '../api/team.fr'
 
 // Current team
 let _team = {};

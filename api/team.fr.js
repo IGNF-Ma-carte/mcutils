@@ -1,4 +1,4 @@
-import { i18n } from "mcutils/i18n/i18n"
+import { i18n } from "../i18n/i18n"
 
 i18n.set('fr', { 
   'team:role_member': 'membre',

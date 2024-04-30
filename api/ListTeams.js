@@ -1,6 +1,6 @@
 import ol_ext_element from 'ol-ext/util/element';
-import team from 'mcutils/api/team';
-import api from 'mcutils/api/api'
+import team from '../api/team';
+import api from '../api/api'
 
 /** teamSelector controler
  * @typedef {Object} teamSelectorCtrl

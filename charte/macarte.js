@@ -7,7 +7,7 @@ import fakeMap from '../dialog/fakeMap'
 import serviceURL, { getDocumentationURL } from "../api/serviceURL";
 import config from '../config/config'
 import team from '../api/team';
-import { teamSelector } from 'mcutils/api/ListTeams'
+import { teamSelector } from '../api/ListTeams'
 
 import './macarte.css'
 
