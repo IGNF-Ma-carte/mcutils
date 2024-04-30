@@ -377,15 +377,25 @@
   vertical-align: middle;
   line-height: 2em;
 }
-.mc-list.mc-filter .filters ul a.remove {
+.mc-list.mc-filter .filters ul button.clear {
   position: absolute;
   right: 2.5em;
-  line-height: 2em;
+  top: 0;
+  border: 0;
+  height: 3.6em;
+  background-color: #fff;
+  cursor: pointer;
 }
-.mc-list.mc-filter .filters ul a.remove:before {
+.mc-list.mc-filter .filters ul li:hover button.clear {
+  background-color: #eee;
+}
+.mc-list.mc-filter .filters ul li button.clear:hover {
+  background-color: #ccc;
+}
+.mc-list.mc-filter .filters ul button.clear:before {
   display: none;
 }
-.mc-list.mc-filter .filters ul a.remove:after {
+.mc-list.mc-filter .filters ul button.clear:after {
   content: '\e902';
   font-family: font-ign;
   margin: 0;
@@ -447,7 +457,7 @@
 }
 .mc-list .filters h2.organization:before,
 .mc-list .filter-organization:before {
-  content: '\ea31';
+  content: '\ea37';
 }
 .mc-list .filters h2.type:before,
 .mc-list .filter-type:before {

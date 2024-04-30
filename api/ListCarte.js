@@ -513,14 +513,15 @@ ListCarte.prototype.showPage = function(page) {
             }
             // Show in list
             ol_ext_element.create('SPAN', { 
-              html: this.getStrAttributeValue(attr, filt[attr], as==='organizations' ? '<span class="undef">Hors équipe</span>' : ''), 
+              html: this.getStrAttributeValue(attr, filt[attr], as==='organizations' ? '<span class="undef">individuel</span>' : ''), 
               parent: li 
             });
             // Filter
             if (this.get(attr) === val) {
-              ol_ext_element.create('A', { 
-                className: 'remove', 
-                title: 'supprmer...',
+              ol_ext_element.create('BUTTON', { 
+                className: 'clear', 
+                title: 'vider',
+                'aria-label': 'Vider',
                 click: e => {
                   this.set(attr, '');
                   this.showPage()
