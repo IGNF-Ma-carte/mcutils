@@ -64,10 +64,6 @@ function saveCarte(carte, callback, options) {
   } else {
     optionsCarte = carte;
   }
-  // Use default team
-  if (!optionsCarte.organization_id) {
-    optionsCarte.organization_id = team.getId();
-  }
   // Save as (remove props)
   if (options.saveAs) {
     const tmp = optionsCarte;
@@ -76,7 +72,14 @@ function saveCarte(carte, callback, options) {
       optionsCarte[i] = tmp[i];
     });
   }
-  if (optionsCarte.active === undefined) optionsCarte.active = true;
+  // Use default team
+  if (!optionsCarte.organization_id) {
+    optionsCarte.organization_id = team.getId();
+  }
+  if (optionsCarte.active === undefined) {
+    optionsCarte.active = true;
+  }
+  // Save dialog
   dialog.show({
     title: options.prompt || 'Enregistrer une carte',
     className: ('mc-save-map ' + (options.className || '')).trim(),
