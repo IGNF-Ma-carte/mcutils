@@ -26,7 +26,7 @@ if (window.maCarteOptions) {
   delete window.maCarteOptions;
   // Update server url
   for (let i in options) {
-    if (options[i].replace) options[i] = options[i].replace(/^SERVER\//, options.server)
+    if (options[i].replace) options[i] = options[i].replace(/^SERVER/, options.server)
   };
 } else {
   console.error('NO CONFIG FILE!\n Ajouter un fichier confg.json dans le répertoire des assets...');

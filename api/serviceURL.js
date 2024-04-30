@@ -128,7 +128,7 @@ function getEditorURL(carte) {
 
 /** Get user url
  * @memberof serviceURL
- * @param {string} user user name
+ * @param {string|Object} user user name
  * @return {string} user url
  */
 function getUserURL(user) {
@@ -144,7 +144,7 @@ function getUserURL(user) {
 
 /** Get team url
  * @memberof serviceURL
- * @param {string} team team name
+ * @param {string|Object} team team name
  * @return {string} user url
  */
 function getTeamURL(team) {
