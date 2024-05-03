@@ -3,7 +3,7 @@ import importConfig from '../config/import'
 // Default options
 let options = {
   server: 'https://server.ign.fr/',
-  viewer: 'SERVER/$TYPE/$ID/$TITLE',
+  viewer: 'SERVER/carte/$ID/$TITLE?$NOTITLE',
   userProfile: 'SERVER/utilisateur/$NAME',
   teamProfile: 'SERVER/equipe/$NAME',
   editor: 'SERVER/edition/$TYPE/$ID',
@@ -15,6 +15,7 @@ let options = {
   gppKey: 'k1RSRVIYRxteMEcPK9A5c7g0C6KRw4KX',
 };
 
+console.log('options', options)
 // Get server options using global options
 if (!window.maCarteOptions) {
   importConfig('./config.json')
@@ -25,8 +26,9 @@ if (window.maCarteOptions) {
   }
   delete window.maCarteOptions;
   // Update server url
+  const server = options.server.replace(/\/$/,'');
   for (let i in options) {
-    if (options[i].replace) options[i] = options[i].replace(/^SERVER/, options.server)
+    if (options[i].replace) options[i] = options[i].replace(/^SERVER/, server)
   };
 } else {
   console.error('NO CONFIG FILE!\n Ajouter un fichier confg.json dans le répertoire des assets...');
