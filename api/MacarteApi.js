@@ -598,7 +598,7 @@ MacarteAPI.prototype.getThemes =  function(callback) {
 }
 
 /** Get Notifications
- * @param {function} callback
+ * @param {function} callback404
  */
 MacarteAPI.prototype.getNotifications =  function(callback) {
   this._send('GET', _apiURL+'notifications', {}, (r) => {
@@ -612,6 +612,80 @@ MacarteAPI.prototype.getNotifications =  function(callback) {
 MacarteAPI.prototype.getTeams =  function(callback) {
   this._send('GET', _apiURL+'organizations/me', {}, (r) => {
     callback(r);
+  });
+}
+
+/** Ativate team user
+ * NB: user must be an inactive member
+ * @param {string} id team id
+ */
+MacarteAPI.prototype.activateTeamMember =  function(id, callback) {
+  if (!id) {
+    callback({ error: true, status: 404, statusText: 'no team' });
+    return;
+  }
+  this._send('GET', _apiURL+'organizations/' + id +'/activate', {}, resp => {
+    if (typeof(callback) === 'function') callback(resp);
+  });
+}
+
+/** Join a team using a link id
+ * @param {string} id link id
+ */
+MacarteAPI.prototype.joinTeam =  function(id, callback) {
+  this._send('GET', _apiURL+'organizations/join/' + id, {}, resp => {
+    if (typeof(callback) === 'function') callback(resp);
+  });
+}
+
+/** Modify the member link
+ * @param {string} id team id
+ * @param {string} type 'member' or 'editor'
+ * @param {function} [options.callback] callback function
+ */
+MacarteAPI.prototype.setTeamLink =  function(id, type, callback) {
+  if (!id) {
+    callback({ error: true, status: 404, statusText: 'no team' });
+    return;
+  }
+  if (['member','editor'].indexOf(type) < 0) {
+    callback({ error: true, status: 404, statusText: 'bad type' });
+    return;
+  }
+  this._send('PUT', _apiURL+'organizations/' + id + '/join-link/' + member, { value: true }, resp => {
+    if (typeof(callback) === 'function') callback(resp);
+  });
+}
+
+/** Remove the member link
+ * @param {string} id team id
+ * @param {string} type 'member' or 'editor'
+ * @param {function} [options.callback] callback function
+ */
+MacarteAPI.prototype.removeTeamLink =  function(id, type, callback) {
+  if (!id) {
+    callback({ error: true, status: 404, statusText: 'no team' });
+    return;
+  }
+  if (['member','editor'].indexOf(type) < 0) {
+    callback({ error: true, status: 404, statusText: 'bad type' });
+    return;
+  }
+  this._send('PUT', _apiURL+'organizations/' + id + '/join-link/' + member, { value: false }, resp => {
+    if (typeof(callback) === 'function') callback(resp);
+  });
+}
+
+/** Get member links
+ * @param {string} id team id
+ */
+MacarteAPI.prototype.getTeamLinks =  function(id, callback) {
+  if (!id) {
+    callback({ error: true, status: 404, statusText: 'no team' });
+    return;
+  }
+  this._send('GET', _apiURL+'organizations/links/' + id, { value: false }, resp => {
+    if (typeof(callback) === 'function') callback(resp);
   });
 }
 
