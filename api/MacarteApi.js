@@ -652,7 +652,7 @@ MacarteAPI.prototype.setTeamLink =  function(id, type, callback) {
     callback({ error: true, status: 404, statusText: 'bad type' });
     return;
   }
-  this._send('PUT', _apiURL+'organizations/' + id + '/join-link/' + member, { value: true }, resp => {
+  this._send('PUT', _apiURL+'organizations/' + id + '/join-link/' + type, { value: true }, resp => {
     if (typeof(callback) === 'function') callback(resp);
   });
 }
@@ -671,7 +671,7 @@ MacarteAPI.prototype.removeTeamLink =  function(id, type, callback) {
     callback({ error: true, status: 404, statusText: 'bad type' });
     return;
   }
-  this._send('PUT', _apiURL+'organizations/' + id + '/join-link/' + member, { value: false }, resp => {
+  this._send('PUT', _apiURL+'organizations/' + id + '/join-link/' + type, { value: false }, resp => {
     if (typeof(callback) === 'function') callback(resp);
   });
 }
@@ -684,7 +684,7 @@ MacarteAPI.prototype.getTeamLinks =  function(id, callback) {
     callback({ error: true, status: 404, statusText: 'no team' });
     return;
   }
-  this._send('GET', _apiURL+'organizations/links/' + id, { value: false }, resp => {
+  this._send('GET', _apiURL+'organizations/links/' + id, {}, resp => {
     if (typeof(callback) === 'function') callback(resp);
   });
 }
