@@ -4,7 +4,7 @@ import charte from "./charte";
 import api from '../api/api'
 import Dialog from 'ol-ext/control/Dialog'
 import fakeMap from '../dialog/fakeMap'
-import serviceURL, { getDocumentationURL } from "../api/serviceURL";
+import serviceURL, { getDocumentationURL, getTeamURL } from "../api/serviceURL";
 import config from '../config/config'
 import team from '../api/team';
 import { teamSelector } from '../api/ListTeams'
@@ -417,7 +417,14 @@ charte.on('user:logout', () => {
     }, 100)
   });
 });
-charte.on('header:title', () => document.location = serviceURL.home);
+charte.on('header:title', () => {
+  if (team.getId()) {
+    const teamurl = getTeamURL(team)
+    if (document.location !== teamurl) document.location = teamurl;
+  } else {
+    document.location = serviceURL.home
+  }
+});
 
 
 /* Update user on login */
