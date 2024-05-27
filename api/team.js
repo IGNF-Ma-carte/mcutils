@@ -109,6 +109,11 @@ class Team extends ol_Object {
   isOwner() {
     return _team.user_role === 'owner'
   }
+  /** Is locked
+   */
+  isLocked() {
+    return !!_team.locked
+  }
   /** Is redactor?
    */
   isRedactor() {
