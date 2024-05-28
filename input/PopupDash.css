@@ -1,6 +1,6 @@
 .ol-popup.ol-dash {
-  width: auto;
-  height: auto;
+  width: auto!important;
+  height: auto!important;
   line-height: 2.2em;
 }
 .ol-popup.ol-dash canvas {

@@ -1,6 +1,6 @@
 .ol-ext-popup-input.popup-pattern {
-  width: 3em;
-  height: 2.2em;
+  width: 3em!important;
+  height: 2.2em!important;
   color: transparent;
 }
 .ol-ext-popup-input.popup-pattern .ol-popup {

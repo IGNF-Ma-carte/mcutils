@@ -1,6 +1,6 @@
 .ol-popup.popup-symbol {
-  width: 3em;
-  height: 2.2em;
+  width: 3em!important;
+  height: 2.2em!important;
 }
 .ol-popup.popup-symbol .ol-popup {
   border: 1px solid #999;
