@@ -74,7 +74,6 @@ class ListMedias extends ListTable {
       });
     }
     this._countDiv = ol_ext_element.create('DIV', { className: 'media-count colored', parent: options.search ? head : undefined });
-    this._filterDiv = ol_ext_element.create('DIV', { className: 'filterOptions', parent: options.search ? head : undefined });
 
     this._filters = {};
     if (options.search) {
@@ -209,13 +208,25 @@ ListMedias.prototype.updateFolders = function(cback) {
     if (this._filters.folders) this._filters.folders.innerHTML = '';
     if (!folders.error) {
       folders.forEach(f => {
-        ol_ext_element.create('LI', { 
+        const fold = ol_ext_element.create('LI', { 
           html: ol_ext_element.create('SPAN', { html: f }),
+          'data-folder': f,
           click: () => {
             this.setFolder(f);
           },
           parent: this._filters.folders
         });
+        ol_ext_element.create('BUTTON', {
+          type: 'button',
+          className: 'clear',
+          title: 'vider',
+          'aria-lable': 'Vider',
+          click: e => {
+            this.setFolder();
+            e.stopPropagation();
+          },
+          parent: fold
+        })
       });
     }
     // Update filters / folders
@@ -240,26 +251,23 @@ ListMedias.prototype.setFolder = function(folder, force) {
   folder = folder || '';
   if (folder === this.get('folder') && !force) return;
   const folders = this.get('folders');
-  const options = this.element.querySelector('.filterOptions');
-  if (options) options.innerHTML = '';
   if (folders && folders.indexOf(folder >= 0)) {
     localStorage.setItem(MCMediaFolder, folder);
     this.element.querySelectorAll('.mc-select-folder option').forEach(f => {
       f.selected = (f.innerText === folder);
     });
-    if (folder) {
-      ol_ext_element.create('DIV', {
-        className: 'filter button-colored',
-        html: '<i class="fi-galerie-image"></i>' + folder,
-        title: 'supprimer...',
-        click: () => {
-          this.setFolder();
-        },
-        parent: options
-      })
-    }
     this.set('folder', folder);
     this.showPage()
+    // Update filters 
+    if (this._filters.folders) {
+      this._filters.folders.querySelectorAll('li').forEach( li => {
+        if (li.dataset.folder === folder) {
+          li.querySelector('button').style.display = ''
+        } else {
+          li.querySelector('button').style.display = 'none'
+        }
+      })
+    }
   }
 };
 
@@ -315,6 +323,19 @@ ListMedias.prototype.showPage = function(page) {
   this.loading(true);
   if (!page || page < 0) page = 0;
   const offset = (page * this.get('size')) || 0
+  // Folders
+  /*
+  if (this._filters.folders) {
+    this._filters.folders.querySelectorAll('li').forEach( li => {
+      if (li.dataset.folder === this.get('folder')) {
+        li.querySelector('button').style.display = ''
+      } else {
+        li.querySelector('button').style.display = 'none'
+      }
+    })
+  }
+  */
+  // Get medias
   this.api.getMedias({
     offset: offset,
     name: this.get('query') || '',
