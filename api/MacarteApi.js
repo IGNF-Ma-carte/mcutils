@@ -493,6 +493,7 @@ MacarteAPI.prototype.getUsers =  function(name, callback) {
  */
 MacarteAPI.prototype.getMedias =  function(options, callback) {
   options = options || {};
+  options.organization = team.getId();
   this._send('GET', _apiURL+'medias', options, callback);
 };
 
@@ -500,7 +501,10 @@ MacarteAPI.prototype.getMedias =  function(options, callback) {
  * @param {function} callback
  */
 MacarteAPI.prototype.getMediasFolders =  function(callback) {
-  this._send('GET', _apiURL+'medias/folders', {}, callback);
+  const options = {
+    organization: team.getId()
+  };
+  this._send('GET', _apiURL+'medias/folders', options, callback);
 };
 
 /** Post a new user media
