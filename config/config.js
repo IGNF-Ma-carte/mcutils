@@ -10,6 +10,7 @@ let options = {
   tuto: 'https://server/aide/tuto/$ARTICLE',
   version: 'https://server/aide/notes-de-version/$ARTICLE',
   sitePiwik: 39,
+  guichetURL: 'https://espacecollaboratif.ign.fr/',
   gppKey: 'k1RSRVIYRxteMEcPK9A5c7g0C6KRw4KX',
 };
 

@@ -1,12 +1,10 @@
-
+import config from '../config/config'
 
 let apiLogin, apiPwd;
-//const apiPath = 'https://espacecollaboratif.ign.fr/gcms/api/';
-const apiPath = 'https://qlf-collaboratif.ign.fr/collaboratif-develop/gcms/api/'
+const apiPath = (config.guichetURL+'/').replace(/\/\/$/, '/') + 'gcms/api/'
 
 function get(root, cback) {
   cback = cback || console.log;
-
   fetch(apiPath + root, {
     method:'GET', 
     headers: {'Authorization': 'Basic ' + btoa(apiLogin + ':' + apiPwd) }
