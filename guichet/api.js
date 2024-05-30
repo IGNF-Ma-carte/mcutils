@@ -2,7 +2,7 @@ import config from '../config/config'
 
 let apiLogin, apiPwd;
 
-const apiPath = config.guichetURL + 'gcms/api/'
+const apiPath = (config.guichetURL+'/').replace(/\/\/$/, '/') + 'gcms/api/'
 
 /* Fetch response as get */
 function get(root, cback) {
