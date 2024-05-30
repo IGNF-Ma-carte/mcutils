@@ -493,7 +493,7 @@ MacarteAPI.prototype.getUsers =  function(name, callback) {
  */
 MacarteAPI.prototype.getMedias =  function(options, callback) {
   options = options || {};
-  options.organization = team.getId();
+  options.organization_id = team.getId();
   this._send('GET', _apiURL+'medias', options, callback);
 };
 
@@ -502,7 +502,7 @@ MacarteAPI.prototype.getMedias =  function(options, callback) {
  */
 MacarteAPI.prototype.getMediasFolders =  function(callback) {
   const options = {
-    organization: team.getId()
+    organization_id: team.getId()
   };
   this._send('GET', _apiURL+'medias/folders', options, callback);
 };
@@ -518,6 +518,7 @@ MacarteAPI.prototype.postMedia =  function(img, folder, name, callback) {
   formData.append('file', img);
   formData.append('folder', folder);
   formData.append('name', name);
+  formData.append('organization_id', team.getId());
   this._send('POST', _apiURL+'medias', formData, callback);
 };
 

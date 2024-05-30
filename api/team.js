@@ -81,6 +81,18 @@ class Team extends ol_Object {
   getId() {
     return _team.public_id || '';
   }
+  /** Get media size
+   * @return {number}
+   */
+  getMediasSize() {
+    return _team.medias_size || 0;
+  }
+  /** Get media quota
+   * @return {number}
+   */
+  getMediaSizeLimit() {
+    return _team.media_size_limit || 0;
+  }
   /** Check if team is in the list, if not remove the team
    * @param {Array<Object>} list
    * @returns {boolean}
