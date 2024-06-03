@@ -27,6 +27,7 @@ function get(root, cback) {
         break;
       }
       default: {
+        apiPwd = null;
         break;
       }
     }
