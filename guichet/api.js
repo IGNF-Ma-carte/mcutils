@@ -7,7 +7,10 @@ const apiPath = (config.guichetURL+'/').replace(/\/\/$/, '/') + 'gcms/api/'
 /* Fetch response as get */
 function get(root, cback) {
   cback = cback || console.log;
-
+  options = options || {};
+  // limit
+  if (options.limit) root += '?limit=' + options.limit;
+  // fetch
   fetch(apiPath + root, {
     method:'GET', 
     headers: {'Authorization': 'Basic ' + btoa(apiLogin + ':' + apiPwd) }
@@ -30,6 +33,7 @@ function get(root, cback) {
         break;
       }
       default: {
+        apiPwd = null;
         break;
       }
     }
@@ -88,7 +92,7 @@ class GuichetAPI {
    * @param {function} callback
    */
   getLayers(comId, cback) {
-    get('communities/' + comId + '/layers', cback)
+    get('communities/' + comId + '/layers', cback, { limit: 100 })
   }
 
   /** Get comuunity layers (full info)
