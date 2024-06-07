@@ -29,6 +29,9 @@ class WMS extends LayerFormat {
  */
 WMS.prototype.read = function (options) {
   if (options.type !== 'WMS') return false;
+  // BUG old version
+  options.wmsparam.source.url = (options.wmsparam.source.url || '').replace(/service=wms&?/i,'');
+  // 
   const layer = new ol_layer_Tile({
     extent: options.wmsparam.layer.extent,
     queryable: !!options.wmsparam.layer.queryable,
