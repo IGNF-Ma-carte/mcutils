@@ -113,7 +113,7 @@ function dialogImportFile(onImport, options) {
     title: options.title || 'Importer des données',
     className: ('importFile ' + (options.className || '')).trim(),
     content: '<div class="loader"><span>' +
-      (options.format || 'Charger un fichier (kml, GeoJSON, gpx'+(options.readCarte ? ', carte)' : ')')) +
+      (options.format || 'Charger un fichier<br/>(kml, GeoJSON, CSV, gpx'+(options.readCarte ? ', carte)' : ')')) +
       '</span></div>',
     buttons: {cancel: 'annuler'},
   })
@@ -134,7 +134,7 @@ function dialogImportFile(onImport, options) {
   // Input file
   const iFile = ol_ext_element.create('INPUT', {
     type: 'file',
-    accept: options.accept || '.kml,.geojson,.gpx,.json' + (options.readCarte ? ',.carte' : ''),
+    accept: options.accept || '.kml,.csv,.geojson,.gpx,.json' + (options.readCarte ? ',.carte' : ''),
     parent: content,
     change: () => {
       //content.querySelector('.loader span').innerText = 'Charger ' + iFile.files[0].name;
