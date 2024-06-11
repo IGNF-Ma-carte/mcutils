@@ -6,6 +6,7 @@ import ol_format_TopoJSON from 'ol/format/TopoJSON'
 import ol_format_GeoJSONX from 'ol-ext/format/GeoJSONX'
 import ol_format_GeoJSONP from 'ol-ext/format/GeoJSONP'
 import ol_format_GeoRSS from 'ol-ext/format/GeoRSS'
+import ol_format_CSV from './CSV'
 
 import ol_format_Feature from 'ol/format/Feature'
 
@@ -30,7 +31,8 @@ ol_format_Guesser.formatConstructors = [
   ol_format_IGC, 
   ol_format_KML, 
   ol_format_TopoJSON,
-  ol_format_GeoRSS
+  ol_format_GeoRSS,
+  ol_format_CSV
 ];
 
 
