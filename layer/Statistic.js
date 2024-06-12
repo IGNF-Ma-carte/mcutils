@@ -171,6 +171,44 @@ Statistic.prototype.getSource = function() {
   return this.vectorSource;
 };
 
+/** Set vector source
+ *	@return ol.source.Vector
+ */
+Statistic.prototype.setSource = function(source, typeGeom) {
+  this.vectorSource = source || new ol_source_Vector();
+
+  // Type de geometrie du layer
+  this.typeGeom = typeGeom || {};
+  var clearsource = this.vectorSource.clear;
+  this.vectorSource.clear = function() {
+    this.typeGeom = {};
+    clearsource.call(this);
+  }.bind(this);
+  this.vectorSource.on('addfeature', e => {
+    this.typeGeom[e.feature.getGeometry().getType()] = true;
+  });
+  
+  // Handle membership
+  this.vectorSource.on('addfeature', e => {
+    e.feature._layer = this;
+  });
+  
+  /* Check geometry type */
+  var features = this.vectorSource.getFeatures();
+  // for (var i = 0, f; f = features[i]; i++) {
+  features.forEach(f => {
+    f._layer = this;
+    this.typeGeom[f.getGeometry().getType()] = true;
+  });
+
+  this.vectorSource.on('removefeature', (function(e) {
+    delete e.feature._layer;
+  }).bind(this));
+  
+  this.layerStat.setSource(this.vectorSource)
+  this.layerHeat.setSource(this.vectorSource)
+};
+
 /** Set composite operation
  * @param {boolean} set or not
  */
