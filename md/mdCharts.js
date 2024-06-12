@@ -165,9 +165,10 @@ function mdCharts(element) {
           param['data-type'][k] = ['barWithErrorBars']
           d.forEach((di, i) => {
             di = parseFloat(di)
+            const e = errors[i] || []
             d[i] = { 
-              x: di, xMin: di - errors[i][0], xMax: di + errors[i][1], 
-              y: di, yMin: di - errors[i][0], yMax: di + errors[i][1] 
+              x: di, xMin: di - e[0], xMax: di + e[1], 
+              y: di, yMin: di - e[0], yMax: di + e[1] 
             };
           })
         }

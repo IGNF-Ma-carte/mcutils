@@ -12,7 +12,6 @@ charte.setApp('md', 'Markdown');
 const page = charte.getAppElement();
 
 // Markdown content
-/** /
 const md = `## titre ^([:fi-info:](# une info))
 !(https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png 200)
 
@@ -24,27 +23,12 @@ dates: { "years": { "2023": { "9": { "29": true } } } }
 \`\`\`chart bar x300 center
 title: Titre
 data:   %valeur_1%; %valeur_2%; %valeur_3%; %valeur_4%; %valeur_5%
+data-error: 1;.5;1.5,1;.5;.5,2
 labels: att1; att2; att3; att4; att5
 colors: red; green; blue; orange; cyan
 legend: right
 \`\`\`
 `
-/*/
-const md = `
-\`\`\`chart bar x300 center
-title: Titre
-data-title: test
-data:   %valeur_1%; %valeur_2%; %valeur_3%; %valeur_4%; %valeur_5%
-data-error: 1,2;2,1;1,1;1,2;2,1
-data-title: test2
-data-type: line
-data:   %valeur_2%; %valeur_3%; %valeur_4%; %valeur_5%; %valeur_1%
-labels: att1; att2; att3; att4; att5
-colors: red; green; blue; orange; cyan
-legend: right
-\`\`\`
-`
-/**/
 
 const data = { 
   name: 'Géoroom', 
