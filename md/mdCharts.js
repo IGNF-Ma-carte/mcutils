@@ -1,5 +1,9 @@
 import Chart from 'chart.js/auto';
+import { BarWithErrorBarsController, BarWithErrorBar } from 'chartjs-chart-error-bars';
 import ol_ext_element from 'ol-ext/util/element';
+
+// register controller in chart.js and ensure the defaults are set
+Chart.register(BarWithErrorBarsController, BarWithErrorBar);
 
 /* Escape chars */
 function doSecure (md) {
@@ -127,7 +131,7 @@ function mdCharts(element) {
         if (att==='data' && !param['labels'] && /%/.test(content)) {
           param['labels'] = getArrayParam(content.replace(/%/g,''), true);
         } 
-        if (/^data$|^data-title$|^data-type$/.test(att)) {
+        if (/^data$|^data-title$|^data-type$|^data-error$/.test(att)) {
           if (!param[att]) param[att] = [];
           param[att].push(getArrayParam(content));
         } else {
@@ -138,11 +142,37 @@ function mdCharts(element) {
           }
         }
       }
-    });
+    })
+    // No data
     if (!param.data) {
       dchart.remove();
       return;
     }
+    // Error bars
+    param.data.forEach((d, k) => {
+      let errors = [];
+      if (param['data-error'] && param['data-error'][k]) {
+        param['data-error'][k].forEach(e => {
+          e = e.split(',')
+          const min = parseFloat(e[0])
+          const max = (e[1] !== undefined ? parseFloat(e[1]) : min)
+          errors.push([min, max])
+        })
+      }
+      if (errors.length) {
+        if (!param['data-type']) param['data-type'] = [];
+        if (type === 'bar' || param['data-type'][k][0] === 'bar') {
+          param['data-type'][k] = ['barWithErrorBars']
+          d.forEach((di, i) => {
+            di = parseFloat(di)
+            d[i] = { 
+              x: di, xMin: di - errors[i][0], xMax: di + errors[i][1], 
+              y: di, yMin: di - errors[i][0], yMax: di + errors[i][1] 
+            };
+          })
+        }
+      }
+    })
     // Background-color
     dchart.style.backgroundColor = param['backgroundColor'] || param['background-color'] || '';
     // not visible
@@ -194,6 +224,7 @@ function mdCharts(element) {
     const bcolor = chartBackColors[param.theme] || chartBackColors['standard'];
     const lcolor = chartLineColors[param.theme] || chartLineColors['standard'];
     param.data.forEach((d,i) => {
+      console.log(types[i])
       dataSet.push({
         label: titles[i],
         type: types[i] ? (types[i][0]||'').replace('donut', 'doughnut').replace('polar','polarArea') : undefined,
@@ -239,6 +270,7 @@ function mdCharts(element) {
           }
         }
       }
+      console.log(opt)
       new Chart(canvas.getContext('2d'), opt);
     } catch(e) {
       // Chart is not set

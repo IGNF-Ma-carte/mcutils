@@ -3,6 +3,9 @@ L'ajout de widgets se fait en encadrant le code entre trois `&#96;&#96;&#96;`
 ## Diaporama
 
 Vous pouvez ajouter un diaporama à partir d'image en utilisant `&#96;&#96;&#96;diaporama`.
+Pour chaque image, indiquez un `titre` et l'url de l'image (`img`).
+Une ligne `rotate: true` permettra de revenir au début lorsqu'on arrive à la fin du diaporama.
+Ajoutez `fullscreen: true` pour autoriser l'affichage du diaporama en grand dans la fenêtre du navigateur.
 
 [++ :fa-code:fw: Code ++]
 ```md
@@ -38,6 +41,7 @@ fullscreen: true
 Vous pouvez ajouter un comparateur d'images sur votre page en utilisant `&#96;&#96;&#96;imageSlider`.
 On peut préciser la taille des images (sous la forme `largeur`x`hauteur`). Si la largeur ou la hauteur n'est pas précisée elle sera calculée par rapport à l'autre dimension.
 Il faut lui fournir deux images à afficher. Il est préférable que les deux images aient la même taille.
+Ajoutez `fullscreen: true` pour autoriser l'affichage du diaporama en grand dans la fenêtre du navigateur.
 
 [++ :fa-code:fw: Code ++]
 ```md
@@ -130,8 +134,8 @@ dates: { "week": { "Mon": "9h-12h", "Tue": "9h-12h 14h-18h", "Thu": "9h-12h 14h-
 
 ## Les diagrammes
 
-Pour afficher des **diagrammes** sur une page, il faut commencer la ligne par `&#96;&#96;&#96;chart`. 
-Il faut ensuite préciser le type de diagramme que l'on veut `line`, `bar`, `pie`, `doughnut` ou `donut`, `radar` ou `polar`. 
+Pour afficher des **diagrammes** sur une page, il faut commencer la ligne par `&#96;&#96;&#96;chart` pour démarrer un bloc diagramme et terminer le bloc avec une ligne `&#96;&#96;&#96;`. 
+Il faut ensuite préciser le type de diagramme que l'on veut `line`, `bar`, `hbar`, `pie`, `doughnut` ou `donut`, `radar` ou `polar`. 
 On peut ensuite préciser la taille du diagramme (sous la forme `largeur`x`hauteur`) et la méthode de centrage (`left`, `right` ou `center`).
 Il faut lui fournir des données à afficher en commençant une ligne par `data:` et une suite de valeurs séparées par un point-virgule (`;`).
 
@@ -156,7 +160,7 @@ Vous pouvez définir vos propres couleurs (`colors:`) au [format du web](https:/
 * Soit au format rgb (`rgb(255,0,0)`) ou hsl avec la variante rgba (`rgba(255,0,0,.5)`).
 
 Il est également possible de définir :
-* le titre du diagramme (`title:`)
+* le titre du diagramme (`title`)
 * le titre des données (`data-title`)
 * l'affichage d'une légende et sa position (`top`, `left`, `bottom` ou `right`)
 * le titre de la légende (`legend-title`)
@@ -324,6 +328,42 @@ data:   1;3;6
 data-title:  Données 3
 data:   2;4;3
 ----
+legend: right
+```
+[----]
+
+### Barres d'erreur
+
+Il est possible d'ajouter des barres d'erreur pour visualiser les erreurs sur une donnée.
+Pour cela, `data-error` indique la liste des erreurs sur les valeurs séparées par des points-virgules (`;`).
+Si l'erreur n'est pas symétrique, indiquez l'erreur min et max séparée par une virgule (`,`).
+NB : les erreurs ne s'appliquent qu'aux diagrammes en barre.
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``chart bar x200 center
+data-title: Symétriques 
+data:   %valeur_1%; %valeur_2%; %valeur_3%; %valeur_4%; %valeur_5%
+data-error: 1;2;1.5;1;0.5
+
+data-title: Asymétriques
+data:   %valeur_2%; %valeur_3%; %valeur_4%; %valeur_5%; %valeur_1%
+data-error: 1,1;1,1.5;1,2;0.5,1;1,0.5
+
+legend: right
+&#96;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+```chart bar x200 center
+data-title: symétriques 
+data:   %valeur_1%; %valeur_2%; %valeur_3%; %valeur_4%; %valeur_5%
+data-error: 1;2;1.5;1;0.5
+
+data-title: Asymétriques
+data:   %valeur_2%; %valeur_3%; %valeur_4%; %valeur_5%; %valeur_1%
+data-error: 1,1;1,1.5;1,2;0.5,1;1,0.5
+
 legend: right
 ```
 [----]
