@@ -717,6 +717,7 @@ function loadTwitter() {
     head.appendChild(script);
   }
 }
+let twitterLoaded = false;
 
 /** Load widget inside the element (twitter, charts, etc.)
  * @function renderWidget
@@ -726,9 +727,9 @@ function loadTwitter() {
  */
 md2html.renderWidget = function(element) {
   // Has twitter ?
-  const hasTwitter = !!element.querySelector('[class^="twitter"]')
-  if (hasTwitter && !window.twttr) {
+  if (!twitterLoaded && !!element.querySelector('[class^="twitter"]')) {
     loadTwitter()
+    twitterLoaded = true;
   }
   if (window.twttr) {
     window.twttr.widgets.load(element);
