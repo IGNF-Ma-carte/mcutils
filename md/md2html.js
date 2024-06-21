@@ -23,15 +23,6 @@ import mdDiaporama, { prepareDiaporama } from './mdDiaporama';
 import mdCalendar, { prepareCalendar } from './mdCalendar.js';
 import { prepareCard } from './mdCardPrinter';
 
-/* Insert twitter script */
-if (document.body.dataset.twitter !== 'no' && !options.noTwitter) {
-  const head = document.getElementsByTagName("head")[0] || document.documentElement;
-  const script = document.createElement("script");
-  script.type = "text/javascript";
-  script.src = "https://platform.twitter.com/widgets.js"
-  head.appendChild(script);
-}
-
 let nbBlock = 0;
 
 /* Global functions to dispatch an event / do something on the map */
@@ -518,20 +509,30 @@ md2html.rules = [
   // Twitter Share
   [ /\!(\[([^\[\]]+)?\])?\(https:\/\/twitter.com\/share ?(\d+)?x?(\d+)?\)/g,
     '<a href="https://twitter.com/share" data-text="$2" data-hashtags="macarte" data-related="IGNFrance" class="twitter-share-button" data-show-count="true" target="_blank">Tweet</a>'],
-
+  [ /\!(\[([^\[\]]+)?\])?\(https:\/\/x.com\/share ?(\d+)?x?(\d+)?\)/g,
+    '<a href="https://twitter.com/share" data-text="$2" data-hashtags="macarte" data-related="IGNFrance" class="twitter-share-button" data-show-count="true" target="_blank">Tweet</a>'],
+  
   // User timeline
   [ /\!(\[([^\[\]]+)?\])?\(https:\/\/twitter.com\/([^\/)]*)\/timeline ?(\d+)?x?(\d+)?\)/g,
+    '<a class="twitter-timeline" href="https://twitter.com/$3" data-tweet-limit="$4" data-width="$5"><a href="https://twitter.com/$3?cards=false"></a></blockquote>'],
+  [ /\!(\[([^\[\]]+)?\])?\(https:\/\/x.com\/([^\/)]*)\/timeline ?(\d+)?x?(\d+)?\)/g,
     '<a class="twitter-timeline" href="https://twitter.com/$3" data-tweet-limit="$4" data-width="$5"><a href="https://twitter.com/$3?cards=false"></a></blockquote>'],
   // Twitter timeline
   [ /\!(\[([^\[\]]+)?\])?\(https:\/\/twitter.com\/([^\/)]*)\/timelines\/([^ |\)]*) ?(\d+)?x?(\d+)?\)/g,
     '<a class="twitter-timeline" href="https://twitter.com/$3/timelines/$4" data-tweet-limit="$5" data-width="$6"><a href="https://twitter.com/$3?cards=false"></a></blockquote>'],
+  [ /\!(\[([^\[\]]+)?\])?\(https:\/\/x.com\/([^\/)]*)\/timelines\/([^ |\)]*) ?(\d+)?x?(\d+)?\)/g,
+    '<a class="twitter-timeline" href="https://twitter.com/$3/timelines/$4" data-tweet-limit="$5" data-width="$6"><a href="https://twitter.com/$3?cards=false"></a></blockquote>'],
   // Twitter grid
   [ /\!(\[([^\[\]]+)?\])?\(https:\/\/twitter.com\/([^\/)]*)\/timegrid\/([^ |\)]*) ?(\d+)?x?(\d+)?\)/g,
+    '<a class="twitter-grid" href="https://twitter.com/$3/timelines/$4" data-limit="$5"  data-width="$6"><a href="https://twitter.com/$3?cards=false"></a></blockquote>'],
+  [ /\!(\[([^\[\]]+)?\])?\(https:\/\/x.com\/([^\/)]*)\/timegrid\/([^ |\)]*) ?(\d+)?x?(\d+)?\)/g,
     '<a class="twitter-grid" href="https://twitter.com/$3/timelines/$4" data-limit="$5"  data-width="$6"><a href="https://twitter.com/$3?cards=false"></a></blockquote>'],
   // Tweet
   [ /\!(\[([^\[\]]+)?\])?\(https:\/\/twitter.com\/([^ |\)]*) ?(\d+)?x?(\d+)?\)/g,
     '<blockquote class="twitter-tweet" data-cards="$4hidden" data-dnt="true" data-width="$5" width="$5"><a href="https://twitter.com/$3?cards=false"></a></blockquote>'],
-
+  [ /\!(\[([^\[\]]+)?\])?\(https:\/\/x.com\/([^ |\)]*) ?(\d+)?x?(\d+)?\)/g,
+    '<blockquote class="twitter-tweet" data-cards="$4hidden" data-dnt="true" data-width="$5" width="$5"><a href="https://twitter.com/$3?cards=false"></a></blockquote>'],
+  
   // FaceBook like
   [ /\!(\[([^\[\]]+)?\])?\(https:\/\/www.facebook.com\/like ?(\d+)?x?(\d+)?\)/g,
     '<iframe src="https://www.facebook.com/plugins/like.php?href=URL_PAGE_CARTE&width=165&layout=button_count&action=like&size=small&show_faces=false&share=true&height=20&appId" width="165" height="20" class="facebook-share-button" scrolling="no" frameborder="0" allowTransparency="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>'],
@@ -706,6 +707,16 @@ md2html.text = function(md, data, escapeHTML) {
   }
 }
 
+/* Insert twitter script */
+function loadTwitter() {
+  if (document.body.dataset.twitter !== 'no' && !options.noTwitter) {
+    const head = document.getElementsByTagName("head")[0] || document.documentElement;
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://platform.twitter.com/widgets.js"
+    head.appendChild(script);
+  }
+}
 
 /** Load widget inside the element (twitter, charts, etc.)
  * @function renderWidget
@@ -714,6 +725,11 @@ md2html.text = function(md, data, escapeHTML) {
  * @instance
  */
 md2html.renderWidget = function(element) {
+  // Has twitter ?
+  const hasTwitter = !!element.querySelector('[class^="twitter"]')
+  if (hasTwitter && !window.twttr) {
+    loadTwitter()
+  }
   if (window.twttr) {
     window.twttr.widgets.load(element);
   } else {
