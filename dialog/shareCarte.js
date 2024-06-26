@@ -4,6 +4,8 @@ import ol_ext_element from 'ol-ext/util/element';
 import serviceURL, { getViewerURL } from '../api/serviceURL';
 import embedCarte from './embedCarte'
 
+import { QRCode } from '../Carte'
+
 const html = `
 <div class="list"></div>
 <h3>Lien</h3>
@@ -108,6 +110,12 @@ function shareCarte(options) {
     html: 'copié dans le presse-papier',
     className: 'copy-info',
     parent: plink
+  })
+  // QRCode
+  ol_ext_element.create('IMG', {
+    className: 'qrcode',
+    src: QRCode.generatePNG(url, {ecclevel : 'L', margin: 0 }),
+    parent: target.querySelector('.link')
   })
 
   // CGU

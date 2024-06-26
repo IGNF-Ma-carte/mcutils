@@ -846,3 +846,4 @@ Carte.prototype.authenticate = function(cback, error) {
 }
 
 export default Carte
+export { QRCode }

@@ -9,7 +9,7 @@
 }
 .mc-share-map .link {
   position: relative;
-  display: inline-block;
+  display: block;
 }
 .mc-share-map .link a span {
   display: inline-block;
@@ -77,4 +77,10 @@
 .mc-share-map .copy-info.visible {
   opacity: 1;
   bottom: 1em;
+}
+
+.mc-share-map .link img.qrcode {
+  width: 100px;
+  margin: 1em auto;
+  display: block;
 }
