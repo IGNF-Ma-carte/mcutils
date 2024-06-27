@@ -307,6 +307,10 @@ Statistic.prototype._getStyle = function(stat) {
           data = parseFloat(feature.get(col));
           color = stat.color(data).rgb();
           color.push(stat.alpha);
+          // Radius use another data
+          if (stat.rmin < 0 && stat.col2) {
+            data = parseFloat(feature.get(stat.col2));
+          } 
           r = stat.radius(data).toFixed(2);
           const id = (isLine ? 'symboline-' : 'symbol-') +color + '-' + r + (stat.stroke ? '-1' : '-0');
           style = styleCache[id];
@@ -442,6 +446,7 @@ Statistic.prototype._cloneStatistic = function(stat) {
     cols: (stat.cols || stat0.cols || []).slice(),
     mode: stat.mode || stat0.mode || 'q',
     nbClass: stat.nbClass || stat0.nbClass || 5,
+    col2: stat.col2==='' ? '' : stat.col2  || stat0.col2 || '',
     symbol: stat.symbol || stat0.symbol || '',
     rmin: stat.rmin || stat0.rmin || 3,
     rmax: stat.rmax || stat0.rmax || 20,
@@ -552,6 +557,7 @@ Statistic.prototype.setStatistic = function(stat, delay) {
     default: {
       // Calculate stats values / min / max
       tab = [];
+      stat.max2 = 0;
       for (i = 0; i < features.length; i++) {
         var data = features[i].get(stat.cols[0]);
         if (!data) {
@@ -564,6 +570,13 @@ Statistic.prototype.setStatistic = function(stat, delay) {
           features[i]._stat = {};
           stat.max = max = Math.max(max, val);
           stat.min = min = Math.min(min, val);
+        }
+        // Radius attr
+        if (stat.col2) {
+          const val2 = parseFloat(features[i].get(stat.col2));
+          if (!isNaN(val2)) {
+            stat.max2 = Math.max(stat.max2, val2);
+          }
         }
       }
 
@@ -591,7 +604,7 @@ Statistic.prototype.setStatistic = function(stat, delay) {
   stat.min = min;
   stat.max = max;
   this._values = tab;
-
+console.log(stat)
   if (this.stat.values.length > 110) {
     this.dispatchEvent({ 
       type: 'stat:end', 
@@ -683,10 +696,12 @@ Statistic.prototype.setStatistic = function(stat, delay) {
       if (stat.rmin < 0) {
         stat.radius = function(v) {
           let r;
+          // Use attribut or not
+          const rmax = stat.col2 ? stat.max2 : max;
           if (stat.rProp === 'area') {
-            r = Math.sqrt(v * stat.rmax*stat.rmax / max)
+            r = Math.sqrt(v * stat.rmax*stat.rmax / rmax)
           } else {
-            r = stat.rmax * v / max;
+            r = stat.rmax * v / rmax;
           }
           return r > 0 ? r : 0;
         };
@@ -752,12 +767,28 @@ Statistic.prototype.getStatLegend = function() {
           f = new ol_Feature(new ol_geom_LineString([[0,0],[0,0]]));
         }
         f.set(stat.cols[0], (stat.limits[i - 1] + stat.limits[i]) / 2);
+        if (stat.col2) f.set(stat.col2, 10 * stat.max2 / stat.rmax);
         f.setStyle(styleFn(f));
         legend.push({
           title: parseFloat(stat.limits[i - 1].toFixed(2)) + ' - ' + parseFloat(stat.limits[i].toFixed(2)),
           feature: f
         })
       }
+      if (stat.typeMap == 'symbol' && stat.col2 && stat.rmin < 0) {
+        legend.push({ title: stat.col2 });
+        for (let i=0; i<4; i++) {
+          val = Math.round(stat.max2 / Math.pow(2,i));
+          f = new ol_Feature(new ol_geom_Point([0,0]));
+          f.set(stat.cols[0], stat.limits[0]);
+          f.set(stat.col2, val);
+          f.setStyle(styleFn(f));
+          legend.push({
+            title: String(val),
+            feature: f
+          })
+        }
+      }
+
       break;
     }
     case 'categorie': {
@@ -996,6 +1027,7 @@ Statistic.paramList = {
   "mode": [ 'choroplethe', 'categorie', 'symbol', 'sectoriel' ],
   "nbClass": [ 'choroplethe', 'symbol' ],
   "symbol": [ 'symbol' ],
+  "col2": [ 'symbol' ],
   "rmin": [ 'symbol', 'sectoriel' ],
   "rmax": [ 'symbol', 'sectoriel' ],
   "stroke": [ 'choroplethe', 'categorie', 'symbol', 'sectoriel' ],
