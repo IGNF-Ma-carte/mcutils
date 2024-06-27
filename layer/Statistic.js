@@ -604,7 +604,7 @@ Statistic.prototype.setStatistic = function(stat, delay) {
   stat.min = min;
   stat.max = max;
   this._values = tab;
-console.log(stat)
+
   if (this.stat.values.length > 110) {
     this.dispatchEvent({ 
       type: 'stat:end', 
