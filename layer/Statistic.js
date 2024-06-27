@@ -777,7 +777,7 @@ Statistic.prototype.getStatLegend = function() {
       if (stat.typeMap == 'symbol' && stat.col2 && stat.rmin < 0) {
         legend.push({ title: stat.col2 });
         for (let i=0; i<4; i++) {
-          val = Math.round(stat.max2 / Math.pow(2,i));
+          const val = Math.round(stat.max2 / Math.pow(2,i));
           f = new ol_Feature(new ol_geom_Point([0,0]));
           f.set(stat.cols[0], stat.limits[0]);
           f.set(stat.col2, val);
