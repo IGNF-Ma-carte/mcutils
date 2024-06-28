@@ -16,7 +16,6 @@ import ol_style_Fill from 'ol/style/Fill'
 import ol_style_Stroke from 'ol/style/Stroke'
 import ol_style_Circle from 'ol/style/Circle'
 import {asString as ol_color_asString} from 'ol/color'
-
 import ol_style_Chart from 'ol-ext/style/Chart'
 import ol_style_FontSymbol from 'ol-ext/style/FontSymbol'
 
@@ -833,6 +832,102 @@ Statistic.prototype.getStatLegend = function() {
   return legend;
 };
 
+/** Get parametric style
+ * @param {object} [stat]
+ * @param {string} [format] 'SLD' to return SLD format, default return ignStyle
+ * @returns {Array}
+ */
+Statistic.prototype.getParametricStyle = function(stat, format) {
+  if (!stat) stat = this.getStatistic();
+  if (stat.typeMap === 'heatmap') return []
+  if (stat.typeMap === 'sectoriel') return []
+
+  const condStyle = [];
+
+  const att = stat.cols[0]
+  const legend = this.getStatLegend().reverse();
+  legend.forEach(l => {
+    l.feature.setIgnStyle(style2IgnStyle(l.feature))
+  })
+  switch (stat.typeMap) {
+    case 'categorie':
+    case 'choroplethe':
+    case 'symbol': {
+      legend.forEach((l,i) => {
+        // Conditions
+        let conditions;
+        if (stat.typeMap === 'categorie') {
+          conditions = [{ attr: att,op: '=', val: l.title }]
+        } else {
+          if (i<legend.length-1) {
+            conditions = [{ attr: att, op: '<', val: stat.limits[i+1] }]
+          } else {
+            conditions = [{ attr: '', op: '=', val: '' }];
+          }
+        }
+        // New param condition
+        condStyle.push({
+          title: l.title,
+          condition: { all: true, conditions: conditions },
+          symbol: new SymbolLib(l)
+        })
+      })
+      break;
+    }
+  }
+
+  // Get as XML 
+  if (format === 'SLD') {
+    function addChild(root, tag, value) {
+      const c = xmlDoc.createElement(tag);
+      if (value) c.innerHTML = value
+      root.appendChild(c)
+      return c;
+    }
+    const xml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><StyledLayerDescriptor version="1.0.0" xsi:schemaLocation="http://www.opengis.net/sld StyledLayerDescriptor.xsd" xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:se="http://www.opengis.net/se"></StyledLayerDescriptor>`;
+    const xmlDoc = (new DOMParser).parseFromString(xml, 'text/xml');
+    const root = xmlDoc.getElementsByTagName("StyledLayerDescriptor")[0];
+    const layer = addChild(root, 'NamedLayer');
+    addChild(layer, 'Name', 'Ma carte - statistique');
+    const ustyle = addChild(layer, 'UserStyle');
+    addChild(ustyle, 'Name', 'statistic');
+    addChild(ustyle, 'Title', 'statistic');
+    const fstyle = addChild(ustyle, 'FeatureTypeStyle')
+    condStyle.reverse().forEach(c => {
+      const rule = addChild(fstyle, 'Rule')
+      addChild(rule, 'Name', c.title)
+      // filter
+      if (c.condition.conditions[0].attr) {
+        const filter = addChild(rule, 'Filter')
+        filter.setAttribute('xmlns', 'http://www.opengis.net/ogc')
+        const prop = addChild(filter, 'PropertyIsLessThan')
+        addChild(prop, 'PropertyName', c.condition.conditions[0].attr)
+        addChild(prop, 'Literal', c.condition.conditions[0].val)
+      }
+      // Style
+      const style = c.symbol.getIgnStyle()
+      const poly = addChild(rule, 'PolygonSymbolizer')
+      const fill = addChild(poly, 'Fill')
+      let param = addChild(fill, 'CssParameter', style.fillColor)
+      param.setAttribute('name', 'fill')
+      if (style.strokeWidth) {
+        const stroke = addChild(poly, 'Stroke')
+        param = addChild(stroke, 'CssParameter', style.strokeColor)
+        param.setAttribute('name', 'stroke')
+        param = addChild(stroke, 'CssParameter', style.strokeWidth)
+        param.setAttribute('name', 'stroke-width')
+      }
+    })
+
+    const serializer = new XMLSerializer();
+    const xmlStr = serializer.serializeToString(xmlDoc);
+    
+    return xmlStr.replace(/ xmlns=""/g, '')
+  } else {
+    return condStyle
+  }
+}
+
 /** Convert to an ol_layer_VectorStyle layer 
  * returns false if none (heatmap, sectoriel)
  * @param {boolean} param create parametric conditional styles (if possible)
@@ -848,40 +943,8 @@ Statistic.prototype.getVectorStyle = function(param) {
   const styleFn = this.getLayers().item(0).getStyleFunction();
 
   // Get parametric styles
-  const condStyle = [];
-  if (param) {
-    const att = stat.cols[0]
-    const legend = this.getStatLegend().reverse();
-    legend.forEach(l => {
-      l.feature.setIgnStyle(style2IgnStyle(l.feature))
-    })
-    switch (stat.typeMap) {
-      case 'categorie':
-      case 'choroplethe':
-      case 'symbol': {
-        legend.forEach((l,i) => {
-          // Conditions
-          let conditions;
-          if (stat.typeMap === 'categorie') {
-            conditions = [{ attr: att,op: '=', val: l.title }]
-          } else {
-            if (i<legend.length-1) {
-              conditions = [{ attr: att, op: '<', val: stat.limits[i+1] }]
-            } else {
-              conditions = [{ attr: '', op: '=', val: '' }];
-            }
-          }
-          // New param condition
-          condStyle.push({
-            title: l.title,
-            condition: { all: true, conditions: conditions },
-            symbol: new SymbolLib(l)
-          })
-        })
-        break;
-      }
-    }
-  }
+  const condStyle = this.getParametricStyle(stat);
+
   // Check condition
   param = (condStyle.length > 0);
 
