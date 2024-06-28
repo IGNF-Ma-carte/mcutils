@@ -18,6 +18,7 @@ import ol_style_Circle from 'ol/style/Circle'
 import {asString as ol_color_asString} from 'ol/color'
 import ol_style_Chart from 'ol-ext/style/Chart'
 import ol_style_FontSymbol from 'ol-ext/style/FontSymbol'
+import { toSLD } from '../style/conditionStyle.js'
 
 import chroma from 'chroma-js'
 
@@ -878,6 +879,8 @@ Statistic.prototype.getParametricStyle = function(stat, format) {
 
   // Get as XML 
   if (format === 'SLD') {
+    return toSLD(condStyle);
+/*    
     function addChild(root, tag, value) {
       const c = xmlDoc.createElement(tag);
       if (value) c.innerHTML = value
@@ -923,6 +926,7 @@ Statistic.prototype.getParametricStyle = function(stat, format) {
     const xmlStr = serializer.serializeToString(xmlDoc);
     
     return xmlStr.replace(/ xmlns=""/g, '')
+*/
   } else {
     return condStyle
   }
