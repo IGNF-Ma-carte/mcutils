@@ -321,11 +321,14 @@ Feature.prototype.showPopup = function(popup, coord, geom) {
     popup.setOffset([0, 0]);
     if (f.getGeometry().getType() === 'Point') {
       var offset = popup.offsetBox;
-      var style = f.getLayer().getIgnStyle(f);
-      var offsetX = /left|right/.test(popup.autoPositioning[0]) ? style.pointRadius : 0;
-      popup.offsetBox = [-offsetX, (style.pointOffsetY ? -2:-1)*style.pointRadius, offsetX, style.pointOffsetY ? 0:style.pointRadius];
+      // Statistic layer has no style
+      if (f.getLayer().getIgnStyle) {
+        var style = f.getLayer().getIgnStyle(f);
+        var offsetX = /left|right/.test(popup.autoPositioning[0]) ? style.pointRadius : 0;
+        popup.offsetBox = [-offsetX, (style.pointOffsetY ? -2:-1)*style.pointRadius, offsetX, style.pointOffsetY ? 0:style.pointRadius];
+      }
       if (geom) popup.show(geom.getClosestPoint(coord), content);
-      else popup.show(f.getGeometry().getClosestPoint(coord), content);
+      else popup.show(f.getGeometry().getFirstCoordinate(), content);
       popup.offsetBox = offset;
     } else {
       if (/polygon/i.test(f.getGeometry().getType())) {

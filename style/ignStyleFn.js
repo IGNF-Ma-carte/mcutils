@@ -15,6 +15,7 @@ import ol_style_Photo from 'ol-ext/style/Photo'
 import ol_style_FontSymbol from 'ol-ext/style/FontSymbol'
 import ol_style_FillPattern from 'ol-ext/style/FillPattern'
 import ol_style_Shadow from 'ol-ext/style/Shadow'
+import Statistic from '../layer/Statistic'
 
 import style2IgnStyle from './style2IgnStyle'
 import { getMediaURL } from '../api/serviceURL'
@@ -585,6 +586,13 @@ function getStyleFn(options) {
 /** Get style for feature
  */
 function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
+  // Statistic layers (get first style)
+  if (!ignStyle && f.getLayer() instanceof Statistic) {
+    if (f.getLayer().layerStat && f.getLayer().layerStat.getStyle) {
+      var style = f.getLayer().layerStat.getStyle()(f)
+      return [style[0]]
+    }
+  }
   var style;
   // Convert ignStyle to openlayers style
   var s = getIgnStyle(f, ignStyle);
@@ -676,6 +684,7 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
       geometry: getClusterGeom
     })];
   }
+
   return style;
 }
 
