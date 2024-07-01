@@ -225,7 +225,6 @@ function mdCharts(element) {
     const bcolor = chartBackColors[param.theme] || chartBackColors['standard'];
     const lcolor = chartLineColors[param.theme] || chartLineColors['standard'];
     param.data.forEach((d,i) => {
-      console.log(types[i])
       dataSet.push({
         label: titles[i],
         type: types[i] ? (types[i][0]||'').replace('donut', 'doughnut').replace('polar','polarArea') : undefined,
@@ -271,7 +270,6 @@ function mdCharts(element) {
           }
         }
       }
-      console.log(opt)
       new Chart(canvas.getContext('2d'), opt);
     } catch(e) {
       // Chart is not set

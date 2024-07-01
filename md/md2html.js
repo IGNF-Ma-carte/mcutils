@@ -729,13 +729,13 @@ md2html.renderWidget = function(element) {
   // Has twitter ?
   if (!twitterLoaded && !!element.querySelector('[class^="twitter"]')) {
     loadTwitter()
-    twitterLoaded = true;
   }
   if (window.twttr) {
     window.twttr.widgets.load(element);
-  } else {
+  } else if (!twitterLoaded) {
     console.error('Twitter is not loaded...')
   }
+  twitterLoaded = true;
   // Hightlight code
   element.querySelectorAll('pre.code code').forEach(block => {
     hljs.highlightBlock(block);
