@@ -78,10 +78,12 @@ function openMedia(options) {
 }
 
 /** Dialog to upload a new media
- * @param {Object} 
+ * @param {Object} options
  *  @param {function} options.callback a function that get the uploaded media
  *  @param {boolean} [options.getError=false] true to get the error if one
+ *  @param {boolean} [options.team=true] use false to add a user media (out of current team)
  *  @param {Array<string>} options.folders
+ * @param {Array<string>} folders
  */
 function addMediaDialog(options, folders) {
   _uploadMediaDialog(null, folders || options.folders, (file, folder, name) => {
@@ -104,7 +106,7 @@ function addMediaDialog(options, folders) {
         });
         list.updateFolders();
       }
-    });
+    }, options.team);
   });
 }
 
