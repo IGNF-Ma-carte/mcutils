@@ -499,6 +499,7 @@ MacarteAPI.prototype.getMedias =  function(options, callback) {
    } else {
     options.organization_id = team.getId();
    }
+   delete options.team;
   this._send('GET', _apiURL+'medias', options, callback);
 };
 

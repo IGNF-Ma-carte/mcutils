@@ -95,6 +95,8 @@ function addMediaDialog(options, folders) {
         let error = '';
         switch (r.status) {
           case 401: error = 'Vous devez être connecté !'; break;
+          case 402: error = 'Votre quota est dépassé !'; break;
+          case 400:
           case 413: error = 'Fichier trop volumineux !'; break;
           default: break;
         }
@@ -123,12 +125,14 @@ function addMediaDialog(options, folders) {
   _uploadMediaDialog(media, options.folders, (file, folder, name) => {
     waitDialog.show({ content: 'Chargement du média...' });
     function done(r) {
-      // console.log(r)
       waitDialog.close();
       if (!options.getError && r && r.error) {
         let error = '';
+        console.log(r.status)
         switch (r.status) {
           case 401: error = 'Vous devez être connecté !'; break;
+          case 402: error = 'Votre quota est dépassé !'; break;
+          case 400:
           case 413: error = 'Fichier trop volumineux !'; break;
           default: break;
         }
