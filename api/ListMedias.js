@@ -160,7 +160,7 @@ class ListMedias extends ListTable {
         },
         parent: div
       });
-      [12,24,36,48,96].forEach(i => {
+      [12,24,36].forEach(i => {
         const o = ol_ext_element.create('OPTION', { value: i, html: i, parent: size });
         if (options.size === i) o.selected = true;
       });
