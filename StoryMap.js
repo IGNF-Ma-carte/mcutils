@@ -959,6 +959,10 @@ StoryMap.prototype.setCompare = function(mode) {
     }
   }
   this.updateMapSize();
+  [0,1].forEach(i => {
+    const c = this.getCarte(i);
+    if (c) c.getMap().renderSync();
+  })
   this.changed('compare');
 };
 
