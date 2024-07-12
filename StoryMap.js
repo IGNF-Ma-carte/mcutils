@@ -61,7 +61,7 @@ window.addEventListener('tabTo', e => {
         window.parent.postMessage({ 
           type: 'tabTo', 
           tab: tab
-        })
+        }, '*')
       }
     } catch(e) { /* ok */ }
   }
