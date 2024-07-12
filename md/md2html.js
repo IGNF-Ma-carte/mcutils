@@ -609,12 +609,15 @@ md2html.rules = [
   // moveTo
   [/\[([^[]+)?\]\(app:\/\/moveTo\?([-\d.]*),([-\d.]*)(,([\d.]*))? ?([^)]*)?\)/g,
     '<a class="moveTo" onclick="appDo(\'moveTo\',$2,$3$4)" title="$6" target="_blank">$1</a>'],
-  // flyTo
+  // flyTo 
   [/\[([^[]+)?\]\(app:\/\/flyTo\?([-\d.]*),([-\d.]*)(,([\d.]*))? ?([^)]*)?\)/g,
     '<a class="moveTo" onclick="appDo(\'flyTo\',$2,$3$4)" title="$6" target="_blank">$1</a>'],
-  // stepTo
+  // stepTo (goto step)
   [/\[([^[]+)?\]\(app:\/\/stepTo\?([\d.]*) ?([^)]*)?\)/g,
     '<a class="stepTo" onclick="appDo(\'stepTo\',$2)" title="$3" target="_blank">$1</a>'],
+  // tab (change tab)
+  [/\[([^[]+)?\]\(app:\/\/tabTo\?([\d.]*) ?([^)]*)?\)/g,
+    '<a class="stepTo" onclick="appDo(\'tabTo\',$2)" title="$3" target="_blank">$1</a>'],
 
   // Code
   [/`(.*?)`/g, '<code>$1</code>'],					    // inline code

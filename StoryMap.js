@@ -47,6 +47,24 @@ window.addEventListener('stepTo', e => {
   }
 })
 
+// Storymap change tab
+window.addEventListener('tabTo', e => {
+  if (globalStory) {
+    try {
+      // Change tab in the current story
+      if (this.get('model') === 'onglet') {
+        globalStory.selectTab(parseInt(e.detail[0]))
+      } else {
+        // Change tab on parent
+        window.parent.postMessage({ 
+          type: 'selectTab', 
+          tab: e.detail[0]
+        })
+      }
+    } catch(e) { /* ok */ }
+  }
+})
+
 /* Global var */
 const defaultPopup = { 
   type: 'default', 
