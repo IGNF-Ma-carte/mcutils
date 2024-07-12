@@ -51,19 +51,32 @@ window.addEventListener('stepTo', e => {
 window.addEventListener('tabTo', e => {
   if (globalStory) {
     try {
+      let tab = e.detail[0]
+      if (tab === parseInt(tab)) tab = parseInt(tab)
       // Change tab in the current story
-      if (this.get('model') === 'onglet') {
-        globalStory.selectTab(parseInt(e.detail[0]))
+      if (globalStory.get('model') === 'onglet') {
+        globalStory.selectTab(tab)
       } else {
         // Change tab on parent
         window.parent.postMessage({ 
-          type: 'selectTab', 
-          tab: e.detail[0]
+          type: 'tabTo', 
+          tab: tab
         })
       }
     } catch(e) { /* ok */ }
   }
 })
+
+// Handle tabTo
+window.addEventListener('message', e => {
+  switch(e.data.type) {
+    case 'tabTo': {
+      globalStory.selectTab(e.data.tab)
+      break;
+    }
+  }
+})
+
 
 /* Global var */
 const defaultPopup = { 
@@ -1211,9 +1224,14 @@ StoryMap.prototype.removeTab = function(index) {
 };
 
 /** Add a new tab to the story
- * @param {number} index
+ * @param {number|string} index tab index or carte ID
  */
 StoryMap.prototype.selectTab = function(index) {
+  if (typeof(index) !== 'number') {
+    this.tabs.forEach((t,i) => {
+      if (t.id===index) index = i;
+    })
+  }
   if (this.getSelectTabIndex() === index) return;
   const t = this.tabs.item(index);
   if (t) {

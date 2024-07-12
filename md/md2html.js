@@ -616,8 +616,8 @@ md2html.rules = [
   [/\[([^[]+)?\]\(app:\/\/stepTo\?([\d.]*) ?([^)]*)?\)/g,
     '<a class="stepTo" onclick="appDo(\'stepTo\',$2)" title="$3" target="_blank">$1</a>'],
   // tab (change tab)
-  [/\[([^[]+)?\]\(app:\/\/tabTo\?([\d.]*) ?([^)]*)?\)/g,
-    '<a class="stepTo" onclick="appDo(\'tabTo\',$2)" title="$3" target="_blank">$1</a>'],
+  [/\[([^[]+)?\]\(app:\/\/tabTo\?([0-9,a-z,A-Z]*) ?([^)]*)?\)/g,
+    '<a class="tabTo" onclick="appDo(\'tabTo\', this.dataset.tab)" data-tab="$2" title="$3" target="_blank">$1</a>'],
 
   // Code
   [/`(.*?)`/g, '<code>$1</code>'],					    // inline code

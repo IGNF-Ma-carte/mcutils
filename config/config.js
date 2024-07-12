@@ -15,7 +15,6 @@ let options = {
   gppKey: 'k1RSRVIYRxteMEcPK9A5c7g0C6KRw4KX',
 };
 
-console.log('options', options)
 // Get server options using global options
 if (!window.maCarteOptions) {
   importConfig('./config.json')
