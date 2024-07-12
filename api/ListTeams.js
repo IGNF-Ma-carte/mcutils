@@ -40,6 +40,7 @@ function teamSelector(parent, roles) {
     api.getTeams(teams => {
       if (!teams || !teams.length) {
         none.innerText = 'Aucune équipe';
+        onready(teams);
         return;
       }
       none.innerText = 'hors équipe';
