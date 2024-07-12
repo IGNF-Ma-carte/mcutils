@@ -52,7 +52,8 @@ window.addEventListener('tabTo', e => {
   if (globalStory) {
     try {
       let tab = e.detail[0]
-      if (tab === parseInt(tab)) tab = parseInt(tab)
+      // Get tab by id
+      if (tab === parseInt(tab)) tab = parseInt(tab);
       // Change tab in the current story
       if (globalStory.get('model') === 'onglet') {
         globalStory.selectTab(tab)

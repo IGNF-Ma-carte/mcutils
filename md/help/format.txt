@@ -92,7 +92,7 @@ Téléphone: (tel:0143988000)
 
 ### Liens spécifiques
 
-Il est possible de créer des liens pour se déplacer sur une carte avec la syntaxe [Nom du lien](app://moveTo?{lon},{lat},{zoom} titre du lien optionnel) 
+Il est possible de créer des liens pour se déplacer sur une carte avec la syntaxe `[Nom du lien](app://moveTo?{lon},{lat},{zoom} titre du lien optionnel)` 
 Dans ce cas la dernière carte ouverte se centrera sur les coordonnées en longitude et latiture fournies dans le lien (lon, lat). Si le zoom est fourni, il sera utilisé pour ajuster celui de la carte.
 Il est également possible d'utiliser app://flyTo pour aller à une coordonnée en mode survol.
 [++ :fa-code:fw: Code ++]
@@ -106,7 +106,8 @@ Il est également possible d'utiliser app://flyTo pour aller à une coordonnée 
 [Voler à Paris](app://flyTo?2.351828,48.856578,9 Aller à Paris)
 [----]
 
-Dans une carte narrative en mode étape vous pouvez aller à une étape en utilisant la syntaxe [Nom du lien](app://stepTo?{numero_etape} titre du lien optionnel) 
+#### Changer d'étape
+Dans une carte narrative en mode étape, vous pouvez aller à une étape en utilisant la syntaxe `[Nom du lien]&lpar;app://stepTo?{numero_etape} titre du lien optionnel)`.
 [++ :fa-code:fw: Code ++]
 ```md
 [Aller à Paris](app://stepTo?5 Aller à l'étape 5)
@@ -116,7 +117,22 @@ Dans une carte narrative en mode étape vous pouvez aller à une étape en utili
 [Aller à Paris](app://stepTo?5 Aller à l'étape 5)
 [----]
 
-### Description au survol
+#### Changer d'onglet
+Dans une carte narrative en mode onglet, vous pouvez changer d'onglet en utilisant la syntaxe `[Nom du lien]&lpar;app://tabTo?{numero_onglet} titre du lien optionnel)`.
+NB: la numérotation des onglet commence à 0 (le premier onglet est donc le 0).
+Vous pouvez également indiquer l'identifiant de la carte plutôt que le numéro de l'onglet (l'identifiant de la carte est le numéro unique à 5 caractères indiqué dans l'url de visualisation de la carte).
+[++ :fa-code:fw: Code ++]
+```md
+[Aller à l'onglet 3](app://tabTo?2 onglet 3)
+[Changer d'onglet](app://tabTo?mq0piZ)
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+[Aller à l'onglet 3](app://tabTo?2 onglet 3)
+[Changer d'onglet](app://tabTo?mq0piZ)
+[----]
+
+#### Description au survol
 
 Dans le même esprit, on peut générer un lien sur la page pour juste afficher une information au survol en utilisant `#` comme url.
 
