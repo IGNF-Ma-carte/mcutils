@@ -58,22 +58,30 @@ import { getStyleFn, defaultIgnStyle, clearCache, getIgnStyle, ordering } from '
     this.layerImage_.selectable = () => {
       return this.selectable();
     }
-    // Handle filter on layerImage element when show
+    // Handle filter on layerImage element on display
     this.layerImage_.on(['filter', 'change:visible'], () => {
       setTimeout(() => {
         if (this._mcFilter && this.layerImage_.getVisible()) {
-          const elt = document.body.querySelector('.ol-viewport .ol-layers .' + this.layerImage_.getClassName());
-          if (elt) {
-            const style = [];
-            const blend = [];
-            if (this._mcFilter.get('filter')) style.push(this._mcFilter.get('filter'));
-            if (this._mcFilter.get('blend')) blend.push(this._mcFilter.get('blend'));
-            elt.style.filter = style.join(' ');
-            elt.style.mixBlendMode = blend.join(' ');
+          if (this.layerVector_.getMapInternal() && this.layerVector_.getMapInternal().getViewport()) {
+            // Get layer viewport element
+            const elt = this.layerVector_.getMapInternal().getViewport().querySelector('.ol-layers .' + this.layerImage_.getClassName());
+            if (elt) {
+              // Set style
+              const style = [];
+              const blend = [];
+              if (this._mcFilter.get('filter')) style.push(this._mcFilter.get('filter'));
+              if (this._mcFilter.get('blend')) blend.push(this._mcFilter.get('blend'));
+              elt.style.filter = style.join(' ');
+              elt.style.mixBlendMode = blend.join(' ');
+            } else {
+              // Not inserted in the DOM: try again later
+              setTimeout(() => this.layerImage_.dispatchEvent('filter'), 200);
+            }
           }
         }
       })
     })
+    // Apply filter on change
     this.on('change:visible', () => this.layerImage_.dispatchEvent('filter'));
 
     // Features

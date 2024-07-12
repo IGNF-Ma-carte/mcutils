@@ -104,6 +104,19 @@ StoryMap.prototype.read2 = function(story, options) {
   if (options.type === 'compare') {
     story.setTitle({ title1: options.cartes[0] ? options.cartes[0].title : '' })
     story.setTitle({ title2: options.cartes[1] ? options.cartes[1].title : '' })
+    const layers = [
+      options.cartes[0] ? options.cartes[0].layers : false,
+      options.cartes[1] ? options.cartes[1].layers : false
+    ]
+    story.set('compareLayer', layers);
+    [0,1].forEach(i => {
+      const c = story.cartes[i];
+      if (c && layers[i]) {
+        c.getMap().getLayers().forEach(l => {
+          l.setVisible(layers[i].indexOf(l.get('id')) > -1)
+        })
+      }
+    })
   }
 
   // iFrame tools
@@ -289,8 +302,10 @@ StoryMap.prototype.write = function(story) {
         zoom: story.getCarte().getMap().getView().getZoom(),
         map1: story.getCarte(0).get('id'),
         map1_titre: story.get('title1'),
+        layer1: story.get('compareLayer') ? story.get('compareLayer')[0] : false,
         map2: story.getCarte(1).get('id'),
         map2_titre: story.get('title2'),
+        layer2: story.get('compareLayer') ? story.get('compareLayer')[1] : false,
         pos: "ver",
       }
       break;

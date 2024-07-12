@@ -41,6 +41,7 @@ class ListMedias extends ListTable {
    * @param {Object} options
    *  @param {Element} [options.target] 
    *  @param {boolean} [options.search=false] enable search input
+   *  @param {boolean} [options.team=true] use false to get user media (out of current team)
    *  @param {boolean} [options.thumb] set thumb selection, if undefined options is hidden 
    *  @param {boolean} [options.limit=false] show limit list
    *  @param {boolean} [options.size=12] current size (12x)
@@ -108,6 +109,7 @@ class ListMedias extends ListTable {
     this.setThumb(options.thumb);
 
     this.set('folder', localStorage.getItem(MCMediaFolder) || '');
+    this._useTeam = options.team !== false;
 
     if (options.search) {
       let div = ol_ext_element.create('DIV', { className: 'mc-filter', parent: head });
@@ -158,7 +160,7 @@ class ListMedias extends ListTable {
         },
         parent: div
       });
-      [12,24,36,48,96].forEach(i => {
+      [12,24,36].forEach(i => {
         const o = ol_ext_element.create('OPTION', { value: i, html: i, parent: size });
         if (options.size === i) o.selected = true;
       });
@@ -233,7 +235,7 @@ ListMedias.prototype.updateFolders = function(cback) {
     this.setFolder(current, true)
     // Callback
     if(typeof(cback) === 'function') cback(folders);
-  })
+  }, this._useTeam)
 };
 
 /** Get folder dialog
@@ -341,7 +343,8 @@ ListMedias.prototype.showPage = function(page) {
     name: this.get('query') || '',
     folder: this.get('folder') || '',
     sort: this.get('sort') || 'date',
-    limit: this.get('size')
+    limit: this.get('size'),
+    team: this._useTeam
   }, (e) => {
     if (!e.error) {
       this.drawList(e.medias, e.offset || offset, e.count);

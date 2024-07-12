@@ -137,10 +137,12 @@ function storyV4(options) {
   if (options.compare) {
     options.cartes = [{
       title: options.compare.map1_titre,
-      id: options.compare.map1
+      id: options.compare.map1,
+      layers: options.compare.layer1
     }, {
       title: options.compare.map2_titre,
-      id: options.compare.map2
+      id: options.compare.map2,
+      layers: options.compare.layer2
     }];
     options.param.lon = options.compare.lon;
     options.param.lat = options.compare.lat;

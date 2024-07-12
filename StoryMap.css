@@ -85,6 +85,11 @@
 [data-role="storymap"][data-model^="compare"] .map1 .ol-cgu {
     display: none;
 }
+[data-role="storymap"][data-model^="compare"][data-compare="dub1"] .map1 .ol-scale-line,
+[data-role="storymap"][data-model^="compare"][data-compare="dub1"] .map1 .ol-permalink,
+[data-role="storymap"][data-model^="compare"][data-compare="dub1"] .map1 .ol-cgu {
+    display: block;
+}
 
 [data-role="storymap"] .volet {
   position: absolute;

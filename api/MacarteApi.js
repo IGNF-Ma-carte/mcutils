@@ -489,21 +489,27 @@ MacarteAPI.prototype.getUsers =  function(name, callback) {
 
 /** Get user media
  * @param {Object} options search options
+ *  @param {boolean} [options.team=true] use false to get user media (out of current team)
  * @param {function} callback
  */
 MacarteAPI.prototype.getMedias =  function(options, callback) {
   options = options || {};
-  options.organization_id = team.getId();
+  if (options.team === false) {
+    delete options.organization_id
+   } else {
+    options.organization_id = team.getId();
+   }
+   delete options.team;
   this._send('GET', _apiURL+'medias', options, callback);
 };
 
 /** Get user media folders
  * @param {function} callback
+ * @param {boolean} [useTeam=true] use false to get user media folder (out of teams)
  */
-MacarteAPI.prototype.getMediasFolders =  function(callback) {
-  const options = {
-    organization_id: team.getId()
-  };
+MacarteAPI.prototype.getMediasFolders =  function(callback, useTeam) {
+  const options = {}
+  options.organization_id = (useTeam !== false) ? team.getId() : '';
   this._send('GET', _apiURL+'medias/folders', options, callback);
 };
 
@@ -512,13 +518,15 @@ MacarteAPI.prototype.getMediasFolders =  function(callback) {
  * @param {string} folder
  * @param {string} name
  * @param {function} callback
+ * @param {boolean} [useTeam=true]
  */
-MacarteAPI.prototype.postMedia =  function(img, folder, name, callback) {
+MacarteAPI.prototype.postMedia =  function(img, folder, name, callback, useTeam) {
   const formData = new FormData();
   formData.append('file', img);
   formData.append('folder', folder);
   formData.append('name', name);
-  formData.append('organization_id', team.getId());
+  //if (useTeam !== false) formData.append('organization_id', team.getId());
+  formData.append('organization_id', (useTeam !== false) ? team.getId() : '');
   this._send('POST', _apiURL+'medias', formData, callback);
 };
 
