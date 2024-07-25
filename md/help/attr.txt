@@ -74,7 +74,7 @@ Le code HTML dans les attributs est échappé. Si vous voulez le supprimer, vous
 
 ### Affichage conditionnel
 
-Il est possible de contitionner l'afficher à la présence (ou non) d'un attribut.
+Il est possible de conditionner l'affichage à la présence (ou non) d'un attribut.
 Pour cela, il suffit de mettre l'attribut entre double parenthèses `&lpar;(&percnt;attr&percnt;))`.
 Dans ce cas, l'ensemble de l'expression entre parenthèses s'affiche ou non suivant la valeur de l'attribut.
 
@@ -119,7 +119,7 @@ Les condition peuvent s'ajouter entre elles lorsqu'elles sont entre les parenth�
 
 #### Tests conditionnels
 
-Il est possible de tester l'existance d'une valeur sans l'afficher en utilisant `&lpar;(?&percnt;attr&percnt;` ou `&lpar;(!&percnt;attr&percnt;`.
+Il est possible de tester l'existence d'une valeur sans l'afficher en utilisant `&lpar;(?&percnt;attr&percnt;` ou `&lpar;(!&percnt;attr&percnt;`.
 
 [++ :fa-code:fw: Code ++]
 ```md
