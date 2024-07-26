@@ -39,6 +39,7 @@ Q: Quelle est la couleur du cheval d'Henri IV ?
 [ ] ![](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Zebra_%28PSF%29.png/1200px-Zebra_%28PSF%29.png 80) rayé noir et blanc
 [x] ![](https://collections.louvre.fr/media/cache/medium/0000000021/0000057596/0000331030_OG.JPG 60) blanc
 [ ] vous pouvez répéter la question ?
+action: app://moveTo?2.351828,48.856578,9
 ---REP info
 *Choisissez la bonne réponse !*
 ---REP
