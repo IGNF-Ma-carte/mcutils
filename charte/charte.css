@@ -1040,7 +1040,7 @@ body > [data-role="storymap"] > * {
 }
 
 /* INPUTS */
-[data-univers] .ol-ext-check span {
+[data-univers] .ol-ext-check > span {
   font-size: 1rem;
   border: .1rem solid #b8bcc1;
   width: 2.4em;
@@ -1048,20 +1048,20 @@ body > [data-role="storymap"] > * {
   margin: 0 1em;
   background-color: #fff;
 }
-[data-univers] .ol-ext-checkbox span {
+[data-univers] .ol-ext-checkbox > span {
   border-radius: .4em;
 }
 [data-univers] .ol-ext-radio input:checked ~ span:before {
   width: 60%;
   height: 60%;
 }
-[data-univers] .ol-ext-check.small span {
+[data-univers] .ol-ext-check.small > span {
   font-size: .6rem;
   position: relative;
   top: -0.3em;
 }
 
-[data-univers] .ol-ext-check:hover span {
+[data-univers] .ol-ext-check:hover > span {
   background-color: #fff;
 }
 [data-univers] .ol-ext-check input:checked ~ span  {

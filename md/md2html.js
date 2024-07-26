@@ -21,6 +21,7 @@ import mdCharts, { prepareCharts } from './mdCharts';
 import mdImageSlider, { prepareImageSlider } from './mdImageSlider';
 import mdDiaporama, { prepareDiaporama } from './mdDiaporama';
 import mdCalendar, { prepareCalendar } from './mdCalendar.js';
+import mdQCM, { prepareQCM, nbQCM, nbQCMok } from './mdQCM.js';
 import { prepareCard } from './mdCardPrinter';
 
 let nbBlock = 0;
@@ -128,6 +129,10 @@ md2html.doWidget = function (md, data) {
     case 'calendar': {
       return prepareCalendar(type, md2html.doData(md, data));
     }
+    // QCM
+    case 'QCM': {
+      return prepareQCM(type, md2html.doData(md, data));
+    }
     // Code
     default: {
       return '<pre class="code"><code class="'+type+'">' + md.replace(/</g,'&lt;') + '</code></pre>';
@@ -138,7 +143,7 @@ md2html.doWidget = function (md, data) {
 /** Handle md part
  * @param {String} md the markdown text
  * @param {} data a list of key value to replace in the markdown %key%
- * @return {HTMl} HTML code
+ * @return {string} HTML code
  */
 md2html.mdPart = function (md, data) {
   if (!md) return '';
@@ -147,6 +152,10 @@ md2html.mdPart = function (md, data) {
 
   // Secure md string
   md = md2html.doSecure(md) +"\n";
+
+  // MarkDown calc
+  md = md.replace(/%md:QCMok%/g, '<span class="md-nb-qcm-ok">'+nbQCMok+'</span>')
+  md = md.replace(/%md:QCM%/g, '<span class="md-nb-qcm">'+nbQCM+'</span>')
 
   // Images Base64 (save)
   var data64 = [];
@@ -702,6 +711,9 @@ md2html.text = function(md, data, escapeHTML) {
   element.querySelectorAll('.md-chart').forEach(d => d.remove());
   // Remove widgets (calendar)
   element.querySelectorAll('.mdCalendar').forEach(d => d.remove());
+  // Remove QCM responses
+  element.querySelectorAll('.md-qcm-response').forEach(d => d.remove());
+  element.querySelectorAll('.md-qcm .qcm-r').forEach(d => d.remove());
   // Return text
   if (escapeHTML) {
     return element.innerText.replace(/</g, '&lt');
@@ -752,6 +764,8 @@ md2html.renderWidget = function(element) {
   mdDiaporama(element);
   // Create Calendar
   mdCalendar(element);
+  // Create QCM
+  mdQCM(element);
 }
 
 /** Render icons in a markdown text

@@ -12,6 +12,7 @@ charte.setApp('md', 'Markdown');
 const page = charte.getAppElement();
 
 // Markdown content
+/** /
 const md = `## titre ^([:fi-info:](# une info))
 !(https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png 200)
 
@@ -29,6 +30,28 @@ colors: red; green; blue; orange; cyan
 legend: right
 \`\`\`
 `
+/*/
+const md = `## Test de QCM
+Réponses: %md:QCMok% / %md:QCM%
+#### Quelle est la couleur du cheval d'Henri IV ?
+\`\`\`QCM henri4
+Q: Quelle est la couleur du cheval d'Henri IV ?
+[ ] ![](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Zebra_%28PSF%29.png/1200px-Zebra_%28PSF%29.png 80) rayé noir et blanc
+[x] ![](https://collections.louvre.fr/media/cache/medium/0000000021/0000057596/0000331030_OG.JPG 60) blanc
+[ ] vous pouvez répéter la question ?
+---REP info
+*Choisissez la bonne réponse !*
+---REP
+« ***Quelle est la couleur du cheval blanc d'Henri IV ?*** » est une [célèbre blague française](https://fr.wikipedia.org/wiki/Cheval_blanc_dans_la_culture#P.C3.A9troglyphes_et_g.C3.A9oglyphes)
+---REP ok
+Bien joué
+![](https://i.ytimg.com/vi/PTLr74H2deA/maxresdefault.jpg 250)
+---REP nok
+OOps encore raté
+![](https://media.baamboozle.com/uploads/images/169049/1604435175_123203 250)
+\`\`\`
+`
+/**/
 
 const data = { 
   name: 'Géoroom', 

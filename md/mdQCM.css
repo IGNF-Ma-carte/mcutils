@@ -1,0 +1,36 @@
+.md .md-qcm {
+  padding: .5em;
+  border: 3px solid rgba(0,0,0,.2);
+}
+.md .md-qcm label {
+  display: block;
+}
+.md .md-qcm label > div {
+  padding: .2em 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+.md .md-qcm label:hover {
+  background-color: rgba(0,0,0,.1);
+}
+
+
+.md .md-qcm[data-valid] {
+  pointer-events: none;
+  background-color: rgba(0,0,0,.05);
+}
+.md .md-qcm[data-valid] label[data-check="true"] {
+  background-color: rgba(0,255,0,.1);
+}
+.md .md-qcm[data-valid="false"] [data-valid="false"] {
+  background-color: rgba(255,0,0,.08);
+}
+
+.md .md-qcm-response {
+  display: none;
+  margin: .5em 0;
+}
+.md .md-qcm-response.md-response-info,
+.md .md-qcm-response[data-visible]{
+  display: block;
+}
