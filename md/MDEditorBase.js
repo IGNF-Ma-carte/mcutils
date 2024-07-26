@@ -19,6 +19,7 @@ import mdHelpList from './help/list.txt'
 import mdHelpMedia from './help/media.txt'
 import mdHelpAttr from './help/attr.txt'
 import mdHelpWidget from './help/widget.txt'
+import mdHelpQCM from './help/qcm.txt'
 
 // Full page dialog
 const fullDialog = new Dialog({ 
@@ -931,7 +932,7 @@ MDEditorBase.prototype.setTools = function (minibar) {
       url: 'https://www.ign.fr/visitez-le-georoom',
       img: 'https://upload.wikimedia.org/wikipedia/commons/7/70/Hurel-Dubois_HD-34,_IGN_-_Institut_Geographique_National_AN1286808.jpg'
     },
-    buttons: { format: 'format', list: 'listes', media: 'médias', attr: 'attributs', widget: 'widget', ok: 'ok' },
+    buttons: { format: 'format', list: 'listes', media: 'médias', attr: 'attributs', widget: 'widget', qcm: 'QCM', ok: 'ok' },
     onButton: (b) => {
       switch(b) {
         case 'format': showHelp(mdHelpFormat, options); break;
@@ -939,7 +940,8 @@ MDEditorBase.prototype.setTools = function (minibar) {
         case 'media': showHelp(mdHelpMedia, options); break;
         case 'attr': showHelp(mdHelpAttr, options); break;
         case 'widget': showHelp(mdHelpWidget, options); break;
-        default: console.log('ok')
+        case 'qcm': showHelp(mdHelpQCM, options); break;
+        default: break;
       }
     }
   }

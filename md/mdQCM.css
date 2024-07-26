@@ -4,6 +4,7 @@
 }
 .md .md-qcm label {
   display: block;
+  padding: .1em 0;
 }
 .md .md-qcm label > div {
   padding: .2em 0;
@@ -13,7 +14,9 @@
 .md .md-qcm label:hover {
   background-color: rgba(0,0,0,.1);
 }
-
+.md .md-qcm .md-action {
+  display: none;
+}
 
 .md .md-qcm[data-valid] {
   pointer-events: none;

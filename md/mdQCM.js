@@ -44,7 +44,8 @@ function doQCM(name, data) {
   const lines = data.split('\n');
   const qcm = {
     question: '',
-    responses: []
+    responses: [],
+    actions: []
   }
   lines.forEach(d => {
     let i = (d.charAt(0)==='[' ? 3 : d.indexOf(':'));
@@ -64,6 +65,10 @@ function doQCM(name, data) {
           check: /x/i.test(att),
           val: val
         })
+        break;
+      }
+      case 'action': {
+        qcm.actions.push(val)
         break;
       }
       default: {
@@ -96,6 +101,16 @@ function doQCM(name, data) {
       parent: check.parentNode
     })
   })
+  // Actions
+  let actions = ''
+  qcm.actions.forEach(a => {
+    actions += md2html('[]('+a+')')
+  })
+  ol_ext_element.create('DIV', {
+    className: 'md-action',
+    html: actions,
+    parent: dqcm
+  })
   return content.innerHTML;
 }
 
@@ -119,8 +134,10 @@ function mdQCM(element) {
         document.querySelectorAll('.md .md-nb-qcm').forEach(e => e.innerText = nbQCM);
         if (type==='ok') {
           nbQCMok++;
-          document.querySelectorAll('.md .md-nb-qcm-ok').forEach(e => e.innerText = nbQCM);
+          document.querySelectorAll('.md .md-nb-qcm-ok').forEach(e => e.innerText = nbQCMok);
         }
+        // Do actions
+        qcmElt.querySelectorAll('.md-action a').forEach(a => a.click())
       }
     })
   })

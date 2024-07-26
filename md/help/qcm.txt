@@ -1,0 +1,109 @@
+## Jeux et QCM
+
+Il est possible de proposer des widgets QCM dans une carte.
+Un QMC est composé d'une partie question qui énumère les question réponses possibles et une partie réponse qui s'affichera en fonction de la réponse choisie. Il est également possible de déclencher des actions lorsque la réponse est choisie (déplacer la carte, changer d'étape, etc.).
+
+### Le questionnaire
+
+Chaque QCM a un nom, ce qui permet de vérifier qu'il a (ou non) déjà été répondu et de décompter les bonnes réponses sur la carte.
+Utilisez un nom différent pour chaque QCM.
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``QCM nomQCM
+Q: la question
+[ ] une première réponse
+[x] la **bonne** réponse
+[ ] la dernière réponse
+&#96;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+```QCM nomQCM
+Q: la question
+[ ] une première réponse
+[x] la **bonne** réponse
+[ ] la dernière réponse
+```
+[----]
+
+### Les blocs réponses
+
+Il est possible de proposer des blocs réponses qui vont s'afficher en fonction des choix de l'utilisateur.
+Ces blocs commencent par `---REP` et ce sont :
+- des blocs d'information (info) qui seront tout le temps affiché (pour aider l'utilisateur)
+- des blocs qui s'afficheront en cas de bonne réponse (ok) 
+- des blocs qui s'afficheront en cas de mauvaise réponse (nok) 
+- et des blocs qui s'afficheront à chaque réponse.
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``QCM qcm2
+Q: la question
+[ ] une première réponse
+[x] la **bonne** réponse
+[ ] la dernière réponse
+---REP info
+*Choisissez la bonne réponse !*
+---REP
+Ce bloc s'affiche quelque soit la réponse.
+---REP ok
+:fa-smile-o:2x left: Ce bloc s'affiche en cas de bonne réponse.
+---REP
+:fa-bomb:2x left: Ce bloc s'affiche en cas de mauvaise réponse.
+&#96;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+```QCM qcm2
+Q: la question
+[ ] une première réponse
+[x] la **bonne** réponse
+[ ] la dernière réponse
+---REP info
+*Choisissez la bonne réponse !*
+---REP
+Ce bloc s'affiche quelque soit la réponse.
+---REP ok
+:fa-smile-o:2x left: Ce bloc s'affiche en cas de bonne réponse.
+---REP nok
+:fa-bomb:2x left: Ce bloc s'affiche en cas de mauvaise réponse.
+```
+[----]
+
+### Les déclencheurs et les décomptes.
+
+Il est possible de compter le nombre de question répondu (&percnt;md:QCM&percnt;) et de bonne réponses (&percnt;md:QCMok&percnt;).
+NB : une fois un QCM répondu il ne sera pas décompté une seconde fois (et c'est la première réponse qui fait fois).
+On peut également ajouter des déclencheurs (voir les liens spécifiques) pour faire une action sur la carte, au travers de l'option `actions`. Le lien commence par `app://`
+
+[++ :fa-code:fw: Code ++]
+```md
+Nombre de questionnaires réalisé : **%md:QCM%**
+Nombre de bonne réponses : **%md:QCMok%**
+&#96;``QCM qcm3
+Q: la question
+[ ] une première réponse
+[x] la **bonne** réponse
+[ ] la dernière réponse
+# Se déplacer à Paris lorsqu'on a répondu
+action: app://moveTo?2.351828,48.856578,9
+# Changer d'étape
+action: app://stepTo?next
+&#96;``
+```
+[----]
+[++ :fa-desktop:fw: Résultat ++]
+Nombre de questionnaires réalisé : **%md:QCM%**
+Nombre de bonne réponses : **%md:QCMok%**
+```QCM qcm3
+Q: la question
+[ ] une première réponse
+[x] la **bonne** réponse
+[ ] la dernière réponse
+# Se déplacer à Paris lorsqu'on a répondu
+action: app://moveTo?2.351828,48.856578,9
+# Changer d'étape
+action: app://stepTo?next
+```
+[----]
