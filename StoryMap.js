@@ -24,7 +24,7 @@ import { containsCoordinate } from 'ol/extent';
 import fullscreen from './dialog/fullscreen';
 import { fromLonLat } from 'ol/proj';
 import Carte from './Carte';
-import { unByKey } from 'ol/observable';
+import { unByKey } from 'ol/Observable';
 import Feature from 'ol/Feature';
 import printCardControl from './control/printCard'
 
@@ -42,7 +42,29 @@ let globalStory;
 window.addEventListener('stepTo', e => {
   if (globalStory) {
     try {
-      globalStory.setStep(parseInt(e.detail[0]))
+      const param = e.detail[0];
+      switch (param) {
+        case 'next': {
+          globalStory.setStep(globalStory.currentStep + 1)
+          break;
+        }
+        case 'prev': {
+          globalStory.setStep(globalStory.currentStep - 1)
+          break;
+        }
+        case 'first': {
+          globalStory.setStep(0)
+          break;
+        }
+        case 'last': {
+          globalStory.setStep(globalStory.getSteps().getLength())
+          break;
+        }
+        default: {
+          globalStory.setStep(parseInt(param))
+          break;
+        }
+      }
     } catch(e) { /* ok */ }
   }
 })
@@ -1005,7 +1027,7 @@ StoryMap.prototype.switcherModel = function() {
   this.target.dataset.switcherModel = this.get('controls').switcherModel;
 };
 
-  /** Set model
+/** Set model
  * @param {string} [model] model name, if none update the current one
  */
 StoryMap.prototype.setModel = function(model) {

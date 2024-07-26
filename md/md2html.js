@@ -613,8 +613,8 @@ md2html.rules = [
   [/\[([^[]+)?\]\(app:\/\/flyTo\?([-\d.]*),([-\d.]*)(,([\d.]*))? ?([^)]*)?\)/g,
     '<a class="moveTo" onclick="appDo(\'flyTo\',$2,$3$4)" title="$6" target="_blank">$1</a>'],
   // stepTo (goto step)
-  [/\[([^[]+)?\]\(app:\/\/stepTo\?([\d.]*) ?([^)]*)?\)/g,
-    '<a class="stepTo" onclick="appDo(\'stepTo\',$2)" title="$3" target="_blank">$1</a>'],
+  [/\[([^[]+)?\]\(app:\/\/stepTo\?([0-9,a-z]*) ?([^)]*)?\)/g,
+    '<a class="stepTo" onclick="appDo(\'stepTo\',\'$2\')" title="$3" target="_blank">$1</a>'],
   // tab (change tab)
   [/\[([^[]+)?\]\(app:\/\/tabTo\?([0-9,a-z,A-Z]*) ?([^)]*)?\)/g,
     '<a class="tabTo" onclick="appDo(\'tabTo\', this.dataset.tab)" data-tab="$2" title="$3" target="_blank">$1</a>'],

@@ -190,7 +190,9 @@ StoryMap.prototype.write = function(story) {
   }
   options.etapes.sort = Object.keys(options.etapes);
   options.etapes.anim = !!story.get('animStep');
-  if (story.get('model')==='etape') options.noStep = !!this.get('noStep');
+  if (story.get('model')==='etape') {
+    options.noStep = !!story.get('noStep');
+  }
 
   // Bulles
   options.bulle = story.get('popup');

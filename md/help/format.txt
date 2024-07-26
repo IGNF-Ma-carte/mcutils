@@ -108,13 +108,17 @@ Il est également possible d'utiliser app://flyTo pour aller à une coordonnée 
 
 #### Changer d'étape
 Dans une carte narrative en mode étape, vous pouvez aller à une étape en utilisant la syntaxe `[Nom du lien]&lpar;app://stepTo?{numero_etape} titre du lien optionnel)`.
+Il est également possible de passer à l'étape suivante (`app://stepTo?next`), précédente (`app://stepTo?prev`) ou la première (`app://stepTo?first`) ou la denière (`app://stepTo?last`).
+⚠️ les étapes commence à 0 (`app://stepTo?1` va à l'étape 2).
 [++ :fa-code:fw: Code ++]
 ```md
-[Aller à Paris](app://stepTo?5 Aller à l'étape 5)
+[Aller au 6](app://stepTo?5 Aller à l'étape 6)
+[Aller à la fin](app://stepTo?last Aller la dernière étape)
 ```
 [----]
 [++ :fa-desktop:fw: Résultat ++]
-[Aller à Paris](app://stepTo?5 Aller à l'étape 5)
+[Aller au 6](app://stepTo?5 Aller à l'étape 6)
+[Aller à la fin](app://stepTo?last Aller la dernière étape)
 [----]
 
 #### Changer d'onglet
