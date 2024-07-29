@@ -198,7 +198,9 @@ md2html.mdPart = function (md, data) {
  */
 md2html.floatingImages = function (md) {
   md = md.replace (/<div class='right'><img([^\<]*)<\/div>/g,"<img class='floatRight' $1");
+  md = md.replace (/<div class='right'><a class="fullscreen"(.*)<\/div>/g,"<a class='fullscreen floatRight' $1");
   md = md.replace (/<div class='left'><img([^\<]*)<\/div>/g,"<img class='floatLeft' $1");
+  md = md.replace (/<div class='left'><a class="fullscreen"(.*)<\/div>/g,"<a class='fullscreen floatLeft' $1");
   md = md.replace (/<a ([^\<]*)<br \/><img/g,"<a $1<img");
   return md;
 };
