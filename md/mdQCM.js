@@ -136,9 +136,11 @@ function mdQCM(element) {
           nbQCMok++;
           document.querySelectorAll('.md .md-nb-qcm-ok').forEach(e => e.innerText = nbQCMok);
         }
-        // Do actions
-        qcmElt.querySelectorAll('.md-action a').forEach(a => a.click())
       }
+      // Do actions
+      qcmElt.querySelectorAll('.md-action a').forEach(a => {
+        a.click()
+      })
     })
   })
 }

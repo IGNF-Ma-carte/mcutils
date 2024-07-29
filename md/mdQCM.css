@@ -6,10 +6,15 @@
   display: block;
   padding: .1em 0;
 }
+.md .md-qcm label > span {
+  margin: 0 1em 0 0;
+}
 .md .md-qcm label > div {
   padding: .2em 0;
   display: inline-block;
   vertical-align: middle;
+  max-width: calc(100% - 2.5em);
+  text-align: left;
 }
 .md .md-qcm label:hover {
   background-color: rgba(0,0,0,.1);
