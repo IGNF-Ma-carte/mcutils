@@ -54,7 +54,11 @@ window.fullscreen = (elt) => {
   if (elt && elt.firstElementChild) {
     const img = elt.firstElementChild;
     const src = img.src;
-    if (src) fullscreen.showImage(src, { title: img.title });
+    if (src) {
+      fullscreen.showImage(src, { title: img.title });
+      // Prevent default
+      if (window.event) window.event.preventDefault();
+    }
   }
 }
 
