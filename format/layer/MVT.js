@@ -1,4 +1,4 @@
-./**	@copy (c) IGN - 2018 
+/**	@copy (c) IGN - 2018 
 	@author Jean-Marc VIGLINO jean-marc.viglino@ign.fr
 */
 import LayerFormat from './Layer';
