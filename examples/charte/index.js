@@ -20,9 +20,11 @@ import MacarteAPI from '../../api/MacarteApi'
 import MVT from '../../layer/MVT'
 import ol_ext_element from 'ol-ext/util/element'
 import organization from '../../api/team'
+import { getUrlParameter } from '../../control/url'
+
 
 const story = new StoryMap({ 
-  id: 'ed8a48f90598791d5d3a5a50d7873b86',
+  id: getUrlParameter('map') || 'ed8a48f90598791d5d3a5a50d7873b86',
   // id: 'e331581bad8927c6a6584d175d240e12',
   // id: '63f449a8a77e81f6584941bdd42d8dc9',
   // id: 'd07f7afe263d4123f80a74d26da91de2',

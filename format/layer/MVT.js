@@ -16,6 +16,8 @@ class MVT extends LayerFormat {
   }
 }
 
+import { MapLibreLayer } from '@geoblocks/ol-maplibre-layer';
+
 /** Read layer from param
  * @param {*} options extend layer options
  *  @param {string} url url of the static image
@@ -23,17 +25,38 @@ class MVT extends LayerFormat {
  */
  MVT.prototype.read = function (options) {
   if (options.type !== 'MVT') return null;
-  const layer = new LayerMVT({
-    title: options.title,
-    url: options.url,
-    attributions: options.copyright
-  })
-  if (options.mbstyle) {
-    try {
-      layer.set('style', options.mbstyle);
-      const data = JSON.parse(options.mbstyle);
-      layer.applyStyle(data);
-    } catch(e) { /* oops */ }
+  
+  // Style
+  let mbstyle, layer;
+  try {
+    if (options.mbstyle) {
+      mbstyle = JSON.parse(options.mbstyle);
+    }
+  } catch(e) { /* oops */ }
+
+  // Create layer
+  if (mbstyle && Object.keys(mbstyle.sources).length > 1) {
+    // Maplibre layer
+    layer = new MapLibreLayer({
+      title: options.title,
+      mapLibreOptions: {
+        style: mbstyle
+      },
+      attributions: options.copyright
+    });
+  } else {
+    layer = new LayerMVT({
+      title: options.title,
+      url: options.url,
+      attributions: options.copyright
+    })
+    if (options.mbstyle) {
+      try {
+        layer.set('style', options.mbstyle);
+        const data = mbstyle;
+        layer.applyStyle(data);
+      } catch(e) { /* oops */ }
+    }
   }
   this.readOptions(layer, options);
   return layer;

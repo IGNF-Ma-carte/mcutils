@@ -42,6 +42,7 @@
   "dependencies": {
     "@fontsource/fira-sans": "^5.0.3",
     "@fontsource/open-sans": "^5.0.3",
+    "@geoblocks/ol-maplibre-layer": "^1.0.0",
     "chart.js": "^4.1.0",
     "chartjs-chart-error-bars": "^4.4.1",
     "chroma-js": "^2.1.2",
@@ -51,6 +52,7 @@
     "font-ign": "git+https://github.com/IGNF-Ma-carte/font-ign.git",
     "highlight.js": "^11.4.0",
     "jspdf": "^2.3.1",
+    "maplibre-gl": "^4.5.0",
     "mongo-parse": "^2.1.0",
     "ol": "^8.2.0",
     "ol-ext": "^4.0.16",
