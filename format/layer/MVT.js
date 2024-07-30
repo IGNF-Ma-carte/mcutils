@@ -1,8 +1,9 @@
-/**	@copy (c) IGN - 2018 
+./**	@copy (c) IGN - 2018 
 	@author Jean-Marc VIGLINO jean-marc.viglino@ign.fr
 */
 import LayerFormat from './Layer';
 import LayerMVT from '../../layer/MVT';
+import { MapLibreLayer } from '@geoblocks/ol-maplibre-layer';
 
 /** MVT layer format reader/writer
  * @memberof mcutils.format.layer
@@ -15,8 +16,6 @@ class MVT extends LayerFormat {
     super();
   }
 }
-
-import { MapLibreLayer } from '@geoblocks/ol-maplibre-layer';
 
 /** Read layer from param
  * @param {*} options extend layer options
