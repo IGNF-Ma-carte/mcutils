@@ -12,7 +12,9 @@ let nbQCMok = 0;
 // Create QCM
 function prepareQCM(type, data) {
   let content = '';
-  const name = type.split(' ')[1].trim();
+  type = (type||'').split(' ')
+  if (!type[1]) console.warn('[QCM] sans nom !')
+  const name = (type[1] || 'none').trim();
   data = ('\n'+data).split(/\n-{3,}REP/)
   content += doQCM(name, data.shift())
   data.forEach(d => {
