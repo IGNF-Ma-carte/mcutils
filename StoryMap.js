@@ -62,7 +62,11 @@ window.addEventListener('stepTo', e => {
           break;
         }
         default: {
-          globalStory.setStep(parseInt(param))
+          if (/^[0-9]+$/.test(param)) {
+            globalStory.setStep(parseInt(param))
+          } else {
+            globalStory.setStepByName(param);
+          }
           break;
         }
       }
@@ -628,6 +632,18 @@ StoryMap.prototype.freezeStep = function(b) {
   return this.get('freezeStep');
 };
 
+/** Show step by name
+ * @param {string} name step name
+ * @param {boolean} [anim=true]
+ */
+StoryMap.prototype.setStepByName = function(name, anim) {
+  let n = -1;
+  this.getSteps().forEach((s,i) => {
+    if (s.title === name) n = i;
+  })
+  if (n >= 0) this.setStep(n, anim)
+}
+
 /** Show step 
  * @param {number} n step number
  * @param {boolean} [anim=true]
@@ -733,6 +749,7 @@ StoryMap.prototype.setStep = function(n, anim) {
   // Change step
   this.dispatchEvent({ type: 'change:step', step: s, position: n })
 };
+
 
 /** Show Table of content
  * @param {number} current step number

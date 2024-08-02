@@ -629,7 +629,7 @@ md2html.rules = [
   [/\[([^[]+)?\]\(app:\/\/flyTo\?([-\d.]*),([-\d.]*)(,([\d.]*))? ?([^)]*)?\)/g,
     '<a class="moveTo" onclick="appDo(\'flyTo\',$2,$3$4)" title="$6" target="_blank">$1</a>'],
   // stepTo (goto step)
-  [/\[([^[]+)?\]\(app:\/\/stepTo\?([0-9,a-z]*) ?([^)]*)?\)/g,
+  [/\[([^[]+)?\]\(app:\/\/stepTo\?([0-9,a-z,A-Z,\-,\+,_]*) ?([^)]*)?\)/g,
     '<a class="stepTo" onclick="appDo(\'stepTo\',\'$2\')" title="$3" target="_blank">$1</a>'],
   // tab (change tab)
   [/\[([^[]+)?\]\(app:\/\/tabTo\?([0-9,a-z,A-Z]*) ?([^)]*)?\)/g,
