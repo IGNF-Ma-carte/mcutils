@@ -135,3 +135,59 @@ Il est possible de tester l'existence d'une valeur sans l'afficher en utilisant 
 ### Caractères d'échappement
 
 Utilisez `&amp;lpar;`, `&amp;rpar;`  ou `&amp;percnt;` pour échapper les caractères (`(`, `)` ou `%`) dans votre code.
+
+## Afficher la fiche d'un objet
+
+Il est également possible d'afficher la fiche d'un objet lorsqu'il est sélectionné (dans le volet d'une narration) gràce au widget `FeatureSelect`.
+Vous pouvez préciser la couche pour laquelle on affiche le contenu de la fiche en précisant son numéro (`layerId`).
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``FeatureSelect
+layerId: 2
+&#96;``
+```
+[----]
+
+Il est également possible de préciser une condition sur l'objet sélectionné en indiquant le nom de l'attribut sur lequel on fait la recherche (`attr`), un opérateur (`op`) et une valeur à tester (`value`).
+Les opérateurs sont les opérateur d'égalité (`=`: égale, `!=`: différent), de supériorité (`<`, `<=`, `>`, `>=`), d'inclusion (`contain`: contient, `!contain`: ne contient pas) ou une expression régulière (`regexp`, `!regexp`).
+Il est possible de préciser si la comparaison est sensible à la case (`matchCase`).
+Vous pouvez utiliser une bloc `---REP` poiur préciser une réponse. Le bloc peut s'afficher en cas de bonne réponse (`---REP ok`) ou en cas de mauvaise réponse (`---REP nok`). Ces bloques peuvent eux-même contenir du Markdown et faire référence aux attributs de l'objet sélectionné.
+
+Par exemple, pour vérifier qu'on a bien cliqué sur la "Loire".
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``FeatureSelect
+layerId: 2
+attr: nom
+op: contain
+value: Loire
+matchCase: 1
+---INFO ok
+Texte en cas de bonne réponse : le nom de l'objet (%nom%) contient "Loire"
+---INFO nok
+Texte en cas de mauvaise réponse : le nom ne contient pas "Loire"
+&#96;``
+```
+[----]
+
+Vous pouvez préciser comment on affiche la fiche avec le paramètre `display` (none : jamais, all : toujours, layer : pour la couche, condition : si respecte la condition)
+Enfin, si vous préciser un QCM, cela va premettre de décompter la réponse comme un QCM (valide si respecte la condition) ou pas.
+[-- :fa-code:fw: Code --]
+```md
+&#96;``FeatureSelect
+layerId: 2
+display: layer
+attr: nom
+op: contain
+value: Loire
+matchCase: 1
+QCM: Loire
+---INFO ok
+Texte en cas de bonne réponse
+---INFO nok
+Texte en cas de mauvaise réponse
+&#96;``
+```
+[----]
+
+
