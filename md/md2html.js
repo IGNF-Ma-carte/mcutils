@@ -23,6 +23,7 @@ import mdDiaporama, { prepareDiaporama } from './mdDiaporama';
 import mdCalendar, { prepareCalendar } from './mdCalendar.js';
 import mdQCM, { prepareQCM, nbQCM, nbQCMok } from './mdQCM.js';
 import { prepareCard } from './mdCardPrinter';
+import { prepareFeatureSelect } from './mdFeatureSelect.js';
 
 let nbBlock = 0;
 
@@ -132,6 +133,10 @@ md2html.doWidget = function (md, data) {
     // QCM
     case 'QCM': {
       return prepareQCM(type, md2html.doData(md, data));
+    }
+    // Feature select
+    case 'FeatureSelect': {
+      return prepareFeatureSelect(type, md2html.doData(md, data));
     }
     // Code
     default: {

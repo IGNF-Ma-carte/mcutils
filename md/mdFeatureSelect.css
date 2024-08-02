@@ -1,0 +1,13 @@
+.md .mdFeatureSelect .md-feature-info-ok,
+.md .mdFeatureSelect .md-feature-info-nok {
+  display: none;
+}
+.md .mdFeatureSelect[data-feature="ok"] .md-feature-info-ok {
+  display: block;
+}
+.md .mdFeatureSelect[data-feature="nok"] .md-feature-info-nok {
+  display: block;
+}
+.md .mdFeatureSelect[data-display="none"] .md-feature {
+  display: none;
+}

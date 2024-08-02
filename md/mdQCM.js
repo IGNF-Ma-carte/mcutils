@@ -49,7 +49,7 @@ function doQCM(name, data) {
   }
   lines.forEach(d => {
     let i = (d.charAt(0)==='[' ? 3 : d.indexOf(':'));
-    const att = d.substr(0,i);
+    const att = d.substr(0,i).trim();
     const val = d.substr(i+1).trim();
     switch (att) {
       case 'q':

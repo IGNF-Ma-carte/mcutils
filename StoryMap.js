@@ -34,6 +34,7 @@ import { click as clickCondition } from 'ol/events/condition'
 import { getSelectStyleFn } from './style/ignStyleFn';
 import { asString } from 'ol/color';
 import { addDrawTools, addMeasureTools, addOptionImport } from './control/toolbar';
+import mdFeatureSelect from './md/mdFeatureSelect';
 
 // Last created carte
 let globalStory;
@@ -540,7 +541,7 @@ StoryMap.prototype.hasVolet = function() {
 
 /** Check if StoryMap has a popup
  */
- StoryMap.prototype.hasPopup = function() {
+StoryMap.prototype.hasPopup = function() {
   return !this.hasVolet() || this.models[this.get('model')].popup;
 };
 
@@ -1446,7 +1447,9 @@ StoryMap.prototype.setCarte = function(carte, n) {
           fullscreen.diaporama(feature, features)
         }
       } else if (this.hasPopup()) {
-        carte.popupFeature(feature, e.mapBrowserEvent ? e.mapBrowserEvent.coordinate : carte.map.getView().getCenter());
+        if (!mdFeatureSelect(feature)) {
+          carte.popupFeature(feature, e.mapBrowserEvent ? e.mapBrowserEvent.coordinate : carte.map.getView().getCenter());
+        }
       } else {
         if (feature) feature._indicator = this.get('indicator');
         // Display feature info or description
