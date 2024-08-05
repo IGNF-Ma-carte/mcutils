@@ -118,7 +118,7 @@ function saveCarte(carte, callback, options) {
   inputs.title.value = optionsCarte.title || '';
   inputs.description.value = optionsCarte.description || '';
   inputs.image.value = optionsCarte.img_url || '';
-  inputs.share.value = optionsCarte.share || 'private';
+  inputs.share.value = optionsCarte.share || (team.getId() ? 'private' : 'public');
   if (team.getId() && !team.isOwner()) {
     inputs.share.disabled = true;
   }
