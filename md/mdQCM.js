@@ -14,7 +14,7 @@ function prepareQCM(type, data) {
   let content = '';
   type = (type||'').split(' ')
   if (!type[1]) console.warn('[QCM] sans nom !')
-  const name = (type[1] || 'none').trim();
+  const name = (type[1] || '').trim();
   data = ('\n'+data).split(/\n-{3,}REP/)
   content += doQCM(name, data.shift())
   data.forEach(d => {
@@ -129,7 +129,7 @@ function mdQCM(element) {
       element.querySelectorAll('.md-qcm-response.md-response-' + type + '[data-response="' + name + '"]').forEach(d => d.dataset.visible = '')
       element.querySelectorAll('.md-qcm-response.md-response-all[data-response="' + name + '"]').forEach(d => d.dataset.visible = '')
       // Update responses
-      if (!responses[name]) {
+      if (name && !responses[name]) {
         responses[name] = type;
         // Update counts
         nbQCM++;
