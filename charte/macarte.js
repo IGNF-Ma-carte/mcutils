@@ -448,6 +448,7 @@ function changeTeam() {
     onButton: b => {
       if (b === 'ok') {
         team.set(sel.getTeam());
+        charte.dispatchEvent('header:team', { team: sel.getTeam() })
       }
     }
   })

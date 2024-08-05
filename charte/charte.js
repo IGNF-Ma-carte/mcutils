@@ -657,6 +657,12 @@ const charte = {
   connect: () => {
     dispatchEvent('user', { head: true });
   },
+  /** Dispatch a connect event
+   * @param {string} type,
+   * @param {Object} options
+   * @instance
+   */
+  dispatchEvent: dispatchEvent,
   /** Add an event listener
    * @param {string|Array<string>} type the event name or an array of event name
    * @param {function} callback
