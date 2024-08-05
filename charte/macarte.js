@@ -419,7 +419,8 @@ charte.on('user:logout', () => {
 });
 charte.on('header:title', () => {
   if (team.getId()) {
-    const teamurl = getTeamURL(team)
+    // const teamurl = getTeamURL(team)
+    const teamurl = serviceURL.mesequipes + '/#equipe'
     if (document.location !== teamurl) document.location = teamurl;
   } else {
     document.location = serviceURL.home
