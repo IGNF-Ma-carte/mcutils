@@ -180,8 +180,11 @@ function saveCarte(carte, callback, options) {
  */
 function checkStoryShare(story, callback) {
   if (typeof(callback) !== 'function') callback = function() {};
-  // Not a storymap
-  if (story.type !== 'storymap') {
+  if (story instanceof StoryMap) {
+    story = story.get('atlas')
+  }
+  // Not a storymap in a team
+  if (!story.organization_id || story.type !== 'storymap') {
     callback();
     return;
   }
@@ -189,12 +192,13 @@ function checkStoryShare(story, callback) {
   api.getMapFile(story.view_id, s => {
     storyV4(s);
     const cartes = [];
-    // Check
-    s.cartes.forEach(c => {
-      api.getMap(c.id, map => {
+    const origin = s.cartes.length ? s.cartes : s.tabs
+    // Check cartes
+    origin.forEach(c => {
+      api.getMap(c.view_id || c.id, map => {
         cartes.push(map)
-        if (cartes.length == s.cartes.length) {
-          checkShare(story, cartes)
+        if (cartes.length == origin.length) {
+          checkShare(story.share, cartes)
           callback();
         }
       }, false)
@@ -208,11 +212,16 @@ const shareList = {
   public: 1,
   atlas: 2
 }
-function checkShare(story, cartes) {
-  const share = shareList[story.share];
+/** Check share between story and cartes
+ * @param {string} share
+ * @param {Array<Object>} cartes
+ */
+function checkShare(share, cartes) {
+  const shareRg = shareList[share];
   const badMap = []
   cartes.forEach(c => {
-    if (shareList[c.share] < share) {
+    if (c.get && c.get('atlas')) c = c.get('atlas');
+    if (shareList[c.share] < shareRg) {
       badMap.push(c)
     }
   })
@@ -225,9 +234,11 @@ function checkShare(story, cartes) {
       b => {
         if (b==='ok') {
           badMap.forEach(c => {
-            api.updateMap(c.edit_id, { share: story.share }, e => {
+            api.updateMap(c.edit_id, { share: share }, e => {
               if (e.error) {
                 dialog.showAlert('Une erreur est survenue.<br/>Opération impossible...');
+              } else {
+                c.share = share;
               }
             })
           })
@@ -237,5 +248,5 @@ function checkShare(story, cartes) {
   }
 }
 
-export { checkStoryShare }
+export { checkStoryShare, checkShare }
 export default saveCarte;
