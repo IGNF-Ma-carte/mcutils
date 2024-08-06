@@ -8,6 +8,7 @@ import StoryMap from '../StoryMap';
 import Carte from '../Carte'
 import md2html from '../md/md2html';
 import team from '../api/team';
+import { storyV4 }  from '../format/version/tov4'
 
 const html = `
 <ul>
@@ -173,4 +174,68 @@ function saveCarte(carte, callback, options) {
   return dialog
 }
 
+/** Check share between story and included cartes
+ * @param { Object } story
+ * @param { function } callback
+ */
+function checkStoryShare(story, callback) {
+  if (typeof(callback) !== 'function') callback = function() {};
+  // Not a storymap
+  if (story.type !== 'storymap') {
+    callback();
+    return;
+  }
+  // Get story and cartes
+  api.getMapFile(story.view_id, s => {
+    storyV4(s);
+    const cartes = [];
+    // Check
+    s.cartes.forEach(c => {
+      api.getMap(c.id, map => {
+        cartes.push(map)
+        if (cartes.length == s.cartes.length) {
+          checkShare(story, cartes)
+          callback();
+        }
+      }, false)
+    })
+  })
+}
+
+// Check share
+const shareList = {
+  private: 0,
+  public: 1,
+  atlas: 2
+}
+function checkShare(story, cartes) {
+  const share = shareList[story.share];
+  const badMap = []
+  cartes.forEach(c => {
+    if (shareList[c.share] < share) {
+      badMap.push(c)
+    }
+  })
+  if (badMap.length) {
+    dialog.showAlert(
+      'Cette carte contient des cartes qui n\'ont pas le même niveau de partage.<br/>'
+      + 'Elles risquent de ne pas s\'afficher correctement.<br/>'
+      + 'Voulez-vous propager le partage ?',
+      { ok: 'Propager aux cartes...', cancel: 'Annuler'},
+      b => {
+        if (b==='ok') {
+          badMap.forEach(c => {
+            api.updateMap(c.edit_id, { share: story.share }, e => {
+              if (e.error) {
+                dialog.showAlert('Une erreur est survenue.<br/>Opération impossible...');
+              }
+            })
+          })
+        }
+      }
+    )
+  }
+}
+
+export { checkStoryShare }
 export default saveCarte;
