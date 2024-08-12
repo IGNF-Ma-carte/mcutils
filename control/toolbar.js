@@ -258,7 +258,7 @@ function addDrawTools(carte, tools, layer) {
                 } else {
                   carte.getMap().getView().setZoom(carte.getMap().getView().getZoom() - 0.2)
                 }
-              }, '<i class="fi-fullscreen-alt"></i> center sur les données')
+              }, '<i class="fi-fullscreen-alt"></i> centrer sur les données')
             ctrl.dispatchEvent({ type: 'import:end', nb: e.features.length })
           } else {
             notification.show('Impossible de charger le fichier...')
@@ -344,7 +344,7 @@ function addOptionImport(carte) {
               } else {
                 carte.getMap().getView().setZoom(carte.getMap().getView().getZoom() - 0.2)
               }
-            }, '<i class="fi-fullscreen-alt"></i> center sur les données')
+            }, '<i class="fi-fullscreen-alt"></i> centrer sur les données')
         } else {
           notification.show('Impossible de charger le fichier...')
         }
