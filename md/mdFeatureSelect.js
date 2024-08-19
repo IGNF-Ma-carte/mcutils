@@ -45,8 +45,9 @@ const prepareFeatureSelect = function(type, data) {
   // Get popup
   data.forEach(d => {
     const n = d.indexOf('\n')
-    const type = d.substr(0,n).trim();
-    if (type==='ok' || type==='nok') {
+    const type = d.substr(0,n).trim() || 'all';
+    console.log(type)
+    if (type==='all' || type==='ok' || type==='nok') {
       info.dataset['md_'+type] = d.substr(n);
     }
   })
@@ -54,7 +55,7 @@ const prepareFeatureSelect = function(type, data) {
   if (content.dataset.QCM) {
     // QCM ok
     info.dataset.md_ok = [
-      '```QCM ' + content.dataset.QCM,
+      '\n```QCM ' + content.dataset.QCM,
       '[x] valider la réponse\n',
       '---REP ok',
       info.dataset.md_ok,
@@ -62,7 +63,7 @@ const prepareFeatureSelect = function(type, data) {
     ].join('\n')
     // QCM nok
     info.dataset.md_nok = [
-      '```QCM ' + content.dataset.QCM,
+      '\n```QCM ' + content.dataset.QCM,
       '[ ] valider la réponse\n',
       '---REP nok',
       info.dataset.md_nok,
@@ -121,7 +122,10 @@ const mdFeatureSelect = function(feature) {
         display = true
       }
       // Display info
-      if (display) md2html.element(info.dataset['md_'+ (isok ? 'ok' : 'nok')], info, feature.getProperties());
+      if (display) {
+        const md = (info.dataset.md_all || '') + info.dataset['md_'+ (isok ? 'ok' : 'nok')]
+        md2html.element(md, info, feature.getProperties());
+      }
     }
   })
   return display
