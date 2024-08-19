@@ -148,10 +148,10 @@ layerId: 2
 ```
 [----]
 
-Il est également possible de préciser une condition sur l'objet sélectionné en indiquant le nom de l'attribut sur lequel on fait la recherche (`attr`), un opérateur (`op`) et une valeur à tester (`value`).
+Il est également possible de préciser **une condition** sur l'objet sélectionné en indiquant le nom de l'attribut sur lequel on conditionne (`attr`), un opérateur (`op`) et une valeur à tester (`value`).
 Les opérateurs sont les opérateur d'égalité (`=`: égale, `!=`: différent), de supériorité (`<`, `<=`, `>`, `>=`), d'inclusion (`contain`: contient, `!contain`: ne contient pas) ou une expression régulière (`regexp`, `!regexp`).
 Il est possible de préciser si la comparaison est sensible à la case (`matchCase`).
-Vous pouvez utiliser une bloc `---REP` poiur préciser une réponse. Le bloc peut s'afficher en cas de bonne réponse (`---REP ok`) ou en cas de mauvaise réponse (`---REP nok`). Ces bloques peuvent eux-même contenir du Markdown et faire référence aux attributs de l'objet sélectionné.
+Vous pouvez alors utiliser une bloc `---INFO` pour préciser l'affichage en fonction de la condition. Le bloc peut s'afficher si la condition est respectée (`---INFO ok`) ou dans le cas contraire (`---INFO nok`). Ces bloques peuvent eux-même contenir du Markdown et faire référence aux attributs de l'objet sélectionné.
 
 Par exemple, pour vérifier qu'on a bien cliqué sur la "Loire".
 [++ :fa-code:fw: Code ++]
@@ -163,9 +163,9 @@ op: contain
 value: Loire
 matchCase: 1
 ---INFO ok
-Texte en cas de bonne réponse : le nom de l'objet (%nom%) contient "Loire"
+Texte en cas de condition respectée : le nom de l'objet (%nom%) contient "Loire"
 ---INFO nok
-Texte en cas de mauvaise réponse : le nom ne contient pas "Loire"
+Texte en cas de non respect de la condition : le nom ne contient pas "Loire"
 &#96;``
 ```
 [----]
