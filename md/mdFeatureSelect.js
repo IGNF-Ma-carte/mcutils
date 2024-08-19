@@ -72,6 +72,20 @@ const prepareFeatureSelect = function(type, data) {
   return container.innerHTML;
 }
 
+/* Test if layer id is in a list
+ * @param {string} [n]
+ * @param {*} id
+ * @returns {boolean}
+ */
+function testLayreId(n, id) {
+  if (!n) return true;
+  let isid = false;
+  n.split(',').forEach(k => {
+    isid = isid || k.trim() == id;
+  });
+
+  return isid;
+}
 /** Display feature info on select
  * @param {Feature} feature
  * @return {boolean} true if display in the md element
@@ -88,7 +102,7 @@ const mdFeatureSelect = function(feature) {
     info.innerHTML = '';
     // Display info
     if (feature) {
-      if (!d.dataset.layerId || d.dataset.layerId == feature.getLayer().get('id')) {
+      if (testLayreId(d.dataset.layerId, feature.getLayer().get('id'))) {
         const cond = { attr: d.dataset.attr, op: d.dataset.op, val: d.dataset.value };
         isok = true;
         if (cond.attr) {
