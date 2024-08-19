@@ -46,7 +46,6 @@ const prepareFeatureSelect = function(type, data) {
   data.forEach(d => {
     const n = d.indexOf('\n')
     const type = d.substr(0,n).trim() || 'all';
-    console.log(type)
     if (type==='all' || type==='ok' || type==='nok') {
       info.dataset['md_'+type] = d.substr(n);
     }
