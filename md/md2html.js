@@ -322,7 +322,7 @@ md2html.doData = function(md, data) {
   md = md.replace(/\|\|/g,"‾");
   
   // Encode URI?
-  const hasURL = /URL\[%(.*)%\]/.test(md);
+  const hasURL = /URL\[%(.*)%\]/.test(md) || /URI\[%(.*)%\]/.test(md);
   // Remove tags
   const hasTag = /HTML\[%(.*)%\]/.test(md);
   
@@ -336,10 +336,14 @@ md2html.doData = function(md, data) {
     if (hasURL && typeof(param) === 'string') {
       const d = md2html.encodeURI(param);
       md = md.replace(new RegExp('URL\\[%'+i+'%\\]','g'), d);
-    } else if (hasTag && typeof(param) === 'string') {
+      const dc = md2html.encodeURI(param, true);
+      md = md.replace(new RegExp('URI\\[%'+i+'%\\]','g'), dc);
+    } 
+    if (hasTag && typeof(param) === 'string') {
       const d = param.replace(/(<([^>]+)>)/ig, '');
       md = md.replace(new RegExp('HTML\\[%'+i+'%\\]','g'), d);
-    } else if (typeof(param) === 'object') {
+    }
+    if (typeof(param) === 'object') {
       // Objects
       try {
         param = JSON.stringify(param)
@@ -382,11 +386,17 @@ md2html.doData = function(md, data) {
  * @memberof md2html
  * @function encodeUri
  * @param {string} uri
+ * @param {boolean} componenet
+ * @returns {string}
  * @instance
  */
-md2html.encodeURI = function(uri) {
+md2html.encodeURI = function(uri, component) {
   if (!/%25/.test(uri)) {
-    uri = encodeURI(uri).replace(/%25/g, '%');
+    if (component) {
+      uri = encodeURIComponent(uri).replace(/%25/g, '%');
+    } else {
+      uri = encodeURI(uri).replace(/%25/g, '%');
+    }
   }
   uri = uri.replace(/,/g,'%2C');
   uri = uri.replace(/\(/g,'%28');

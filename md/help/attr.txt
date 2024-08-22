@@ -40,7 +40,8 @@ Lorsqu'un objet est sélectionné, les attributs `%COORD%` (coordonées) et `%CO
 
 #### Attributs liens
 
-Si votre attribut est un lien avec des caractères spéciaux, vous pouvez les échapper en utilisant la fonction URL[%attr%].
+Si votre attribut est un lien avec des caractères spéciaux, vous pouvez les échapper en utilisant la fonction `URL[%attr%]`.
+Si votre attribut est destiné à être inclue comme composant d'une url (URICompoenent), vous pouvez `URI[%attr%]`.
 
 [++ :fa-code:fw: Code ++]
 ```md
