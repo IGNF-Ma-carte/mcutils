@@ -29,15 +29,17 @@ class WFS extends LayerFormat {
       url: options.url,
       typeName: options.typeName,
       tileZoom: options.tileZoom,
+      outputFormat: options.format,
       version: options.version || '2.0.0'
     }),
   })
   layer.setMinZoom(options.tileZoom)
   // Save parameters
   layer.getSource().set('url', options.url)
+  layer.getSource().set('version', options.version)
+  layer.getSource().set('format', options.format)
   layer.getSource().set('typeName', options.typeName)
   layer.getSource().set('tileZoom', options.tileZoom)
-  layer.getSource().set('version', options.version || '2.0.0')
   // Options
   this.readOptions(layer, options);
   return layer;
@@ -53,6 +55,7 @@ WFS.prototype.write = function (layer) {
   return this.writeOptions(layer, {
     url: source.get('url'),
     typeName: source.get('typeName'),
+    format: source.get('format'),
     version: source.get('version'),
     tileZoom: source.get('tileZoom')
   });
