@@ -10,7 +10,7 @@ import Clip from 'ol-ext/interaction/ClipMap'
 
 // import Carte from './Carte'
 import ol_ext_element from 'ol-ext/util/element';
-import setLayout from './layout/layout'
+import setLayout, { getDefs } from './layout/layout'
 import jCSSRule from './layout/jCSSRule';
 import md2html from './md/md2html';
 import 'ol-ext/util/View'
@@ -1612,9 +1612,10 @@ StoryMap.prototype.setLayout = function (layout) {
 
 /** Set the CSS for a storymap
  * @param {string} css
- * @return {boolean}
+ * @return {*} error
  */
 StoryMap.prototype.setStyleSheet = function (css) {
+  css = css || '';
   // Create the stylesheet
   if (!this._styleSheet) {
     this._styleSheet = document.createElement('style');
@@ -1623,13 +1624,27 @@ StoryMap.prototype.setStyleSheet = function (css) {
   }
 
   // Add the sheet
+  const def = getDefs(this.get('colors'))
   try {
-    const result = sass.compileString('[data-role="storymap"] { ' + css + '}');
-    this._styleSheet.innerHTML = result.css;
+    const main = sass.compileString(def + '[data-role="storymap"] {\n' + css + '\n}');
+    const dialog = sass.compileString(def + '.ol-ext-dialog.mapInfo {\n' + css + '\n}');
+    this._styleSheet.innerHTML = main.css + dialog.css;
     this.set('css', css);
-    return true;
+    return '';
   } catch(e) { 
-    return false;  
+    // Get error line
+    const mes = e.message.split('\n')
+    mes.forEach((m, i) => {
+      console.log(m)
+      let l = parseInt(m);
+      if (l) {
+        const start = l - def.split('\n').length;
+        m = (start + '   ').substr(0,3) + m.substr(3);
+        mes[i] = m;
+      }
+    })
+    e.message = mes.join('\n');
+    return e;
   }
 }
 
