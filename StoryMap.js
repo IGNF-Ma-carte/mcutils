@@ -1614,16 +1614,36 @@ StoryMap.prototype.setLayout = function (layout) {
  * @return {*} error
  */
 StoryMap.prototype.setStyleSheet = function (css) {
-  console.warn('[TODO]')
-  return;
   css = css || '';
+  // Prefix classes
+  const doc = document.implementation.createHTMLDocument('');
+  const styleElement = document.createElement('style');
+  styleElement.setAttribute('type', 'text/css');
+
+  styleElement.textContent = css;
+  // the style will only be parsed once it is added to a document
+  doc.body.appendChild(styleElement);
+
+  const rules = styleElement.sheet.cssRules;
+  let newCSS = ''
+  for (let i=0; i<rules.length; i++) {
+    const r = rules[i];
+    const main = r.selectorText.split(',').map(s => '[data-role="storymap"] '+ s.replace('body', ''));
+    const dialog = r.selectorText.split(',').map(s => '.ol-ext-dialog.mapInfo form '+ s.replace('body', ''));
+    r.selectorText = main.join(',') + ', ' +dialog.join(',');;
+    newCSS += r.cssText + '\n';
+  }
+
   // Create the stylesheet
   if (!this._styleSheet) {
     this._styleSheet = document.createElement('style');
     this._styleSheet.setAttribute('type', 'text/css');
     document.body.appendChild(this._styleSheet);
   }
+  this._styleSheet.innerHTML = newCSS;
+  this.set('css', css);
 
+  /*
   // Add the sheet
   const def = getDefs(this.get('colors'))
   try {
@@ -1647,6 +1667,7 @@ StoryMap.prototype.setStyleSheet = function (css) {
     e.message = mes.join('\n');
     return e;
   }
+  */
 }
 
 /** Get StoryMap steps whe type=etape
