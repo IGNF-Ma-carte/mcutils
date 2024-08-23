@@ -40,6 +40,7 @@ StoryMap.prototype.read = function(story, options) {
   story.set('description', options.param.description);
   story.setLogo(options.param.logo);
   story.setLayout(options.layout);
+  story.setStyleSheet(options.layout.css);
   if (options.param.synchronize) story.set('synchronize', true);
 
   if (options.type === 'onglet') {
@@ -244,6 +245,7 @@ StoryMap.prototype.write = function(story) {
   options.modele =  {
     type: story.get('model'), 
     theme: theme, 
+    css: story.get('css') || '',
     optimobile: false
   }
   if (theme === 'custom') {

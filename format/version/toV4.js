@@ -128,6 +128,7 @@ function storyV4(options) {
     theme: getTheme(options.modele.theme),
     photo: options.photo,
     colors: [],
+    css: options.modele.css || '',
     voletPosition: options.volet ? options.volet.position.replace('gauche', 'left').replace('droite', 'right') : 'right',
     voletWidth: parseInt(options.volet ? options.volet.width : 0) || 250,
     compare: options.compare ? options.compare.pos : ''

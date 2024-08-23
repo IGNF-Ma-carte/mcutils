@@ -1,3 +1,4 @@
+import sass from 'sass'
 import { getViewerURL, getMediaURL } from './api/serviceURL';
 
 import ol_Object from 'ol/Object'
@@ -1608,6 +1609,29 @@ StoryMap.prototype.setLayout = function (layout) {
   this.updateMapSize();
   this.changed('layout');
 };
+
+/** Set the CSS for a storymap
+ * @param {string} css
+ * @return {boolean}
+ */
+StoryMap.prototype.setStyleSheet = function (css) {
+  // Create the stylesheet
+  if (!this._styleSheet) {
+    this._styleSheet = document.createElement('style');
+    this._styleSheet.setAttribute('type', 'text/css');
+    document.body.appendChild(this._styleSheet);
+  }
+
+  // Add the sheet
+  try {
+    const result = sass.compileString('[data-role="storymap"] { ' + css + '}');
+    this._styleSheet.innerHTML = result.css;
+    this.set('css', css);
+    return true;
+  } catch(e) { 
+    return false;  
+  }
+}
 
 /** Get StoryMap steps whe type=etape
  * @returns {Collection}
