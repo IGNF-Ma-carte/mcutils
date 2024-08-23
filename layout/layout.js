@@ -1,96 +1,99 @@
 /** @module layout */
-import sass from 'sass'
 
 import { asString } from 'ol/color'
+import jCSSRule from './jCSSRule'
 import { darkenColor } from './jCSSRule'
 import chroma from 'chroma-js'
-import {toHSL} from 'ol-ext/util/color'
 
-// Define style sheet
-const styleSheet = document.createElement('style');
-styleSheet.setAttribute('type', 'text/css');
-if (document.body) document.body.appendChild(styleSheet);
-else document.head.appendChild(styleSheet);
-
-// CSS ruse
-const css = `
-[data-role="storymap"],
-[data-role="storymap"] .tabs .header > div,
-[data-role="storymap"] select {
-  color: $COLOR;
-  background-color: $BGCOLOR;
+const rules = {
+  '[data-role="storymap"] select': {
+    'color': 'COLOR',
+    'background-color': 'BGCOLOR',
+  },
+  '[data-role="storymap"]': { 
+    'color': 'COLOR',
+    'background-color': 'BGCOLOR',
+  },
+  '[data-role="storymap"] .tabs:before': {
+    'color': 'BGCOLOR',
+  },
+  '[data-role="storymap"] .tabs .header > div': {
+    'color': 'COLOR',
+    'background-color': 'BGCOLOR',
+  },
+  '[data-role="storymap"] .tabs .header > div.selected': {
+    'color': 'BGCOLOR',
+    'background-color': 'COLOR',
+  },
+  '[data-role="storymap"] .volet': {
+    'color': 'VOLETCOLOR',
+    'background-color': 'BGVOLETCOLOR',
+  },
+  /*
+  '[data-role="storymap"] .volet a': {
+    'color': 'DARKCOLOR',
+  },
+  */
+  '[data-role="storymap"] .volet .pages span:hover, [data-role="storymap"] .volet .pages span.active': {
+    'color': 'BGVOLETCOLOR',
+    'background-color': 'VOLETCOLOR',
+    'border-color': 'VOLETCOLOR'
+  },
+  '[data-role="storymap"] .volet .content .toc li:hover, [data-role="storymap"] .tools > div:hover': {
+    'color': 'BGVOLETCOLOR',
+    'background-color': 'VOLETCOLOR'  
+  },
+  '[data-role="storymap"] .tools > .select': {
+    'color': 'BGVOLETCOLOR',
+    'background-color': 'VOLETCOLOR'  
+  },
+  '[data-role="storymap"] .title > img': {
+    'color': 'BGCOLOR' 
+  },
+  '[data-role="storymap"] .map button' : {
+    'color': 'COLOR',
+    'background-color': 'BGCOLOR_08' 
+  },
+  '[data-role="storymap"] .map button:focus, [data-role="storymap"] .map button:hover' : {
+    'background-color': 'BGCOLOR' 
+  },
+  /*
+  '[data-role="storymap"] .map .ol-cgu, [data-role="storymap"] .map .ol-cgu a': {
+    'color': 'DARKCOLOR',
+  },
+  */
+  '[data-role="storymap"] .ol-layerswitcher': {
+    'color': 'DARKCOLOR'
+  },
+  '[data-role="storymap"] .ol-search li.copy': {
+    'background-color': 'DARKCOLOR',
+    'opacity': '.65'
+  },
+  '.ol-ext-print-dialog button[type="submit"], .ol-ext-print-dialog .ol-saveas select, .ol-ext-print-dialog .ol-savelegend select': {
+    'background-color': 'DARKCOLOR',
+    'opacity': '.65'
+  },
+  '.carte-info-dialog .permalink, .ol-ext-dialog.mapInfo > form .ol-buttons input:hover': {
+    'background-color': 'LIGHTCOLOR',
+  },
+  '.ol-control.ol-bar .ol-toggle.ol-active > button, .ol-control.ol-bar .ol-toggle.ol-active button:hover': {
+    'color': 'DARKCOLOR',
+    'background-color': 'LIGHTCOLOR',
+  },
+  '.ol-control.ol-bar .ol-option-bar:before': {
+    'border-color': 'transparent transparent DARKCOLOR'
+  },
+  '.ol-control.ol-bar .ol-control.ol-text-button div:hover, .ol-control.ol-bar .ol-control.ol-text-button > div': {
+    'color': 'DARKCOLOR',
+    'background-color': 'LIGHTCOLOR',
+  },
+  '[data-role="storymap"] .map, .ol-ext-dialog.mapInfo': {
+    'color': 'DARKCOLOR'
+  },
+  '.ol-ext-dialog.mapInfo a': {
+    'color': 'DARKCOLOR'
+  }
 }
-[data-role="storymap"] .tabs .header > div.selected {
-  color: $BGCOLOR;
-  background-color: $COLOR;
-}
-[data-role="storymap"] .tabs:before {
-  color: $BGCOLOR;
-}
-[data-role="storymap"] .volet {
-  color: $VOLETCOLOR;
-  background-color: $BGVOLETCOLOR;
-}
-[data-role="storymap"] .volet .pages span:hover,
-[data-role="storymap"] .volet .pages span.active {
-  color: $BGVOLETCOLOR;
-  background-color: $VOLETCOLOR;
-  border-color: $VOLETCOLOR;
-}
-[data-role="storymap"] .tools > .select,
-[data-role="storymap"] .volet .content .toc li:hover, 
-[data-role="storymap"] .tools > div:hover {
-  color: $BGVOLETCOLOR;
-  background-color: $VOLETCOLOR;
-}
-[data-role="storymap"] .title > img {
-  color: $BGCOLOR;
-}
-[data-role="storymap"] .map button:focus, 
-[data-role="storymap"] .map button:hover {
-  background-color: $BGCOLOR;
-}
-[data-role="storymap"] .ol-layerswitcher {
-  color: $DARKCOLOR;
-}
-[data-role="storymap"] .map button {
-  color: $COLOR;
-  background-color: $BGCOLOR_08;
-}
-[data-role="storymap"] .ol-search li.copy {
-  background-color: $DARKCOLOR;
-  opacity: .65;
-}
-.ol-ext-print-dialog button[type="submit"],
-.ol-ext-print-dialog .ol-saveas select,
-.ol-ext-print-dialog .ol-savelegend select {
-  background-color: $DARKCOLOR;
-  opacity: .65;
-}
-.carte-info-dialog .permalink, 
-.ol-ext-dialog.mapInfo > form .ol-buttons input:hover {
-  background-color: $LIGHTCOLOR;
-}
-.ol-control.ol-bar .ol-toggle.ol-active > button, 
-.ol-control.ol-bar .ol-toggle.ol-active button:hover {
-  color: $DARKCOLOR;
-  background-color: $LIGHTCOLOR;
-}
-.ol-control.ol-bar .ol-option-bar:before {
-  border-color: transparent transparent $DARKCOLOR;
-}
-.ol-control.ol-bar .ol-control.ol-text-button div:hover, 
-.ol-control.ol-bar .ol-control.ol-text-button > div {
-  color: $DARKCOLOR;
-  background-color: $LIGHTCOLOR;
-}
-[data-role="storymap"] .map, .ol-ext-dialog.mapInfo {
-  color: $DARKCOLOR;
-}
-.ol-ext-dialog.mapInfo a {
-  color: $DARKCOLOR;
-}
-`
 
 /** Default layout
  */
@@ -136,10 +139,21 @@ const layout = {
   ]
 }
 
-function getDefs(colors) {
+export { layout }
+import {toHSL} from 'ol-ext/util/color'
+
+/** Set the document layout
+ * @param {Array<ol.color>|string} colors [bgColor, txtColor, darkColor, lightColor, voletColor, voletBgColor] or the name of a standard layout
+ */
+function setLayout(colors) {
   // Standard layout
   if (typeof(colors) === 'string') {
     colors = layout[colors];
+  }
+  // Reset
+  if (!colors) {
+    jCSSRule('*', null);
+    return [[33,33,33],[255,255,255]];
   }
   // Get colors
   const bgColor = colors[0];
@@ -160,29 +174,39 @@ function getDefs(colors) {
   const voletColor = colors[4] || txtColor;
   let offset = Math.min(60, (255 - Math.max(bgColor[0], bgColor[1], bgColor[2])));
   const voletBgColor = colors[5] || [Math.min(255,bgColor[0]+offset), Math.min(255,bgColor[1]+offset), Math.min(255,bgColor[2]+offset)];
-  // Define styles
-  let def = '';
-  [10,8,5].forEach(s => {
-    def += '$COLOR'+(s===10 ? '' : '_0'+s) + ':' + asString(txtColor) + ';\n'
-    def += '$BGCOLOR'+(s===10 ? '' : '_0'+s) + ':' + asString(bgColor) + ';\n'
-    def += '$DARKCOLOR'+(s===10 ? '' : '_0'+s) + ':' + asString(darkColor) + ';\n'
-    def += '$LIGHTCOLOR'+(s===10 ? '' : '_0'+s) + ':' + asString(lightColor) + ';\n'
-    def += '$VOLETCOLOR'+(s===10 ? '' : '_0'+s) + ':' + asString(voletColor) + ';\n'
-    def += '$BGVOLETCOLOR'+(s===10 ? '' : '_0'+s) + ':' + asString(voletBgColor) + ';\n'
-  })
+  for (let i in rules) {
+    const rule = Object.assign({}, rules[i]);
+    const step = [5,8,10];
+    for (let c in rule) {
+      step.forEach( s => {
+        bgColor[3] = s/10;
+        let rex = new RegExp('BGCOLOR'+(s===10 ? '' : '_0'+s), 'g');
+        rule[c] = rule[c].replace(rex, asString(bgColor))
+        
+        darkColor[3] = s/10;
+        rex = new RegExp('DARKCOLOR'+(s===10 ? '' : '_0'+s), 'g');
+        rule[c] = rule[c].replace(rex, asString(darkColor))
 
-  return def;
-}
-
-/** Set the document layout
- * @param {Array<ol.color>|string} colors [bgColor, txtColor, darkColor, lightColor, voletColor, voletBgColor] or the name of a standard layout
- */
-function setLayout(colors) {
-  const def = getDefs(colors);
-  const main = sass.compileString(def + css);
-  styleSheet.innerHTML = main.css;
+        lightColor[3] = s/10;
+        rex = new RegExp('LIGHTCOLOR'+(s===10 ? '' : '_0'+s), 'g');
+        rule[c] = rule[c].replace(rex, asString(lightColor))
+        
+        voletBgColor[3] = s/10;
+        rex = new RegExp('BGVOLETCOLOR'+(s===10 ? '' : '_0'+s), 'g');
+        rule[c] = rule[c].replace(rex, asString(voletBgColor))
+        
+        voletColor[3] = s/10;
+        rex = new RegExp('VOLETCOLOR'+(s===10 ? '' : '_0'+s), 'g');
+        rule[c] = rule[c].replace(rex, asString(voletColor))
+        
+        txtColor[3] = s/10;
+        rex = new RegExp('COLOR'+(s===10 ? '' : '_0'+s), 'g');
+        rule[c] = rule[c].replace(rex, asString(txtColor))
+      });
+    }
+    jCSSRule(i, rule);
+  }
   return colors;
 }
 
-export { layout, getDefs }
 export default setLayout

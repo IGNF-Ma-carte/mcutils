@@ -1,4 +1,3 @@
-import sass from 'sass'
 import { getViewerURL, getMediaURL } from './api/serviceURL';
 
 import ol_Object from 'ol/Object'
@@ -10,7 +9,7 @@ import Clip from 'ol-ext/interaction/ClipMap'
 
 // import Carte from './Carte'
 import ol_ext_element from 'ol-ext/util/element';
-import setLayout, { getDefs } from './layout/layout'
+import setLayout from './layout/layout'
 import jCSSRule from './layout/jCSSRule';
 import md2html from './md/md2html';
 import 'ol-ext/util/View'
@@ -1615,6 +1614,8 @@ StoryMap.prototype.setLayout = function (layout) {
  * @return {*} error
  */
 StoryMap.prototype.setStyleSheet = function (css) {
+  console.warn('[TODO]')
+  return;
   css = css || '';
   // Create the stylesheet
   if (!this._styleSheet) {
