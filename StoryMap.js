@@ -1615,59 +1615,49 @@ StoryMap.prototype.setLayout = function (layout) {
  */
 StoryMap.prototype.setStyleSheet = function (css) {
   css = css || '';
-  // Prefix classes
+  // Get rules
   const doc = document.implementation.createHTMLDocument('');
   const styleElement = document.createElement('style');
   styleElement.setAttribute('type', 'text/css');
-
   styleElement.textContent = css;
   // the style will only be parsed once it is added to a document
   doc.body.appendChild(styleElement);
 
   const rules = styleElement.sheet.cssRules;
+
+  // Prefix classes
   let newCSS = ''
   for (let i=0; i<rules.length; i++) {
     const r = rules[i];
-    const main = r.selectorText.split(',').map(s => '[data-role="storymap"] '+ s.replace('body', ''));
-    const dialog = r.selectorText.split(',').map(s => '.ol-ext-dialog.mapInfo form '+ s.replace('body', ''));
-    r.selectorText = main.join(',') + ', ' +dialog.join(',');;
-    newCSS += r.cssText + '\n';
+    if (r.selectorText) {
+      const selector = [];
+      r.selectorText.split(',').forEach(s => {
+        s = s.trim();
+        if (/^story\b/.test(s)) {
+          selector.push('[data-role="storymap"] '+ s.replace(/story|dialog|body/g, ''))
+        } else if (/^dialog\b/.test(s)) {
+          selector.push('.ol-ext-dialog.mapInfo form '+ s.replace(/story|dialog|body/g, ''))
+        } else {
+          selector.push('[data-role="storymap"] '+ s.replace(/story|dialog|body/g, ''))
+          selector.push('.ol-ext-dialog.mapInfo form '+ s.replace(/story|dialog|body/g, ''))
+        }
+      });
+      r.selectorText = selector.join(',');
+      newCSS += r.cssText + '\n';
+    } else if (/^@font-face/.test(r.cssText)) {
+      newCSS += r.cssText + '\n';
+    }
   }
 
-  // Create the stylesheet
+  // Create the stylesheet (if not exist)
   if (!this._styleSheet) {
     this._styleSheet = document.createElement('style');
     this._styleSheet.setAttribute('type', 'text/css');
     document.body.appendChild(this._styleSheet);
   }
+  // New sheet
   this._styleSheet.innerHTML = newCSS;
   this.set('css', css);
-
-  /*
-  // Add the sheet
-  const def = getDefs(this.get('colors'))
-  try {
-    const main = sass.compileString(def + '[data-role="storymap"] {\n' + css + '\n}');
-    const dialog = sass.compileString(def + '.ol-ext-dialog.mapInfo {\n' + css + '\n}');
-    this._styleSheet.innerHTML = main.css + dialog.css;
-    this.set('css', css);
-    return '';
-  } catch(e) { 
-    // Get error line
-    const mes = e.message.split('\n')
-    mes.forEach((m, i) => {
-      console.log(m)
-      let l = parseInt(m);
-      if (l) {
-        const start = l - def.split('\n').length;
-        m = (start + '   ').substr(0,3) + m.substr(3);
-        mes[i] = m;
-      }
-    })
-    e.message = mes.join('\n');
-    return e;
-  }
-  */
 }
 
 /** Get StoryMap steps whe type=etape
