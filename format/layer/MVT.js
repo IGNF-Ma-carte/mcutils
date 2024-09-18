@@ -43,6 +43,7 @@ class MVT extends LayerFormat {
       },
       attributions: options.copyright
     });
+    layer.set('style', options.mbstyle);
   } else {
     layer = new LayerMVT({
       title: options.title,
