@@ -49,7 +49,7 @@ Q: la question
 Ce bloc s'affiche quelque soit la réponse.
 ---REP ok
 :fa-smile-o:2x left: Ce bloc s'affiche en cas de bonne réponse.
----REP
+---REP nok
 :fa-bomb:2x left: Ce bloc s'affiche en cas de mauvaise réponse.
 &#96;``
 ```
@@ -73,13 +73,13 @@ Ce bloc s'affiche quelque soit la réponse.
 
 ### Les déclencheurs et les décomptes.
 
-Il est possible de compter le nombre de question répondu (&percnt;md:QCM&percnt;) et de bonne réponses (&percnt;md:QCMok&percnt;).
-NB : une fois un QCM répondu il ne sera pas décompté une seconde fois (et c'est la première réponse qui fait fois).
-On peut également ajouter des déclencheurs (voir les liens spécifiques) pour faire une action sur la carte, au travers de l'option `actions`. Le lien commence par `app://`
+Il est possible de compter le nombre de questions répondues (&percnt;md:QCM&percnt;) et de bonnes réponses (&percnt;md:QCMok&percnt;).
+NB : une fois un QCM répondu il ne sera pas décompté une seconde fois (et c'est la première réponse qui fait foi).
+On peut également ajouter des déclencheurs (voir le paragraphe sur les liens spécifiques) pour faire une action sur la carte, au travers de l'option `actions`. Le lien commence par `app://`.
 
 [++ :fa-code:fw: Code ++]
 ```md
-Nombre de questionnaires réalisé : **%md:QCM%**
+Nombre de questionnaires réalisés : **%md:QCM%**
 Nombre de bonne réponses : **%md:QCMok%**
 &#96;``QCM qcm3
 Q: la question
@@ -94,7 +94,7 @@ action: app://stepTo?next
 ```
 [----]
 [++ :fa-desktop:fw: Résultat ++]
-Nombre de questionnaires réalisé : **%md:QCM%**
+Nombre de questionnaires réalisés : **%md:QCM%**
 Nombre de bonne réponses : **%md:QCMok%**
 ```QCM qcm3
 Q: la question

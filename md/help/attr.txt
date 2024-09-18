@@ -139,7 +139,7 @@ Utilisez `&amp;lpar;`, `&amp;rpar;`  ou `&amp;percnt;` pour échapper les caract
 
 ## Afficher la fiche d'un objet
 
-Il est également possible d'afficher la fiche d'un objet lorsqu'il est sélectionné (dans le volet d'une narration) gràce au widget `FeatureSelect`.
+Il est également possible d'afficher la fiche d'un objet lorsqu'il est sélectionné (dans le volet d'une narration) grâce au widget `FeatureSelect`.
 Vous pouvez préciser la couche pour laquelle on affiche le contenu de la fiche en précisant son numéro (`layerId`).
 [++ :fa-code:fw: Code ++]
 ```md
@@ -149,11 +149,11 @@ layerId: 2
 ```
 [----]
 
-Il est également possible de préciser **une condition** sur l'objet sélectionné en indiquant le nom de l'attribut sur lequel on conditionne (`attr`), un opérateur (`op`) et une valeur à tester (`value`).
+Vous pouvez préciser **une condition** sur l'objet sélectionné en indiquant le nom de l'attribut sur lequel on conditionne (`attr`), un opérateur (`op`) et une valeur à tester (`value`).
 Les opérateurs sont les opérateur d'égalité (`=`: égale, `!=`: différent), de supériorité (`<`, `<=`, `>`, `>=`), d'inclusion (`contain`: contient, `!contain`: ne contient pas) ou une expression régulière (`regexp`, `!regexp`).
 Il est possible de préciser si la comparaison est sensible à la case (`matchCase`).
 
-Vous pouvez alors utiliser une bloc `---INFO` pour préciser l'affichage de l'objet. Utilisez un bloc `---INFO ok` qui s'affichera si la condition est respectée ou `---INFO nok` dans le cas contraire. Ces bloques peuvent eux-même contenir du Markdown et faire référence aux attributs de l'objet sélectionné.
+Vous pouvez alors utiliser une bloc `---INFO` pour préciser l'affichage de l'objet. Utilisez un bloc `---INFO ok` qui s'affichera si la condition est respectée ou `---INFO nok` dans le cas contraire. Ces blocs peuvent eux-même contenir du Markdown et faire référence aux attributs de l'objet sélectionné.
 
 Par exemple, pour vérifier qu'on a bien cliqué sur la "Loire".
 [++ :fa-code:fw: Code ++]
