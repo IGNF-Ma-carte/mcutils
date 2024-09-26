@@ -467,6 +467,7 @@ Statistic.prototype._cloneStatistic = function(stat) {
  * @API
  */
 Statistic.prototype.setStatistic = function(stat, delay) {
+  console.log('setstat',stat)
   if (delay) {
     this.dispatchEvent({ type: 'stat:start' });
     setTimeout(() => this.setStatistic(stat), delay);
@@ -538,7 +539,7 @@ Statistic.prototype.setStatistic = function(stat, delay) {
         var d = [];
         var s = 0;
         for (k = 0; k < cols.length; k++) {
-          var dk = Number(features[i].get(cols[k]));
+          var dk = Number(features[i].get(cols[k])) || 0;
           s += dk;
           d.push(dk);
         }
