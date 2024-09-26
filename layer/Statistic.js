@@ -467,7 +467,6 @@ Statistic.prototype._cloneStatistic = function(stat) {
  * @API
  */
 Statistic.prototype.setStatistic = function(stat, delay) {
-  console.log('setstat',stat)
   if (delay) {
     this.dispatchEvent({ type: 'stat:start' });
     setTimeout(() => this.setStatistic(stat), delay);
