@@ -666,7 +666,7 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
   }
   
   // Annotation show a disk if no label
-  if (!String(label).trim().length && !s.pointRadius) {
+  if (!s.pointRadius && !String(label).trim().length) {
     return [new ol_style_Style({
       fill: new ol_style_Fill({
         color: 'rgba(255, 255, 255, 0.2)',
