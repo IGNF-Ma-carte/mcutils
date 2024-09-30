@@ -18,6 +18,22 @@
 .ol-control.ol-layerswitcher.mainSwitcher .ol-scroll {
   top: 2.5em;
 }
+.ol-control.ol-layerswitcher.mainSwitcher .panel li > div.disabled {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 1.5em;
+  width: calc(100% - 4.5em);
+  height: 1.5em;
+  z-index: 1;
+  cursor: default;
+}
+.ol-control.ol-layerswitcher.mainSwitcher .panel li.ol-layer-hidden {
+  position: relative;
+}
+.ol-control.ol-layerswitcher.mainSwitcher .panel li.ol-layer-hidden > div.disabled {
+  display: block;
+}
 
 .ol-touch .ol-layerswitcher button {
   font-size: 2em;

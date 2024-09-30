@@ -76,11 +76,18 @@ function getLayerSwitcher() {
   // No selection
   layerSwitcher.set('selection', false);
   // Inview layers
-  layerSwitcher.on('drawlist', e => {
+  layerSwitcher.on('drawlist', (e, li) => {
     if (e.layer.get('inview') || e.layer.getVisible()) {
       if (!e.layer.get('inview')) e.layer.set('inview', true)
       e.li.dataset.inview = '';
     }
+    const title = 'la couche '+ e.layer.get('title') + ' n\'est pas visible sur cette zone à certte échelle'
+    ol_ext_element.create('DIV', {
+      className: 'disabled',
+      title: title,
+      'aria-label': title,
+      parent: e.li
+    })
   })
   // Add layers inview
   ol_ext_element.create('BUTTON', {
