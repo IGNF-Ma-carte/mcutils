@@ -941,6 +941,8 @@ Statistic.prototype.getVectorStyle = function(param) {
   const stat = this.getStatistic();
   if (stat.typeMap === 'heatmap') return false
   if (stat.typeMap === 'sectoriel') return false
+  // Symbol proportional
+  if (stat.type === 'symbol' && stat.rmin < 0) return false;
 
   const source = new ol_source_Vector();
   const features = this.getSource().getFeatures();
