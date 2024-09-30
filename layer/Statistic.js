@@ -932,27 +932,39 @@ Statistic.prototype.getParametricStyle = function(stat, format) {
   }
 }
 
+/** Can convert a statistique to an ol_layer_VectorStyle layer 
+ * returns false if none (heatmap, sectoriel)
+ * @param {boolean} param create parametric conditional styles (if possible)
+ * @return {ol_layer_VectorStyle|false} 
+ */
+Statistic.prototype.hasVectorStyle = function(param) {
+  const stat = this.getStatistic();
+  // Heatmap and sectoriel
+  if (stat.typeMap === 'heatmap') return false
+  if (stat.typeMap === 'sectoriel') return false
+  // Symbol proportional
+  if (param && stat.typeMap === 'symbol' && stat.rmin < 0) return false;
+  // OK
+  return true;
+}
+
 /** Convert to an ol_layer_VectorStyle layer 
  * returns false if none (heatmap, sectoriel)
  * @param {boolean} param create parametric conditional styles (if possible)
  * @return {ol_layer_VectorStyle|false} 
  */
 Statistic.prototype.getVectorStyle = function(param) {
-  const stat = this.getStatistic();
-  if (stat.typeMap === 'heatmap') return false
-  if (stat.typeMap === 'sectoriel') return false
-  // Symbol proportional
-  if (stat.type === 'symbol' && stat.rmin < 0) return false;
+  if (!this.hasVectorStyle()) return false
 
+  const stat = this.getStatistic();
   const source = new ol_source_Vector();
   const features = this.getSource().getFeatures();
   const styleFn = this.getLayers().item(0).getStyleFunction();
 
   // Get parametric styles
   const condStyle = this.getParametricStyle(stat);
-
   // Check condition
-  param = (condStyle.length > 0);
+  param = param && (condStyle.length > 0);
 
   // Copy features
   features.forEach(f => {
@@ -1018,7 +1030,7 @@ Statistic.prototype.getVectorStyle = function(param) {
   layer.setIgnStyle('pointStrokeWidth', stat.stroke ? 1.25 : 0);
   
   // Conditional styles
-  layer.setConditionStyle(condStyle)
+  if (param) layer.setConditionStyle(condStyle)
   return layer;
 };
 
