@@ -34,11 +34,8 @@ const html = `
     <input type="text" class="image" />
   </li>
   <li data-attr="share">
-    Partage :
+    Publication :
     <select class="share">
-      <option value="private">Privée</option>
-      <option value="public">Publique</option>
-      <option value="atlas">Atlas</option>
     </select>
   </li>
 `;
@@ -119,6 +116,18 @@ function saveCarte(carte, callback, options) {
   inputs.title.value = optionsCarte.title || '';
   inputs.description.value = optionsCarte.description || '';
   inputs.image.value = optionsCarte.img_url || '';
+  if (team.getId()) {
+    inputs.share.innerHTML = `
+      <option value="private">Privée</option>
+      <option value="public">Equipe</option>
+      <option value="atlas">Atlas</option>
+    `
+  } else {
+    inputs.share.innerHTML = `
+      <option value="public">Publique</option>
+      <option value="atlas">Atlas</option>
+    `
+  }
   inputs.share.value = optionsCarte.share || (team.getId() ? 'private' : 'public');
   if (team.getId() && !team.isOwner()) {
     inputs.share.disabled = true;
