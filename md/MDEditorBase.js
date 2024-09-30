@@ -932,7 +932,7 @@ MDEditorBase.prototype.setTools = function (minibar) {
       url: 'https://www.ign.fr/visitez-le-georoom',
       img: 'https://upload.wikimedia.org/wikipedia/commons/7/70/Hurel-Dubois_HD-34,_IGN_-_Institut_Geographique_National_AN1286808.jpg'
     },
-    buttons: { format: 'format', list: 'listes', media: 'médias', attr: 'attributs', widget: 'widget', qcm: 'QCM', ok: 'ok' },
+    buttons: { format: 'format', list: 'listes', media: 'médias', attr: 'attributs', widget: 'widget', /* qcm: 'QCM', */ ok: 'ok' },
     onButton: (b) => {
       switch(b) {
         case 'format': showHelp(mdHelpFormat, options); break;
