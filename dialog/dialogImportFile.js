@@ -1,3 +1,4 @@
+import { read, utils } from "xlsx";
 import { style2IgnStyle } from '../style/ignStyleFn'
 import ol_ext_element from 'ol-ext/util/element'
 import ol_format_Guesser from '../format/Guesser'
@@ -44,9 +45,15 @@ function loadFile(file, onload, options) {
     if (/\.carte$/.test(file.name)) {
       result.carte = JSON.parse(reader.result);
     } else {
+      let csv = reader.result
+      // 
+      if (/\.xlsx?$|^\.ods$/.test(file.name)) {
+        const workbook = read(csv, { type: 'binary' });
+        csv = utils.sheet_to_csv(workbook.Sheets[workbook.SheetNames[0]]);
+      }
       // Try to read features with every different format
       const format = new ol_format_Guesser();
-      const features = format.readFeatures(reader.result, {
+      const features = format.readFeatures(csv, {
         featureProjection: options.projection || 'EPSG:3857',
         extractStyles: options.useStyle
       })
@@ -88,7 +95,12 @@ function loadFile(file, onload, options) {
     onload(result);
   });
 
-  reader.readAsText(file);
+  // Read
+  if (/\.xlsx?$|\.ods$/.test(file.name)) {
+    reader.readAsBinaryString(file);
+  } else {
+    reader.readAsText(file);
+  }
 }
 
 /** A ol-ext dialog to import a file
@@ -101,6 +113,7 @@ function loadFile(file, onload, options) {
  *  @param {string} [options.format] format info
  *  @param {string} [options.accept] accepted formats
  *  @param {boolean} [options.readCarte=false] can read carte
+ *  @param {boolean} [options.readXLS=false] can read XLS,XLSX,ODS
  *  @param {boolean} [options.ignStyle=true] read features with ignStyle
  *  @param {boolean} [options.useLayer=false] checkbox to use layer
  *  @param {Projection} [options.projection=EPSG:3857] result projection
@@ -113,8 +126,8 @@ function dialogImportFile(onImport, options) {
     title: options.title || 'Importer des données',
     className: ('importFile ' + (options.className || '')).trim(),
     content: '<div class="loader"><span>' +
-      (options.format || 'Charger un fichier<br/>(kml, GeoJSON, CSV, gpx'+(options.readCarte ? ', carte)' : ')')) +
-      '</span></div>',
+      (options.format || 'Charger un fichier<br/>(KML, GeoJSON, CSV, GPX' + (options.readXLS ? ', XLS, XLSX, ODS' : '') + (options.readCarte ? ', carte)' : ''))
+      + '</span></div>',
     buttons: {cancel: 'annuler'},
   })
   const content = dialog.getContentElement();
@@ -134,7 +147,7 @@ function dialogImportFile(onImport, options) {
   // Input file
   const iFile = ol_ext_element.create('INPUT', {
     type: 'file',
-    accept: options.accept || '.kml,.csv,.geojson,.gpx,.json' + (options.readCarte ? ',.carte' : ''),
+    accept: options.accept || '.kml,.csv,.geojson,.gpx,.json' + (options.readXLS ? ', .xls, .xlsx, .ods' : '') + (options.readCarte ? ',.carte' : ''),
     parent: content,
     change: () => {
       //content.querySelector('.loader span').innerText = 'Charger ' + iFile.files[0].name;
