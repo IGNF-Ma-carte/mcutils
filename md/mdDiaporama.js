@@ -1,4 +1,5 @@
 import ol_ext_element from "ol-ext/util/element";
+import { getMediaURL } from "mcutils/api/serviceURL";
 
 import './mdDiaporam.css'
 
@@ -46,7 +47,7 @@ function prepareDiaporama(type, data) {
   atts.img.forEach((img, i) => {
     if (img) {
       ol_ext_element.create('IMG', {
-        src: img,
+        src: getMediaURL(img),
         className: 'diapo',
         parent: diapo
       });

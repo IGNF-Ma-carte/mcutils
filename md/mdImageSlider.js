@@ -1,4 +1,5 @@
 import ol_ext_element from "ol-ext/util/element";
+import { getMediaURL } from "mcutils/api/serviceURL";
 
 import './mdImageSlider.css'
 
@@ -54,7 +55,7 @@ function createElement(content, atts, width, height) {
   })
   // First image
   ol_ext_element.create('IMG', {
-    src: atts.img1,
+    src: getMediaURL(atts.img1),
     className: 'md-img-1',
     style: {
       width: width ? width + 'px' : 'auto',
@@ -74,7 +75,7 @@ function createElement(content, atts, width, height) {
   // Second image
   ol_ext_element.create('IMG', {
     className: 'md-img-2',
-    src: atts.img2,
+    src: getMediaURL(atts.img2),
     parent: element
   })
   return element
