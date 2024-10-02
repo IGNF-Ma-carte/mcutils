@@ -72,8 +72,8 @@ class FormStyle extends olObject {
           filter: tab[element.className] ? [tab[element.className]] : undefined,
           symbolLib: options.symbolLib
         })
-        const setSymbol = () => {
-          const style = symbolList.getSelect().getIgnStyle();
+        const setSymbol = (s) => {
+          const style = s.getIgnStyle();
           this.setStyle(style, true);
           Object.keys(style).forEach(k => {
             this.dispatchEvent({ type: 'change', attr: k, value: style[k] })
@@ -86,7 +86,7 @@ class FormStyle extends olObject {
           buttons: { ok: 'Utiliser', cancel: 'annuler'},
           onButton: (b) => {
             if (b==='ok') {
-              setSymbol();
+              setSymbol(symbolList.getSelect());
             }
           }
         })
@@ -95,8 +95,13 @@ class FormStyle extends olObject {
           dialog.element.querySelector('.ol-buttons input').disabled = e.type!=='item:select';
         })
         symbolList.on('item:dblclick', () => {
-          setSymbol();
+          setSymbol(symbolList.getSelect());
           dialog.close();
+        })
+        symbolList.on('item:duplicate', (e) => {
+          FormStyle.addSymbolLibDialog(options.symbolLib, e.item, s => {
+            setSymbol(s)
+          })
         })
         const removeCollection = () => { 
           symbolList.removeCollection();
@@ -170,8 +175,9 @@ class FormStyle extends olObject {
 
 /** Add a new symbol to the symbol lib
  * @param {Collection<SymbolLib>} symbolLib SymbolLib to update
+ * @param {function} [cback] a function that takes a SymbolLib
  */
-FormStyle.prototype.addSymbol = function(symbolLib) {
+FormStyle.prototype.addSymbol = function(symbolLib, cback) {
   const type = tab[this.element.className];
   if (!type) return;
   const symb = new SymbolLib({
@@ -189,6 +195,7 @@ FormStyle.prototype.addSymbol = function(symbolLib) {
         symb.set('name', inputs.name.value);
         symbolLib.push(symb);
         dialog.hide();
+        if (typeof(cback) === 'function') cback(symb)
       }
     }
   })
@@ -622,8 +629,9 @@ FormStyle.prototype.setTypeGeom = function(type) {
 /** Display a dialog to create a new symbol in a SymbolLib
  * @param {Collection<SymbolLib>} symbolLib SymbolLib to update
  * @param {SymbolLib} symbol Default symbol
+ * @param {function} [cback] a function that takes a SymbolLib
  */
-FormStyle.addSymbolLibDialog = function(symbolLib, symbol) {
+FormStyle.addSymbolLibDialog = function(symbolLib, symbol, cback) {
   // Select geometry
   const select = ol_ext_element.create('SELECT');
   ['Point', 'LineString', 'Polygon'].forEach(k => ol_ext_element.create('OPTION', { text: 'Géométrie : ' + _T('geom_'+k), value: k, parent: select }))
@@ -642,9 +650,10 @@ FormStyle.addSymbolLibDialog = function(symbolLib, symbol) {
         Object.keys(st).forEach(k => {
           symbol.setIgnStyle(k, st[k]);
         })
+        if (typeof(cback) === 'function') cback(symbol)
       } else if (b==='submit' || b==='add') {
         // New Symbol
-        form.addSymbol(symbolLib)
+        form.addSymbol(symbolLib, cback)
       }
     }
   })

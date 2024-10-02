@@ -9,6 +9,7 @@ import './SymbolLibInput.css'
  * @param {Object} options a list of options
  *  @param {Element} [option.target]
  *  @param {Collection<SymbolLib>} options.symbolLib
+ *  @param {boolean} [options.edit=true] symbol is editable
  *  @param {Array<string>} [option.filter] a list of geometry type to filter, default ['Point', 'LineString', 'Polygon']
  * @fires item:remove
  * @fires item:select
@@ -61,38 +62,40 @@ class SymbolLibInput extends InputCollection {
             text: item.get('name'),
             parent: content
           });
-          // Edit mode
-          ol_ext_element.create('I', {
-            className: 'fi-pencil',
-            title: 'modifier le nom',
-            click: () => {
-              content.dataset.edit = '';
-              editor.focus();
-              const val = editor.value;
-              editor.value = '';
-              editor.value = val;
-            },
-            parent: content
-          })
-          // Duplicate
-          ol_ext_element.create('I', {
-            className: 'fg-color',
-            title: 'modifier / dupliquer le style',
-            click: () => {
-              this.dispatchEvent({ type: 'item:duplicate', item: item });
-            },
-            parent: content
-          })
-          // Remove element from llist
-          ol_ext_element.create('i', {
-            className: 'fi-delete',
-            title: 'supprimer le style',
-            click: () => {
-              symbolLib.remove(item);
-              this.dispatchEvent({ type: 'item:remove' });
-            },
-            parent: content
-          })
+          if (options.edit!==false) {
+            // Edit mode
+            ol_ext_element.create('I', {
+              className: 'fi-pencil',
+              title: 'modifier le nom',
+              click: () => {
+                content.dataset.edit = '';
+                editor.focus();
+                const val = editor.value;
+                editor.value = '';
+                editor.value = val;
+              },
+              parent: content
+            })
+            // Duplicate
+            ol_ext_element.create('I', {
+              className: 'fg-color',
+              title: 'modifier / dupliquer le style',
+              click: () => {
+                this.dispatchEvent({ type: 'item:duplicate', item: item });
+              },
+              parent: content
+            })
+            // Remove element from llist
+            ol_ext_element.create('i', {
+              className: 'fi-delete',
+              title: 'supprimer le style',
+              click: () => {
+                symbolLib.remove(item);
+                this.dispatchEvent({ type: 'item:remove' });
+              },
+              parent: content
+            })
+          }
           return content
         } else {
           return ol_ext_element.create('DIV', { className: 'hidden' })
