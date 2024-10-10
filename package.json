@@ -60,7 +60,8 @@
     "papaparse": "^5.4.1",
     "proj4": "^2.9.0",
     "qrjs": "^0.1.3",
-    "webfontloader": "^1.6.28"
+    "webfontloader": "^1.6.28",
+    "xlsx": "^0.18.5"
   },
   "staticFiles": {
     "staticPath": "examples/assets",

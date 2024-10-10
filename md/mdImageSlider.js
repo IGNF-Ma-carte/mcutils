@@ -1,5 +1,5 @@
 import ol_ext_element from "ol-ext/util/element";
-import { getMediaURL } from "mcutils/api/serviceURL";
+import { getMediaURL } from "../api/serviceURL";
 
 import './mdImageSlider.css'
 
