@@ -236,11 +236,13 @@ class Carte extends ol_Object {
             if (!content) return;
             // Empty content
             if (!content.titre && !content.desc && !content.img && !content.coord) return;
+            // Info_format
+            const param = l.get('wmsparam') || {};
             // Get feature info
             l.getSource().getFeatureInfo(
               e.coordinate, 
               this.getMap().getView().getResolution(), {
-                INFO_FORMAT: 'application/json',
+                INFO_FORMAT: (param.layer ? param.layer.info_format : null) || 'application/json',
                 callback: resp => {
                   const features = JSON.parse(resp).features;
                   if (features.length) {
