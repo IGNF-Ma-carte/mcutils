@@ -174,10 +174,12 @@ Texte en cas de non respect de la condition : le nom ne contient pas "Loire"
 ```
 [----]
 
+
+```hidden
 Vous pouvez préciser comment on affiche la fiche avec le paramètre `display` (none : jamais, all : toujours, layer : pour la couche, condition : si respecte la condition)
-Enfin, si vous préciser un QCM, cela va premettre de décompter la réponse comme un QCM (valide si respecte la condition) ou pas.
+Enfin, si vous préciser un QCM, cela va permettre de décompter la réponse comme un QCM (valide si respecte la condition) ou pas.
 [-- :fa-code:fw: Code --]
-```md
+ ```md
 &#96;``FeatureSelect
 layerId: 2
 display: layer
@@ -191,7 +193,7 @@ Texte en cas de bonne réponse
 ---INFO nok
 Texte en cas de mauvaise réponse
 &#96;``
-```
+ ```
 [----]
-
+```
 

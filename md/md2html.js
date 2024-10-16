@@ -106,6 +106,10 @@ md2html.doWidget = function (md, data) {
   md = md.substr(c+1);
   // Handle charts
   switch (type.split(' ').shift()) {
+    // hidden
+    case 'hidden': {
+      return '';
+    }
     // Piwik
     case 'piwik': {
       return '<iframe style="border: 0; height: 200px; width: 600px; margin: auto; display: block;" src="https://piwik.ign.fr/piwik/public.php?module=CoreAdminHome&amp;action=optOut&amp;language=fr"></iframe>'

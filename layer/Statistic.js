@@ -848,7 +848,9 @@ Statistic.prototype.getParametricStyle = function(stat, format) {
   const att = stat.cols[0]
   const legend = this.getStatLegend().reverse();
   legend.forEach(l => {
-    l.feature.setIgnStyle(style2IgnStyle(l.feature))
+    if (l.feature) {
+      l.feature.setIgnStyle(style2IgnStyle(l.feature))
+    }
   })
   switch (stat.typeMap) {
     case 'categorie':

@@ -81,7 +81,7 @@ function getLayerSwitcher() {
       if (!e.layer.get('inview')) e.layer.set('inview', true)
       e.li.dataset.inview = '';
     }
-    const title = 'la couche '+ e.layer.get('title') + ' n\'est pas visible sur cette zone à certte échelle'
+    const title = 'la couche '+ e.layer.get('title') + ' n\'est pas visible sur cette zone à cette échelle'
     ol_ext_element.create('DIV', {
       className: 'disabled',
       title: title,
