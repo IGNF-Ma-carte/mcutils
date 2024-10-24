@@ -184,7 +184,9 @@ StoryMap.prototype.write = function(story) {
       s.layers = [];
       s.layerIds.forEach(lid => {
         const l = layers.find((layer) => layer.get('id') === lid);
-        s.layers.push(l.get('title') || l.get('name'))
+        if (l) {
+          s.layers.push(l.get('title') || l.get('name'))
+        }
       })
       options.etapes['step_'+i] = s;
     })
