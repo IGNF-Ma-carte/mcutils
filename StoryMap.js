@@ -1644,7 +1644,7 @@ StoryMap.prototype.setStyleSheet = function (css) {
       });
       r.selectorText = selector.join(',');
       newCSS += r.cssText + '\n';
-    } else if (/^@font-face/.test(r.cssText)) {
+    } else if (/^@font-face/.test(r.cssText) || /^@import url\([\'|\"]https:\/\/fonts.googleapis.com\/css2/.test(r.cssText)) {
       newCSS += r.cssText + '\n';
     }
   }
