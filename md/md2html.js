@@ -305,6 +305,19 @@ md2html.doSecure = function(md) {
     .replace(/\"/g,"&quot;");
 }
 
+/** Desecure md string
+ * @function deSecure
+ * @memberof md2html
+ * @param {string} md the markdown
+ * @return {string} result md
+ * @instance
+ */
+md2html.deSecure = function(md) {
+  return md.replace(/&lt;/g, '<')
+    .replace(/&apos;/g, '\'')
+    .replace(/&quot;/g, '"');
+}
+
 /** handle icons
  * @private
  */

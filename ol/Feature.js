@@ -285,12 +285,9 @@ Feature.prototype.setPopupContent = function(content) {
 Feature.prototype.getLabelContent = function(content) {
   if (!content) return '';
 
-  var format = content;
-  format = format.replace(/\n$/, '');
-  var list = this.getProperties();
-  var md = md2html.doData (format, list);
-  md = md.replace(/<br \/>/, '');
-  md = md.replace(/<br\/>/, '');
+  const format = content.replace(/\n$/, '');
+  let md = md2html.deSecure(md2html.doData (format, this.getProperties()));
+  md = md.replace(/<br ?\/>/, '');
   return md;
 };
 
