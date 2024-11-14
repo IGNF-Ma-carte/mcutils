@@ -591,7 +591,8 @@ Statistic.prototype.setStatistic = function(stat, delay) {
         }
         // Calculate classification
         default: {
-          if (!/^(q|l|k|e)/.test(stat.mode)) {
+          const modes = Object.keys(Statistic.mode);
+          if (modes.indexOf(stat.mode) < 0) {
             stat.mode = 'q';
           }
           stat.limits = this.limits(stat, tab);
@@ -1129,6 +1130,7 @@ Statistic.mode = {
   e: 'Equidistance',
   l: 'Logarithmique',
   k: 'Clusters',
+  h: 'Head/tail',
   c: 'Manuelle'
 }
 
@@ -1289,6 +1291,30 @@ Statistic.prototype.limits = function(stat, data) {
         limits.push(v);
       }
     }
+  } else if (mode.substr(0,1) ==='h') {
+    /* Head/tail https://en.wikipedia.org/wiki/Head/tail_breaks */
+    var stats = {
+      mean: function(arr){
+        var len = arr.length,
+            sum = arr.reduce(function(memo, num){ return memo + num; }, 0),
+            mean = sum / len
+        return mean;
+      },
+      headTail: function(arr){
+        var data_min = Math.min.apply(Math, data),
+            mean = this.mean(arr),
+          bins = [data_min];
+
+        while (arr.length > 1) {
+          arr = arr.filter(function (d) { return d > mean });
+          mean = this.mean(arr);
+          bins.push(mean);
+        };
+        return bins;
+      }
+    };
+
+    limits = stats.headTail(data);
   }
   return limits;
 };
