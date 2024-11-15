@@ -1303,24 +1303,23 @@ Statistic.prototype.limits = function(stat, data) {
     } 
     case 'h': {
       /* Head/tail 
-        source: https://en.wikipedia.org/wiki/Head/tail_breaks 
+        source: https://www.icem7.fr/cartographie/la-discretisation-head-tail-produit-des-cartes-mieux-hierarchisees/
+        - https://en.wikipedia.org/wiki/Head/tail_breaks 
       */
       function calcMean(arr){
-        var len = arr.length,
-            sum = arr.reduce(function(memo, num){ return memo + num; }, 0),
-            mean = sum / len
-        return mean;
+        const sum = arr.reduce(function(memo, num){ return memo + num; }, 0);
+        return sum / arr.length;
       }
-      // const data_min = Math.min.apply(Math, data)
+
       let kmean = calcMean(data)
       limits = [min];
 
       while (data.length > 1) {
-        data = data.filter(function (d) { return d > kmean });
+        data = data.filter(d => d > kmean);
         kmean = calcMean(data);
         limits.push(kmean);
+        // Max limit / restore max
         if (limits.length > num) {
-          // Restore max
           limits.pop();
           limits.push(max);
           break;
