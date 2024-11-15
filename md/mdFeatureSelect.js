@@ -86,6 +86,7 @@ function testLayreId(n, id) {
 
   return isid;
 }
+
 /** Display feature info on select
  * @param {Feature} feature
  * @return {boolean} true if display in the md element
@@ -95,7 +96,7 @@ const mdFeatureSelect = function(feature) {
   let display = false;
   document.querySelectorAll('div.mdFeatureSelect').forEach(d => {
     const md = d.querySelector('.md-feature');
-    const displayType  = d.dataset.display || 'layer'
+    const displayType = d.dataset.display || 'layer'
     // Clear
     md.innerHTML = '';
     const info = d.querySelector('.md-feature-info')
@@ -122,7 +123,7 @@ const mdFeatureSelect = function(feature) {
       }
       // Display info
       if (display) {
-        const md = (info.dataset.md_all || '') + info.dataset['md_'+ (isok ? 'ok' : 'nok')]
+        const md = (info.dataset.md_all || '') + (info.dataset['md_'+ (isok ? 'ok' : 'nok')] || '');
         md2html.element(md, info, feature.getProperties());
       }
     }
