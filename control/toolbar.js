@@ -250,7 +250,7 @@ function addDrawTools(carte, tools, layer) {
             ctrl.dispatchEvent({ type: 'import:start' })
             drawLayer.getSource().addFeatures(e.features);
             notification.cancel(
-              e.features.length + ' objects chargés',
+              e.features.length + ' objets chargés',
               () => {
                 carte.getMap().getView().fit(drawLayer.getSource().getExtent());
                 if (carte.getMap().getView().getZoom() > 16) {
@@ -336,7 +336,7 @@ function addOptionImport(carte) {
           layer.getSource().addFeatures(e.features);
           carte.getMap().addLayer(layer);
           notification.cancel(
-            e.features.length + ' objects chargés',
+            e.features.length + ' objets chargés',
             () => {
               carte.getMap().getView().fit(layer.getSource().getExtent());
               if (carte.getMap().getView().getZoom() > 16) {

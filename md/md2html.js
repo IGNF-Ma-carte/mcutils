@@ -547,7 +547,7 @@ md2html.rules = [
   // Anchor links
   [/\[([a-z,A-Z,0-9,\-,\_]+)\]\(#\)/g, '<a id="$1" class="anchor" href="#$1" tabindex="-1" aria-hidden="true"></a>'],
   // Automatic links
-  [/([^\(])(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=()\u00E0-\u00FC$]*))/g, '$1<a href=\'$2\' target="_blank">$2</a>'],
+  [/([^\(])(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=()\u00E0-\u00FC$]*))/g, '$1<a href=\'$2\' target="_blank">$2</a>'],
   // Mailto
   [/([^\(])\bmailto\b\:(\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b)/gi, '$1<a href=\'mailto:$2\'>$2</a>'],
 
@@ -614,14 +614,14 @@ md2html.rules = [
     '<iframe class="video" frameborder="0" width="300" height="180" style="width:$4px; height:$5px;" src="https://player.vimeo.com/video/$3" allowfullscreen></iframe>'],
 
   // Audio
-  [/\!(\[([^\[\]]+)?\])?\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=\(\)]*)\.[mM][pP]3) ?(\d+)?x?(\d+)?( autoplay)?\)/g,
+  [/\!(\[([^\[\]]+)?\])?\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=\(\)]*)\.[mM][pP]3) ?(\d+)?x?(\d+)?( autoplay)?\)/g,
     '<audio controls style="width:$6px; height:$7px;" $8 title="$2"><source src="$3" type="audio/mpeg">Your browser does not support the audio element.</audio>'],
   // Video
-  [/\!(\[([^\[\]]+)?\])?\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=\(\)]*)\.[mM][pP]4) ?(\d+)?x?(\d+)?( autoplay)?\)/g,
+  [/\!(\[([^\[\]]+)?\])?\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=\(\)]*)\.[mM][pP]4) ?(\d+)?x?(\d+)?( autoplay)?\)/g,
     '<video controls style="width:$6px; height:$7px;" $8 title="$2"><source src="$3" type="video/mp4">Your browser does not support the video tag.</video>'],
 
   // Images
-  [/!(\[([^[\]]+)?\])?\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=\u00E0-\u00FC$]*)) ?(\d+)?x?(\d+)?\)/g,
+  [/!(\[([^[\]]+)?\])?\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=\u00E0-\u00FC$]*)) ?(\d+)?x?(\d+)?\)/g,
     '<img style="width:$6px; height:$7px;" src="$3" title="$2" />'],
   // Local images
   [/!(\[([^[\]]+)?\])?\((file:\/\/\/([-a-zA-Z0-9@:%_+.~#?&/=]*)) ?(\d+)?x?(\d+)?\)/g,
@@ -768,6 +768,7 @@ function loadTwitter() {
     script.type = "text/javascript";
     script.src = "https://platform.twitter.com/widgets.js"
     head.appendChild(script);
+    setTimeout(() => twitterLoaded = true)
   }
 }
 let twitterLoaded = false;
@@ -785,10 +786,9 @@ md2html.renderWidget = function(element) {
   }
   if (window.twttr) {
     window.twttr.widgets.load(element);
-  } else if (!twitterLoaded) {
+  } else if (twitterLoaded) {
     console.error('Twitter is not loaded...')
   }
-  twitterLoaded = true;
   // Hightlight code
   element.querySelectorAll('pre.code code').forEach(block => {
     hljs.highlightBlock(block);
