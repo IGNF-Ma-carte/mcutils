@@ -61,6 +61,10 @@ window.addEventListener('stepTo', e => {
           globalStory.setStep(globalStory.getSteps().getLength())
           break;
         }
+        case 'toc': {
+          globalStory.showTOC(globalStory.currentStep);
+          break;
+        }
         default: {
           if (/^[0-9]+$/.test(param)) {
             globalStory.setStep(parseInt(param))
