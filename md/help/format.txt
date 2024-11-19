@@ -223,3 +223,16 @@ Image centrée
 Images alignés à gauche ou à droite 
 avec le texte entre les deux.
 [----]
+
+## Blocs Markdown
+
+Vous pouvez créer des blocs Markdown avec une classe CSS particulière (cela peut être utile pour appliquer un style particulier à un bloc). 
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``mdblock classname
+## Titre
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+&#96;``
+```
+[----]
