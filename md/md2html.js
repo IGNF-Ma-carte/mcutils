@@ -110,6 +110,10 @@ md2html.doWidget = function (md, data) {
     case 'hidden': {
       return '';
     }
+    // mdblock
+    case 'mdblock': {
+      return '<div class="' + type.replace(/[^(a-z|A-Z|0-9|-| ]/g,'_') + '">' + md2html(md, data) + '</div>';
+    }
     // Piwik
     case 'piwik': {
       return '<iframe style="border: 0; height: 200px; width: 600px; margin: auto; display: block;" src="https://piwik.ign.fr/piwik/public.php?module=CoreAdminHome&amp;action=optOut&amp;language=fr"></iframe>'
