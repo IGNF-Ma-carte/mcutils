@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>MCUtils Class: PopupSymbol</title>
+	<title>MCUtils Class: Color</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -93,16 +93,18 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: PopupSymbol</h1>
+	<h1 class="page-title">Class: Color</h1>
 <section>
 
 <header>
     
         <h2>
-        PopupSymbol
+            <span class="ancestors"><a href="mcutils.html">mcutils</a><a href="mcutils.format.html">.format</a><a href="mcutils.format.layer.html">.layer</a>.</span>
+        
+        Color
         </h2>
         
-            <div class="class-description"><p>Input to select symbols in a popup</p></div>
+            <div class="class-description"><p>Format to read/write</p></div>
         
     
 </header>
@@ -114,215 +116,23 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="PopupSymbol"><span class="type-signature"></span>new PopupSymbol(options)</h4>
+    <h4 class="name" id="Color"><span class="type-signature"></span>new Color()</h4>
     
     
 </dt>
 <dd>
 
     
-
+    <div class="description">
+        <p>Constructor</p>
+    </div>
     
 
     
 
     
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Argument</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"><p>a list of options</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
-                
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>input</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Element</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>the input</p></td>
-        </tr>
 
     
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>option.symbol</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    'ign-form-poi'
-                
-                </td>
-            
-
-            <td class="description last"><p>the current symbol</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options.position</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">booelan</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    'fixed'
-                
-                </td>
-            
-
-            <td class="description last"><p>popup position on the page</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
     
 
     
@@ -358,7 +168,7 @@
 	
 	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
 	<dd class="tag-source">
-		input/PopupSymbol.js
+		format/layer/Color.js
 	</dd>
 	
 
@@ -372,11 +182,6 @@
 
     
 
-    
-    <h5>Fires:</h5>
-    <ul>
-        <li>event:select</li>
-    </ul>
     
 
     
@@ -400,7 +205,7 @@
 
 
     <ul>
-        <li>PopupBase</li>
+        <li>mcutils.format.Layer</li>
     </ul>
 
 
@@ -423,7 +228,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="setValue"><span class="type-signature"></span>setValue(value)</h4>
+    <h4 class="name" id="read"><span class="type-signature"></span>read(options, table)</h4>
     
     
 </dt>
@@ -431,7 +236,7 @@
 
     
     <div class="description">
-        <p>Change the current value</p>
+        <p>Read layer from param</p>
     </div>
     
 
@@ -466,13 +271,13 @@
 
         <tr>
             
-                <td class="name"><code>value</code></td>
+                <td class="name"><code>options</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">*</span>
 
 
 
@@ -483,7 +288,31 @@
 
             
 
-            <td class="description last"><p>the symbol name</p></td>
+            <td class="description last"><p>extend layer options</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>table</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -525,7 +354,7 @@
 	
 	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
 	<dd class="tag-source">
-		input/PopupSymbol.js
+		format/layer/Color.js
 	</dd>
 	
 
@@ -559,7 +388,7 @@
     </dt>
     <dd>
         
-<span class="param-type">boolean</span>
+<span class="param-type">ColorLayer</span>
 
 
 

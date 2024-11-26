@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>MCUtils Class: PopupSymbol</title>
+	<title>MCUtils Class: UserInput</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -93,16 +93,16 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: PopupSymbol</h1>
+	<h1 class="page-title">Class: UserInput</h1>
 <section>
 
 <header>
     
         <h2>
-        PopupSymbol
+        UserInput
         </h2>
         
-            <div class="class-description"><p>Input to select symbols in a popup</p></div>
+            <div class="class-description"><p>User input to get public name with autocomplete list</p></div>
         
     
 </header>
@@ -114,12 +114,16 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="PopupSymbol"><span class="type-signature"></span>new PopupSymbol(options)</h4>
+    <h4 class="name" id="UserInput"><span class="type-signature"></span>new UserInput(api, options [, full])</h4>
     
     
 </dt>
 <dd>
 
+    
+    <div class="description">
+        <p>Constructor</p>
+    </div>
     
 
     
@@ -145,14 +149,44 @@
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
     </thead>
 
     <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>api</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="MacarteAPI.html">MacarteAPI</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
     
 
         <tr>
@@ -181,12 +215,8 @@
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
-            <td class="description last"><p>a list of options</p>
+            <td class="description last">
                 <h6 class="method-params-label method-subparams-label">Properties</h6>
                 
 
@@ -200,6 +230,8 @@
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -212,7 +244,7 @@
 
         <tr>
             
-                <td class="name"><code>input</code></td>
+                <td class="name"><code>target</code></td>
             
 
             <td class="type">
@@ -226,10 +258,20 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last"><p>the input</p></td>
+            <td class="description last"><p>element to place in</p></td>
         </tr>
 
     
@@ -243,13 +285,13 @@
 
         <tr>
             
-                <td class="name"><code>option.symbol</code></td>
+                <td class="name"><code>full</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">boolean</span>
 
 
 
@@ -269,54 +311,8 @@
             
 
             
-                <td class="default">
-                
-                    'ign-form-poi'
-                
-                </td>
-            
 
-            <td class="description last"><p>the current symbol</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options.position</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">booelan</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    'fixed'
-                
-                </td>
-            
-
-            <td class="description last"><p>popup position on the page</p></td>
+            <td class="description last"><p>get full information (id and picture)</p></td>
         </tr>
 
     
@@ -358,7 +354,7 @@
 	
 	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
 	<dd class="tag-source">
-		input/PopupSymbol.js
+		api/UserInput.js
 	</dd>
 	
 
@@ -394,17 +390,6 @@
     </div>
 
     
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li>PopupBase</li>
-    </ul>
-
-
-    
 
     
 
@@ -423,7 +408,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="setValue"><span class="type-signature"></span>setValue(value)</h4>
+    <h4 class="name" id="autocompleteAuthor"><span class="type-signature"></span>autocompleteAuthor(value)</h4>
     
     
 </dt>
@@ -431,7 +416,7 @@
 
     
     <div class="description">
-        <p>Change the current value</p>
+        <p>Autocomplete author list</p>
     </div>
     
 
@@ -483,7 +468,7 @@
 
             
 
-            <td class="description last"><p>the symbol name</p></td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -525,7 +510,7 @@
 	
 	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
 	<dd class="tag-source">
-		input/PopupSymbol.js
+		api/UserInput.js
 	</dd>
 	
 
@@ -548,26 +533,139 @@
     
 
     
-    <h5>Returns:</h5>
+
     
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="setUser"><span class="type-signature"></span>setUser(public_name)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Set the autor value</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>public_name</code></td>
             
 
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">boolean</span>
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
 
 
 
-    </dd>
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		api/UserInput.js
+	</dd>
+	
+
+	
+
+	
+
+	
 </dl>
 
 
-        
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
 </dd>
