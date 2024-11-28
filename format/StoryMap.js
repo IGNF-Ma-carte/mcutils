@@ -1,4 +1,4 @@
-import { unByKey } from 'ol/observable';
+import { unByKey } from 'ol/Observable';
 import { fromLonLat } from 'ol/proj';
 import Carte from '../Carte';
 import BaseFormat from './Base';

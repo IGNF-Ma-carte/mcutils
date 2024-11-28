@@ -2,7 +2,7 @@
   @author Jean-Marc VIGLINO jean-marc.viglino@ign.fr
 */
 import LayerFormat from './Layer';
-import VectorSource from 'ol/source/vector';
+import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
 import StatisticLayer from '../../layer/Statistic'
 import GeoJSONXFormat from 'ol-ext/format/GeoJSONX'
