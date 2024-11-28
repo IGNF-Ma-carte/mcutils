@@ -5,7 +5,7 @@ let apiLogin, apiPwd;
 const apiPath = (config.guichetURL+'/').replace(/\/\/$/, '/') + 'gcms/api/'
 
 /* Fetch response as get */
-function get(root, cback) {
+function get(root, cback, options) {
   cback = cback || console.log;
   options = options || {};
   // limit

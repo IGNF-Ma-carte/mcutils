@@ -73,12 +73,11 @@ function isNumber(n) {
  * @returns 
  */
 function getField(rex, fields) {
-  const field = fields.find(f => {
+  return fields.find(f => {
     if (rex.test(f)) {
       return f;
     }
   })
-  return field
 }
 
 /** Get field with POINT(x,y)

@@ -1324,7 +1324,7 @@ Statistic.prototype.limits = function(stat, data) {
           limits.push(max);
           break;
         }
-      };
+      }
       break;
     }
   }

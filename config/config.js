@@ -28,7 +28,7 @@ if (window.maCarteOptions) {
   const server = options.server.replace(/\/$/,'');
   for (let i in options) {
     if (options[i].replace) options[i] = options[i].replace(/^SERVER/, server)
-  };
+  }
 } else {
   console.error('NO CONFIG FILE!\n Ajouter un fichier confg.json dans le répertoire des assets...');
 }
