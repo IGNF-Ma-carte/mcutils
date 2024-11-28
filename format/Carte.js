@@ -3,7 +3,7 @@ import { fromLonLat, toLonLat } from 'ol/proj';
 import GeoportailFormat from './layer/Geoportail'
 import EdugeoFormat from './layer/Edugeo'
 import VectorStyleFormat from './layer/VectorStyle';
-import GeoImageFormat from './layer/Geoimage';
+import GeoImageFormat from './layer/GeoImage';
 import StatisticFormat from './layer/Statistic';
 import WMS from './layer/WMS';
 import WMTS from './layer/WMTS';

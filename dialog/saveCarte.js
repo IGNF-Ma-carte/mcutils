@@ -8,7 +8,7 @@ import StoryMap from '../StoryMap';
 import Carte from '../Carte'
 import md2html from '../md/md2html';
 import team from '../api/team';
-import { storyV4 }  from '../format/version/tov4'
+import { storyV4 }  from '../format/version/toV4'
 
 const html = `
 <ul>
