@@ -9,6 +9,19 @@ import './ColorBrewer.css'
 // Add Pure colors
 chroma.brewer.Pure = ["#d66", "#fa0", "#ff0", "#080", /*"#6ff",*/ "#66f"];
 
+// Bivariate color
+chroma.brewer.DkViolet1 = ["#f5fdff", "#b4dae3", "#72b7c8", "#3194ac"];
+chroma.brewer.DkViolet2 = ["#fff5fa", "#e4b2b8", "#ca6f75", "#af2c33"];
+chroma.brewer.DkBlue1 = ["#f3ffff", "#b0ebea", "#6cd6d5", "#29c2c0"];
+chroma.brewer.DkBlue2 = ["#fdecfa", "#e0aad6", "#c468b3", "#a7268f"];
+chroma.brewer.BluOr1 = ["#f3fbff", "#abd7ee", "#63b3dd", "#1b8fcc"];
+chroma.brewer.BluOr2 = ["#fdede7", "#f3b8a3", "#e98260", "#df4d1c"];
+chroma.brewer.Brown1 = ["#fffcee", "#ede2a9", "#dcc965", "#caaf20"];
+chroma.brewer.Brown2 = ["#f1e6f7", "#cca6de", "#a666c5", "#8126ac"];
+chroma.brewer.Berlin1 = ["#e9f4fd", "#aad5f2", "#6bb7e6", "#2c98db"];
+chroma.brewer.Berlin2 = ["#fff2f1", "#f8baba", "#f28382", "#eb4b4b"];
+
+
 /** Color brewer control
  * @memberof mcutils.control
  * @constructor
@@ -351,10 +364,15 @@ ColorBrewer.types = {
     title: 'qualitatif',
     scheme: ["Accent", "Dark2", "Paired", "Pastel1", "Pastel2", "Set1", "Set2", "Set3", "Pure"]
   },
+  bivariate: {
+    title: 'bivarié',
+    scheme: ["DkViolet1", "DkViolet2", "DkBlue1", "DkBlue2", "BluOr1", "BluOr2", "Brown1", "Brown2", "Berlin1", "Berlin2"]
+  },
   custom: {
     title: 'manuel',
     scheme: []
   }
 };
+
 
 export default ColorBrewer
