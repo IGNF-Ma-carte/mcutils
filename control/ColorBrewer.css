@@ -23,6 +23,14 @@
 .color-brewer[data-type='qualitative'] .cbr-scheme > div.qualitative {
   display: block;
 }
+.color-brewer[data-type='bivariate'] .cbr-scheme > div.bivariate {
+  display: block;
+}
+.color-brewer[data-type='bivariate'] .cbr-scheme > div.bivariate > div:nth-child(even) {
+  margin-right: .5em;
+}
+
+
 .color-brewer .cbr-scheme > div > div {
   display: inline-block;
   vertical-align: top;
