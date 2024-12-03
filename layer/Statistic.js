@@ -1315,15 +1315,16 @@ Statistic.prototype.limits = function(stat, data) {
       limits = [min];
 
       while (data.length > 1) {
-        data = data.filter(d => d > kmean);
-        kmean = calcMean(data);
-        limits.push(kmean);
-        // Max limit / restore max
-        if (limits.length > num) {
-          limits.pop();
+        // Max limit
+        if (limits.length >= num) {
           limits.push(max);
           break;
         }
+        // Get head
+        data = data.filter(d => d > kmean);
+        if (data.length === 0) break;
+        kmean = calcMean(data);
+        limits.push(kmean);
       }
       break;
     }
