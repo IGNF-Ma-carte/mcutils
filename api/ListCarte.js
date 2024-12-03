@@ -423,11 +423,11 @@ ListCarte.prototype.getPermalink = function() {
   else this.element.classList.add('mc-filter')
   this.element.dataset.mode = perma.mode || 'list';
   if (perma.query) {
-    setTimeout(() => {
-      this.set('query', perma.query);
-      this.input.value = perma.query;
-      this.search(perma.query)
-    });
+    this.set('query', perma.query);
+    this.input.value = perma.query;
+    this.search(perma.query)
+  } else {
+    this.search(perma.query)
   }
 };
 
