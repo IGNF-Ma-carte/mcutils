@@ -1,0 +1,264 @@
+{
+ "param": {
+  "lon": -0.2632504808230034,
+  "lat": 45.89028989496441,
+  "zoom": 7.810533891551703,
+  "rot": 0,
+  "controlParams": {
+   "zoomBtn": true,
+   "scaleLine": true,
+   "pSearchBar": false,
+   "legend": false,
+   "coords": false,
+   "selectLayer": true,
+   "geoloc": false,
+   "profil": false,
+   "printDlg": false
+  },
+  "proj": {
+   "valeur": "EPSG:4326"
+  }
+ },
+ "legende": {
+  "legendtitle": "Ma légende",
+  "lineHeight": 45,
+  "legendWidth": 300,
+  "legendParam": {
+   "width": 300,
+   "lineHeight": 45
+  },
+  "items": [],
+  "legendVisible": false
+ },
+ "layers": [
+  {
+   "id": 1,
+   "type": "Geoportail",
+   "name": "Plan IGN",
+   "title": "Plan IGN",
+   "visibility": true,
+   "opacity": 1,
+   "description": "Cartographie multi-échelles sur le territoire national, issue des bases de données vecteur de l’IGN, mis à jour régulièrement et réalisée selon un processus entièrement automatisé. Version actuellement en beta test",
+   "copyright": "",
+   "popupContent": {},
+   "grayscale": false,
+   "blendMode": "",
+   "minZoom": null,
+   "maxZoom": null,
+   "crop": {},
+   "layer": "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
+  },
+  {
+   "dessin": true,
+   "attributes": [],
+   "id": 2,
+   "type": "Vector",
+   "name": "Dessin",
+   "title": "Dessin",
+   "visibility": true,
+   "opacity": 1,
+   "copyright": "",
+   "selectable": true,
+   "popupContent": {},
+   "grayscale": false,
+   "blendMode": "",
+   "minZoom": null,
+   "maxZoom": null,
+   "declutter": false,
+   "style": [],
+   "conditionStyle": [],
+   "mode": "cluster",
+   "cluster": true,
+   "radiusCluster": 40,
+   "clusterDistance": 40,
+   "crop": {},
+   "data": {
+    "type": "FeatureCollection",
+    "decimals": 3,
+    "hashProperties": [],
+    "features": [
+     [
+      "Ds@$.,B@.8%/"
+     ],
+     [
+      "DxK/V,B@{HPB"
+     ],
+     [
+      "BiIs<,B[Dn9%"
+     ],
+     [
+      "B%?gt,B[`RQ6"
+     ],
+     [
+      "BO*WW,B]UmRJ"
+     ],
+     [
+      "Em/S1,B^7d#D"
+     ],
+     [
+      "EC6qI,B=R*3o"
+     ],
+     [
+      "}D%g,B=5p4P"
+     ],
+     [
+      "BT9R=,B>@)6V"
+     ],
+     [
+      "C+F_2,B??[7="
+     ],
+     [
+      "C9<  ,B?_V0r"
+     ],
+     [
+      "BZL2&,B>=N9["
+     ],
+     [
+      "+ihM,B?pX7O"
+     ],
+     [
+      "qA)t,B[gLP9"
+     ],
+     [
+      "L[d5,B??[7="
+     ],
+     [
+      "J#K>,B=ZB30"
+     ],
+     [
+      "mk!%,B]4qR&"
+     ],
+     [
+      "FvTl3,B=rD3["
+     ],
+     [
+      "CRiQ4,B^0K!["
+     ],
+     [
+      "B~f*?,B?XV6."
+     ],
+     [
+      "B`$$K,B>fe5e"
+     ],
+     [
+      "DOO:s,B@:YO:"
+     ],
+     [
+      "ChFgr,B@vnOc"
+     ],
+     [
+      "Bs$!~,B@:YO:"
+     ],
+     [
+      "B*1c~,B[%PQe"
+     ]
+    ],
+    "style": [
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     },
+     {
+      "zi": 0
+     }
+    ],
+    "popupContent": [
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {},
+     {}
+    ]
+   }
+  }
+ ],
+ "symbolLib": []
+}

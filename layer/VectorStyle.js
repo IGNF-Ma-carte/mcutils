@@ -300,6 +300,25 @@ VectorStyle.prototype.setMode = function(mode, options) {
   this.set('clusterDash', !!options.clusterDash);
   this.set('clusterColor', !!options.clusterColor);
   switch (mode) {
+    case 'clusterStat':{
+      // Create cluster layer when needed
+      if (!this.layerCluster_ ) {
+        var clusterSource = new ol_source_Cluster({
+          // Get objets as point
+          geometryFunction: function(f) {
+            var g = f.getGeometry();
+            if (g.getType()==='Point') {
+              return g;
+            } else {
+              return new ol_geom_Point(ol_extent_getCenter(g.getExtent()));
+            }
+          },
+          distance: options.clusterDistance || 40,
+          source: this.getSource(),
+        });
+      }
+      console.log("CLUSTER STAT")
+    }
     case 'cluster':{
       // Create cluster layer when needed
       if (!this.layerCluster_ ) {
