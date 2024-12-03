@@ -389,15 +389,18 @@ Statistic.prototype._getStyle = function(stat) {
               fill = new ol_style_Fill({ color: color });
               stroke = stat.stroke ? new ol_style_Stroke({ 
                 color: stat.stroke === true ? '#3399CC' : stat.stroke, 
-                width: 1.25
-              }) : undefined;
+                width: stat.stroke === false ? 0 : 1.25
+              }) : null;
+              image = new ol_style_FontSymbol({
+                glyph: stat.symbol || 'ign-form-rond',
+                fill: fill,
+                stroke: stroke || new ol_style_Stroke({ color: '', width: 0}),
+                radius: stat.rsymb || 5,
+              });
+
               style = styleCache[id] = [
                 new ol_style_Style({
-                  image: new ol_style_Circle({
-                    fill: fill,
-                    stroke: stroke,
-                    radius: 5,
-                  }),
+                  image: image,
                   fill: fill,
                   stroke: stroke,
                 }),
@@ -448,6 +451,7 @@ Statistic.prototype._cloneStatistic = function(stat) {
     nbClass: stat.nbClass || stat0.nbClass || 5,
     col2: stat.col2==='' ? '' : stat.col2  || stat0.col2 || '',
     symbol: stat.symbol || stat0.symbol || '',
+    rsymb: stat.rsymb || stat0.rsymb || 5,
     rmin: stat.rmin || stat0.rmin || 3,
     rmax: stat.rmax || stat0.rmax || 20,
     rProp: stat.rProp || stat0.rProp || 'length',
@@ -1110,7 +1114,8 @@ Statistic.paramList = {
   "cols": [ 'choroplethe', 'categorie', 'symbol', 'sectoriel', 'heatmap' ],
   "mode": [ 'choroplethe', 'categorie', 'symbol', 'sectoriel' ],
   "nbClass": [ 'choroplethe', 'symbol' ],
-  "symbol": [ 'symbol' ],
+  "symbol": [ 'symbol', 'categorie' ],
+  "rsymb": [ 'categorie' ],
   "col2": [ 'symbol' ],
   "rmin": [ 'symbol', 'sectoriel' ],
   "rmax": [ 'symbol', 'sectoriel' ],
