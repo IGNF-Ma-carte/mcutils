@@ -9,6 +9,8 @@ import 'ol-ext/filter/Base'
 
 import '../ol/BaseLayer'
 
+import chroma from "chroma-js";
+
 import '../ol/Feature'
 import loadFonts from '../font/loadFonts'
 import { getStyleFn, defaultIgnStyle, clearCache, getIgnStyle, ordering } from '../style/ignStyleFn'
@@ -299,26 +301,20 @@ VectorStyle.prototype.setMode = function(mode, options) {
   this.set('clusterDistance', parseFloat(options.clusterDistance || options.distance) || 40);
   this.set('clusterDash', !!options.clusterDash);
   this.set('clusterColor', !!options.clusterColor);
+
+  // Attributes and colors
+  if (options.clusterAttribute) {
+    this.set('clusterAttribute', options.clusterAttribute)
+  } else {
+    this.set('clusterAttribute', "")
+  }
+  if (options.clusterColors) {
+    this.set("clusterColors", options.clusterColors)
+  } else {
+    this.set("clusterColors", chroma.brewer.Oranges)
+  }
+
   switch (mode) {
-    case 'clusterStat':{
-      // Create cluster layer when needed
-      if (!this.layerCluster_ ) {
-        var clusterSource = new ol_source_Cluster({
-          // Get objets as point
-          geometryFunction: function(f) {
-            var g = f.getGeometry();
-            if (g.getType()==='Point') {
-              return g;
-            } else {
-              return new ol_geom_Point(ol_extent_getCenter(g.getExtent()));
-            }
-          },
-          distance: options.clusterDistance || 40,
-          source: this.getSource(),
-        });
-      }
-      console.log("CLUSTER STAT")
-    }
     case 'cluster':{
       // Create cluster layer when needed
       if (!this.layerCluster_ ) {
