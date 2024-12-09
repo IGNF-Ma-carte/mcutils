@@ -7,7 +7,7 @@
     "start": "parcel ./examples/index.html --dist-dir ./.dist",
     "build": "parcel build ./examples/index.html --no-source-maps --public-url . --dist-dir ./docs/mcutils",
     "doc": "jsdoc ./ -c ./doc/jsdoc.json",
-    "lint": "eslint --fix **/*.js --ignore-path .lintignore || exit 0",
+    "lint": "eslint --fix \"**/*.js\" --ignore-path .lintignore || exit 0",
     "lintex": "eslint --fix **/*.js  || exit 0"
   },
   "repository": {
