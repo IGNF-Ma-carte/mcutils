@@ -197,7 +197,7 @@ function getClusterRadius(size) {
 }
 
 function getChartRadius(size) {
-  return Math.min(size+15, 40);;
+  return Math.min(size+15, 40);
 }
 
 /**
@@ -303,19 +303,20 @@ function getStatisticClusterStyle(f, cluster, optId, clusterColor, clusterDash, 
   const size = cluster.length;
 
   let dataColor = f.get('dataColor');
+  let color;
   // Get number of element per color
   if (!dataColor) {
     dataColor = {};
     cluster.forEach(f => {
       // Get feature style
-      st = f.getLayer().getStyle()(f)
+      const st = f.getLayer().getStyle()(f)
       switch(f.getGeometry().getType()) {
         case 'MultiPoint':
         case 'Point':
-          var color = st[0].getImage()._color
+          color = st[0].getImage()._color
           break;
         default:
-          var color = st[0].getStroke().getColor()
+          color = st[0].getStroke().getColor()
           break;
       }
       if (color in dataColor) dataColor[color] ++;
@@ -329,7 +330,7 @@ function getStatisticClusterStyle(f, cluster, optId, clusterColor, clusterDash, 
   for (const color in dataColor) {
     // rgba value
     if (!color.includes("#")) {
-      hexColor = chroma(color).hex();
+      const hexColor = chroma(color).hex();
       dataColor[hexColor] = dataColor[color];
       delete dataColor[color]
     } 
@@ -717,11 +718,11 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
   // Statistic layers (get first style)
   if (!ignStyle && f.getLayer() instanceof Statistic) {
     if (f.getLayer().layerStat && f.getLayer().layerStat.getStyle) {
-      var style = f.getLayer().layerStat.getStyle()(f)
+      const style = f.getLayer().layerStat.getStyle()(f)
       return [style[0]]
     }
   }
-  var style;
+  let style;
   // Convert ignStyle to openlayers style
   var s = getIgnStyle(f, ignStyle);
   // Transform image

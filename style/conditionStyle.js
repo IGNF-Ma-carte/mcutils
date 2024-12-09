@@ -6,7 +6,7 @@
  */
 
 class SLDDoc {
-  constructor(options) {
+  constructor(/* options */) {
     const xml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><StyledLayerDescriptor version="1.0.0" xsi:schemaLocation="http://www.opengis.net/sld StyledLayerDescriptor.xsd" xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:se="http://www.opengis.net/se"></StyledLayerDescriptor>`;
     this.doc = (new DOMParser).parseFromString(xml, 'text/xml');
     this.root = this.doc.getElementsByTagName('StyledLayerDescriptor')[0];
@@ -117,21 +117,20 @@ function toSLD(condStyle) {
       } 
       case 'Polygon': {
         const poly = doc.addChild('PolygonSymbolizer', rule)
-        let param; 
         if (style.fillColor) {
           const fill = doc.addChild('Fill', poly)
-          param = doc.addChild('CssParameter', fill, {
+          doc.addChild('CssParameter', fill, {
             value: style.fillColor,
             name: 'fill'
           })
         }
         if (style.strokeWidth) {
           const stroke = doc.addChild('Stroke', poly)
-          param = doc.addChild('CssParameter', stroke, {
+          doc.addChild('CssParameter', stroke, {
             value: style.strokeColor,
             name: 'stroke'
           })
-          param = doc.addChild('CssParameter', stroke, {
+          doc.addChild('CssParameter', stroke, {
             value: style.strokeWidth,
             name: 'stroke-width'
           })
