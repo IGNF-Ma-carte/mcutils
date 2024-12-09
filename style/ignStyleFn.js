@@ -2,8 +2,10 @@ import ol_style_Style from 'ol/style/Style'
 import ol_style_Text from 'ol/style/Text'
 import ol_style_Image from 'ol/style/Image'
 import ol_style_Circle from 'ol/style/Circle'
+import ol_style_Chart from 'ol-ext/style/Chart'
 import ol_style_Stroke from 'ol/style/Stroke'
 import ol_style_Fill from 'ol/style/Fill'
+import chroma from 'chroma-js'
 
 import {asArray, asArray as ol_color_asArray} from 'ol/color'
 import {DEVICE_PIXEL_RATIO as ol_has_DEVICE_PIXEL_RATIO} from 'ol/has'
@@ -193,6 +195,11 @@ function ordering(f1, f2) {
 function getClusterRadius(size) {
   return Math.max(8, Math.min(size*0.75, 20));
 }
+
+function getChartRadius(size) {
+  return Math.min(size+15, 40);;
+}
+
 /**
  * Create a ol.style.Image for a cluster
  * @param {number} options.size the cluster size
@@ -231,9 +238,10 @@ function clusterImage(options) {
  * @param {*} clusterColor 
  * @param {*} clusterDash 
  * @param {*} clusterTextColor 
+ * @param {*} options 
  * @private
  */
-function getClusterStyle(cluster, optId, clusterColor, clusterDash, clusterTextColor) {
+function getClusterStyle(cluster, optId, clusterColor, clusterDash, clusterTextColor, options) {
   var size = cluster.length;
   var styleid = 'cluster:'+size+'-'+optId;
   var style = _cacheStyle[styleid];
@@ -247,6 +255,115 @@ function getClusterStyle(cluster, optId, clusterColor, clusterDash, clusterTextC
           }),
       }),
     });
+    style.setZIndex(options.zIndex||0);
+  }
+  return [style];
+}
+
+
+/**
+ * Create a ol.style.Chart for a Statistic cluster
+ * @param {number} options.size the cluster size
+ * @param {Object<string, number>} options.dataColor the cluster colors and data for the chart
+ * @return {ol.style.Image} the cluster image
+ * @private
+ */
+function statisticImage(options) {
+  options = options || {};
+  const colors = options.colors;
+  const data = options.data;
+  const radius = getChartRadius(options.size);
+  return new ol_style_Chart({
+    type: 'donut',
+    radius: radius,
+    data: data,
+    colors: colors,
+    rotateWithView: true,
+    stroke: new ol_style_Stroke({
+      color: "#FFF",
+      width: 2
+    }),
+    // text: new ol_style_Text({
+    //   color: 'rgba('+color.join(',')+',1)',
+    // }),
+  });
+}
+
+
+/** Get Style for cluster
+ * @param {Array<Feature>} cluster
+ * @param {string} optId cluster Id
+ * @param {*} clusterColor 
+ * @param {*} clusterDash 
+ * @param {*} clusterTextColor 
+ * @param {*} options 
+ * @private
+ */
+function getStatisticClusterStyle(f, cluster, optId, clusterColor, clusterDash, clusterTextColor, options) {
+  const size = cluster.length;
+
+  let dataColor = f.get('dataColor');
+  // Get number of element per color
+  if (!dataColor) {
+    dataColor = {};
+    cluster.forEach(f => {
+      // Get feature style
+      st = f.getLayer().getStyle()(f)
+      switch(f.getGeometry().getType()) {
+        case 'MultiPoint':
+        case 'Point':
+          var color = st[0].getImage()._color
+          break;
+        default:
+          var color = st[0].getStroke().getColor()
+          break;
+      }
+      if (color in dataColor) dataColor[color] ++;
+      else dataColor[color] = 1;
+    })
+    // Add it to the cluster to prevent recalculation
+    f.dataColor = dataColor;
+  }
+
+  // Rename all colors to hex format
+  for (const color in dataColor) {
+    // rgba value
+    if (!color.includes("#")) {
+      hexColor = chroma(color).hex();
+      dataColor[hexColor] = dataColor[color];
+      delete dataColor[color]
+    } 
+  }
+
+  const hexKeys = Object.keys(dataColor).sort()
+  // Construct the new data and colors + cache key
+  let cacheKey = "";
+  let colors = [];
+  let data = []
+  hexKeys.forEach(key => {
+    colors.push(key);
+    data.push(dataColor[key])
+    cacheKey += key.toString() + dataColor[key].toString()
+  })
+
+  // Construct style id and style
+  const styleid = 'clusterStat:'+cacheKey+'-'+optId;
+  let style = _cacheStyle[styleid];
+  if (!style) {
+    style = _cacheStyle[styleid] = new ol_style_Style({
+      image: statisticImage({ size: size, colors: colors, data: data, dash: clusterDash }),
+      text: new ol_style_Text({
+        text: size.toString(),
+        scale: 1.3,
+        fill: new ol_style_Fill({
+          color: "black",
+        }),
+        backgroundFill: new ol_style_Fill({
+          color: "rgba(255, 255, 255, 0.5)",
+        }),
+      }),
+    });
+    style.setZIndex(options.zIndex||0);
   }
   return [style];
 }
@@ -552,7 +669,7 @@ function getStyleFn(options) {
     clusterTextColor = isDarkColor(clusterColor) ? '#fff' : '#000';
   }
   const clusterDash = options.clusterDash;
-  const optId = (options.clusterColor||'')+'-'+(options.clusterDash === false ? 0 : 1);
+  const optId = (options.clusterColor||'')+'-'+(options.clusterDash === false ? 0 : 1)+'-'+(options.clusterStat === false ? 0 : 1);
 
   // Clusters style
   return function(f, res, clustered) {
@@ -567,7 +684,18 @@ function getStyleFn(options) {
       if (cluster.length == 1) {
         f = cluster[0];
       } else {
-        return getClusterStyle(cluster, optId, clusterColor, clusterDash, clusterTextColor);
+        // Check if the feature is already a cluster
+        let clusterStatFeature = false;
+        if (!options.clusterStat) {
+          clusterStatFeature = cluster[0].getLayer().get('clusterStat');
+        }
+        // Get style for statistic clusters
+        if (options.clusterStat || clusterStatFeature) {
+          return getStatisticClusterStyle(f, cluster, optId, clusterColor, clusterDash, clusterTextColor, options)
+        }
+        else {
+          return getClusterStyle(cluster, optId, clusterColor, clusterDash, clusterTextColor, options);
+        }
       }
     }
 
@@ -630,7 +758,6 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
       stroke: stroke,
       geometry: getClusterGeom
     });
-    // console.log("style main")
   }
   st.setZIndex(options.zIndex||0);
   style = [st];
@@ -645,7 +772,6 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
     // Stroke Arrow
     if (!(st = _cacheStyle[id.arrow])) {
       st = _cacheStyle[id.arrow] = getStyleArrow(s);
-      // console.log("style arrow")
     }
     setArrowRotation(st, f)
     st.setZIndex(options.zIndex||0);
@@ -655,7 +781,6 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
   if (label) {
     if (!(st = _cacheStyle[id.text])) {
       st = _cacheStyle[id.text] = getStyleLabel(s /*, typeGeom*/);
-      // console.log("style text",s)
     }
     // Label avec affichage conditionnel si le champ est vide
     st.getText().setText(label.replace ? f.getLabelContent("(("+label.replace(/\\n/g, '\n')+"))") : f.getLabelContent("(("+label+"))"));
@@ -779,25 +904,33 @@ function getSelectStyleFn(options) {
         if (points) s.push(ptsStyle);
         return s;
       }
-      case 'overlay': {	
+      case 'overlay': {
         // Feature style
         s = showObject ? style(f, res) : [];
         s.push(overlay);
         if (points) s.push(ptsStyle);
         return s;
       }
-      default: {	
+      default: {
         // Feature style
         s = showObject ? style(f, res) : [];
         // Add
         var g = f.getGeometry();
         if (/Point/.test(g.getType())) {
           var cluster = f.get('features');
-          if (cluster && cluster.length==1) {
-            f = cluster[0];
-            cluster = false;
+          // Get function radius according to the cluster type
+          let functionRadius = getClusterRadius;
+          if (cluster) {
+            if (cluster.length==1) {
+              f = cluster[0];
+              cluster = false;
+            } else if (cluster[0].getLayer().get('clusterStat')) {
+              functionRadius = getChartRadius;
+            }
           }
-          const r = (cluster ? getClusterRadius(cluster.length) : (f.getIgnStyle('pointRadius') || 5)) + radius;
+          
+          // Get radius value
+          const r = (cluster ? functionRadius(cluster.length) : (f.getIgnStyle('pointRadius') || 5)) + radius;
           s.unshift(new ol_style_Style({
             image: new ol_style_Circle({
               stroke: strokePoint,

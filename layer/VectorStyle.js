@@ -9,8 +9,6 @@ import 'ol-ext/filter/Base'
 
 import '../ol/BaseLayer'
 
-import chroma from "chroma-js";
-
 import '../ol/Feature'
 import loadFonts from '../font/loadFonts'
 import { getStyleFn, defaultIgnStyle, clearCache, getIgnStyle, ordering } from '../style/ignStyleFn'
@@ -303,17 +301,11 @@ VectorStyle.prototype.setMode = function(mode, options) {
   this.set('clusterColor', !!options.clusterColor);
 
   // Attributes and colors
-  if (options.clusterAttribute) {
-    this.set('clusterAttribute', options.clusterAttribute)
+  if (options.clusterStat) {
+    this.set('clusterStat', options.clusterStat)
   } else {
-    this.set('clusterAttribute', "")
+    this.set('clusterStat', false)
   }
-  if (options.clusterColors) {
-    this.set("clusterColors", options.clusterColors)
-  } else {
-    this.set("clusterColors", chroma.brewer.Oranges)
-  }
-
   switch (mode) {
     case 'cluster':{
       // Create cluster layer when needed
