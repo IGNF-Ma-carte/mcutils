@@ -103,7 +103,8 @@ Layer.prototype.readOptions = function(layer, options) {
     if (options.cluster || options.mode === 'cluster') {
       layer.setMode('cluster', { 
         distance: options.clusterDistance || options.radiusCluster || 40,
-        maxZoomCluster: parseInt(options.maxZoomCluster)
+        maxZoomCluster: parseInt(options.maxZoomCluster),
+        clusterStat: options.clusterStat
       });
     } else if (options.mode) {
       layer.setMode(options.mode || 'vector');
@@ -198,6 +199,7 @@ Layer.prototype.writeOptions = function(layer, options) {
       options.cluster = true;
       options.clusterDistance = options.radiusCluster = layer.get('clusterDistance');
       options.maxZoomCluster = layer.get('maxZoomCluster');
+      options.clusterStat = layer.get("clusterStat");
     }
   }
   // Crop

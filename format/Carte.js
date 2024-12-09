@@ -161,7 +161,6 @@ Carte.prototype.writeLayers = function(layers, uncompressed) {
       data.push(layer);
     } else {
       console.warn('Layer [' + l.get('type') + ':' + l.get('title') + ']  has no writer...')
-      console.log(l)
     }
   })
   return data;
