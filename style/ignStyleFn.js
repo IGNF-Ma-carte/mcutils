@@ -289,6 +289,58 @@ function statisticImage(options) {
   });
 }
 
+/**
+ * Get the color that will be used for the feature depending
+ * on the type of feature and its style
+ * @param {Feature} feature Feature used to get the color of
+ * @return {string} Color to use for the statistic cluster
+ * @private
+ */
+function getFeatureColor(feature) {
+  let color;
+  const st = feature.getLayer().getStyle()(feature);
+
+  if (st.length != 0) {
+    switch(feature.getGeometry().getType()) {
+      case 'MultiPoint':
+      case 'Point':
+        const image = st[0].getImage();
+        color = image._color;
+
+        // Check if color is valid to see if it's a special case
+        if (!chroma.valid(color)) {
+          // Check if it's an image
+          const img = image.img_;
+          if (img) {
+            // Get the stroke color
+            color = image._stroke.getColor();
+            
+            // Transform 'transparent' color to gray
+            if (color === 'transparent') color = 'rgba(128,128,128,0.5)';
+          }
+
+          // Else it might be a marker, so necessary to take the second feature
+          else if (st.length > 1) {
+            color = st[1].getImage()._color
+          }
+
+          // Otherwise the feature will not be rendered
+          else color = null;
+        }
+        break;
+      
+      // Get line color for (multi) lines and polygons 
+      default:
+        color = st[0].getStroke().getColor()
+        break;
+  }} else {
+    // No style so it will not be rendered
+    return null;
+  }
+  return color
+}
+
+
 
 /** Get Style for cluster
  * @param {Array<Feature>} cluster
@@ -300,27 +352,19 @@ function statisticImage(options) {
  * @private
  */
 function getStatisticClusterStyle(f, cluster, optId, clusterColor, clusterDash, clusterTextColor, options) {
-  const size = cluster.length;
-
   let dataColor = f.get('dataColor');
-  let color;
   // Get number of element per color
   if (!dataColor) {
     dataColor = {};
     cluster.forEach(f => {
-      // Get feature style
-      const st = f.getLayer().getStyle()(f)
-      switch(f.getGeometry().getType()) {
-        case 'MultiPoint':
-        case 'Point':
-          color = st[0].getImage()._color
-          break;
-        default:
-          color = st[0].getStroke().getColor()
-          break;
+      // Get feature color for the chart
+      const color = getFeatureColor(f);
+
+      // If there are no colors, it is not added to the cluster
+      if (color !== null) {
+        if (color in dataColor) dataColor[color] ++;
+        else dataColor[color] = 1;
       }
-      if (color in dataColor) dataColor[color] ++;
-      else dataColor[color] = 1;
     })
     // Add it to the cluster to prevent recalculation
     f.dataColor = dataColor;
@@ -347,6 +391,9 @@ function getStatisticClusterStyle(f, cluster, optId, clusterColor, clusterDash, 
     cacheKey += key.toString() + dataColor[key].toString()
   })
 
+  // Count number of rendered items
+  const size = data.reduce((partialSum, a) => partialSum + a, 0);
+
   // Construct style id and style
   const styleid = 'clusterStat:'+cacheKey+'-'+optId;
   let style = _cacheStyle[styleid];
@@ -368,6 +415,7 @@ function getStatisticClusterStyle(f, cluster, optId, clusterColor, clusterDash, 
   }
   return [style];
 }
+
 
 /** Get ol stroke dash from string
  * @param {*} style
@@ -960,6 +1008,7 @@ function getSelectStyleFn(options) {
 export { ignStyleDef }
 
 export { getStyleFn }
+export { getFeatureColor }
 export { style2IgnStyle }
 export { getSelectStyleFn }
 export { defaultIgnStyle }
