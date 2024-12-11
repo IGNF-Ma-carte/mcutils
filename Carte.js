@@ -49,6 +49,7 @@ import notification from './dialog/notification'
 import getLayerSwitcher from './control/layerSwitcher'
 
 import Popup from 'ol-ext/overlay/Popup'
+import ol_Overlay_PopupMultiple from 'mcutils/ol/PopupMultiple'
 import Tooltip from 'ol-ext/overlay/Tooltip'
 import Hover from 'ol-ext/interaction/Hover'
 
@@ -381,11 +382,12 @@ class Carte extends ol_Object {
     this._controls.locate.set('bar', true);
     this.showControl('toolbar', false);
     // Popup
-    this.popup = new Popup({ closeBox: true, minibar: true });
+    this.popup = new ol_Overlay_PopupMultiple({ closeBox: true, minibar: true });
+    // this.popup = new Popup({ closeBox: true, minibar: true });
     this.map.addOverlay(this.popup);
     this.popup.on('show', () => this.popup.content.scrollTop = 0);
     // Hover
-    this.popover = new Popup({
+    this.popover = new ol_Overlay_PopupMultiple({
       className: 'tooltips popuphover',
       positioning: 'center-left',
       stopEvent: false
