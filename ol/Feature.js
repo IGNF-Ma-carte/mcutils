@@ -311,6 +311,9 @@ Feature.prototype.showPopup = function(popup, coord, geom) {
     features = [feat]
   }
 
+  // Get count of the popup if exists
+  const count = feat.get('popupIndex')
+
   let contents = [];
   let renderedFeatures = [];
   features.forEach(f => {
@@ -341,14 +344,14 @@ Feature.prototype.showPopup = function(popup, coord, geom) {
           popup.offsetBox = [-offsetX, (style.pointOffsetY ? -2:-1)*style.pointRadius, offsetX, style.pointOffsetY ? 0:style.pointRadius];
         }
       }
-      if (geom) popup.show(geom.getClosestPoint(coord), contents, renderedFeatures);
-      else popup.show(feat.getGeometry().getFirstCoordinate(), contents, renderedFeatures);
+      if (geom) popup.show(geom.getClosestPoint(coord), contents, renderedFeatures, count);
+      else popup.show(feat.getGeometry().getFirstCoordinate(), contents, renderedFeatures, count);
       popup.offsetBox = offset;
     } else {
       if (/polygon/i.test(feat.getGeometry().getType())) {
-        popup.show(coord, contents, renderedFeatures);
+        popup.show(coord, contents, renderedFeatures, count);
       } else {
-        popup.show(feat.getGeometry().getClosestPoint(coord), contents, renderedFeatures);
+        popup.show(feat.getGeometry().getClosestPoint(coord), contents, renderedFeatures, count);
       }
     }
   } else {

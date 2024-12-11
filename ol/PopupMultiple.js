@@ -27,9 +27,11 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
 
   /** Show the popup on the map
    * @param {ol.coordinate|undefined} coordinate Position of the popup
-   * @param {string|Element|Array<string|Element>} contents The contents to display
+   * @param {string|Element|Array<string|Element>} contents Contents of the popup
+   * @param {string|Element|Array<string|Element>} features Corresponding features for contents
+   * @param {string|Element|Array<string|Element>} count The count of the feature to display
    */
-  show(coordinate, contents, features) {
+  show(coordinate, contents, features, count) {
     if (!(contents instanceof Array))
       contents = [contents];
     if (!(features instanceof Array))
@@ -39,9 +41,16 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
     if (!this._count)
       this._count = 1;
 
-    // Calculate html upon content values
     this._count = 1;
-    let content = contents[0]
+    // Set _count to count if given
+    if (count && Number.isInteger(count)) {
+      // _count is between 1 and _contents.length
+      if (0 < count && count < this._contents.length + 1)
+        this._count = count
+    }
+
+    // Calculate html upon content values
+    let content = contents[this._count - 1]
     var html = this._getHtml(content);
     if (html) {
       if (!this.element.classList.contains('ol-fixed'))
@@ -71,9 +80,9 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
             this._count = this._contents.length;
           html = this._getHtml(this._contents[this._count - 1]);
           setTimeout(function () {
-            ol_Overlay_Popup.prototype.show.call(this, this.getPosition(), html);
+            ol_Overlay_Popup.prototype.show.call(this, this.getPosition(), html, this._count);
           }.bind(this), 350);
-          this.dispatchEvent({type: 'change', content: this._contents[this._count - 1], feature: this._features[this._count - 1]})
+          this.dispatchEvent({type: 'change', content: this._contents[this._count - 1], feature: this._features[this._count - 1], index: this._count})
         }.bind(this)
       });
       ol_ext_element.create('TEXT', { html: this._count + '/' + this._contents.length, parent: div });
@@ -86,9 +95,9 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
             this._count = 1;
           html = this._getHtml(this._contents[this._count - 1]);
           setTimeout(function () {
-            ol_Overlay_Popup.prototype.show.call(this, this.getPosition(), html);
+            ol_Overlay_Popup.prototype.show.call(this, this.getPosition(), html, this._count);
           }.bind(this), 350);
-          this.dispatchEvent({type: 'change', content: this._contents[this._count - 1], feature: this._features[this._count - 1]})
+          this.dispatchEvent({type: 'change', content: this._contents[this._count - 1], feature: this._features[this._count - 1], index: this._count})
         }.bind(this)
       });
     }
@@ -103,10 +112,8 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
         parent: html
       });
     }
-
     return html;
   }
-
 }
 
 /** Get a function to use as format to get local string for an attribute
