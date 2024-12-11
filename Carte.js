@@ -48,8 +48,7 @@ import LocateCtrl from 'ol-ext/control/GeolocationButton'
 import notification from './dialog/notification'
 import getLayerSwitcher from './control/layerSwitcher'
 
-import Popup from 'ol-ext/overlay/Popup'
-import ol_Overlay_PopupMultiple from 'mcutils/ol/PopupMultiple'
+import ol_Overlay_PopupMultiple from './ol/PopupMultiple'
 import Tooltip from 'ol-ext/overlay/Tooltip'
 import Hover from 'ol-ext/interaction/Hover'
 
