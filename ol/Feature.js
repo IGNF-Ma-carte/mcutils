@@ -312,7 +312,7 @@ Feature.prototype.showPopup = function(popup, coord, geom) {
   }
 
   // Get count of the popup if exists
-  const count = feat.get('popupIndex')
+  const count = feat.popupIndex_
 
   let contents = [];
   let renderedFeatures = [];
