@@ -765,11 +765,17 @@ function getStyleFn(options) {
       } else {
         // Update values from layer for clusters
         clusterType = (clusterType ? clusterType : cluster[0].getLayer().get('clusterType'))
-        clusterColor = (clusterColor ? clusterColor : cluster[0].getLayer().get('clusterColor').slice(0, 3))
-        clusterTextColor = isDarkColor(clusterColor) ? '#fff' : '#000';
         clusterDistance = (clusterDistance ? clusterDistance : cluster[0].getLayer().get('clusterDistance'))
         // Update radius max
         radiusMax = getRadiusMax(clusterDistance)
+
+        // The color might not be defined
+        clusterColor = (clusterColor ? clusterColor : cluster[0].getLayer().get('clusterColor'))
+        if (clusterColor) {
+          clusterColor = clusterColor.slice(0, 3)
+          clusterTextColor = isDarkColor(clusterColor) ? '#fff' : '#000';
+        }
+        
         
         // Recreate optId
         type = (clusterType == "normal" ? 0 : (clusterType == "color" ? 1 : 2));
