@@ -321,9 +321,13 @@ Feature.prototype.showPopup = function(popup, coord, geom) {
     const mode = f.getLayer().getMode();
     // If it's a cluster, then we check if there is a style to display it
     if (mode == "cluster") {
-      const st = f.getLayer().getStyle()(f);
-      if (st.length == 0) {
-        continue;
+      // Check if the cluster type is statistic
+      if (f.getLayer().get("clusterType") == 'stat') {
+        const st = f.getLayer().getStyle()(f);
+        // No popup is displayed for transparent items
+        if (st.length == 0) {
+          continue;
+        }
       }
     }
 
