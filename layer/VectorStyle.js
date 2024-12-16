@@ -296,16 +296,25 @@ VectorStyle.prototype.setMode = function(mode, options) {
     this.set('maxZoomCluster', parseFloat(options.maxZoomCluster));
   }
   if (options.clusterDistance === undefined) options.clusterDistance = options.distance;
+  // Cluster options
   this.set('clusterDistance', parseFloat(options.clusterDistance || options.distance) || 40);
   this.set('clusterDash', !!options.clusterDash);
-  this.set('clusterColor', !!options.clusterColor);
-
-  // Attributes and colors
-  if (options.clusterStat) {
-    this.set('clusterStat', options.clusterStat)
+  if (options.clusterType) {
+    this.set('clusterType', options.clusterType)
   } else {
-    this.set('clusterStat', false)
+    this.set('clusterType', "normal")
   }
+  if (options.clusterColor) {
+    this.set('clusterColor', options.clusterColor)
+  } else {
+    this.set('clusterColor', null)
+  }
+  if (options.displayClusterPopup) {
+    this.set('displayClusterPopup', options.displayClusterPopup)
+  } else {
+    this.set('displayClusterPopup', false)
+  }
+  
   switch (mode) {
     case 'cluster':{
       // Create cluster layer when needed
