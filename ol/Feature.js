@@ -316,21 +316,27 @@ Feature.prototype.showPopup = function(popup, coord, geom) {
 
   let contents = [];
   let renderedFeatures = [];
-  features.forEach(f => {
-    const st = f.getLayer().getStyle()(f);
-
-    if (st.length != 0) {
-      const content = f.getPopupContent(true);
-      if (content.innerText.trim() || content.querySelector('canvas') || content.querySelector('img')) {
-        if (!coord) coord = popup.getPosition() || (geom||f.getGeometry()).getFirstCoordinate();
-        popup.setOffset([0, 0]);
-
-        // If a content was created, we add it to the contents 
-        contents.push(content);
-        renderedFeatures.push(f);
+  for (let i = 0; i < features.length; i++) {
+    f = features[i]
+    const mode = f.getLayer().getMode();
+    // If it's a cluster, then we check if there is a style to display it
+    if (mode == "cluster") {
+      const st = f.getLayer().getStyle()(f);
+      if (st.length == 0) {
+        continue;
       }
     }
-  })
+
+    const content = f.getPopupContent(true);
+    if (content.innerText.trim() || content.querySelector('canvas') || content.querySelector('img')) {
+      if (!coord) coord = popup.getPosition() || (geom||f.getGeometry()).getFirstCoordinate();
+      popup.setOffset([0, 0]);
+
+      // If a content was created, we add it to the contents
+      contents.push(content);
+      renderedFeatures.push(f);
+    }
+  }
 
   // Show popup only if there is content
   if (contents.length) {

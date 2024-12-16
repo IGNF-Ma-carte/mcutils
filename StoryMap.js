@@ -1437,13 +1437,15 @@ StoryMap.prototype.setCarte = function(carte, n) {
     // Handle feature select on the map
     const onselect = (e) => {
       let feature = e.selected[0];
-      // Cluster > zoom to cluster extent
+      // Cluster : zoom or display Popup
       if (feature && feature.get('features')) {
-        if (feature.get('features').length > 1) {
-          carte.zoomToClusterExtent(feature.get('features'));
-          feature = false;
-        } else {
-          feature = feature.get('features')[0];
+        displayClusterPopup = feature.get('features')[0].getLayer().get("displayClusterPopup")
+        // If displayClusterPopup is true, we display the popup; else we zoom to the extent
+        if (!displayClusterPopup) {
+          if (feature.get('features').length > 1) {
+            carte.zoomToClusterExtent(feature.get('features'));
+            feature = false;
+          }
         }
       }
       // Show info
