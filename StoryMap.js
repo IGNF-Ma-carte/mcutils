@@ -1439,7 +1439,7 @@ StoryMap.prototype.setCarte = function(carte, n) {
       let feature = e.selected[0];
       // Cluster : zoom or display Popup
       if (feature && feature.get('features')) {
-        displayClusterPopup = feature.get('features')[0].getLayer().get("displayClusterPopup")
+        const displayClusterPopup = feature.get('features')[0].getLayer().get("displayClusterPopup")
         // If displayClusterPopup is true, we display the popup; else we zoom to the extent
         if (!displayClusterPopup) {
           if (feature.get('features').length > 1) {

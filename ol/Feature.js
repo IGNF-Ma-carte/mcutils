@@ -317,7 +317,7 @@ Feature.prototype.showPopup = function(popup, coord, geom) {
   let contents = [];
   let renderedFeatures = [];
   for (let i = 0; i < features.length; i++) {
-    f = features[i]
+    let f = features[i]
     const mode = f.getLayer().getMode();
     // If it's a cluster, then we check if there is a style to display it
     if (mode == "cluster") {
