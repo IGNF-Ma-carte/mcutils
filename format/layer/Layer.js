@@ -73,6 +73,8 @@ Layer.prototype.readOptions = function(layer, options) {
   if (layer.selectable) {
     layer.selectable(options.selectable);
   }
+  // Multi select
+  if (options.multiSelect) layer.set('multiSelect', options.multiSelect);
   // Popup
   if (layer.setPopupContent) layer.setPopupContent(options.popupContent);
   if (options.popupHoverSelect) layer.set('popupHoverSelect', options.popupHoverSelect);
@@ -167,6 +169,8 @@ Layer.prototype.writeOptions = function(layer, options) {
   if (layer.selectable) {
     options.selectable = layer.selectable();
   }
+  // Multi select
+  options.multiSelect = layer.get('multiSelect');
   // PopupContent
   if (layer.getPopupContent) {
     options.popupContent = layer.getPopupContent();
