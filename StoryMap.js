@@ -1436,62 +1436,51 @@ StoryMap.prototype.setCarte = function(carte, n) {
     carte.setSelectStyle({ points: false });
     // Handle feature select on the map
     const onselect = (e) => {
-      let layers = carte.getMap().getLayers();
       let visibleLayersIds = [];
-      layers.forEach(layer => {
+      // Get visible layers of the map
+      carte.getMap().getLayers().forEach(layer => {
         if (layer.getVisible()) visibleLayersIds.push(layer.ol_uid)
       })
       
-      let firstFeature;
-      let selectedFeatures = carte.getSelect().getFeatures().getArray();
-      
-      console.log("onselect");
-      console.log(e);
-      console.log(...selectedFeatures);
-      // If empty, take select from event
-      if (selectedFeatures.length) {
-        firstFeature = selectedFeatures[0];
-      }
-      else {
-        console.log("first feature = e.select")
-        firstFeature = e.selected[0];
-      }
+      // Take the first feature of the current selection (before filtering here)
+      const selectedFeatures = carte.getSelect().getFeatures();
+      let firstFeature = selectedFeatures.item(0);
 
-      // Check if we change the selected layer (only if new features are selected)
-      let indexFirstFeature, indexFirstSelectedFeature;
-      let firstSelectedFeature;
+      // Check if the selected layer most on top has changed
       if (e.selected.length) {
-        firstSelectedFeature = e.selected[0];
-        indexFirstFeature = visibleLayersIds.indexOf(firstFeature.getLayer().ol_uid);
-        indexFirstSelectedFeature = visibleLayersIds.indexOf(firstSelectedFeature.getLayer().ol_uid);
+        const firstSelectedFeature = e.selected[0];
+        // Last element of visible layers is the layer at the top of the layer switcher
+        const indexFirstFeature = visibleLayersIds.indexOf(firstFeature.getLayer().ol_uid);
+        const indexFirstSelectedFeature = visibleLayersIds.indexOf(firstSelectedFeature.getLayer().ol_uid);
 
         if (indexFirstSelectedFeature > indexFirstFeature) {
-          // Clear current selection
-          console.log("clear select")
+          // Layer changed : remove previous selection and take first selected as the first feature
           firstFeature = e.selected[0];
+
           const firstFeatureId = firstFeature.getLayer().ol_uid;
-          console.log(firstFeature);
-          // Keep selected features from the
-          const nbSelectedFeatures = carte.getSelect().getFeatures().getLength();
-          // Deselect unwanted features
+          const nbSelectedFeatures = selectedFeatures.getLength();
+
+          // Remove previous selection (First features with a different layer id)
           for (let i = 0; i < nbSelectedFeatures; i++) {
-            const feature = carte.getSelect().getFeatures().item(0);
+            const feature = selectedFeatures.item(0);
             if (feature.getLayer().ol_uid != firstFeatureId) {
-              carte.getSelect().getFeatures().removeAt(0);
+              selectedFeatures.removeAt(0);
             } else {
+              // The selected features are ordered : first current election and new elements
+              // So there is no need to check after the id is different
               break
             }
           }
-
-          console.log(...selectedFeatures);
         }
       }
 
+      // In case of multi select, add the feature to the current selection
+      const indexToStart = ((e.selected.length == selectedFeatures.getLength()) ? 1 : 0)
 
-      const indexToStart = ((e.selected.length == selectedFeatures.length) ? 1 : 0)
-      console.log("e length", e.selected.length,"select length", selectedFeatures.length, indexToStart)
       let features = [];
       let deselectedFeatures = [];
+      
+      // Multi selection handler
       if (firstFeature && firstFeature.getLayer) {
         const multiSelect = firstFeature.getLayer().get('multiSelect');
         // If it's multi select, get all features selected from this layer
@@ -1506,7 +1495,6 @@ StoryMap.prototype.setCarte = function(carte, n) {
             }
           }
         } else {
-          console.log("not multi select");
           features.push(firstFeature)
           deselectedFeatures.push(...e.selected.slice(indexToStart, e.selected.length))
         }
@@ -1514,10 +1502,11 @@ StoryMap.prototype.setCarte = function(carte, n) {
         features.push(firstFeature)
         deselectedFeatures.push(...e.selected.slice(indexToStart, e.selected.length))
       }
+      
+      // Remove features
       if (deselectedFeatures.length) {
         deselectedFeatures.forEach(firstFeature => {
-          // Remove feature
-          e.target.getFeatures().remove(firstFeature);
+          selectedFeatures.remove(firstFeature);
         })
       }
 
@@ -1527,6 +1516,7 @@ StoryMap.prototype.setCarte = function(carte, n) {
         // If displayClusterPopup is true, we display the popup; else we zoom to the extent
         if (!displayClusterPopup && (firstFeature.get('features').length > 1 || features.length > 1)) {
           let clusterFeatures = [];
+          // Check all elements in the selected features
           features.forEach(feat => {
             const cluster = feat.get('features');
             if (cluster)
