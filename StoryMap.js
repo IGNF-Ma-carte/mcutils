@@ -1436,22 +1436,114 @@ StoryMap.prototype.setCarte = function(carte, n) {
     carte.setSelectStyle({ points: false });
     // Handle feature select on the map
     const onselect = (e) => {
-      let feature = e.selected[0];
-      // Cluster : zoom or display Popup
-      if (feature && feature.get('features')) {
-        const displayClusterPopup = feature.get('features')[0].getLayer().get("displayClusterPopup")
-        // If displayClusterPopup is true, we display the popup; else we zoom to the extent
-        if (!displayClusterPopup) {
-          if (feature.get('features').length > 1) {
-            carte.zoomToClusterExtent(feature.get('features'));
-            feature = false;
+      let layers = carte.getMap().getLayers();
+      let visibleLayersIds = [];
+      layers.forEach(layer => {
+        if (layer.getVisible()) visibleLayersIds.push(layer.ol_uid)
+      })
+      
+      let firstFeature;
+      let selectedFeatures = carte.getSelect().getFeatures().getArray();
+      
+      console.log("onselect");
+      console.log(e);
+      console.log(...selectedFeatures);
+      // If empty, take select from event
+      if (selectedFeatures.length) {
+        firstFeature = selectedFeatures[0];
+      }
+      else {
+        console.log("first feature = e.select")
+        firstFeature = e.selected[0];
+      }
+
+      // Check if we change the selected layer (only if new features are selected)
+      let indexFirstFeature, indexFirstSelectedFeature;
+      let firstSelectedFeature;
+      if (e.selected.length) {
+        firstSelectedFeature = e.selected[0];
+        indexFirstFeature = visibleLayersIds.indexOf(firstFeature.getLayer().ol_uid);
+        indexFirstSelectedFeature = visibleLayersIds.indexOf(firstSelectedFeature.getLayer().ol_uid);
+
+        if (indexFirstSelectedFeature > indexFirstFeature) {
+          // Clear current selection
+          console.log("clear select")
+          firstFeature = e.selected[0];
+          const firstFeatureId = firstFeature.getLayer().ol_uid;
+          console.log(firstFeature);
+          // Keep selected features from the
+          const nbSelectedFeatures = carte.getSelect().getFeatures().getLength();
+          // Deselect unwanted features
+          for (let i = 0; i < nbSelectedFeatures; i++) {
+            const feature = carte.getSelect().getFeatures().item(0);
+            if (feature.getLayer().ol_uid != firstFeatureId) {
+              carte.getSelect().getFeatures().removeAt(0);
+            } else {
+              break
+            }
           }
+
+          console.log(...selectedFeatures);
         }
       }
+
+
+      const indexToStart = ((e.selected.length == selectedFeatures.length) ? 1 : 0)
+      console.log("e length", e.selected.length,"select length", selectedFeatures.length, indexToStart)
+      let features = [];
+      let deselectedFeatures = [];
+      if (firstFeature && firstFeature.getLayer) {
+        const multiSelect = firstFeature.getLayer().get('multiSelect');
+        // If it's multi select, get all features selected from this layer
+        if (multiSelect) {
+          const layerId = firstFeature.getLayer().ol_uid;
+          for (let i = 0; i < e.selected.length; i++) {
+            const f = e.selected[i];
+            if (layerId == f.getLayer().ol_uid) {
+              features.push(f)
+            } else {
+              deselectedFeatures.push(f)
+            }
+          }
+        } else {
+          console.log("not multi select");
+          features.push(firstFeature)
+          deselectedFeatures.push(...e.selected.slice(indexToStart, e.selected.length))
+        }
+      } else if (firstFeature) {
+        features.push(firstFeature)
+        deselectedFeatures.push(...e.selected.slice(indexToStart, e.selected.length))
+      }
+      if (deselectedFeatures.length) {
+        deselectedFeatures.forEach(firstFeature => {
+          // Remove feature
+          e.target.getFeatures().remove(firstFeature);
+        })
+      }
+
+      // Cluster : zoom or display Popup
+      if (firstFeature && firstFeature.get('features')) {
+        const displayClusterPopup = firstFeature.get('features')[0].getLayer().get("displayClusterPopup")
+        // If displayClusterPopup is true, we display the popup; else we zoom to the extent
+        if (!displayClusterPopup && (firstFeature.get('features').length > 1 || features.length > 1)) {
+          let clusterFeatures = [];
+          features.forEach(feat => {
+            const cluster = feat.get('features');
+            if (cluster)
+              clusterFeatures.push(...cluster)
+              else {
+              clusterFeatures.push(feat)
+            }
+          })
+          carte.zoomToClusterExtent(clusterFeatures);
+          firstFeature = false;
+        }
+      }
+      
       // Show info
       carte.popupFeature(false);
       if (this.get('model') === 'diapo') {
-        if (feature instanceof Feature) {
+        if (firstFeature instanceof Feature) {
           const features = [];
           // Get 100 feature for diaporama
           let nb = 100;
@@ -1467,17 +1559,17 @@ StoryMap.prototype.setCarte = function(carte, n) {
             }
             if (nb < 0) break;
           }
-          fullscreen.diaporama(feature, features)
+          fullscreen.diaporama(firstFeature, features)
         }
       } else if (this.hasPopup()) {
-        if (!mdFeatureSelect(feature)) {
-          carte.popupFeature(feature, e.mapBrowserEvent ? e.mapBrowserEvent.coordinate : carte.map.getView().getCenter());
+        if (!mdFeatureSelect(firstFeature) && features.length) {
+          carte.popupFeatures(features, e.mapBrowserEvent ? e.mapBrowserEvent.coordinate : carte.map.getView().getCenter());
         }
       } else {
-        if (feature) feature._indicator = this.get('indicator');
+        if (firstFeature) firstFeature._indicator = this.get('indicator');
         // Display feature info or description
         this.setInfoVolet(
-          feature ? feature.getPopupContent(true) : this.get('description'), 
+          firstFeature ? firstFeature.getPopupContent(true) : this.get('description'), 
           // Second select (differentiel model)
           e.target === carte._interactions.select2
         );

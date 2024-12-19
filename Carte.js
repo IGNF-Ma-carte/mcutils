@@ -270,7 +270,6 @@ class Carte extends ol_Object {
         }
       }
     })
-
     // Add interactions
     this._interactions = {
       select: new Select({
@@ -278,6 +277,7 @@ class Carte extends ol_Object {
           if (l.selectable) return l.selectable();
           return false;
         },
+        multi:true,
         hitTolerance: 3,
         condition: clickCondition,
         style: getSelectStyleFn(this._styleOptions)
@@ -699,6 +699,127 @@ Carte.prototype.popupFeature = function(feature, coord) {
     feature.showPopup(this.popup, coord);
   }
 };
+
+/** Show a popup for multiple feature
+ * @param {Array<Feature>} feature
+ * @param {ol.coordinate} coord
+ */
+Carte.prototype.popupFeatures = function(features, coord) {
+  if (!features) {
+    this.popup.hide();
+  } else if (features.length == 0){
+    this.popup.hide();
+  } else {
+    // Set current world (when outside)
+    if (coord) {
+      const projExtent = this.map.getView().getProjection().getExtent();
+      if (coord[0] > projExtent[2]) {
+        const c = this.map.getView().getCenter();
+        c[0] = c[0] - (projExtent[2] - projExtent[0]);
+        this.map.getView().setCenter(c);
+        this.map.renderSync();
+      } else if (coord[0] < projExtent[1]) {
+        const c = this.map.getView().getCenter();
+        c[0] = c[0] + (projExtent[2] - projExtent[0]);
+        this.map.getView().setCenter(c);
+        this.map.renderSync();
+      }
+    }
+    // Show Popup
+    showPopupFeatures(features, this.popup, coord);
+  }
+};
+
+
+
+/** Show a popup at the right place
+ * If the feature has no content the popup is hidden.
+ * The popup is placed on the object (closest point)
+ * and use the feature style to calculate the offset from the point symbol.
+ * @method ol.Feature#showPopup
+ * @param {ol.Overlay.Popup} popup the popup to display on the map
+ * @param {ol.Coordinate} coord popup position (the closest point will be used)
+ * @param {ol.geom|undefined} [geom] use as geometry, default use object geom
+ * @returns {string} the popup content
+ * @private
+ */
+function showPopupFeatures(feat, popup, coord, geom) {
+  if (!feat) {
+    return;
+  }
+  let features = [];
+
+  features.forEach(feature => {
+    const cluster = feature.get('features');
+    if (cluster) {
+      features.push(...cluster);
+    } else {
+      features.push(feature);
+    }
+  })
+
+  if (features.length == 0) {
+    return
+  }
+
+  console.log(features)
+
+  let contents = [];
+  let renderedFeatures = [];
+  for (let i = 0; i < features.length; i++) {
+    let f = features[i]
+    const mode = f.getLayer().getMode();
+    // If it's a cluster, then we check if there is a style to display it
+    if (mode == "cluster" && f.getLayer().get("clusterType") == 'stat') {
+      const st = f.getLayer().getStyle()(f);
+      // No popup is displayed for transparent items
+      if (st.length == 0) {
+        continue;
+      }
+    }
+    
+
+    const content = f.getPopupContent(true);
+    if (content.innerText.trim() || content.querySelector('canvas') || content.querySelector('img')) {
+      if (!coord) coord = popup.getPosition() || (geom||f.getGeometry()).getFirstCoordinate();
+      popup.setOffset([0, 0]);
+
+      // If a content was created, we add it to the contents
+      contents.push(content);
+      renderedFeatures.push(f);
+    }
+  }
+
+  // Show popup only if there is content
+  if (contents.length) {
+    if (features[0].getGeometry().getType() === 'Point') {
+      var offset = popup.offsetBox;
+      // Statistic layer has no style
+      if (features[0].getLayer()) {
+        if (features[0].getLayer().getIgnStyle) {
+          var style = features[0].getLayer().getIgnStyle(features[0]);
+          var offsetX = /left|right/.test(popup.autoPositioning[0]) ? style.pointRadius : 0;
+          popup.offsetBox = [-offsetX, (style.pointOffsetY ? -2:-1)*style.pointRadius, offsetX, style.pointOffsetY ? 0:style.pointRadius];
+        }
+      }
+      if (geom) popup.show(geom.getClosestPoint(coord), contents, renderedFeatures);
+      else popup.show(features[0].getGeometry().getFirstCoordinate(), contents, renderedFeatures);
+      popup.offsetBox = offset;
+    } else {
+      if (/polygon/i.test(features[0].getGeometry().getType())) {
+        popup.show(coord, contents, renderedFeatures);
+      } else {
+        popup.show(features[0].getGeometry().getClosestPoint(coord), contents, renderedFeatures);
+      }
+    }
+  } else {
+    popup.hide()
+  }
+  // Load Twitter widget
+  md2html.renderWidget(popup.getElement());
+  
+  return contents;
+}
 
 /** Set current selection
  * @param {Feature} feature
