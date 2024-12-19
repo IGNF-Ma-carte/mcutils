@@ -1450,20 +1450,45 @@ StoryMap.prototype.setCarte = function(carte, n) {
       if (e.selected.length) {
         const firstSelectedFeature = e.selected[0];
         // Last element of visible layers is the layer at the top of the layer switcher
-        const indexFirstFeature = visibleLayersIds.indexOf(firstFeature.getLayer().ol_uid);
-        const indexFirstSelectedFeature = visibleLayersIds.indexOf(firstSelectedFeature.getLayer().ol_uid);
+        let indexFirstFeature;
+        if (firstFeature && firstFeature.get('features') instanceof Array) {
+          indexFirstFeature = visibleLayersIds.indexOf(firstFeature.get('features')[0].getLayer().ol_uid);
+        } else {
+          indexFirstFeature = visibleLayersIds.indexOf(firstFeature.getLayer().ol_uid);
+        }
+
+        let indexFirstSelectedFeature;
+        if (firstSelectedFeature && firstSelectedFeature.get('features') instanceof Array) {
+          indexFirstSelectedFeature = visibleLayersIds.indexOf(firstSelectedFeature.get('features')[0].getLayer().ol_uid);
+        } else {
+          indexFirstSelectedFeature = visibleLayersIds.indexOf(firstSelectedFeature.getLayer().ol_uid);
+        }
 
         if (indexFirstSelectedFeature > indexFirstFeature) {
           // Layer changed : remove previous selection and take first selected as the first feature
           firstFeature = e.selected[0];
 
-          const firstFeatureId = firstFeature.getLayer().ol_uid;
+          let firstFeatureId;
+          if (firstFeature && firstFeature.get('features') instanceof Array) {
+            firstFeatureId = firstFeature.get('features')[0].getLayer().ol_uid;
+          } else {
+            firstFeatureId = firstFeature.getLayer().ol_uid;
+          }
+
           const nbSelectedFeatures = selectedFeatures.getLength();
 
           // Remove previous selection (First features with a different layer id)
           for (let i = 0; i < nbSelectedFeatures; i++) {
-            const feature = selectedFeatures.item(0);
-            if (feature.getLayer().ol_uid != firstFeatureId) {
+            const f = selectedFeatures.item(0);
+            // Check if it's a cluster
+            let l;
+            if (f.get('features') instanceof Array) {
+              l = f.get('features')[0].getLayer()
+            } else {
+              l = f.getLayer()
+            }
+            if (l.ol_uid != firstFeatureId) {
+              console.log("removing", f)
               selectedFeatures.removeAt(0);
             } else {
               // The selected features are ordered : first current election and new elements
@@ -1482,13 +1507,27 @@ StoryMap.prototype.setCarte = function(carte, n) {
       
       // Multi selection handler
       if (firstFeature && firstFeature.getLayer) {
-        const multiSelect = firstFeature.getLayer().get('multiSelect');
+        // Check if it's a cluster
+        let firstLayer;
+        if (firstFeature.get('features') instanceof Array) {
+          firstLayer = firstFeature.get('features')[0].getLayer()
+        } else {
+          firstLayer = firstFeature.getLayer()
+        }
+        const multiSelect = firstLayer.get('multiSelect');
         // If it's multi select, get all features selected from this layer
         if (multiSelect) {
-          const layerId = firstFeature.getLayer().ol_uid;
+          const layerId = firstLayer.ol_uid;
           for (let i = 0; i < e.selected.length; i++) {
             const f = e.selected[i];
-            if (layerId == f.getLayer().ol_uid) {
+            // Check if it's a cluster
+            let l;
+            if (f.get('features') instanceof Array) {
+              l = f.get('features')[0].getLayer()
+            } else {
+              l = f.getLayer()
+            }
+            if (layerId == l.ol_uid) {
               features.push(f)
             } else {
               deselectedFeatures.push(f)
@@ -1511,7 +1550,7 @@ StoryMap.prototype.setCarte = function(carte, n) {
       }
 
       // Cluster : zoom or display Popup
-      if (firstFeature && firstFeature.get('features')) {
+      if (firstFeature && firstFeature.get('features') instanceof Array) {
         const displayClusterPopup = firstFeature.get('features')[0].getLayer().get("displayClusterPopup")
         // If displayClusterPopup is true, we display the popup; else we zoom to the extent
         if (!displayClusterPopup && (firstFeature.get('features').length > 1 || features.length > 1)) {
