@@ -1533,7 +1533,7 @@ StoryMap.prototype.setCarte = function(carte, n) {
             } else {
               l = f.getLayer()
             }
-            if (layerId != l.ol_uid) 
+            if (layerId != l.ol_uid)
               deselectedFeatures.push(f)
           }
         } else {

@@ -994,7 +994,6 @@ function getSelectStyleFn(options) {
           }
           s.push(si);
         });
-        // console.log(fillStyle)
         // s.push(fillStyle);
         if (points) s.push(ptsStyle);
         return s;
