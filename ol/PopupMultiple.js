@@ -55,6 +55,7 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
     if (html) {
       if (!this.element.classList.contains('ol-fixed'))
         this.hide();
+      this.dispatchEvent({type: 'show:feature', content: this._contents[this._count - 1], feature: this._features[this._count - 1], index: this._count})
       super.show(coordinate, html);
     } else {
       this.hide();
@@ -75,6 +76,7 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
         className: 'ol-prev',
         parent: div,
         click: function () {
+          this.dispatchEvent({type: 'unshow:feature', content: this._contents[this._count - 1], feature: this._features[this._count - 1], index: this._count})
           this._count--;
           if (this._count < 1)
             this._count = this._contents.length;
@@ -82,6 +84,7 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
           setTimeout(function () {
             ol_Overlay_Popup.prototype.show.call(this, this.getPosition(), html, this._count);
           }.bind(this), 350);
+          this.dispatchEvent({type: 'show:feature', content: this._contents[this._count - 1], feature: this._features[this._count - 1], index: this._count})
           this.dispatchEvent({type: 'change', content: this._contents[this._count - 1], feature: this._features[this._count - 1], index: this._count})
         }.bind(this)
       });
@@ -90,6 +93,7 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
         className: 'ol-next',
         parent: div,
         click: function () {
+          this.dispatchEvent({type: 'unshow:feature', content: this._contents[this._count - 1], feature: this._features[this._count - 1], index: this._count})
           this._count++;
           if (this._count > this._contents.length)
             this._count = 1;
@@ -97,6 +101,7 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
           setTimeout(function () {
             ol_Overlay_Popup.prototype.show.call(this, this.getPosition(), html, this._count);
           }.bind(this), 350);
+          this.dispatchEvent({type: 'show:feature', content: this._contents[this._count - 1], feature: this._features[this._count - 1], index: this._count})
           this.dispatchEvent({type: 'change', content: this._contents[this._count - 1], feature: this._features[this._count - 1], index: this._count})
         }.bind(this)
       });
@@ -113,6 +118,19 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
       });
     }
     return html;
+  }
+
+    /** Show the popup on the map
+   * @param {ol.coordinate|undefined} coordinate Position of the popup
+   * @param {string|Element|Array<string|Element>} contents Contents of the popup
+   * @param {string|Element|Array<string|Element>} features Corresponding features for contents
+   * @param {string|Element|Array<string|Element>} count The count of the feature to display
+   */
+  hide() {
+    super.hide()
+    if (this._contents && this._features && this._count) {
+      this.dispatchEvent({type: 'unshow:feature', content: this._contents[this._count - 1], feature: this._features[this._count - 1], index: this._count})
+    }
   }
 }
 

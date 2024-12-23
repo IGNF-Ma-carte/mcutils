@@ -920,10 +920,12 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
  */
 function getSelectStyleFn(options) {
   options = options || {};
-  var style = options.styleFn || getStyleFn({ zIndex: Infinity, select: options.type });
+  var style = options.styleFn || getStyleFn({
+    // zIndex: Infinity,
+    select: options.type });
   const selColor = options.color ? asArray(options.color) : [255,0,0];
   const selColorFill = selColor.slice();
-  selColorFill[3] = .5;
+  selColorFill[3] = 0;
 
   var stroke = options.stroke || new ol_style_Stroke({
     color: selColor,
@@ -992,7 +994,8 @@ function getSelectStyleFn(options) {
           }
           s.push(si);
         });
-        s.push(fillStyle);
+        // console.log(fillStyle)
+        // s.push(fillStyle);
         if (points) s.push(ptsStyle);
         return s;
       }

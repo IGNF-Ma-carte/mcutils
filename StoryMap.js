@@ -7,6 +7,11 @@ import ImageLine from 'ol-ext/control/Imageline'
 import Swipe from 'ol-ext/control/SwipeMap'
 import Clip from 'ol-ext/interaction/ClipMap'
 
+import ol_style_Fill from 'ol/style/Fill'
+import ol_style_Style from 'ol/style/Style'
+import ol_style_Stroke from 'ol/style/Stroke'
+import { fromExtent } from 'ol/geom/Polygon'
+
 // import Carte from './Carte'
 import ol_ext_element from 'ol-ext/util/element';
 import setLayout from './layout/layout'
@@ -1436,6 +1441,8 @@ StoryMap.prototype.setCarte = function(carte, n) {
     carte.setSelectStyle({ points: false });
     // Handle feature select on the map
     const onselect = (e) => {
+      /* HANDLE MULTI SELECT */
+
       let visibleLayersIds = [];
       // Get visible layers of the map
       carte.getMap().getLayers().forEach(layer => {
@@ -1488,7 +1495,6 @@ StoryMap.prototype.setCarte = function(carte, n) {
               l = f.getLayer()
             }
             if (l.ol_uid != firstFeatureId) {
-              console.log("removing", f)
               selectedFeatures.removeAt(0);
             } else {
               // The selected features are ordered : first current election and new elements
@@ -1500,13 +1506,13 @@ StoryMap.prototype.setCarte = function(carte, n) {
       }
 
       // In case of multi select, add the feature to the current selection
-      const indexToStart = ((e.selected.length == selectedFeatures.getLength()) ? 1 : 0)
+      const indexToStart = ((e.selected.length == selectedFeatures.getLength()) ? 1 : 0);
 
-      let features = [];
+      // Features to deselect at the end
       let deselectedFeatures = [];
       
       // Multi selection handler
-      if (firstFeature && firstFeature.getLayer) {
+      if (firstFeature && firstFeature.getLayer && e.selected.length) {
         // Check if it's a cluster
         let firstLayer;
         if (firstFeature.get('features') instanceof Array) {
@@ -1527,18 +1533,13 @@ StoryMap.prototype.setCarte = function(carte, n) {
             } else {
               l = f.getLayer()
             }
-            if (layerId == l.ol_uid) {
-              features.push(f)
-            } else {
+            if (layerId != l.ol_uid) 
               deselectedFeatures.push(f)
-            }
           }
         } else {
-          features.push(firstFeature)
           deselectedFeatures.push(...e.selected.slice(indexToStart, e.selected.length))
         }
-      } else if (firstFeature) {
-        features.push(firstFeature)
+      } else if (firstFeature && e.selected.length) {
         deselectedFeatures.push(...e.selected.slice(indexToStart, e.selected.length))
       }
       
@@ -1547,7 +1548,16 @@ StoryMap.prototype.setCarte = function(carte, n) {
         deselectedFeatures.forEach(firstFeature => {
           selectedFeatures.remove(firstFeature);
         })
+        carte.getSelect().dispatchEvent({
+          type: 'select',
+          selected: selectedFeatures.getArray(),
+          mapBrowserEvent: e.mapBrowserEvent,
+        })
+        return
       }
+
+      // Get copy of selected features
+      let features = [...selectedFeatures.getArray()];
 
       // Cluster : zoom or display Popup
       if (firstFeature && firstFeature.get('features') instanceof Array) {
@@ -1565,6 +1575,7 @@ StoryMap.prototype.setCarte = function(carte, n) {
             }
           })
           carte.zoomToClusterExtent(clusterFeatures);
+          features = [];
           firstFeature = false;
         }
       }
@@ -1605,6 +1616,75 @@ StoryMap.prototype.setCarte = function(carte, n) {
       }
     }
     carte.getSelect().on('select', onselect);
+    // Change z-index on selected feature
+    carte.popup.on('show:feature', e => {
+      const f = e.feature;
+      let style = f.getStyle({index: 1});
+      if (typeof style === 'function') {
+        style = style(f);
+      }
+      if (style && style.length) {
+        // Set z-index of feature to Infinity
+        style[0].setZIndex(Infinity)
+
+        const fill = new ol_style_Fill({
+          color: [255, 0, 0, 0.5]
+        })
+        let fillStyle = new ol_style_Style({
+          fill: fill,
+          zIndex: Infinity
+        });
+        fillStyle.selectFill = true;
+
+        const g = f.getGeometry();
+        var stroke = new ol_style_Stroke({
+          color: [255, 0, 0],
+          width: 5,
+        });
+        let newStyle = new ol_style_Style({
+          stroke: stroke,
+          geometry: fromExtent(g.getExtent()),
+          zIndex: Infinity,
+        })
+        // Value to delete later
+        newStyle.newStyle = true;
+        style.unshift(newStyle);
+        style.push(fillStyle)
+        f.setStyle(style)
+      }
+    })
+
+
+    carte.popup.on('unshow:feature', e => {
+      const f = e.feature;
+      let style = f.getStyle();
+      if (typeof style === 'function') {
+        style = style(f);
+      }
+      if (style && style.length) {
+        for (let i = 0; i < style.length; i++) {
+          st = style[i]
+          // If the style was added, we remove it
+          if (st.newStyle) {
+            style.splice(i, 1);
+            continue;
+          }
+          // If fill was changed, put it back
+          if (st.selectFill) {
+            style.splice(i, 1);
+            continue
+          }
+        }
+
+        // Get and set back original zIndex
+        if (f.getLayer && f.getLayer()) {
+          const zIndex = f.getLayer().getStyle()(f)[0].getZIndex();
+          style[0].setZIndex(zIndex)
+        }
+        f.setStyle(style)
+      }
+    })
+
     carte.on('layer:featureInfo', e => {
       carte.popupFeature(e.feature, e.coordinate)
     });

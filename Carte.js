@@ -749,7 +749,7 @@ function showPopupFeatures(feat, popup, coord, geom) {
   }
   let features = [];
 
-  features.forEach(feature => {
+  feat.forEach(feature => {
     const cluster = feature.get('features');
     if (cluster) {
       features.push(...cluster);
@@ -761,8 +761,6 @@ function showPopupFeatures(feat, popup, coord, geom) {
   if (features.length == 0) {
     return
   }
-
-  console.log(features)
 
   let contents = [];
   let renderedFeatures = [];
