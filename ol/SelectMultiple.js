@@ -36,12 +36,40 @@ class SelectMultiple extends Select {
      */
     this.shownStyle_ = options.shownStyle ? options.shownStyle : this.getStyle();
 
+    /** Index of the currently feature shown
+     * @private
+     * @type {number}
+     */
+    this.indexShownFeature = 1;
+
     // Initialise shownFeature value on select (first item, undefined if there is no selection)
     this.on('select', () => {
       // Reset shown feature
       this.setShownFeature(this.getFeatures().item(0))
     })
-  }  
+  }
+
+  /** Get the index of the currently shown feature.
+   * 
+   * @public
+   * @returns {number} Current index.
+   */
+  getIndex() {
+    return this.indexShownFeature
+  } 
+
+  /** Set the index of the currently shown feature.
+   * Compare its value to the number of features
+   * and change it if needed
+   * 
+   * @public
+   * @param {number} indexShownFeature Feature shown
+   */
+  setIndex(indexShownFeature) {
+    if (indexShownFeature && parseInt(indexShownFeature)) {
+      this.indexShownFeature = indexShownFeature
+    }
+  }
 
   /** Get the shown feature
    * 
@@ -59,11 +87,16 @@ class SelectMultiple extends Select {
    * @param {import('ol/Feature').default} feature Feature shown
    */
   setShownFeature(feature) {
+    // Stop if nothing new is to set
+    if (this.shownFeature === feature) {
+      return
+    }
     // Send event
     this.dispatchEvent({
       type: 'select:show',
       shown_feature: feature,
       unshown_feature: this.shownFeature,
+      index: this.getIndex(),
     });
     // Remove style on previous shown feature
     if (this.shownFeature) {

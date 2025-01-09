@@ -56,6 +56,7 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
     if (html) {
       if (!this.element.classList.contains('ol-fixed'))
         this.hide();
+      this.select.setIndex(this._count)
       this.select.setShownFeature(this._features[this._count - 1])
       super.show(coordinate, html);
     } else {
@@ -84,6 +85,7 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
           setTimeout(function () {
             ol_Overlay_Popup.prototype.show.call(this, this.getPosition(), html, this._count);
           }.bind(this), 350);
+          this.select.setIndex(this._count)
           this.select.setShownFeature(this._features[this._count - 1])
         }.bind(this)
       });
@@ -99,6 +101,7 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
           setTimeout(function () {
             ol_Overlay_Popup.prototype.show.call(this, this.getPosition(), html, this._count);
           }.bind(this), 350);
+          this.select.setIndex(this._count)
           this.select.setShownFeature(this._features[this._count - 1])
         }.bind(this)
       });

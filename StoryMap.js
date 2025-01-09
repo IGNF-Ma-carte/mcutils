@@ -530,6 +530,7 @@ StoryMap.prototype.setInfoVolet = function(md, sel2) {
               index = contents.length;
             mdClone.index = index;
             this.setInfoVolet(mdClone, sel2);
+            this.getCarte().getSelect().setIndex(index);
             this.getCarte().getSelect().setShownFeature(features[index - 1]);
           }.bind(this)
         });
@@ -543,6 +544,7 @@ StoryMap.prototype.setInfoVolet = function(md, sel2) {
               index = 1;
             mdClone.index = index;
             this.setInfoVolet(mdClone, sel2);
+            this.getCarte().getSelect().setIndex(index);
             this.getCarte().getSelect().setShownFeature(features[index - 1]);
           }.bind(this)
         });
