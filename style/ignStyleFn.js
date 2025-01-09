@@ -322,7 +322,7 @@ function getFeatureColor(feature) {
   if (st.length != 0) {
     switch(feature.getGeometry().getType()) {
       case 'MultiPoint':
-      case 'Point':
+      case 'Point': {
         const image = st[0].getImage();
         color = image._color;
 
@@ -347,12 +347,14 @@ function getFeatureColor(feature) {
           else color = null;
         }
         break;
-      
+      }
       // Get line color for (multi) lines and polygons 
-      default:
+      default: {
         color = st[0].getStroke().getColor()
         break;
-  }} else {
+      }
+    }
+  } else {
     // No style so it will not be rendered
     return null;
   }
@@ -994,7 +996,7 @@ function getSelectStyleFn(options) {
           }
           s.push(si);
         });
-        // s.push(fillStyle);
+        s.push(fillStyle);
         if (points) s.push(ptsStyle);
         return s;
       }
@@ -1016,7 +1018,152 @@ function getSelectStyleFn(options) {
             f = cluster[0];
             cluster = false;
           }
-          
+
+          // Get radius value
+          const r = (cluster ? getClusterRadius(cluster.length) : (f.getIgnStyle('pointRadius') || 5)) + radius;
+          s.unshift(new ol_style_Style({
+            image: new ol_style_Circle({
+              stroke: strokePoint,
+              radius: r,
+              declutterMode: 'none',
+            }),
+            zIndex: Infinity
+          }));
+        } else {
+          if (points) {
+            s.push(ptsStyle);
+          }
+          s.unshift(new ol_style_Style({
+            stroke: stroke,
+            geometry: fromExtent( g.getExtent() ),
+            zIndex: Infinity
+          }));
+        }
+
+        return s;
+      }
+    }
+  }
+}
+
+
+/** Get shown feature style
+ * @memberof ignStyle
+ * @param {*} options
+ *  @param {zoom | overlay | highlight | box } options.type select style type, default box
+ * @return {function} style function
+ */
+function getShownFeatureStyleFn(options) {
+  options = options || {};
+  const style = options.styleFn || getStyleFn({
+    select: options.type
+  });
+
+  const selColor = options.color ? asArray(options.color) : [255,0,0];
+  const selColorFill = selColor.slice();
+  selColorFill[3] = 0;
+
+  const stroke = options.stroke || new ol_style_Stroke({
+    color: selColor,
+    width: 2,
+  });
+  const fill = options.fill || new ol_style_Fill({
+    color: selColorFill,
+  });
+  const radius = options.radius || 5;
+  const color = stroke.getColor();
+  const showObject = options.showObject !== false;
+
+  const pts = options.points instanceof ol_style_Image ? options.points : new ol_style_Circle({
+    stroke: new ol_style_Stroke({
+      color: color,
+      width: 1,
+    }),
+    radius: 5,
+    declutterMode: 'none',
+  });
+  const ptsStyle = new ol_style_Style({
+    image: pts,
+    geometry: getGeomPoints,
+    zIndex: Infinity
+  });
+  const strokePoint = new ol_style_Stroke({
+    color: color,
+    width: 5,
+  });
+
+  const overlay = new ol_style_Style({
+    image: new ol_style_Circle({
+      stroke: stroke,
+      fill: fill,
+      radius: radius,
+      declutterMode: 'none',
+    }),
+    stroke: stroke,
+    fill: fill,
+    zIndex: Infinity
+  });
+
+  return function(f, res) {
+    let s;
+    const points = options.features.getLength() > 10 ? false : options.points;
+    switch (options.type) {
+      case 'highlight':
+      case 'zoom': {
+        s = style(f, res);
+        if (typeof s === 'function') {
+          s = s(f);
+        }
+        if (s && s.length) {
+          // Set z-index of feature to Infinity
+          s[0].setZIndex(Infinity)
+
+          const fill = new ol_style_Fill({
+            color: [255, 0, 0, 0.5]
+          })
+          const fillStyle = new ol_style_Style({
+            fill: fill,
+            zIndex: Infinity
+          });
+          fillStyle.selectFill = true;
+
+          const g = f.getGeometry();
+          const stroke = new ol_style_Stroke({
+            color: [255, 0, 0],
+            width: 5,
+          });
+          const newStyle = new ol_style_Style({
+            stroke: stroke,
+            geometry: fromExtent(g.getExtent()),
+            zIndex: Infinity,
+          })
+          // Value to delete later
+          newStyle.newStyle = true;
+          s.unshift(newStyle);
+          s.push(fillStyle)
+          return s
+        }
+      }
+
+      case 'overlay': {
+        // Feature style
+        s = showObject ? style(f, res) : [];
+        s.push(overlay);
+        if (points) s.push(ptsStyle);
+        return s;
+      }
+      default: {
+        // Feature style
+        s = showObject ? style(f, res) : [];
+        // Add
+        const g = f.getGeometry();
+        if (/Point/.test(g.getType())) {
+          let cluster = f.get('features');
+          if (cluster && cluster.length==1) {
+            f = cluster[0];
+            cluster = false;
+          }
+
           // Get radius value
           const r = (cluster ? getClusterRadius(cluster.length) : (f.getIgnStyle('pointRadius') || 5)) + radius;
           s.unshift(new ol_style_Style({
@@ -1050,6 +1197,7 @@ export { getStyleFn }
 export { getFeatureColor }
 export { style2IgnStyle }
 export { getSelectStyleFn }
+export { getShownFeatureStyleFn }
 export { defaultIgnStyle }
 export { clearCache }
 export { getIgnStyle }

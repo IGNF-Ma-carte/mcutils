@@ -318,16 +318,12 @@ Feature.prototype.showPopup = function(popup, coord, geom) {
   let renderedFeatures = [];
   for (let i = 0; i < features.length; i++) {
     let f = features[i]
-    const mode = f.getLayer().getMode();
     // If it's a cluster, then we check if there is a style to display it
-    if (mode == "cluster") {
-      // Check if the cluster type is statistic
-      if (f.getLayer().get("clusterType") == 'stat') {
-        const st = f.getLayer().getStyle()(f);
-        // No popup is displayed for transparent items
-        if (st.length == 0) {
-          continue;
-        }
+    if (f.getLayer().getMode && f.getLayer().getMode() == "cluster" && f.getLayer().get("clusterType") == 'stat') {
+      const st = f.getLayer().getStyle()(f);
+      // No popup is displayed for transparent items
+      if (st.length == 0) {
+        continue;
       }
     }
 
@@ -347,12 +343,10 @@ Feature.prototype.showPopup = function(popup, coord, geom) {
     if (feat.getGeometry().getType() === 'Point') {
       var offset = popup.offsetBox;
       // Statistic layer has no style
-      if (feat.getLayer()) {
-        if (feat.getLayer().getIgnStyle) {
-          var style = feat.getLayer().getIgnStyle(feat);
-          var offsetX = /left|right/.test(popup.autoPositioning[0]) ? style.pointRadius : 0;
-          popup.offsetBox = [-offsetX, (style.pointOffsetY ? -2:-1)*style.pointRadius, offsetX, style.pointOffsetY ? 0:style.pointRadius];
-        }
+      if (feat.getLayer && feat.getLayer() && feat.getLayer().getIgnStyle) {
+        var style = feat.getLayer().getIgnStyle(feat);
+        var offsetX = /left|right/.test(popup.autoPositioning[0]) ? style.pointRadius : 0;
+        popup.offsetBox = [-offsetX, (style.pointOffsetY ? -2:-1)*style.pointRadius, offsetX, style.pointOffsetY ? 0:style.pointRadius];
       }
       if (geom) popup.show(geom.getClosestPoint(coord), contents, renderedFeatures, count);
       else popup.show(feat.getGeometry().getFirstCoordinate(), contents, renderedFeatures, count);

@@ -7,11 +7,6 @@ import ImageLine from 'ol-ext/control/Imageline'
 import Swipe from 'ol-ext/control/SwipeMap'
 import Clip from 'ol-ext/interaction/ClipMap'
 
-import ol_style_Fill from 'ol/style/Fill'
-import ol_style_Style from 'ol/style/Style'
-import ol_style_Stroke from 'ol/style/Stroke'
-import { fromExtent } from 'ol/geom/Polygon'
-
 // import Carte from './Carte'
 import ol_ext_element from 'ol-ext/util/element';
 import setLayout from './layout/layout'
@@ -514,6 +509,48 @@ StoryMap.prototype.setInfoVolet = function(md, sel2) {
     }
     // Show info
     where.innerHTML = '';
+    // Multi selection
+    if (md && md.contents && md.renderedFeatures) {
+      let mdClone = {...md};
+      const contents = mdClone.contents;
+      const features = mdClone.renderedFeatures;
+      let index = mdClone.index;
+      if (!index) {
+        index = 1;
+      }
+      // Add arrows for multi select
+      if (contents.length > 1) {
+        var div = ol_ext_element.create('DIV', { className: 'ol-count', parent: where });
+        ol_ext_element.create('DIV', {
+          className: 'ol-prev',
+          parent: div,
+          click: function () {
+            index--;
+            if (index < 1)
+              index = contents.length;
+            mdClone.index = index;
+            this.setInfoVolet(mdClone, sel2);
+            this.getCarte().getSelect().setShownFeature(features[index - 1]);
+          }.bind(this)
+        });
+        ol_ext_element.create('TEXT', { html: index + '/' + contents.length, parent: div });
+        ol_ext_element.create('DIV', {
+          className: 'ol-next',
+          parent: div,
+          click: function () {
+            index++;
+            if (index > contents.length)
+              index = 1;
+            mdClone.index = index;
+            this.setInfoVolet(mdClone, sel2);
+            this.getCarte().getSelect().setShownFeature(features[index - 1]);
+          }.bind(this)
+        });
+      }
+      if (contents.length) {
+        md = contents[index - 1]
+      }
+    }
     if (md instanceof Element) {
       where.appendChild(md);
     } else {
@@ -1441,123 +1478,9 @@ StoryMap.prototype.setCarte = function(carte, n) {
     carte.setSelectStyle({ points: false });
     // Handle feature select on the map
     const onselect = (e) => {
-      /* HANDLE MULTI SELECT */
-
-      let visibleLayersIds = [];
-      // Get visible layers of the map
-      carte.getMap().getLayers().forEach(layer => {
-        if (layer.getVisible()) visibleLayersIds.push(layer.ol_uid)
-      })
-      
-      // Take the first feature of the current selection (before filtering here)
-      const selectedFeatures = carte.getSelect().getFeatures();
-      let firstFeature = selectedFeatures.item(0);
-
-      // Check if the selected layer most on top has changed
-      if (e.selected.length) {
-        const firstSelectedFeature = e.selected[0];
-        // Last element of visible layers is the layer at the top of the layer switcher
-        let indexFirstFeature;
-        if (firstFeature && firstFeature.get('features') instanceof Array) {
-          indexFirstFeature = visibleLayersIds.indexOf(firstFeature.get('features')[0].getLayer().ol_uid);
-        } else {
-          indexFirstFeature = visibleLayersIds.indexOf(firstFeature.getLayer().ol_uid);
-        }
-
-        let indexFirstSelectedFeature;
-        if (firstSelectedFeature && firstSelectedFeature.get('features') instanceof Array) {
-          indexFirstSelectedFeature = visibleLayersIds.indexOf(firstSelectedFeature.get('features')[0].getLayer().ol_uid);
-        } else {
-          indexFirstSelectedFeature = visibleLayersIds.indexOf(firstSelectedFeature.getLayer().ol_uid);
-        }
-
-        if (indexFirstSelectedFeature > indexFirstFeature) {
-          // Layer changed : remove previous selection and take first selected as the first feature
-          firstFeature = e.selected[0];
-
-          let firstFeatureId;
-          if (firstFeature && firstFeature.get('features') instanceof Array) {
-            firstFeatureId = firstFeature.get('features')[0].getLayer().ol_uid;
-          } else {
-            firstFeatureId = firstFeature.getLayer().ol_uid;
-          }
-
-          const nbSelectedFeatures = selectedFeatures.getLength();
-
-          // Remove previous selection (First features with a different layer id)
-          for (let i = 0; i < nbSelectedFeatures; i++) {
-            const f = selectedFeatures.item(0);
-            // Check if it's a cluster
-            let l;
-            if (f.get('features') instanceof Array) {
-              l = f.get('features')[0].getLayer()
-            } else {
-              l = f.getLayer()
-            }
-            if (l.ol_uid != firstFeatureId) {
-              selectedFeatures.removeAt(0);
-            } else {
-              // The selected features are ordered : first current election and new elements
-              // So there is no need to check after the id is different
-              break
-            }
-          }
-        }
-      }
-
-      // In case of multi select, add the feature to the current selection
-      const indexToStart = ((e.selected.length == selectedFeatures.getLength()) ? 1 : 0);
-
-      // Features to deselect at the end
-      let deselectedFeatures = [];
-      
-      // Multi selection handler
-      if (firstFeature && firstFeature.getLayer && e.selected.length) {
-        // Check if it's a cluster
-        let firstLayer;
-        if (firstFeature.get('features') instanceof Array) {
-          firstLayer = firstFeature.get('features')[0].getLayer()
-        } else {
-          firstLayer = firstFeature.getLayer()
-        }
-        const multiSelect = firstLayer.get('multiSelect');
-        // If it's multi select, get all features selected from this layer
-        if (multiSelect) {
-          const layerId = firstLayer.ol_uid;
-          for (let i = 0; i < e.selected.length; i++) {
-            const f = e.selected[i];
-            // Check if it's a cluster
-            let l;
-            if (f.get('features') instanceof Array) {
-              l = f.get('features')[0].getLayer()
-            } else {
-              l = f.getLayer()
-            }
-            if (layerId != l.ol_uid)
-              deselectedFeatures.push(f)
-          }
-        } else {
-          deselectedFeatures.push(...e.selected.slice(indexToStart, e.selected.length))
-        }
-      } else if (firstFeature && e.selected.length) {
-        deselectedFeatures.push(...e.selected.slice(indexToStart, e.selected.length))
-      }
-      
-      // Remove features
-      if (deselectedFeatures.length) {
-        deselectedFeatures.forEach(firstFeature => {
-          selectedFeatures.remove(firstFeature);
-        })
-        carte.getSelect().dispatchEvent({
-          type: 'select',
-          selected: selectedFeatures.getArray(),
-          mapBrowserEvent: e.mapBrowserEvent,
-        })
-        return
-      }
-
       // Get copy of selected features
-      let features = [...selectedFeatures.getArray()];
+      let features = [...carte.getSelect().getFeatures().getArray()];
+      let firstFeature = features[0]
 
       // Cluster : zoom or display Popup
       if (firstFeature && firstFeature.get('features') instanceof Array) {
@@ -1581,7 +1504,7 @@ StoryMap.prototype.setCarte = function(carte, n) {
       }
       
       // Show info
-      carte.popupFeature(false);
+      carte.popupFeatures(false);
       if (this.get('model') === 'diapo') {
         if (firstFeature instanceof Feature) {
           const features = [];
@@ -1609,81 +1532,13 @@ StoryMap.prototype.setCarte = function(carte, n) {
         if (firstFeature) firstFeature._indicator = this.get('indicator');
         // Display feature info or description
         this.setInfoVolet(
-          firstFeature ? firstFeature.getPopupContent(true) : this.get('description'), 
+          features.length ? carte.getFeaturesPopupContent(features, true) : this.get('description'),
           // Second select (differentiel model)
           e.target === carte._interactions.select2
         );
       }
     }
     carte.getSelect().on('select', onselect);
-    // Change z-index on selected feature
-    carte.popup.on('show:feature', e => {
-      const f = e.feature;
-      let style = f.getStyle({index: 1});
-      if (typeof style === 'function') {
-        style = style(f);
-      }
-      if (style && style.length) {
-        // Set z-index of feature to Infinity
-        style[0].setZIndex(Infinity)
-
-        const fill = new ol_style_Fill({
-          color: [255, 0, 0, 0.5]
-        })
-        let fillStyle = new ol_style_Style({
-          fill: fill,
-          zIndex: Infinity
-        });
-        fillStyle.selectFill = true;
-
-        const g = f.getGeometry();
-        var stroke = new ol_style_Stroke({
-          color: [255, 0, 0],
-          width: 5,
-        });
-        let newStyle = new ol_style_Style({
-          stroke: stroke,
-          geometry: fromExtent(g.getExtent()),
-          zIndex: Infinity,
-        })
-        // Value to delete later
-        newStyle.newStyle = true;
-        style.unshift(newStyle);
-        style.push(fillStyle)
-        f.setStyle(style)
-      }
-    })
-
-
-    carte.popup.on('unshow:feature', e => {
-      const f = e.feature;
-      let style = f.getStyle();
-      if (typeof style === 'function') {
-        style = style(f);
-      }
-      if (style && style.length) {
-        for (let i = 0; i < style.length; i++) {
-          st = style[i]
-          // If the style was added, we remove it
-          if (st.newStyle) {
-            style.splice(i, 1);
-            continue;
-          }
-          // If fill was changed, put it back
-          if (st.selectFill) {
-            style.splice(i, 1);
-            continue
-          }
-        }
-
-        // Get and set back original zIndex
-        if (f.getLayer && f.getLayer()) {
-          const zIndex = f.getLayer().getStyle()(f)[0].getZIndex();
-          style[0].setZIndex(zIndex)
-        }
-        f.setStyle(style)
-      }
-    })
 
     carte.on('layer:featureInfo', e => {
       carte.popupFeature(e.feature, e.coordinate)
