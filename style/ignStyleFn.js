@@ -202,7 +202,7 @@ function ordering(f1, f2) {
  */
 function getRadiusMax(distance) {
   if (distance && parseInt(distance))
-    return Math.min(Math.max(20, parseInt(distance)/2), 35)
+    return Math.min(Math.max(20, parseInt(distance)/2), 25)
   else
     return radiusMax
 }
@@ -213,6 +213,15 @@ function getRadiusMax(distance) {
  * @returns {number} cluster radius in pixel
  */
 function getClusterRadius(size) {
+  return Math.max(8, Math.min(size*0.75, radiusMax));
+}
+
+/**
+ * Get the cluster radius for chart
+ * @param {number} size size of the cluster
+ * @returns {number} cluster radius in pixel
+ */
+function getChartRadius(size) {
   return Math.min(size*0.75 + 12, radiusMax);
 }
 
@@ -294,7 +303,7 @@ function statisticImage(options) {
   options = options || {};
   const colors = options.colors;
   const data = options.data;
-  const radius = getClusterRadius(options.size);
+  const radius = getChartRadius(options.size);
   return new ol_style_Chart({
     type: 'donut',
     radius: radius,
@@ -1016,13 +1025,16 @@ function getSelectStyleFn(options) {
         if (/Point/.test(g.getType())) {
           var cluster = f.get('features');
           let feat = f;
+          let functionRadius = getClusterRadius;
           if (cluster instanceof Array && cluster.length == 1) {
             feat = cluster[0];
             cluster = false;
+          } else if (cluster[0].getLayer().get('clusterType') === "stat") {
+            console.log("chart")
+            functionRadius = getChartRadius;
           }
-
           // Get radius value
-          const r = (cluster ? getClusterRadius(cluster.length) : (feat.getIgnStyle('pointRadius') || 5)) + radius;
+          const r = (cluster ? functionRadius(cluster.length) : (feat.getIgnStyle('pointRadius') || 5)) + radius;
           s.unshift(new ol_style_Style({
             image: new ol_style_Circle({
               stroke: strokePoint,
@@ -1122,13 +1134,15 @@ function getShownFeatureStyleFn(options) {
           if (/Point/.test(g.getType())) {
             let cluster = f.get('features');
             let feat = f;
+            let functionRadius = getClusterRadius;
             if (cluster instanceof Array && cluster.length == 1) {
               feat = cluster[0];
               cluster = false;
+            } else if (cluster[0].getLayer().get('clusterType') === "stat") {
+              functionRadius = getChartRadius;
             }
-
             // Get radius value
-            const r = (cluster ? getClusterRadius(cluster.length) : (feat.getIgnStyle('pointRadius') || 5)) + radius;
+            const r = (cluster ? functionRadius(cluster.length) : (feat.getIgnStyle('pointRadius') || 5)) + radius;
             const style = new ol_style_Style({
               image: new ol_style_Circle({
                 stroke: strokePoint,
@@ -1186,13 +1200,16 @@ function getShownFeatureStyleFn(options) {
         if (/Point/.test(g.getType())) {
           let cluster = f.get('features');
           let feat = f;
+          let functionRadius = getClusterRadius;
           if (cluster instanceof Array && cluster.length == 1) {
             feat = cluster[0];
             cluster = false;
+          } else if (cluster[0].getLayer().get('clusterType') === "stat") {
+            console.log("chart shown")
+            functionRadius = getChartRadius;
           }
-
           // Get radius value
-          const r = (cluster ? getClusterRadius(cluster.length) : (feat.getIgnStyle('pointRadius') || 5)) + radius;
+          const r = (cluster ? functionRadius(cluster.length) : (feat.getIgnStyle('pointRadius') || 5)) + radius;
           const style = new ol_style_Style({
             image: new ol_style_Circle({
               stroke: strokePoint,
