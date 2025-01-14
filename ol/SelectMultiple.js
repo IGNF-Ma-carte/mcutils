@@ -57,22 +57,36 @@ class SelectMultiple extends Select {
   }
 
   /**
-   * Set map
+   * Set map and add event listener on add
+   * @param {import("ol/Map.js").default|null} map Map.
    */
   setMap(map) {
+    // Remove event listener on current map
+    if (this.getMap()) {
+      this.getMap().getView().removeEventListener('change:resolution', this.removeSelectedClusters_)
+    }
+
+    // Set map
     super.setMap(map)
 
     if (map) {
-      map.getView().on('change:resolution', () => {
+      map.getView().on('change:resolution', this.removeSelectedClusters_)
+    }
+  }
 
-        // Deselect clusters when changing resolution
-        for (let i = this.getFeatures().getLength() - 1; i == 0; i--) {
-          const f = this.getFeatures().item(i)
-          if (f && f.get('features') instanceof Array) {
-            this.getFeatures().removeAt(i);
-          }
+  /**
+   * Remove selected cluster only
+   * @private
+   */
+  removeSelectedClusters_() {
+    if (this.getFeatures) {
+      // Deselect clusters when changing resolution
+      for (let i = this.getFeatures().getLength() - 1; i == 0; i--) {
+        const f = this.getFeatures().item(i)
+        if (f && f.get('features') instanceof Array) {
+          this.getFeatures().removeAt(i);
         }
-      })
+      }
     }
   }
 
@@ -181,7 +195,7 @@ class SelectMultiple extends Select {
   removeShownStyle(feature) {
     // Remove style only if there is a style
     if (feature.getStyle()) {
-      feature.setStyle(null);
+      feature.setStyle(this.getStyle());
     }
   }
 
