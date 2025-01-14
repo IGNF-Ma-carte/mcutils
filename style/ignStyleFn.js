@@ -1012,15 +1012,17 @@ function getSelectStyleFn(options) {
         s = showObject ? style(f, res) : [];
         // Add
         var g = f.getGeometry();
+        console.log("select style")
         if (/Point/.test(g.getType())) {
           var cluster = f.get('features');
-          if (cluster && cluster.length==1) {
-            f = cluster[0];
+          let feat = f;
+          if (cluster instanceof Array && cluster.length == 1) {
+            feat = cluster[0];
             cluster = false;
           }
 
           // Get radius value
-          const r = (cluster ? getClusterRadius(cluster.length) : (f.getIgnStyle('pointRadius') || 5)) + radius;
+          const r = (cluster ? getClusterRadius(cluster.length) : (feat.getIgnStyle('pointRadius') || 5)) + radius;
           s.unshift(new ol_style_Style({
             image: new ol_style_Circle({
               stroke: strokePoint,
@@ -1039,7 +1041,6 @@ function getSelectStyleFn(options) {
             zIndex: Infinity
           }));
         }
-
         return s;
       }
     }
@@ -1115,41 +1116,66 @@ function getShownFeatureStyleFn(options) {
           s = s(f);
         }
         if (s && s.length) {
+          const g = f.getGeometry();
           // Set z-index of feature to Infinity
           s[0].setZIndex(Infinity)
+          if (/Point/.test(g.getType())) {
+            let cluster = f.get('features');
+            let feat = f;
+            if (cluster instanceof Array && cluster.length == 1) {
+              feat = cluster[0];
+              cluster = false;
+            }
 
-          const fill = new ol_style_Fill({
-            color: [255, 0, 0, 0.5]
-          })
-          const fillStyle = new ol_style_Style({
-            fill: fill,
-            zIndex: Infinity
-          });
-          fillStyle.selectFill = true;
+            // Get radius value
+            const r = (cluster ? getClusterRadius(cluster.length) : (feat.getIgnStyle('pointRadius') || 5)) + radius;
+            const style = new ol_style_Style({
+              image: new ol_style_Circle({
+                stroke: strokePoint,
+                radius: r,
+                declutterMode: 'none',
+              }),
+              zIndex: Infinity
+            })
+            style.newStyle = true
+            s.unshift(style);
+          } else {
+            const fill = new ol_style_Fill({
+              color: [255, 0, 0, 0.5]
+            })
+            const fillStyle = new ol_style_Style({
+              fill: fill,
+              zIndex: Infinity
+            });
+            fillStyle.selectFill = true;
 
-          const g = f.getGeometry();
-          const stroke = new ol_style_Stroke({
-            color: [255, 0, 0],
-            width: 5,
-          });
-          const newStyle = new ol_style_Style({
-            stroke: stroke,
-            geometry: fromExtent(g.getExtent()),
-            zIndex: Infinity,
-          })
-          // Value to delete later
-          newStyle.newStyle = true;
-          s.unshift(newStyle);
-          s.push(fillStyle)
-          return s
+            const g = f.getGeometry();
+            const stroke = new ol_style_Stroke({
+              color: [255, 0, 0],
+              width: 5,
+            });
+            const newStyle = new ol_style_Style({
+              stroke: stroke,
+              geometry: fromExtent(g.getExtent()),
+              zIndex: Infinity,
+            })
+            // Value to delete later
+            newStyle.newStyle = true;
+            s.unshift(newStyle);
+            s.push(fillStyle)
+          }
         }
+        return s
       }
-
       case 'overlay': {
         // Feature style
         s = showObject ? style(f, res) : [];
+        overlay.newStyle = true;
         s.push(overlay);
-        if (points) s.push(ptsStyle);
+        if (points) {
+          ptsStyle.newStyle = true;
+          s.push(ptsStyle);
+        }
         return s;
       }
       default: {
@@ -1159,32 +1185,37 @@ function getShownFeatureStyleFn(options) {
         const g = f.getGeometry();
         if (/Point/.test(g.getType())) {
           let cluster = f.get('features');
-          if (cluster && cluster.length==1) {
-            f = cluster[0];
+          let feat = f;
+          if (cluster instanceof Array && cluster.length == 1) {
+            feat = cluster[0];
             cluster = false;
           }
 
           // Get radius value
-          const r = (cluster ? getClusterRadius(cluster.length) : (f.getIgnStyle('pointRadius') || 5)) + radius;
-          s.unshift(new ol_style_Style({
+          const r = (cluster ? getClusterRadius(cluster.length) : (feat.getIgnStyle('pointRadius') || 5)) + radius;
+          const style = new ol_style_Style({
             image: new ol_style_Circle({
               stroke: strokePoint,
               radius: r,
               declutterMode: 'none',
             }),
             zIndex: Infinity
-          }));
+          })
+          style.newStyle = true
+          s.unshift(style);
         } else {
           if (points) {
+            ptsStyle.newStyle = true;
             s.push(ptsStyle);
           }
-          s.unshift(new ol_style_Style({
+          const style = new ol_style_Style({
             stroke: stroke,
             geometry: fromExtent( g.getExtent() ),
             zIndex: Infinity
-          }));
+          })
+          style.newStyle = true
+          s.unshift(style);
         }
-
         return s;
       }
     }

@@ -30,6 +30,12 @@ class SelectMultiple extends Select {
      */
     this.shownFeature;
 
+    /** Possible cluster the shown feature belongs to
+     * @private
+     * @type {import('ol/Feature').default}
+     */
+    this.shownCluster_;
+
     /** Feature currently shown
      * @private
      * @type {import('ol/style/Style').StyleLike}
@@ -45,8 +51,29 @@ class SelectMultiple extends Select {
     // Initialise shownFeature value on select (first item, undefined if there is no selection)
     this.on('select', () => {
       // Reset shown feature
+      this.shownCluster_ = null
       this.setShownFeature(this.getFeatures().item(0))
     })
+  }
+
+  /**
+   * Set map
+   */
+  setMap(map) {
+    super.setMap(map)
+
+    if (map) {
+      map.getView().on('change:resolution', () => {
+
+        // Deselect clusters when changing resolution
+        for (let i = this.getFeatures().getLength() - 1; i == 0; i--) {
+          const f = this.getFeatures().item(i)
+          if (f && f.get('features') instanceof Array) {
+            this.getFeatures().removeAt(i);
+          }
+        }
+      })
+    }
   }
 
   /** Get the index of the currently shown feature.
@@ -105,7 +132,37 @@ class SelectMultiple extends Select {
     this.shownFeature = feature;
     // Apply style on shown feature if exists
     if (this.shownFeature) {
-      this.applyShownStyle(this.shownFeature);
+      let changeStyleShownFeature = true
+
+      // Check if shown feature belongs to a cluster //
+      if (this.shownCluster_ && !this.shownCluster_.get('features').includes(this.shownFeature)) {
+        // Not in this cluster anymore : reset value and remove style
+        this.removeShownStyle(this.shownCluster_);
+        this.shownCluster_ = null;
+      }
+
+      if (!this.shownCluster_) {
+        // Check if shown feature in cluster
+        for (let i = 0; i < this.getFeatures().getLength(); i++) {
+          const f = this.getFeatures().item(i);
+          const features = f.get('features');
+          // Feature in cluster : apply style
+          if (features instanceof Array && features.includes(this.shownFeature)) {
+            this.shownCluster_ = f;
+            this.applyShownStyle(this.shownCluster_);
+            changeStyleShownFeature = false
+            break
+          }
+        }
+      } else {
+        // Feature already in cluster : do not apply style
+        changeStyleShownFeature = false
+      }
+
+      // Apply new style
+      if (changeStyleShownFeature) {
+        this.applyShownStyle(this.shownFeature);
+      }
     }
   }
 
@@ -122,25 +179,9 @@ class SelectMultiple extends Select {
    * @param {import('ol/Feature').default} feature feature to remove the style from
    */
   removeShownStyle(feature) {
-    let style = feature.getStyle();
-    if (typeof style === 'function') {
-      style = style(feature);
-    }
-    if (style && style.length) {
-      for (let i = 0; i < style.length; i++) {
-        const st = style[i]
-        // If the style was added or fill was changed, we remove it
-        if (st.newStyle || st.selectFill) {
-          style.splice(i, 1);
-        }
-      }
-
-      // Get and set back original zIndex
-      if (feature.getLayer && feature.getLayer()) {
-        const zIndex = feature.getLayer().getStyle()(feature)[0].getZIndex();
-        style[0].setZIndex(zIndex)
-      }
-      feature.setStyle(style)
+    // Remove style only if there is a style
+    if (feature.getStyle()) {
+      feature.setStyle(null);
     }
   }
 
