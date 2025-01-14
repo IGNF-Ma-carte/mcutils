@@ -789,18 +789,18 @@ Carte.prototype.getFeaturesPopupContent = function(feat, getAllFeaturesContent =
 }
 
 /** Show a multi popup for an array of features
- * @param {Array<Feature>} feat array of features
+ * @param {Array<Feature>} features array of features
  * @param {ol.Overlay.Popup} popup the popup to display on the map
  * @param {ol.Coordinate} coord popup position (the closest point will be used)
  * @param {ol.geom|undefined} [geom] use as geometry, default use object geom
  * @returns {Array<string>} Array of popup content
  * @private
  */
-Carte.prototype.showPopupFeatures = function(feat, popup, coord, geom) {
+Carte.prototype.showPopupFeatures = function(features, popup, coord, geom) {
   // Get features popup content
-  const result = this.getFeaturesPopupContent(feat)
+  const result = this.getFeaturesPopupContent(features)
   const contents = result.contents;
-  const features = result.renderedFeatures;
+  const renderedFeatures = result.renderedFeatures;
 
   // Show popup only if there is content
   if (contents.length) {
@@ -815,6 +815,7 @@ Carte.prototype.showPopupFeatures = function(feat, popup, coord, geom) {
 
     // Update coord if needed
     if (!coord) {
+      // Get position of first feature on the map
       const f = features[0]
       coord = popup.getPosition() || (geom||f.getGeometry()).getFirstCoordinate();
     }
@@ -822,19 +823,19 @@ Carte.prototype.showPopupFeatures = function(feat, popup, coord, geom) {
     if (features[0].getGeometry().getType() === 'Point') {
       var offset = popup.offsetBox;
       // Statistic layer has no style
-      if (features[0].getLayer() && features[0].getLayer().getIgnStyle) {
+      if (features[0].getLayer && features[0].getLayer() && features[0].getLayer().getIgnStyle) {
         var style = features[0].getLayer().getIgnStyle(features[0]);
         var offsetX = /left|right/.test(popup.autoPositioning[0]) ? style.pointRadius : 0;
         popup.offsetBox = [-offsetX, (style.pointOffsetY ? -2:-1)*style.pointRadius, offsetX, style.pointOffsetY ? 0:style.pointRadius];
       }
-      if (geom) popup.show(geom.getClosestPoint(coord), contents, features);
-      else popup.show(features[0].getGeometry().getFirstCoordinate(), contents, features);
+      if (geom) popup.show(geom.getClosestPoint(coord), contents, renderedFeatures);
+      else popup.show(features[0].getGeometry().getFirstCoordinate(), contents, renderedFeatures);
       popup.offsetBox = offset;
     } else {
       if (/polygon/i.test(features[0].getGeometry().getType())) {
-        popup.show(coord, contents, features);
+        popup.show(coord, contents, renderedFeatures);
       } else {
-        popup.show(features[0].getGeometry().getClosestPoint(coord), contents, features);
+        popup.show(features[0].getGeometry().getClosestPoint(coord), contents, renderedFeatures);
       }
     }
   } else {
