@@ -74,7 +74,7 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
     // Counter
     if (this._contents.length > 1) {
       var div = ol_ext_element.create('DIV', { className: 'ol-count', parent: html });
-      ol_ext_element.create('DIV', {
+      ol_ext_element.create('BUTTON', {
         className: 'ol-prev',
         parent: div,
         click: function () {
@@ -90,7 +90,7 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
         }.bind(this)
       });
       ol_ext_element.create('TEXT', { html: this._count + '/' + this._contents.length, parent: div });
-      ol_ext_element.create('DIV', {
+      ol_ext_element.create('BUTTON', {
         className: 'ol-next',
         parent: div,
         click: function () {

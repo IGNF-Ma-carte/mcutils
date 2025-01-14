@@ -521,7 +521,7 @@ StoryMap.prototype.setInfoVolet = function(md, sel2) {
       // Add arrows for multi select
       if (contents.length > 1) {
         var div = ol_ext_element.create('DIV', { className: 'ol-count', parent: where });
-        ol_ext_element.create('DIV', {
+        ol_ext_element.create('BUTTON', {
           className: 'ol-prev',
           parent: div,
           click: function () {
@@ -535,7 +535,7 @@ StoryMap.prototype.setInfoVolet = function(md, sel2) {
           }.bind(this)
         });
         ol_ext_element.create('TEXT', { html: index + '/' + contents.length, parent: div });
-        ol_ext_element.create('DIV', {
+        ol_ext_element.create('BUTTON', {
           className: 'ol-next',
           parent: div,
           click: function () {
