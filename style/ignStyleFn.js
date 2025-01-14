@@ -202,7 +202,7 @@ function ordering(f1, f2) {
  */
 function getRadiusMax(distance) {
   if (distance && parseInt(distance))
-    return Math.min(Math.max(20, parseInt(distance)/2), 25)
+    return Math.min(Math.max(20, parseInt(distance)/2), 20)
   else
     return radiusMax
 }
