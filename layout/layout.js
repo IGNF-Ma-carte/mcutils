@@ -30,21 +30,21 @@ const rules = {
     'background-color': 'BGVOLETCOLOR',
   },
   /* Next / prev arrows for volet (multi selection) */
-  '[data-role="storymap"] .volet .content .ol-count' : {
+  '[data-role="storymap"] .volet .content .ol-count, .ol-popup .ol-popupfeature .ol-count' : {
     'text-align': 'center',
-    'margin': '.25em 0',
+    'display': 'flex',
+    'justify-content': 'center',
+    'align-items': 'center',
+    'float': 'none',
   },
-  '[data-role="storymap"] .volet .content .ol-prev, [data-role="storymap"] .volet .content .ol-next' : {
-    'border-style': 'solid',
-    'border-color': 'transparent rgba(0,60,136,.5)',
-    'border-width': '.5em 0 .5em .5em',
+  '[data-role="storymap"] .volet .content .ol-prev, [data-role="storymap"] .volet .content .ol-next, .ol-popup .ol-popupfeature .ol-prev, .ol-popup .ol-popupfeature .ol-next' : {
+    'border': '0',
+    'margin': '0 .2em',
+    'padding': '0 .5em',
+    'background-color': 'inherit',
     'display': 'inline-block',
     'vertical-align': 'bottom',
-    'margin': '0 .5em',
     'cursor': 'pointer',
-  },
-  '[data-role="storymap"] .volet .content .ol-prev' :{
-    'border-width': '.5em .5em .5em 0',
   },
   /*
   '[data-role="storymap"] .volet a': {

@@ -520,9 +520,9 @@ StoryMap.prototype.setInfoVolet = function(md, sel2) {
       }
       // Add arrows for multi select
       if (contents.length > 1) {
-        var div = ol_ext_element.create('DIV', { className: 'ol-count', parent: where });
+        let div = ol_ext_element.create('DIV', { className: 'ol-count', parent: where });
         ol_ext_element.create('BUTTON', {
-          className: 'ol-prev',
+          className: 'ol-prev fa fa-caret-left fa-2x',
           parent: div,
           click: function () {
             index--;
@@ -536,7 +536,7 @@ StoryMap.prototype.setInfoVolet = function(md, sel2) {
         });
         ol_ext_element.create('TEXT', { html: index + '/' + contents.length, parent: div });
         ol_ext_element.create('BUTTON', {
-          className: 'ol-next',
+          className: 'ol-next fa fa-caret-right fa-2x',
           parent: div,
           click: function () {
             index++;
