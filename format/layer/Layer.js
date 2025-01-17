@@ -106,6 +106,8 @@ Layer.prototype.readOptions = function(layer, options) {
       layer.setMode('cluster', { 
         distance: options.clusterDistance || options.radiusCluster || 40,
         maxZoomCluster: parseInt(options.maxZoomCluster),
+        minSizeCluster: parseInt(options.minSizeCluster),
+        maxSizeCluster: parseInt(options.maxSizeCluster),
         clusterType: options.clusterType,
         clusterColor: options.clusterColor,
         displayClusterPopup: options.displayClusterPopup,
@@ -205,6 +207,8 @@ Layer.prototype.writeOptions = function(layer, options) {
       options.cluster = true;
       options.clusterDistance = options.radiusCluster = layer.get('clusterDistance');
       options.maxZoomCluster = layer.get('maxZoomCluster');
+      options.minSizeCluster = layer.get('minSizeCluster');
+      options.maxSizeCluster = layer.get('maxSizeCluster');
       options.clusterType = layer.get('clusterType');
       options.clusterColor = layer.get('clusterColor');
       options.displayClusterPopup = layer.get('displayClusterPopup');

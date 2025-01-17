@@ -314,6 +314,16 @@ VectorStyle.prototype.setMode = function(mode, options) {
   } else {
     this.set('displayClusterPopup', false)
   }
+  let smin = Math.max(0, typeof(options.minSizeCluster) === 'number' ? options.minSizeCluster : 0)
+  let smax = Math.max(0, typeof(options.maxSizeCluster) === 'number' ? options.maxSizeCluster : 0)
+  if (smin > smax) {
+    const tmp = smax;
+    smax = smin;
+    smin = tmp;
+  }
+  console.log('SMIN', smin, smax)
+  this.set('minSizeCluster', smin)
+  this.set('maxSizeCluster', smax)
   
   switch (mode) {
     case 'cluster':{
