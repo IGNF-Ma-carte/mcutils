@@ -989,7 +989,7 @@ function getSelectStyleFn(options) {
         s0 = style(f, res);
         s = [];
         s0.forEach((si0) => {
-          let si = si0;
+          let si = si0.clone();
           if (si.getImage()) {
             si.getImage().setScale(1.25);
             si.getImage().setRotation(si0.getImage().getRotation());
