@@ -15,9 +15,17 @@ i18n.set('fr', { 'subfooterHTML': `
         <span>-k</span>
         abonnés
       </a>
-    </li><li class="twitter">
+    </li><!--
+    <li class="twitter">
       <a href="https://twitter.com/IGNFrance" target="_blank" title="twitter IGN (Nouvelle fenêtre)">
         <i class="fa fa-twitter"></i>
+        <span>-k</span>
+        abonnés
+      </a>
+    </li>
+    --><li class="bluesky">
+      <a href="https://bsky.app/profile/ignfrance.bsky.social" target="_blank" title="Bluesky IGN (Nouvelle fenêtre)">
+        <i class="fi-bluesky"></i>
         <span>-k</span>
         abonnés
       </a>

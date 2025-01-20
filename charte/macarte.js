@@ -40,9 +40,9 @@ if (charte.getSubFooterElement()) {
   api.getEditorial('followers', (r) => {
     const social = charte.getSubFooterElement();
     if (r && social) {
-      ["facebook", "twitter", "linkedin", "instagram"].forEach(s => {
+      ["facebook", "twitter", "bluesky", "linkedin", "instagram"].forEach(s => {
         const elt = social.querySelector('.'+s+' span');
-        if (elt) elt.innerText = (r[s] || '');
+        if (elt) elt.innerText = (r[s] || '- k');
       })
     }
   })
