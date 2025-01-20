@@ -321,7 +321,6 @@ VectorStyle.prototype.setMode = function(mode, options) {
     smax = smin;
     smin = tmp;
   }
-  console.log('SMIN', smin, smax)
   this.set('minSizeCluster', smin)
   this.set('maxSizeCluster', smax)
   
