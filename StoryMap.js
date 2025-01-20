@@ -1711,6 +1711,9 @@ StoryMap.prototype.setStyleSheet = function (css) {
     } else if (/^@font-face/.test(r.cssText) || /^@import url\([\'|\"]https:\/\/fonts.googleapis.com\/css2/.test(r.cssText)) {
       // Font face and google fonts
       newCSS += r.cssText + '\n';
+    } else if (/^@keyframes/.test(r.cssText)) {
+      // Keyframe
+      newCSS += r.cssText + '\n';
     }
   }
 
