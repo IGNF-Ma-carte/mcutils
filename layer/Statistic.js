@@ -762,7 +762,7 @@ Statistic.prototype.getStatLegend = function() {
       }
       for (let i = stat.limits.length - 1; i > 0; i--) {
         if (this.isGeom('Polygon') || this.isGeom('Point') || !this.isGeom('Line')) {
-          if (stat.typeMap == 'symbol') {
+          if (stat.typeMap == 'symbol' || this.isGeom('Point')) {
             f = new ol_Feature(new ol_geom_Point([0,0]));
           } else {
             f = new ol_Feature(new ol_geom_Polygon([[[0, 0], [0, 0], [0, 0],
@@ -799,7 +799,7 @@ Statistic.prototype.getStatLegend = function() {
     case 'categorie': {
       this.getValues().forEach(v => {
         if (this.isGeom('Polygon') || this.isGeom('Point') || !this.isGeom('Line')) {
-            if (stat.typeMap == 'symbol') {
+            if (stat.typeMap == 'symbol' || this.isGeom('Point')) {
               f = new ol_Feature(new ol_geom_Point([0,0]));
             } else {
               f = new ol_Feature(new ol_geom_Polygon([[[0, 0], [0, 0], [0, 0],[0, 0], [0, 0]]]));
@@ -995,14 +995,20 @@ Statistic.prototype.getVectorStyle = function(param) {
         ignStyle.strokeWidth = style[0].getStroke().getWidth();
       }
     } else {
-      if (style[0].getFill()) {
-        ignStyle.fillColor = ol_color_asString(style[0].getFill().getColor());
-      }
-      if (style[0].getStroke()) {
-        ignStyle.strokeColor = ol_color_asString(style[0].getStroke().getColor());
-        ignStyle.strokeWidth = style[0].getStroke().getWidth();
+      const img = style[style.length-1]
+      if (img.getImage()) {
+        ignStyle.symbolColor = ol_color_asString(img.getImage().getFill().getColor());
+        ignStyle.pointRadius = Math.round((img.getImage().getRadius() || 0) * 10) / 10;
       } else {
-        ignStyle.strokeColor = 'rgba(255,255,255,0)';
+        if (style[0].getFill()) {
+          ignStyle.fillColor = ol_color_asString(style[0].getFill().getColor());
+        }
+        if (style[0].getStroke()) {
+          ignStyle.strokeColor = ol_color_asString(style[0].getStroke().getColor());
+          ignStyle.strokeWidth = style[0].getStroke().getWidth();
+        } else {
+          ignStyle.strokeColor = 'rgba(255,255,255,0)';
+        }
       }
     }
     // Parametric style?
