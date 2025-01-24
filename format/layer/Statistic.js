@@ -60,8 +60,8 @@ Statistic.prototype.read = function (options) {
             layer.setStatistic(layer.getStatistic())
           }
         })
+        .catch(() => {})
     } catch (e) {
-      console.error(e);
       return;
     }
   }
