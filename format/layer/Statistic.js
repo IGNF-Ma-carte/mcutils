@@ -53,9 +53,11 @@ Statistic.prototype.read = function (options) {
           const features = (new ol_format_Guesser()).readFeatures(resp, {
             featureProjection: 'EPSG:3857'
           })
-  
+          // Init source
           if (features) {
             source.addFeatures(features);
+            // Display stat when loaded
+            layer.setStatistic(layer.getStatistic())
           }
         })
     } catch (e) {
