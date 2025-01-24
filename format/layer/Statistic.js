@@ -6,7 +6,7 @@ import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
 import StatisticLayer from '../../layer/Statistic'
 import GeoJSONXFormat from 'ol-ext/format/GeoJSONX'
-
+import ol_format_Guesser from '../Guesser'
 import { ol_geom_createFromType } from 'ol-ext/geom/GeomUtils'
 import { roundCoords } from './VectorStyle'
 
@@ -28,18 +28,40 @@ class Statistic extends LayerFormat {
  */
 Statistic.prototype.read = function (options) {
   if (options.type !== 'Statistique') return;
-  // Read features
   let features = [];
-  // Compressed data?
-  if (options.data) {
-    const format = new GeoJSONXFormat()
-    features = format.readFeaturesFromObject(options.data);
+  // Read features
+  if (!options.url) {
+    // Compressed data?
+    if (options.data) {
+      const format = new GeoJSONXFormat()
+      features = format.readFeaturesFromObject(options.data);
+    } else {
+      options.features.forEach((f) => {
+        const feature = new Feature(ol_geom_createFromType(f.type, f.coords));
+        feature.setProperties(f.attributes);
+        features.push(feature);
+      });
+    }
   } else {
-    options.features.forEach((f) => {
-      const feature = new Feature(ol_geom_createFromType(f.type, f.coords));
-      feature.setProperties(f.attributes);
-      features.push(feature);
-    });
+    // Get features from url
+    try {
+      fetch(options.url)
+        .then(x => x.text())
+        .then(resp => {
+          layer.set('url', options.url)
+          // Create features
+          const features = (new ol_format_Guesser()).readFeatures(resp, {
+            featureProjection: 'EPSG:3857'
+          })
+  
+          if (features) {
+            source.addFeatures(features);
+          }
+        })
+    } catch (e) {
+      console.error(e);
+      return;
+    }
   }
   // Create
   const source = new VectorSource();
@@ -72,24 +94,29 @@ Statistic.prototype.write = function (layer, uncompressed) {
   if (s.stat.cols.length === 1) s.stat.cols.push(s.stat.cols[0]);
   s.popupContent = layer.getPopupContent();
 
-  const features = layer.getSource().getFeatures();
-  // Compress data
-  if (uncompressed) {
-    // Uncompressed features
-    s.features = [];
-    features.forEach((f) => {
-      const feat = {
-        type: f.getGeometry().getType(),
-        coords: roundCoords(f.getGeometry().getCoordinates()),
-        attributes: f.getProperties()
-      }
-      delete feat.attributes[f.getGeometryName()];
-      s.features.push(feat);
-    });
+  if (layer.get('url')) {
+    s.url = layer.get('url')
   } else {
-    // Compress GeoJSONX
-    const format = new GeoJSONXFormat({ decimals: 3 })
-    s.data = format.writeFeaturesObject(features);
+    // Save features
+    const features = layer.getSource().getFeatures();
+    // Compress data
+    if (uncompressed) {
+      // Uncompressed features
+      s.features = [];
+      features.forEach((f) => {
+        const feat = {
+          type: f.getGeometry().getType(),
+          coords: roundCoords(f.getGeometry().getCoordinates()),
+          attributes: f.getProperties()
+        }
+        delete feat.attributes[f.getGeometryName()];
+        s.features.push(feat);
+      });
+    } else {
+      // Compress GeoJSONX
+      const format = new GeoJSONXFormat({ decimals: 3 })
+      s.data = format.writeFeaturesObject(features);
+    }
   }
     
   return s;
