@@ -4,7 +4,7 @@ import md2html from "./md2html";
 import ColorInput from 'ol-ext/util/input/Color';
 import {asArray} from 'ol/color'
 import {toHexa} from 'ol-ext/util/color'
-import {helpData, showHelp} from "../dialog/helpDialog";
+import {showHelp} from "../dialog/helpDialog";
 
 import Dialog from 'ol-ext/control/Dialog'
 import fakeMap from '../dialog/fakeMap';

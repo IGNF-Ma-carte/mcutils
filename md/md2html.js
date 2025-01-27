@@ -495,7 +495,7 @@ md2html.cleanUp = function(md) {
   // Facebook
   md = md.replace (/URL_PAGE_CARTE/g, encodeURIComponent(window.location.href));
   // Bluesky
-  match = md.match(/DATA_BLUESKY_ID/g)
+  let match = md.match(/DATA_BLUESKY_ID/g)
   if (match) {
     for (let i = 0; i < match.length; i+= 2) {
       const id = String(Math.random()).slice(2);
