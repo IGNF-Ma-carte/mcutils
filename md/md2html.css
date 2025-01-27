@@ -238,6 +238,10 @@ iframe.video,
 .twitter-tweet {
   margin: auto;
 }
+.bluesky-embed {
+  margin: auto;
+  overflow: hidden;
+}
 .md iframe.twitter-grid {
   display: inline-block!important;
 }

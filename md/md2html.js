@@ -610,7 +610,7 @@ md2html.rules = [
     '<blockquote class="twitter-tweet" data-cards="$4hidden" data-dnt="true" data-width="$5" width="$5"><a href="https://twitter.com/$3?cards=false"></a></blockquote>'],
 
   // Bluesky
-  [ /\!\(at:\/\/(.*app.bsky.feed.post\/\w+) ?(\d+)?x?(\d+)?\)/g,
+  [ /\!\(bsky:\/\/(.*app.bsky.feed.post\/\w+) ?(\d+)?x?(\d+)?\)/g,
     '<div style="max-width: 600px; width: $2px; height: $3px; margin-top: 10px; margin-bottom: 10px; display: flex;" class="bluesky-embed"><iframe data-bluesky-id="DATA_BLUESKY_ID" width="$2px" style="border: medium; display: block; flex-grow: 1; height: $3px;" frameborder="0" scrolling="no" src="https://embed.bsky.app/embed/$1?id=DATA_BLUESKY_ID"></iframe></div>'],
   
   // FaceBook like

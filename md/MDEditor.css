@@ -341,6 +341,21 @@ textarea.mdEditor {
   display: inline-block;
 }
 
+.mdedit-bluesky label {
+  margin-top: 0.5em;
+}
+.mdedit-bluesky p.error {
+  display: none;
+}
+.mdedit-bluesky .mderror ~ p.error {
+  display: block;
+}
+
+.mdedit-bluesky textarea {
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+}
 
 /* Edit bar */
 

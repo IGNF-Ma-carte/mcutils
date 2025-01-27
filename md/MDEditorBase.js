@@ -4,7 +4,7 @@ import md2html from "./md2html";
 import ColorInput from 'ol-ext/util/input/Color';
 import {asArray} from 'ol/color'
 import {toHexa} from 'ol-ext/util/color'
-import {showHelp} from "../dialog/helpDialog";
+import {helpData, showHelp} from "../dialog/helpDialog";
 
 import Dialog from 'ol-ext/control/Dialog'
 import fakeMap from '../dialog/fakeMap';
@@ -504,6 +504,12 @@ function insertUrl(text, p, options) {
   }
 }
 
+/** Insert Bluesky uri using bsky blockquote
+ * @param {string} text 
+ * @param {*} p 
+ * @param {*} options 
+ * @private
+ */
 function insertBluesky(text, p, options) {
   const elt = this.input;
   let t = text.substring(p.start,p.end);
@@ -517,20 +523,20 @@ function insertBluesky(text, p, options) {
     onButton: (b, inputs) => {
       if (b==='cancel') dialog.setContent(' ');
       if (b==='submit') {
+        // Handle error
         Object.keys(inputs).forEach(i => {
           i = inputs[i]
           i.classList.remove('mderror');
           inputs[i.className] = i;
         });
-        let bskyUri;
         if (!rexbsky.test(inputs.dtextarea.value)) {
           inputs.dtextarea.classList.add('mderror');
           dialog.show();
           inputs.dtextarea.focus();
           return;
-        } else {
-          bskyUri = inputs.dtextarea.value.match(rexbsky)[1]
         }
+        // Get bsky uri
+        const bskyUri = inputs.dtextarea.value.match(rexbsky)[1].replace(/^at:/, 'bsky:')
         // Set text
         if (t) {
           text = removeAt(text, p.start, t.length);
@@ -552,6 +558,8 @@ function insertBluesky(text, p, options) {
       elt.focus();
     }
   });
+  // Focus on text
+  dialog.getContentElement().querySelector('textarea').focus()
 }
 
 /* Add icon dialog */
@@ -947,7 +955,6 @@ MDEditorBase.prototype.setTools = function (minibar) {
     this.addTool({
       title:'insérer un post Bluesky',
       icon: 'fi-bluesky',
-      val: 'https://bsky.app/profile',
       type: 'dialog',
       fn: insertBluesky,
       className: 'mdedit-bluesky'
