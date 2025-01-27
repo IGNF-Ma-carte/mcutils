@@ -435,19 +435,21 @@ body > .ol-ext-dialog.mapInfo > form.ol-title .ol-content {
   transform: translate(-50%, -50%);
 }
 
-/* Iframe / scroll */
+/* Enable scroll on makdown using iframe */
 iframe.video,
 .twitter-tweet iframe {
   max-width: 100%;
   display: block;
 }
 
+.bluesky-embed iframe,
 .twitter-tweet iframe {
   pointer-events: none;
 }
 .ol-scroll.ol-100pc + div iframe.video,
 .ol-scroll.ol-100pc + div .twitter-tweet iframe,
 .ol-hasClick iframe.video,
+.ol-hasClick .bluesky-embed iframe,
 .ol-hasClick .twitter-tweet iframe {
   pointer-events: all;
 }
