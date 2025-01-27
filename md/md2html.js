@@ -40,6 +40,25 @@ window.appDo = function(type) {
   );
 }
 
+const EMBED_URL = 'https://embed.bsky.app';
+window.addEventListener('message', function (event) {
+  if (event.origin !== EMBED_URL) {
+    return;
+  }
+  const id = event.data.id;
+  if (!id) {
+    return;
+  }
+  const embed = document.querySelector("[data-bluesky-id=\"".concat(id, "\"]"));
+  if (!embed) {
+    return;
+  }
+  const height = event.data.height;
+  if (height) {
+    embed.style.height = "".concat(height + 1, "px");
+  }
+});
+
 /** Simple markdown to html convertor
  * @namespace md2html
  * @example
@@ -475,7 +494,17 @@ md2html.cleanUp = function(md) {
   md = md.replace (/<div class='left'><blockquote /g,"<div class='floatLeft' style=\"min-width:200px\"><blockquote ")
   // Facebook
   md = md.replace (/URL_PAGE_CARTE/g, encodeURIComponent(window.location.href));
-  
+  // Bluesky
+  match = md.match(/DATA_BLUESKY_ID/g)
+  if (match) {
+    for (let i = 0; i < match.length; i+= 2) {
+      const id = String(Math.random()).slice(2);
+      // Replace twice cause we need it
+      md = md.replace(/DATA_BLUESKY_ID/, id)
+      md = md.replace(/DATA_BLUESKY_ID/, id)
+    }
+  }
+
   // Clollapsible blocks
   md = md.replace(/mdBlockTitle\">\n/g,'mdBlockTitle">');
   md = md.replace(/mdBlockContent\">\n/g,'mdBlockContent">');
@@ -579,6 +608,10 @@ md2html.rules = [
     '<blockquote class="twitter-tweet" data-cards="$4hidden" data-dnt="true" data-width="$5" width="$5"><a href="https://twitter.com/$3?cards=false"></a></blockquote>'],
   [ /\!(\[([^\[\]]+)?\])?\(https:\/\/x.com\/([^ |\)]*) ?(\d+)?x?(\d+)?\)/g,
     '<blockquote class="twitter-tweet" data-cards="$4hidden" data-dnt="true" data-width="$5" width="$5"><a href="https://twitter.com/$3?cards=false"></a></blockquote>'],
+
+  // Bluesky
+  [ /\!\(at:\/\/(.*app.bsky.feed.post\/\w+) ?(\d+)?x?(\d+)?\)/g,
+    '<div style="max-width: 600px; width: $2px; height: $3px; margin-top: 10px; margin-bottom: 10px; display: flex;" class="bluesky-embed"><iframe data-bluesky-id="DATA_BLUESKY_ID" width="$2px" style="border: medium; display: block; flex-grow: 1; height: $3px;" frameborder="0" scrolling="no" src="https://embed.bsky.app/embed/$1?id=DATA_BLUESKY_ID"></iframe></div>'],
   
   // FaceBook like
   [ /\!(\[([^\[\]]+)?\])?\(https:\/\/www.facebook.com\/like ?(\d+)?x?(\d+)?\)/g,

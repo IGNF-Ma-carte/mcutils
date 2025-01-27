@@ -51,6 +51,28 @@ Bien joué
 OOps encore raté
 ![](https://media.baamboozle.com/uploads/images/169049/1604435175_123203 250)
 \`\`\`
+
+Ideal:
+![Bluesky](https://bsky.app/profile/ignfrance.bsky.social/post/3lfdabftbqc2m)
+
+Lien : https://bsky.app/profile/ignfrance.bsky.social/post/3lfdabftbqc2m
+
+Blockcode :
+
+\`\`\`html
+<blockquote class="bluesky-embed" data-bluesky-uri="at://did:plc:6j7dfu4urjderngdgf2nh7gw/app.bsky.feed.post/3leoghenwmc2d" data-bluesky-cid="bafyreiax76gjmq47e5df6nvvbnpi2b6juzaudqmk7xorwifjwoujuwzcxy"><p lang="fr">✨Nouvelle année, nouvelle résolution : l&#x27;IGN arrive sur Bluesky ! Et vous souhaite une excellente année 2025 <br><br><a href="https://bsky.app/profile/did:plc:6j7dfu4urjderngdgf2nh7gw/post/3leoghenwmc2d?ref_src=embed">[image or embed]</a></p>&mdash; IGN (<a href="https://bsky.app/profile/did:plc:6j7dfu4urjderngdgf2nh7gw?ref_src=embed">@ignfrance.bsky.social</a>) <a href="https://bsky.app/profile/did:plc:6j7dfu4urjderngdgf2nh7gw/post/3leoghenwmc2d?ref_src=embed">1 January 2025 at 12:11</a></blockquote><script async src="https://embed.bsky.app/static/embed.js" charset="utf-8"></script>
+\`\`\`
+
+Lien
+
+\`\`\`
+!(at://did:plc:6j7dfu4urjderngdgf2nh7gw/app.bsky.feed.post/3leoghenwmc2d 400x500)
+\`\`\`
+
+Liens réels :
+!(at://did:plc:6j7dfu4urjderngdgf2nh7gw/app.bsky.feed.post/3leoghenwmc2d)
+
+!(at://did:plc:6j7dfu4urjderngdgf2nh7gw/app.bsky.feed.post/3lfdabftbqc2m)
 `
 /**/
 
