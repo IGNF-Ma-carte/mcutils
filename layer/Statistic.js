@@ -1027,7 +1027,13 @@ Statistic.prototype.getVectorStyle = function(param) {
     maxZoom: this.getMaxZoom(),
     source: source
   });
-  layer.set('type', 'Vector');
+  // Parametric + url
+  if (param && this.get('url')) {
+    layer.set('type', 'file');
+    layer.set('url', this.get('url'));
+  } else {
+    layer.set('type', 'Vector');
+  }
   layer.setPopupContent(this.getPopupContent())
   layer._legend = this._legend;
   layer.setMode('image');
