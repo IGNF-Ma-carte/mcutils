@@ -1,6 +1,7 @@
 import ol_Object from 'ol/Object.js'
 import Feature from 'ol/Feature'
 import Point from 'ol/geom/Point'
+import ol_format_WKT from 'ol/format/WKT'
 import { fromLonLat } from 'ol/proj'
 import papa from 'papaparse'
 
@@ -26,37 +27,41 @@ class olFormatCSV extends ol_Object {
     if (csv.meta.fields && csv.meta.fields.length) {
       const lonField = getField(/^lon$|^long$|^longitude$|^ln$|^x$/i, csv.meta.fields)
       const latField = getField(/^lat$|^latitude$|^lt$|^y$/i, csv.meta.fields)
-      const pointField = getPointField(csv.data[0])
-      if (pointField || (lonField && latField)) {
+      const wktField = getWKTField(csv.data[0])
+      if (wktField || (lonField && latField)) {
         csv.data.forEach(c => {
-          const pt = fromLonLat(getPoint(c, pointField, lonField, latField), options.featureProjection)
-          if (isNumber(pt[0]) && isNumber(pt[1])) {
-            const feature = new Feature(new Point(pt))
-            Object.keys(c).forEach(k => {
-              feature.set(k, c[k], true);
-            })
-            features.push(feature)
+          const geom = getGeom(c, wktField, lonField, latField);
+          if (geom) {
+            geom.transform('EPSG:4326', options.featureProjection)
+            if (geom.getFirstCoordinate().length) {
+              const feature = new Feature(geom)
+              Object.keys(c).forEach(k => {
+                feature.set(k, c[k], true);
+              })
+              features.push(feature)
+            }
           }
         })
-      } 
+      }
     }
     return features
   }
 }
 
-const pointRex = /^POINT\((\d*(\.\d*)?) (\d*(\.\d*)?)\)$/;
+const wktFormat = new ol_format_WKT()
 
-/** Get field as POINT(lon lat)
+/** Get geometry from fields (lon lat) or WKT
  * @param {Object} c
- * @param {string} pointField
+ * @param {string} wkfField
  * @param {string} lonField
  * @param {string} latField
  */
-function getPoint(c, pointField, lonField, latField) {
-  if (lonField && latField) return [c[lonField], c[latField]]
-  const lon = parseFloat(c[pointField].replace(pointRex, "$1"))
-  const lat = parseFloat(c[pointField].replace(pointRex, "$3"))
-  return [lon, lat]
+function getGeom(c, wkfField, lonField, latField) {
+  if (lonField && latField) {
+    return new Point([c[lonField], c[latField]]);
+  }
+  if (!c[wkfField]) return false;
+  return wktFormat.readGeometry(c[wkfField])
 }
 
 /** Check if is a number is finite or NaN
@@ -80,15 +85,14 @@ function getField(rex, fields) {
   })
 }
 
-/** Get field with POINT(x,y)
+/** Get field with that is a WKT
  * @param {RegExp} rex
  * @param {Array<string>} fields 
  * @returns 
  */
-function getPointField(data) {
+function getWKTField(data) {
   for (let f in data) {
-    if (pointRex.test(data[f])) return f;
+    if (/^(POINT|LINESTRING|POLYGON|MULTIPOINT|MULTILINESTRING|MULTIPOLYGON) ?\(/.test(data[f])) return f;
   }
 }
-
 export default olFormatCSV
