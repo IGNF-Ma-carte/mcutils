@@ -8,6 +8,7 @@ import serviceURL, { getDocumentationURL, getTeamURL } from "../api/serviceURL";
 import config from '../config/config'
 import team from '../api/team';
 import { teamSelector } from '../api/ListTeams'
+import dialogMessage from '../dialog/dialogMessage'
 
 import './macarte.css'
 
@@ -62,6 +63,7 @@ if (charte.getSubFooterElement()) {
  * @instance
  */
 charte.setApp = function (id, name, roles) {
+  charte.appID = id;
   charte.roles = typeof(roles) === 'string' ? [roles] : roles;
   // Check teams roles and remove the team if bad role
   if (roles && roles.indexOf) {
@@ -196,6 +198,7 @@ charte.setApp = function (id, name, roles) {
       charte.setUser();
     } else {
       charte.setUser(user);
+      showTeamInfo();
     }
     // Check notifications
     checkNotification(id);
@@ -480,11 +483,47 @@ api.on('login', e => {
   if (e.user.organizations) {
     if (!team.checkIn(e.user.organizations)) {
       team.set()
+    } else {
+      showTeamInfo()
     }
   } else {
     team.set();
   }
 })
+
+
+/** Show team info at start up */
+function showTeamInfo() {
+  if (!/macarte|geocod|mestat|narration/.test(charte.appID)) return;
+  if (!team.getId()) return;
+  const delay = 3;
+
+  dialogMessage.show({
+    content: '<img> Vous êtes dans l\'équipe <b>' + team.getName() +'</b>',
+    className: 'teamInfo',
+    autoclose: delay * 1000,
+    buttons: { change: 'changer d\'équipe', exit: 'sortir', submit: 'ok' },
+    onButton: (b) => {
+      if (b === 'exit') {
+        team.set();
+      } else if (b === 'change') {
+        changeTeam()
+      }
+    }
+  })
+  dialogMessage.getContentElement().querySelector('img').src = team.getImage()
+  // Timer
+  const timer = ol_ext_element.create('I', {
+    parent: dialogMessage.getContentElement()
+  })
+  const showTimer = function(t) {
+    if (t>0) {
+      timer.innerHTML = 'Fermeture automatique dans ' + t + ' secondes'
+      setTimeout(() => showTimer(t-1), 1000)
+    }
+  }
+  showTimer(delay)
+}
 
 export { connectDialog }
 

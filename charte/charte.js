@@ -579,6 +579,12 @@ const charte = {
     logoElt.title = titleElt.title = title;
     titleElt.innerText = name;
   },
+  /** Get the app name
+   * @returns {string}
+   */
+  getName() {
+    return initName;
+  },
   /** Set the app logo
    * @param {string} name application name
    * @param {string} [title] link title, default 'Acceuil - ' + name
