@@ -29,6 +29,23 @@ const rules = {
     'color': 'VOLETCOLOR',
     'background-color': 'BGVOLETCOLOR',
   },
+  /* Next / prev arrows for volet (multi selection) */
+  '[data-role="storymap"] .volet .content .ol-count, .ol-popup .ol-popupfeature .ol-count' : {
+    'text-align': 'center',
+    'display': 'flex',
+    'justify-content': 'center',
+    'align-items': 'center',
+    'float': 'none',
+  },
+  '[data-role="storymap"] .volet .content .ol-prev, [data-role="storymap"] .volet .content .ol-next, .ol-popup .ol-popupfeature .ol-prev, .ol-popup .ol-popupfeature .ol-next' : {
+    'border': '0',
+    'margin': '0 .2em',
+    'padding': '0 .5em',
+    'background-color': 'inherit',
+    'display': 'inline-block',
+    'vertical-align': 'bottom',
+    'cursor': 'pointer',
+  },
   /*
   '[data-role="storymap"] .volet a': {
     'color': 'DARKCOLOR',

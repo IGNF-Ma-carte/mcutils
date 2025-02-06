@@ -42,6 +42,8 @@ let _cacheStyle = {};
 // Reset cache on PixelRatio change
 let _cachePixelRatio = window.devicePixelRatio;
 
+let radiusMax = 30;
+
 /** Clear style cache
  * @memberof ignStyle
  */
@@ -192,26 +194,60 @@ function ordering(f1, f2) {
   }
 }
 
-function getClusterRadius(size) {
-  return Math.max(8, Math.min(size*0.75, 20));
+/**
+ * Get the maximum cluster radius depending on the distance.
+ * The maximum radius cannot is between 20 and 40 pixels
+ * @param {number} distance cluster distance
+ * @returns {number} maximum cluster radius in pixels
+ */
+function getRadiusMax(distance) {
+  if (distance && parseInt(distance))
+    return Math.min(Math.max(20, parseInt(distance)/2), 20)
+  else
+    return radiusMax
 }
 
-function getChartRadius(size) {
-  return Math.min(size+15, 40);
+/**
+ * Get the cluster radius
+ * @param {number} size size of the cluster
+ * @returns {number} cluster radius in pixel
+ */
+function getClusterRadius(size, min, max) {
+  return Math.max(min || 8, Math.min(size*0.75, max || radiusMax));
+}
+
+/**
+ * Get the cluster radius for chart
+ * @param {number} size size of the cluster
+ * @param {number} min size of the cluster
+ * @param {number} max size of the cluster
+ * @returns {number} cluster radius in pixel
+ */
+function getChartRadius(size, min, max) { 
+  return Math.min(size*0.75 + (min||8) + 4, max || radiusMax);
 }
 
 /**
  * Create a ol.style.Image for a cluster
- * @param {number} options.size the cluster size
- * @param {Array<number>} options.color the cluster color as [r,v,b]
- * @param {boolean} options.dash default true
+ * @param {Object} options
+ *  @param {number} options.size the cluster size
+ *  @param {number} options.minSize 
+ *  @param {number} options.maxSize 
+ *  @param {Array<number>} options.color the cluster color as [r,v,b]
+ *  @param {boolean} options.dash default true
+ *  @param {String} options.type type of the cluster (either `normal`, `color` or `stat`)
  * @return {ol.style.Image} the cluster image
  * @private
  */
 function clusterImage(options) {
   options = options || {};
-  var color = options.color || (options.size>25 ? [192, 0, 0] : options.size>8 ? [255, 128, 0] : [0, 128, 0]);
-  var radius = getClusterRadius(options.size);
+  let color;
+  if (options.type && options.type == "color") {
+    color = options.color;
+  } else {
+    color = (options.size>25 ? [192, 0, 0] : options.size>8 ? [255, 128, 0] : [0, 128, 0]);
+  }
+  var radius = getClusterRadius(options.size, options.min, options.max);
   var dash;
   if (options.dash!==false) {
     dash = 2*Math.PI*radius/6;
@@ -234,6 +270,7 @@ function clusterImage(options) {
 
 /** Get Style for cluster
  * @param {Array<Feature>} cluster
+ * @param {Array<number>} minmax size
  * @param {string} optId cluster Id
  * @param {*} clusterColor 
  * @param {*} clusterDash 
@@ -241,13 +278,13 @@ function clusterImage(options) {
  * @param {*} options 
  * @private
  */
-function getClusterStyle(cluster, optId, clusterColor, clusterDash, clusterTextColor, options) {
+function getClusterStyle(cluster, minmax, optId, clusterColor, clusterDash, clusterTextColor, clusterType, options) {
   var size = cluster.length;
-  var styleid = 'cluster:'+size+'-'+optId;
+  var styleid = 'cluster-'+clusterType+':'+size+'-'+optId;
   var style = _cacheStyle[styleid];
   if (!style) {
     style = _cacheStyle[styleid] = new ol_style_Style({
-      image: clusterImage({ size: size, color: clusterColor, dash: clusterDash }),
+      image: clusterImage({ size: size, min: minmax[0], max: minmax[1], color: clusterColor, dash: clusterDash, type: clusterType}),
       text: new ol_style_Text({
         text: size.toString(),
           fill: new ol_style_Fill({
@@ -272,7 +309,7 @@ function statisticImage(options) {
   options = options || {};
   const colors = options.colors;
   const data = options.data;
-  const radius = getChartRadius(options.size);
+  const radius = getChartRadius(options.size, options.min, options.max);
   return new ol_style_Chart({
     type: 'donut',
     radius: radius,
@@ -283,14 +320,66 @@ function statisticImage(options) {
       color: "#FFF",
       width: 2
     }),
-    // text: new ol_style_Text({
-    //   color: 'rgba('+color.join(',')+',1)',
-    // }),
   });
 }
 
+/**
+ * Get the color that will be used for the feature depending
+ * on the type of feature and its style
+ * @param {Feature} feature Feature used to get the color of
+ * @return {string} Color to use for the statistic cluster
+ * @private
+ */
+function getFeatureColor(feature) {
+  let color;
+  const st = feature.getLayer().getStyle()(feature);
+
+  if (st.length != 0) {
+    switch(feature.getGeometry().getType()) {
+      case 'MultiPoint':
+      case 'Point': {
+        const image = st[0].getImage();
+        color = image._color;
+
+        // Check if color is valid to see if it's a special case
+        if (!chroma.valid(color)) {
+          // Check if it's an image
+          const img = image.img_;
+          if (img) {
+            // Get the stroke color
+            color = image._stroke.getColor();
+            
+            // Transform 'transparent' color to gray
+            if (color === 'transparent') color = 'rgba(128,128,128,0.5)';
+          }
+
+          // Else it might be a marker, so necessary to take the second feature
+          else if (st.length > 1) {
+            color = st[1].getImage()._color
+          }
+
+          // Otherwise the feature will not be rendered
+          else color = null;
+        }
+        break;
+      }
+      // Get line color for (multi) lines and polygons 
+      default: {
+        color = st[0].getStroke().getColor()
+        break;
+      }
+    }
+  } else {
+    // No style so it will not be rendered
+    return null;
+  }
+  return color
+}
+
+
 
 /** Get Style for cluster
+ * @param {Feature} f feature to get the colors from
  * @param {Array<Feature>} cluster
  * @param {string} optId cluster Id
  * @param {*} clusterColor 
@@ -299,28 +388,20 @@ function statisticImage(options) {
  * @param {*} options 
  * @private
  */
-function getStatisticClusterStyle(f, cluster, optId, clusterColor, clusterDash, clusterTextColor, options) {
-  const size = cluster.length;
-
+function getStatisticClusterStyle(f, cluster, minmax, optId, clusterColor, clusterDash, clusterTextColor, options) {
   let dataColor = f.get('dataColor');
-  let color;
   // Get number of element per color
   if (!dataColor) {
     dataColor = {};
     cluster.forEach(f => {
-      // Get feature style
-      const st = f.getLayer().getStyle()(f)
-      switch(f.getGeometry().getType()) {
-        case 'MultiPoint':
-        case 'Point':
-          color = st[0].getImage()._color
-          break;
-        default:
-          color = st[0].getStroke().getColor()
-          break;
+      // Get feature color for the chart
+      const color = getFeatureColor(f);
+
+      // If there are no colors, it is not added to the cluster
+      if (color !== null) {
+        if (color in dataColor) dataColor[color] ++;
+        else dataColor[color] = 1;
       }
-      if (color in dataColor) dataColor[color] ++;
-      else dataColor[color] = 1;
     })
     // Add it to the cluster to prevent recalculation
     f.dataColor = dataColor;
@@ -333,7 +414,7 @@ function getStatisticClusterStyle(f, cluster, optId, clusterColor, clusterDash, 
       const hexColor = chroma(color).hex();
       dataColor[hexColor] = dataColor[color];
       delete dataColor[color]
-    } 
+    }
   }
 
   const hexKeys = Object.keys(dataColor).sort()
@@ -347,12 +428,15 @@ function getStatisticClusterStyle(f, cluster, optId, clusterColor, clusterDash, 
     cacheKey += key.toString() + dataColor[key].toString()
   })
 
+  // Count number of rendered items
+  const size = data.reduce((partialSum, a) => partialSum + a, 0);
+
   // Construct style id and style
-  const styleid = 'clusterStat:'+cacheKey+'-'+optId;
+  const styleid = 'cluster-stat:'+cacheKey+'-'+optId;
   let style = _cacheStyle[styleid];
   if (!style) {
     style = _cacheStyle[styleid] = new ol_style_Style({
-      image: statisticImage({ size: size, colors: colors, data: data, dash: clusterDash }),
+      image: statisticImage({ size: size, min: minmax[0], max: minmax[1], colors: colors, data: data, dash: clusterDash }),
       text: new ol_style_Text({
         text: size.toString(),
         scale: 1.3,
@@ -368,6 +452,7 @@ function getStatisticClusterStyle(f, cluster, optId, clusterColor, clusterDash, 
   }
   return [style];
 }
+
 
 /** Get ol stroke dash from string
  * @param {*} style
@@ -657,20 +742,13 @@ function getConditionStyle(f, clustered, options, clusterColor) {
  * @param {*} options
  *	@param {boolean} options.ghost true to show a ghost feature when size=0
  *	@param {string} options.clusterColor a color, default red / orange / green
- *	@param {boolean} options.clusterDash border is dash, default true
+ *	@param {string} options.clusterType type of cluster, either `normal`, `color` or `stat`. Default `normal`
+ *	@param {string} options.clusterDistance distance of the cluster in pixels. Default 40.  
+ *	@param {boolean} options.clusterDash border is dash, default true.
  *  @param {number} [options.zIndex=0]
  */
 function getStyleFn(options) {
   if (!options) options = {};
-
-  let clusterColor; 
-  let clusterTextColor = '#fff';
-  if (options.clusterColor) {
-    clusterColor = ol_color_asArray(options.clusterColor).slice(0, 3);
-    clusterTextColor = isDarkColor(clusterColor) ? '#fff' : '#000';
-  }
-  const clusterDash = options.clusterDash;
-  const optId = (options.clusterColor||'')+'-'+(options.clusterDash === false ? 0 : 1)+'-'+(options.clusterStat === false ? 0 : 1);
 
   // Clusters style
   return function(f, res, clustered) {
@@ -678,6 +756,23 @@ function getStyleFn(options) {
     if (_cachePixelRatio !== window.devicePixelRatio) {
       // ??? clearCache();
     }
+
+    // Get options value
+    let clusterColor;
+    let clusterTextColor = '#fff';
+    let clusterType = options.clusterType;
+    let clusterDistance = options.clusterDistance;
+    // Check if cluster color is defined and if it's the display mode
+    if (!!options.clusterColor && clusterType == "color") {
+      clusterColor = ol_color_asArray(options.clusterColor).slice(0, 3);
+      clusterTextColor = isDarkColor(clusterColor) ? '#fff' : '#000';
+    }
+    let clusterDash = options.clusterDash;
+    let type = (options.clusterType == "normal" ? 0 : (options.clusterType == "color" ? 1 : 2));
+    let optId = (options.clusterColor ? options.clusterColor.join(',') : '')+'-'+(clusterDash === false ? 0 : 1)+'-'+(parseInt(clusterDistance) ? parseInt(clusterDistance) : 40)+'-'+type;
+  
+    // Update radius max
+    radiusMax = getRadiusMax(clusterDistance)
     
     // Handle clusters
     var cluster = f.get('features');
@@ -685,17 +780,40 @@ function getStyleFn(options) {
       if (cluster.length == 1) {
         f = cluster[0];
       } else {
-        // Check if the feature is already a cluster
-        let clusterStatFeature = false;
-        if (!options.clusterStat) {
-          clusterStatFeature = cluster[0].getLayer().get('clusterStat');
+        // Update values from layer for clusters
+        clusterType = (clusterType ? clusterType : cluster[0].getLayer().get('clusterType'))
+        clusterDistance = (clusterDistance ? clusterDistance : cluster[0].getLayer().get('clusterDistance'))
+        // Update radius max
+        radiusMax = getRadiusMax(clusterDistance)
+
+        // The color might not be defined
+        clusterColor = (clusterColor ? clusterColor : cluster[0].getLayer().get('clusterColor'))
+        if (clusterColor) {
+          clusterColor = clusterColor.slice(0, 3)
+          clusterTextColor = isDarkColor(clusterColor) ? '#fff' : '#000';
         }
+        
+        
+        // Recreate optId
+        type = (clusterType == "normal" ? 0 : (clusterType == "color" ? 1 : 2));
+        optId = (clusterColor ? clusterColor.join(',') : '')+'-'+(clusterDash === false ? 0 : 1)+'-'+(parseInt(clusterDistance) ? parseInt(clusterDistance) : 40)+'-'+type;
+        
+        // Layer
+        let minmax = [];
+        const layer = cluster[0].getLayer()
+        if (layer) {
+          minmax = [
+            layer.get('minSizeCluster'),
+            layer.get('maxSizeCluster')
+          ]
+          optId += '-'+minmax.join('-')
+        }
+
         // Get style for statistic clusters
-        if (options.clusterStat || clusterStatFeature) {
-          return getStatisticClusterStyle(f, cluster, optId, clusterColor, clusterDash, clusterTextColor, options)
-        }
-        else {
-          return getClusterStyle(cluster, optId, clusterColor, clusterDash, clusterTextColor, options);
+        if (clusterType == "stat") {
+          return getStatisticClusterStyle(f, cluster, minmax, optId, clusterColor, clusterDash, clusterTextColor, options)
+        } else {
+          return getClusterStyle(cluster, minmax, optId, clusterColor, clusterDash, clusterTextColor, clusterType, options);
         }
       }
     }
@@ -829,23 +947,25 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
  */
 function getSelectStyleFn(options) {
   options = options || {};
-  var style = options.styleFn || getStyleFn({ zIndex: Infinity, select: options.type });
+  const style = options.styleFn || getStyleFn({
+    // zIndex: Infinity,
+    select: options.type });
   const selColor = options.color ? asArray(options.color) : [255,0,0];
   const selColorFill = selColor.slice();
-  selColorFill[3] = .5;
+  selColorFill[3] = 0.5;
 
-  var stroke = options.stroke || new ol_style_Stroke({
+  const stroke = options.stroke || new ol_style_Stroke({
     color: selColor,
     width: 2,
   });
-  var fill = options.fill || new ol_style_Fill({
+  const fill = options.fill || new ol_style_Fill({
     color: selColorFill,
   });
-  var radius = options.radius || 5;
-  var color = stroke.getColor();
-  var showObject = options.showObject !== false;
+  const radius = options.radius || 5;
+  const color = stroke.getColor();
+  const showObject = options.showObject !== false;
 
-  var pts = options.points instanceof ol_style_Image ? options.points : new ol_style_Circle({
+  const pts = options.points instanceof ol_style_Image ? options.points : new ol_style_Circle({
     stroke: new ol_style_Stroke({
       color: color,
       width: 1,
@@ -853,23 +973,17 @@ function getSelectStyleFn(options) {
     radius: 5,
     declutterMode: 'none',
   });
-  var ptsStyle = new ol_style_Style({
+  const ptsStyle = new ol_style_Style({
     image: pts,
     geometry: getGeomPoints,
     zIndex: Infinity
   });
-  var strokePoint = new ol_style_Stroke({
+  const strokePoint = new ol_style_Stroke({
     color: color,
     width: 5,
   });
 
-  var fillStyle = new ol_style_Style({
-    // stroke: new ol_style_Stroke({ color:'transparent'}),
-    fill: fill,
-    zIndex: Infinity
-  });
-
-  var overlay = new ol_style_Style({
+  const overlay = new ol_style_Style({
     image: new ol_style_Circle({
       stroke: stroke,
       fill: fill,
@@ -882,7 +996,7 @@ function getSelectStyleFn(options) {
   });
 
   return function(f, res) {
-    var s, s0;
+    let s, s0;
     const points = options.features.getLength() > 10 ? false : options.points;
     switch (options.type) {
       case 'highlight':
@@ -891,7 +1005,7 @@ function getSelectStyleFn(options) {
         s0 = style(f, res);
         s = [];
         s0.forEach((si0) => {
-          var si = si0;
+          let si = si0.clone();
           if (si.getImage()) {
             si.getImage().setScale(1.25);
             si.getImage().setRotation(si0.getImage().getRotation());
@@ -901,7 +1015,6 @@ function getSelectStyleFn(options) {
           }
           s.push(si);
         });
-        s.push(fillStyle);
         if (points) s.push(ptsStyle);
         return s;
       }
@@ -916,22 +1029,21 @@ function getSelectStyleFn(options) {
         // Feature style
         s = showObject ? style(f, res) : [];
         // Add
-        var g = f.getGeometry();
+        const g = f.getGeometry();
         if (/Point/.test(g.getType())) {
-          var cluster = f.get('features');
-          // Get function radius according to the cluster type
+          let cluster = f.get('features');
+          let feat = f;
           let functionRadius = getClusterRadius;
-          if (cluster) {
-            if (cluster.length==1) {
-              f = cluster[0];
+          if (cluster instanceof Array) {
+            if (cluster.length == 1) {
+              feat = cluster[0];
               cluster = false;
-            } else if (cluster[0].getLayer().get('clusterStat')) {
+            } else if (cluster[0].getLayer().get('clusterType') === "stat") {
               functionRadius = getChartRadius;
             }
           }
-          
           // Get radius value
-          const r = (cluster ? functionRadius(cluster.length) : (f.getIgnStyle('pointRadius') || 5)) + radius;
+          const r = (cluster instanceof Array ? functionRadius(cluster.length) : (feat.getIgnStyle('pointRadius') || 5)) + radius;
           s.unshift(new ol_style_Style({
             image: new ol_style_Circle({
               stroke: strokePoint,
@@ -950,7 +1062,105 @@ function getSelectStyleFn(options) {
             zIndex: Infinity
           }));
         }
+        return s;
+      }
+    }
+  }
+}
 
+
+/** Get shown feature style
+ * @memberof ignStyle
+ * @param {*} options
+ *  @param {zoom | overlay | highlight | box } options.type select style type, default box
+ * @return {function} style function
+ */
+function getShownFeatureStyleFn(options) {
+  options = options || {};
+  // Get select style as default style
+  const style = options.styleFn || getSelectStyleFn(options);
+
+  const selColor = options.color ? asArray(options.color) : [255,0,0];
+  const stroke = options.stroke || new ol_style_Stroke({
+    color: selColor,
+    width: 5,
+  });
+
+  const selColorFill = selColor.slice();
+  selColorFill[3] = 0.5;
+  const fill = options.fill || new ol_style_Fill({
+    color: selColorFill,
+  });
+  const fillStyle = new ol_style_Style({
+    fill: fill,
+    zIndex: Infinity
+  });
+
+  const radius = options.radius || 5;
+  const color = stroke.getColor();
+  const showObject = options.showObject !== false;
+
+  const strokePoint = new ol_style_Stroke({
+    color: color,
+    width: 5,
+  });
+
+  const overlay = new ol_style_Style({
+    image: new ol_style_Circle({
+      stroke: stroke,
+      fill: fill,
+      radius: radius,
+      declutterMode: 'none',
+    }),
+    stroke: stroke,
+    fill: fill,
+    zIndex: Infinity
+  });
+
+  return function(f, res) {
+    let s;
+    switch (options.type) {
+      case 'highlight':
+      case 'zoom': {
+        s = style(f, res);
+        if (typeof s === 'function') {
+          s = s(f);
+        }
+        if (s && s.length) {
+          const g = f.getGeometry();
+          // Set z-index of feature to Infinity
+          s[0].setZIndex(Infinity)
+          if (/Point/.test(g.getType())) {
+            let cluster = f.get('features');
+            let feat = f;
+            let functionRadius = getClusterRadius;
+            if (cluster instanceof Array) {
+              if (cluster.length == 1) {
+                feat = cluster[0];
+                cluster = false;
+              } else if (cluster[0].getLayer().get('clusterType') === "stat") {
+                functionRadius = getChartRadius;
+              }
+            }
+            // Get radius value
+            const r = (cluster instanceof Array ? functionRadius(cluster.length) : (feat.getIgnStyle('pointRadius') || 5)) + radius;
+            s.unshift(new ol_style_Style({
+              image: new ol_style_Circle({
+                stroke: strokePoint,
+                radius: r,
+                declutterMode: 'none',
+              }),
+              zIndex: Infinity
+            }));
+          } else {
+            s.push(fillStyle);
+          }
+        }
+        return s
+      }
+      default: {
+        // Return feature style
+        s = showObject ? style(f, res) : [];
         return s;
       }
     }
@@ -960,8 +1170,10 @@ function getSelectStyleFn(options) {
 export { ignStyleDef }
 
 export { getStyleFn }
+export { getFeatureColor }
 export { style2IgnStyle }
 export { getSelectStyleFn }
+export { getShownFeatureStyleFn }
 export { defaultIgnStyle }
 export { clearCache }
 export { getIgnStyle }

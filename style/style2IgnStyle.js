@@ -43,6 +43,13 @@ function getImageStyle(f, style) {
       f.setIgnStyle ('symbolColor', f.getIgnStyle ('pointColor'));
       f.setIgnStyle ('pointStrokeColor', colorAsString(image.getStroke() ? image.getStroke().getColor() : 'rgba(255,255,255,0)'));
     } else if (image instanceof ol_style_FontSymbol) {
+      f.setIgnStyle ('pointForm', 'circle');
+      f.setIgnStyle ('pointGlyph', 'ign-form-rond');
+      f.setIgnStyle ('pointRadius', image.getRadius());
+      f.setIgnStyle ('pointStrokeWidth', image.getStroke() ? image.getStroke().getWidth() : 0);
+      f.setIgnStyle ('pointColor', colorAsString(image.getFill() ? image.getFill().getColor(): 'rgba(255,255,255,0)'));
+      f.setIgnStyle ('symbolColor', f.getIgnStyle ('pointColor'));
+      f.setIgnStyle ('pointStrokeColor', colorAsString(image.getStroke() ? image.getStroke().getColor() : 'rgba(255,255,255,0)'));
       return true;
     } else {
       return false;

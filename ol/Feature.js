@@ -302,44 +302,69 @@ Feature.prototype.getLabelContent = function(content) {
  * @returns {string} the popup content
  */
 Feature.prototype.showPopup = function(popup, coord, geom) {
-  var f = this;
-  const cluster = f.get('features');
+  var feat = this;
+  const cluster = feat.get('features');
+  let features;
   if (cluster) {
-    if (cluster.length === 1) {
-      f = cluster[0];
-    } else {
-      popup.hide();
-      return '';
+    features = cluster;
+  } else {
+    features = [feat]
+  }
+
+  // Get count of the popup if exists
+  const count = feat.popupIndex_
+
+  let contents = [];
+  let renderedFeatures = [];
+  for (let i = 0; i < features.length; i++) {
+    let f = features[i]
+    // If it's a cluster, then we check if there is a style to display it
+    if (f.getLayer().getMode && f.getLayer().getMode() == "cluster" && f.getLayer().get("clusterType") == 'stat') {
+      const st = f.getLayer().getStyle()(f);
+      // No popup is displayed for transparent items
+      if (st.length == 0) {
+        continue;
+      }
+    }
+
+    const content = f.getPopupContent(true);
+    if (content.innerText.trim() || content.querySelector('canvas') || content.querySelector('img')) {
+      if (!coord) coord = popup.getPosition() || (geom||f.getGeometry()).getFirstCoordinate();
+      popup.setOffset([0, 0]);
+
+      // If a content was created, we add it to the contents
+      contents.push(content);
+      renderedFeatures.push(f);
     }
   }
-  var content = f.getPopupContent(true);
-  if (content.innerText.trim() || content.querySelector('canvas') || content.querySelector('img')) {
-    if (!coord) coord = popup.getPosition() || (geom||f.getGeometry()).getFirstCoordinate();
-    popup.setOffset([0, 0]);
-    if (f.getGeometry().getType() === 'Point') {
+
+  // Show popup only if there is content
+  if (contents.length) {
+    if (feat.getGeometry().getType() === 'Point') {
       var offset = popup.offsetBox;
       // Statistic layer has no style
-      if (f.getLayer().getIgnStyle) {
-        var style = f.getLayer().getIgnStyle(f);
+      if (feat.getLayer && feat.getLayer() && feat.getLayer().getIgnStyle) {
+        var style = feat.getLayer().getIgnStyle(feat);
         var offsetX = /left|right/.test(popup.autoPositioning[0]) ? style.pointRadius : 0;
         popup.offsetBox = [-offsetX, (style.pointOffsetY ? -2:-1)*style.pointRadius, offsetX, style.pointOffsetY ? 0:style.pointRadius];
       }
-      if (geom) popup.show(geom.getClosestPoint(coord), content);
-      else popup.show(f.getGeometry().getFirstCoordinate(), content);
+      if (geom) popup.show(geom.getClosestPoint(coord), contents, renderedFeatures, count);
+      else popup.show(feat.getGeometry().getFirstCoordinate(), contents, renderedFeatures, count);
       popup.offsetBox = offset;
     } else {
-      if (/polygon/i.test(f.getGeometry().getType())) {
-        popup.show(coord, content);
+      if (/polygon/i.test(feat.getGeometry().getType())) {
+        popup.show(coord, contents, renderedFeatures, count);
       } else {
-        popup.show(f.getGeometry().getClosestPoint(coord), content);
+        popup.show(feat.getGeometry().getClosestPoint(coord), contents, renderedFeatures, count);
       }
     }
   } else {
-    popup.hide();
+    popup.hide()
   }
   // Load Twitter widget
   md2html.renderWidget(popup.getElement());
-  return content;
+  
+  return contents;
 };
 
 // Handle style

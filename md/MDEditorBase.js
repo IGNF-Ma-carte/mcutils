@@ -11,6 +11,7 @@ import fakeMap from '../dialog/fakeMap';
 
 import dlog from './mdeDialog'
 import icons from './mdeIcon'
+import blueskydlog from './mdeBluesky'
 
 import './MDEditor.css'
 import '../font/loadFonts'
@@ -424,7 +425,7 @@ function align (text, p, options) {
   return text;
 }
 
-/* Insert an url with a dialog
+/** Insert an url with a dialog
  * @param {Element} elt 
  * @param {string} text 
  * @param {*} p 
@@ -493,17 +494,6 @@ function insertUrl(text, p, options) {
   // Input url
   const inputUrl = dialog.getContentElement().querySelector('input.durl');
   if (!isTwitter) document.getElementById('twitterURL').innerHTML = '';
-  // Get url in clipboard
-  if (!t || !rexurl.test(t)) {
-    navigator.clipboard.readText().then(st => {
-      console.log(st)
-      if (rexurl.test(st)) {
-        inputUrl.value = st;
-        inputUrl.focus();
-        inputUrl.select();
-      }
-    })
-  }
   // Get 
   if (rexurl.test(t)) {
     inputUrl.value = t;
@@ -512,6 +502,64 @@ function insertUrl(text, p, options) {
     dialog.getContentElement().querySelector('input.mdalt').value = t;
     setTimeout(function(){ inputUrl.focus(); });
   }
+}
+
+/** Insert Bluesky uri using bsky blockquote
+ * @param {string} text 
+ * @param {*} p 
+ * @param {*} options 
+ * @private
+ */
+function insertBluesky(text, p, options) {
+  const elt = this.input;
+  let t = text.substring(p.start,p.end);
+  const rexbsky = /data-bluesky-uri="(at:\/\/.*app.bsky.feed.post\/\w+)"/;
+  // const nb = text.length;
+  dialog.show({
+    title: options.title[0].toUpperCase() + options.title.substring(1) ,
+    className: options.className,
+    content: blueskydlog,
+    buttons: { submit: 'ok', cancel: 'annuler' },
+    onButton: (b, inputs) => {
+      if (b==='cancel') dialog.setContent(' ');
+      if (b==='submit') {
+        // Handle error
+        Object.keys(inputs).forEach(i => {
+          i = inputs[i]
+          i.classList.remove('mderror');
+          inputs[i.className] = i;
+        });
+        if (!rexbsky.test(inputs.dtextarea.value)) {
+          inputs.dtextarea.classList.add('mderror');
+          dialog.show();
+          inputs.dtextarea.focus();
+          return;
+        }
+        // Get bsky uri
+        const bskyUri = inputs.dtextarea.value.match(rexbsky)[1].replace(/^at:/, 'bsky:')
+        // Set text
+        if (t) {
+          text = removeAt(text, p.start, t.length);
+        }
+        // Size
+        let sizex = inputs.width.value;
+        let sizey = inputs.height.value;
+        if (sizex || sizey) sizex = ' '+sizex+'x'+sizey;
+        // insert
+        const link = `!(${bskyUri}${sizex})`;
+        text = insertAt(text, p.start, link);
+        elt.value = text;
+        // Dispatch it.
+        this.refresh();
+        this._onchange();
+        dialog.close();
+        dialog.setContent(' ');
+      }
+      elt.focus();
+    }
+  });
+  // Focus on text
+  dialog.getContentElement().querySelector('textarea').focus()
 }
 
 /* Add icon dialog */
@@ -902,6 +950,14 @@ MDEditorBase.prototype.setTools = function (minibar) {
       type: 'dialog', 
       fn: insertUrl,
       className: 'mdedit-twitter'
+    });
+    // Bluesky
+    this.addTool({
+      title:'insérer un post Bluesky',
+      icon: 'fi-bluesky',
+      type: 'dialog',
+      fn: insertBluesky,
+      className: 'mdedit-bluesky'
     });
     // FaceBook
     this.addTool({ title:'Facebook', icon: 'fa fa-facebook-square', val: ' !(https://www.facebook.com/like) ', type: 'insert' });
