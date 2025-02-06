@@ -11,7 +11,6 @@ import urls, { getMediaURL } from './serviceURL'
 import _T from '../i18n/i18n'
 import { getThemeID } from "../format/theme";
 import UserInput from "./UserInput";
-import team from "../api/team";
 
 /** Control to display a list of Cartes
  */

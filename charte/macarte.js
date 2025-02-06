@@ -9,14 +9,13 @@ import config from '../config/config'
 import team from '../api/team';
 import { teamSelector } from '../api/ListTeams'
 import dialogMessage from '../dialog/dialogMessage'
-
-import './macarte.css'
-
-import dialogMessage from "../dialog/dialogMessage";
-import connectDlg from './page-connectDlg.html'
-import lockDlg from './page-lockDlg.html'
 import FlashMessage from '../dialog/FlashMessage';
 import md2html from '../md/md2html';
+
+import connectDlg from './page-connectDlg.html'
+import lockDlg from './page-lockDlg.html'
+
+import './macarte.css'
 
 const dialog = new Dialog({ 
   closeOnSubmit: false,

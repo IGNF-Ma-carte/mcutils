@@ -508,8 +508,9 @@ MacarteAPI.prototype.getMedias =  function(options, callback) {
  * @param {boolean} [useTeam=true] use false to get user media folder (out of teams)
  */
 MacarteAPI.prototype.getMediasFolders =  function(callback, useTeam) {
-  const options = {}
-  options.organization_id = (useTeam !== false) ? team.getId() : '';
+  const options = {
+    organization_id: (useTeam !== false) ? team.getId() : ''
+  }
   this._send('GET', _apiURL+'medias/folders', options, callback);
 };
 

@@ -15,7 +15,6 @@ import api from '../api/api'
  * @return {teamSelectorCtrl}
  */
 function teamSelector(parent, roles) {
-  roles = roles;
   let myTeam = {};
   let onselect = function() {}
   let onready =  function() {}

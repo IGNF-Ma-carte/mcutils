@@ -76,7 +76,7 @@ function getLayerSwitcher() {
   // No selection
   layerSwitcher.set('selection', false);
   // Inview layers
-  layerSwitcher.on('drawlist', (e, li) => {
+  layerSwitcher.on('drawlist', (e) => {
     if (e.layer.get('inview') || e.layer.getVisible()) {
       if (!e.layer.get('inview')) e.layer.set('inview', true)
       e.li.dataset.inview = '';

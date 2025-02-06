@@ -2,7 +2,6 @@ import ol_Object from 'ol/Object.js'
 import Feature from 'ol/Feature'
 import Point from 'ol/geom/Point'
 import ol_format_WKT from 'ol/format/WKT'
-import { fromLonLat } from 'ol/proj'
 import papa from 'papaparse'
 
 class olFormatCSV extends ol_Object {
