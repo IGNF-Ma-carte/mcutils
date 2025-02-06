@@ -509,6 +509,50 @@ StoryMap.prototype.setInfoVolet = function(md, sel2) {
     }
     // Show info
     where.innerHTML = '';
+    // Multi selection
+    if (md && md.contents && md.renderedFeatures) {
+      let mdClone = {...md};
+      const contents = mdClone.contents;
+      const features = mdClone.renderedFeatures;
+      let index = mdClone.index;
+      if (!index) {
+        index = 1;
+      }
+      // Add arrows for multi select
+      if (contents.length > 1) {
+        let div = ol_ext_element.create('DIV', { className: 'ol-count', parent: where });
+        ol_ext_element.create('BUTTON', {
+          className: 'ol-prev fa fa-caret-left fa-2x',
+          parent: div,
+          click: function () {
+            index--;
+            if (index < 1)
+              index = contents.length;
+            mdClone.index = index;
+            this.setInfoVolet(mdClone, sel2);
+            this.getCarte().getSelect().setIndex(index);
+            this.getCarte().getSelect().setShownFeature(features[index - 1]);
+          }.bind(this)
+        });
+        ol_ext_element.create('TEXT', { html: index + '/' + contents.length, parent: div });
+        ol_ext_element.create('BUTTON', {
+          className: 'ol-next fa fa-caret-right fa-2x',
+          parent: div,
+          click: function () {
+            index++;
+            if (index > contents.length)
+              index = 1;
+            mdClone.index = index;
+            this.setInfoVolet(mdClone, sel2);
+            this.getCarte().getSelect().setIndex(index);
+            this.getCarte().getSelect().setShownFeature(features[index - 1]);
+          }.bind(this)
+        });
+      }
+      if (contents.length) {
+        md = contents[index - 1]
+      }
+    }
     if (md instanceof Element) {
       where.appendChild(md);
     } else {
@@ -1436,20 +1480,35 @@ StoryMap.prototype.setCarte = function(carte, n) {
     carte.setSelectStyle({ points: false });
     // Handle feature select on the map
     const onselect = (e) => {
-      let feature = e.selected[0];
-      // Cluster > zoom to cluster extent
-      if (feature && feature.get('features')) {
-        if (feature.get('features').length > 1) {
-          carte.zoomToClusterExtent(feature.get('features'));
-          feature = false;
-        } else {
-          feature = feature.get('features')[0];
+      // Get copy of selected features
+      let features = [...carte.getSelect().getFeatures().getArray()];
+      let firstFeature = features[0]
+
+      // Cluster : zoom or display Popup
+      if (firstFeature && firstFeature.get('features') instanceof Array) {
+        const displayClusterPopup = firstFeature.get('features')[0].getLayer().get("displayClusterPopup")
+        // If displayClusterPopup is true, we display the popup; else we zoom to the extent
+        if (!displayClusterPopup && (firstFeature.get('features').length > 1 || features.length > 1)) {
+          let clusterFeatures = [];
+          // Check all elements in the selected features
+          features.forEach(feat => {
+            const cluster = feat.get('features');
+            if (cluster)
+              clusterFeatures.push(...cluster)
+              else {
+              clusterFeatures.push(feat)
+            }
+          })
+          carte.zoomToClusterExtent(clusterFeatures);
+          features = [];
+          firstFeature = false;
         }
       }
+      
       // Show info
-      carte.popupFeature(false);
+      carte.popupFeatures(false);
       if (this.get('model') === 'diapo') {
-        if (feature instanceof Feature) {
+        if (firstFeature instanceof Feature) {
           const features = [];
           // Get 100 feature for diaporama
           let nb = 100;
@@ -1465,23 +1524,24 @@ StoryMap.prototype.setCarte = function(carte, n) {
             }
             if (nb < 0) break;
           }
-          fullscreen.diaporama(feature, features)
+          fullscreen.diaporama(firstFeature, features)
         }
       } else if (this.hasPopup()) {
-        if (!mdFeatureSelect(feature)) {
-          carte.popupFeature(feature, e.mapBrowserEvent ? e.mapBrowserEvent.coordinate : carte.map.getView().getCenter());
+        if (!mdFeatureSelect(firstFeature) && features.length) {
+          carte.popupFeatures(features, e.mapBrowserEvent ? e.mapBrowserEvent.coordinate : carte.map.getView().getCenter());
         }
       } else {
-        if (feature) feature._indicator = this.get('indicator');
+        if (firstFeature) firstFeature._indicator = this.get('indicator');
         // Display feature info or description
         this.setInfoVolet(
-          feature ? feature.getPopupContent(true) : this.get('description'), 
+          features.length ? carte.getFeaturesPopupContent(features, true) : this.get('description'),
           // Second select (differentiel model)
           e.target === carte._interactions.select2
         );
       }
     }
     carte.getSelect().on('select', onselect);
+
     carte.on('layer:featureInfo', e => {
       carte.popupFeature(e.feature, e.coordinate)
     });
@@ -1650,6 +1710,9 @@ StoryMap.prototype.setStyleSheet = function (css) {
       newCSS += r.cssText + '\n';
     } else if (/^@font-face/.test(r.cssText) || /^@import url\([\'|\"]https:\/\/fonts.googleapis.com\/css2/.test(r.cssText)) {
       // Font face and google fonts
+      newCSS += r.cssText + '\n';
+    } else if (/^@keyframes/.test(r.cssText)) {
+      // Keyframe
       newCSS += r.cssText + '\n';
     }
   }

@@ -23,7 +23,8 @@ import View from 'ol/View'
 import './ol/BaseLayer'
 import { defaults as defaultControls } from 'ol/control'
 import { defaults as defaultInteractions, DragRotate, PinchRotate } from 'ol/interaction'
-import Select from './ol/Select'
+// import Select from './ol/Select'
+import Select from './ol/SelectMultiple'
 import Synchronize from 'ol-ext/interaction/Synchronize'
 import MouseWheelZoom from 'ol/interaction/MouseWheelZoom'
 import { click as clickCondition, platformModifierKeyOnly } from 'ol/events/condition'
@@ -48,7 +49,7 @@ import LocateCtrl from 'ol-ext/control/GeolocationButton'
 import notification from './dialog/notification'
 import getLayerSwitcher from './control/layerSwitcher'
 
-import Popup from 'ol-ext/overlay/Popup'
+import ol_Overlay_PopupMultiple from './ol/PopupMultiple'
 import Tooltip from 'ol-ext/overlay/Tooltip'
 import Hover from 'ol-ext/interaction/Hover'
 
@@ -59,7 +60,7 @@ import Legend from 'ol-ext/legend/Legend'
 import { saveAs } from 'file-saver';
 import { jsPDF } from "jspdf";
 
-import { getSelectStyleFn, getStyleFn } from './style/ignStyleFn'
+import { getSelectStyleFn, getStyleFn, getShownFeatureStyleFn } from './style/ignStyleFn'
 
 import './layer/Geoportail'
 import { toStringHDMS } from 'ol/coordinate'
@@ -270,7 +271,6 @@ class Carte extends ol_Object {
         }
       }
     })
-
     // Add interactions
     this._interactions = {
       select: new Select({
@@ -278,9 +278,11 @@ class Carte extends ol_Object {
           if (l.selectable) return l.selectable();
           return false;
         },
+        multi:true,
         hitTolerance: 3,
         condition: clickCondition,
-        style: getSelectStyleFn(this._styleOptions)
+        style: getSelectStyleFn(this._styleOptions),
+        shownStyle: getShownFeatureStyleFn(this._styleOptions),
       }),
       // remove issue on large datasets
       hover: new Hover({
@@ -293,6 +295,12 @@ class Carte extends ol_Object {
       }),
       synchro: new Synchronize({ active: false })
     }
+
+    // Reset selection arrays on click
+    this.getMap().on('click', () => {
+      this._interactions.select.clearCurrentSelectionArrays();
+    })
+
     for (let i in this._interactions) {
       this.map.addInteraction(this._interactions[i]);
     }
@@ -381,14 +389,16 @@ class Carte extends ol_Object {
     this._controls.locate.set('bar', true);
     this.showControl('toolbar', false);
     // Popup
-    this.popup = new Popup({ closeBox: true, minibar: true });
+    this.popup = new ol_Overlay_PopupMultiple({ closeBox: true, minibar: true, select: this.getSelect()});
+    // this.popup = new Popup({ closeBox: true, minibar: true });
     this.map.addOverlay(this.popup);
     this.popup.on('show', () => this.popup.content.scrollTop = 0);
     // Hover
-    this.popover = new Popup({
+    this.popover = new ol_Overlay_PopupMultiple({
       className: 'tooltips popuphover',
       positioning: 'center-left',
-      stopEvent: false
+      stopEvent: false,
+      select: this.getSelect(),
     });
     this.map.addOverlay(this.popover);
     // Tooltip
@@ -699,6 +709,144 @@ Carte.prototype.popupFeature = function(feature, coord) {
   }
 };
 
+/** Show a popup for multiple feature
+ * @param {Array<Feature>} feature
+ * @param {ol.coordinate} coord
+ */
+Carte.prototype.popupFeatures = function(features, coord) {
+  if (!features || features.length == 0) {
+    this.popup.hide();
+  } else {
+    // Set current world (when outside)
+    if (coord) {
+      const projExtent = this.map.getView().getProjection().getExtent();
+      if (coord[0] > projExtent[2]) {
+        const c = this.map.getView().getCenter();
+        c[0] = c[0] - (projExtent[2] - projExtent[0]);
+        this.map.getView().setCenter(c);
+        this.map.renderSync();
+      } else if (coord[0] < projExtent[1]) {
+        const c = this.map.getView().getCenter();
+        c[0] = c[0] + (projExtent[2] - projExtent[0]);
+        this.map.getView().setCenter(c);
+        this.map.renderSync();
+      }
+    }
+    // Show Popup
+    this.showPopupFeatures(features, this.popup, coord);
+  }
+};
+
+/** Get the contents of multiple features.
+ * It also check different things such as the cluster type
+ * or the multi select attribute of the layer.
+ * @param {Array<Feature>} features Array of the features to get the content from
+ * @param {boolean} getAllFeaturesContent
+ * @return {{contents: Array<Element>, renderedFeatures: Array<Feature>}}
+ *    An object containing:
+ *    - contents: Array of HTML elements displayed in the popup
+ *    - renderedFeature: Array of rendered features
+ */
+Carte.prototype.getFeaturesPopupContent = function(feat, getAllFeaturesContent = false) {
+  if (!feat) {
+    return;
+  }
+  let features = [];
+
+  feat.forEach(feature => {
+    const cluster = feature.get('features');
+    if (cluster) {
+      features.push(...cluster);
+    } else {
+      features.push(feature);
+    }
+  })
+
+  if (features.length == 0) {
+    return
+  }
+
+  let contents = []
+  let renderedFeatures = []
+  for (let i = 0; i < features.length; i++) {
+    let f = features[i]
+    // If it's a cluster, then we check if there is a style to display it
+    if (f.getLayer().getMode && f.getLayer().getMode() == "cluster" && f.getLayer().get("clusterType") == 'stat') {
+      const st = f.getLayer().getStyle()(f);
+      // No popup is displayed for transparent items
+      if (st.length == 0) {
+        continue;
+      }
+    }
+    
+    const content = f.getPopupContent(true);
+    if (getAllFeaturesContent || content.innerText.trim() || content.querySelector('canvas') || content.querySelector('img') || f.getLayer().get('multiSelect')) {
+      contents.push(content);
+      renderedFeatures.push(f);
+    }
+  }
+  return {contents, renderedFeatures}
+}
+
+/** Show a multi popup for an array of features
+ * @param {Array<Feature>} features array of features
+ * @param {ol.Overlay.Popup} popup the popup to display on the map
+ * @param {ol.Coordinate} coord popup position (the closest point will be used)
+ * @param {ol.geom|undefined} [geom] use as geometry, default use object geom
+ * @returns {Array<string>} Array of popup content
+ * @private
+ */
+Carte.prototype.showPopupFeatures = function(features, popup, coord, geom) {
+  // Get features popup content
+  const result = this.getFeaturesPopupContent(features)
+  const contents = result.contents;
+  const renderedFeatures = result.renderedFeatures;
+
+  // Show popup only if there is content
+  if (contents.length) {
+
+    // Set offset if at least one content is not empty
+    for (let i = 0; i < contents.length; i++) {
+      if (contents[i].innerText.trim() || contents[i].querySelector('canvas') || contents[i].querySelector('img')) {
+        popup.setOffset([0, 0]);
+        break
+      }
+    }
+
+    // Update coord if needed
+    if (!coord) {
+      // Get position of first feature on the map
+      const f = features[0]
+      coord = popup.getPosition() || (geom||f.getGeometry()).getFirstCoordinate();
+    }
+
+    if (features[0].getGeometry().getType() === 'Point') {
+      var offset = popup.offsetBox;
+      // Statistic layer has no style
+      if (features[0].getLayer && features[0].getLayer() && features[0].getLayer().getIgnStyle) {
+        var style = features[0].getLayer().getIgnStyle(features[0]);
+        var offsetX = /left|right/.test(popup.autoPositioning[0]) ? style.pointRadius : 0;
+        popup.offsetBox = [-offsetX, (style.pointOffsetY ? -2:-1)*style.pointRadius, offsetX, style.pointOffsetY ? 0:style.pointRadius];
+      }
+      if (geom) popup.show(geom.getClosestPoint(coord), contents, renderedFeatures);
+      else popup.show(features[0].getGeometry().getFirstCoordinate(), contents, renderedFeatures);
+      popup.offsetBox = offset;
+    } else {
+      if (/polygon/i.test(features[0].getGeometry().getType())) {
+        popup.show(coord, contents, renderedFeatures);
+      } else {
+        popup.show(features[0].getGeometry().getClosestPoint(coord), contents, renderedFeatures);
+      }
+    }
+  } else {
+    popup.hide()
+  }
+  // Load Twitter widget
+  md2html.renderWidget(popup.getElement());
+  
+  return contents;
+}
+
 /** Set current selection
  * @param {Feature} feature
  * @param {string} [select] name: select, select1 or select2
@@ -731,7 +879,7 @@ Carte.prototype.zoomToClusterExtent = function (features) {
   extent = buffer(extent, 15*view.getResolution());
   // Fit
   view.fit(extent, { size: this.map.getSize() });
-  // Prevent infinity zoom 
+  // Prevent infinity zoom
   const maxZoom = Math.min(18, features[0].getLayer().get('maxZoomCluster'));
   if (view.getZoom() > maxZoom) {
     if (maxZoom > 18) {

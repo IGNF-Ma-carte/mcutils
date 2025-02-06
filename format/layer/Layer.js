@@ -73,6 +73,8 @@ Layer.prototype.readOptions = function(layer, options) {
   if (layer.selectable) {
     layer.selectable(options.selectable);
   }
+  // Multi select
+  if (options.multiSelect) layer.set('multiSelect', options.multiSelect);
   // Popup
   if (layer.setPopupContent) layer.setPopupContent(options.popupContent);
   if (options.popupHoverSelect) layer.set('popupHoverSelect', options.popupHoverSelect);
@@ -104,7 +106,11 @@ Layer.prototype.readOptions = function(layer, options) {
       layer.setMode('cluster', { 
         distance: options.clusterDistance || options.radiusCluster || 40,
         maxZoomCluster: parseInt(options.maxZoomCluster),
-        clusterStat: options.clusterStat
+        minSizeCluster: parseInt(options.minSizeCluster),
+        maxSizeCluster: parseInt(options.maxSizeCluster),
+        clusterType: options.clusterType,
+        clusterColor: options.clusterColor,
+        displayClusterPopup: options.displayClusterPopup,
       });
     } else if (options.mode) {
       layer.setMode(options.mode || 'vector');
@@ -165,6 +171,8 @@ Layer.prototype.writeOptions = function(layer, options) {
   if (layer.selectable) {
     options.selectable = layer.selectable();
   }
+  // Multi select
+  options.multiSelect = layer.get('multiSelect');
   // PopupContent
   if (layer.getPopupContent) {
     options.popupContent = layer.getPopupContent();
@@ -199,7 +207,11 @@ Layer.prototype.writeOptions = function(layer, options) {
       options.cluster = true;
       options.clusterDistance = options.radiusCluster = layer.get('clusterDistance');
       options.maxZoomCluster = layer.get('maxZoomCluster');
-      options.clusterStat = layer.get("clusterStat");
+      options.minSizeCluster = layer.get('minSizeCluster');
+      options.maxSizeCluster = layer.get('maxSizeCluster');
+      options.clusterType = layer.get('clusterType');
+      options.clusterColor = layer.get('clusterColor');
+      options.displayClusterPopup = layer.get('displayClusterPopup');
     }
   }
   // Crop

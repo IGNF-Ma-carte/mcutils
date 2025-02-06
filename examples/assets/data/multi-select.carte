@@ -1,0 +1,288 @@
+{
+ "param": {
+  "lon": 1.349881875060815,
+  "lat": 47.672768235701454,
+  "zoom": 10.417137935629935,
+  "rot": 0,
+  "controlParams": {
+   "zoomBtn": true,
+   "scaleLine": true,
+   "pSearchBar": false,
+   "legend": false,
+   "coords": false,
+   "selectLayer": true,
+   "geoloc": false,
+   "profil": false,
+   "printDlg": false
+  },
+  "proj": {
+   "valeur": "EPSG:4326"
+  }
+ },
+ "legende": {
+  "legendtitle": "Ma légende",
+  "lineHeight": 45,
+  "legendWidth": 300,
+  "legendParam": {
+   "width": 300,
+   "lineHeight": 45
+  },
+  "items": [],
+  "legendVisible": false
+ },
+ "layers": [
+  {
+   "id": 5,
+   "type": "Geoportail",
+   "name": "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
+   "title": "Plan IGN v2",
+   "visibility": true,
+   "opacity": 1,
+   "description": "Cartographie multi-échelles sur le territoire national, issue des bases de données vecteur de l’IGN, mis à jour régulièrement et réalisée selon un processus entièrement automatisé.",
+   "copyright": "",
+   "popupContent": {},
+   "grayscale": false,
+   "blendMode": "",
+   "minZoom": null,
+   "maxZoom": null,
+   "crop": {},
+   "layer": "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
+  },
+  {
+   "dessin": true,
+   "attributes": [
+    {
+     "name": "color",
+     "type": "string",
+     "default": "orange"
+    }
+   ],
+   "id": 6,
+   "type": "Vector",
+   "name": "",
+   "title": "Dessin",
+   "visibility": true,
+   "opacity": 1,
+   "copyright": "",
+   "selectable": true,
+   "multiSelect": true,
+   "popupContent": {
+    "titre": "%color%",
+    "desc": "Mes attributs\n\n%ATTRIBUTES%",
+    "img": "",
+    "coord": true
+   },
+   "grayscale": false,
+   "blendMode": "",
+   "minZoom": null,
+   "maxZoom": null,
+   "declutter": false,
+   "style": {},
+   "conditionStyle": [],
+   "mode": "vector",
+   "crop": {},
+   "data": {
+    "type": "FeatureCollection",
+    "decimals": 3,
+    "hashProperties": [
+     "color"
+    ],
+    "features": [
+     [
+      [
+       2,
+       [
+        "Dl}1[,B_MMQ';e?cg,BTW?Y;BfJxM,H2]};Pd#8,%}/B;Q}Z~,:nea;CERX_,Go|j;@j-,xUDo"
+       ]
+      ],
+      [
+       0,
+       "vert"
+      ]
+     ],
+     [
+      [
+       2,
+       [
+        "EE`eM,B`lzXI;BYpWA,bzUF;I 3o,B7WPu;CEz9>,c>m1;L<jQ,UhCd;BT2_,CnXi;Hh5_,LMf^;_vkw,BYAej"
+       ]
+      ],
+      [
+       0,
+       "orange"
+      ]
+     ],
+     [
+      [
+       2,
+       [
+        "FNI+),B`!u!T;CwZiE,BX]eK;DNB*4,xmtl;3$ny,B*e.x"
+       ]
+      ],
+      [
+       0,
+       "jaune"
+      ]
+     ],
+     [
+      [
+       2,
+       [
+        "Dx=r*,B_i_`!;f]az,BLK 0;zj`q,X XP;BXCw ,rWa;tN4g,BfAzY;B 0Z*,s91{;XHwL,|$`N"
+       ]
+      ],
+      [
+       0,
+       "bleu"
+      ]
+     ]
+    ],
+    "style": [
+     {
+      "zi": 0,
+      "sc": "rgba(0, 0, 0, 1)",
+      "fc": "rgba(0, 255, 0, 1)"
+     },
+     {
+      "zi": 0,
+      "fc": "rgba(255, 153, 0, 1)",
+      "sc": "rgba(0, 0, 0, 1)"
+     },
+     {
+      "zi": 0,
+      "sc": "rgba(0, 0, 0, 1)",
+      "fc": "rgba(255, 255, 0, 1)"
+     },
+     {
+      "zi": 0,
+      "sc": "rgba(0, 0, 0, 1)",
+      "fc": "rgba(68, 136, 238, 1)"
+     }
+    ],
+    "popupContent": [
+     {},
+     {},
+     {},
+     {}
+    ]
+   }
+  },
+  {
+   "dessin": true,
+   "attributes": [],
+   "id": 7,
+   "type": "Vector",
+   "name": "",
+   "title": "Au dessus",
+   "visibility": true,
+   "opacity": 1,
+   "copyright": "",
+   "selectable": true,
+   "multiSelect": false,
+   "popupContent": {},
+   "grayscale": false,
+   "blendMode": "",
+   "minZoom": null,
+   "maxZoom": null,
+   "declutter": false,
+   "style": {},
+   "conditionStyle": [],
+   "mode": "vector",
+   "crop": {},
+   "data": {
+    "type": "FeatureCollection",
+    "decimals": 3,
+    "hashProperties": [],
+    "features": [
+     [
+      [
+       2,
+       [
+        "E}2h%,B`'vc4;BQ{BE,BnUdW;B?QKT,EKKp;/UJN,Bren!"
+       ]
+      ]
+     ],
+     [
+      [
+       2,
+       [
+        "D/QmS,B`&>^Z;`_^9,BJJR!;p5Qd,+]B/;Bbt>B,aMum;*RK+,Bt> B"
+       ]
+      ]
+     ],
+     [
+      [
+       2,
+       [
+        "E}(xp,B_%7r+;=8g<,u8GZ;dN4l,xM~(;=8g=,u8Ga;dN4m,xM~'"
+       ]
+      ]
+     ]
+    ],
+    "style": [
+     {
+      "zi": 0,
+      "sc": "rgba(0, 0, 0, 1)",
+      "fc": "rgba(140, 28, 140, 1)"
+     },
+     {
+      "zi": 0,
+      "sc": "rgba(0, 0, 0, 1)",
+      "fc": "rgba(255, 0, 255, 1)"
+     },
+     {
+      "zi": 0,
+      "sc": "rgba(0, 255, 0, 1)",
+      "fc": "rgba(255, 255, 255, 1)"
+     }
+    ],
+    "popupContent": [
+     {
+      "active": true,
+      "titre": "A droite",
+      "desc": "Je suis à droite t rouge",
+      "img": "",
+      "coord": false
+     },
+     {
+      "active": true,
+      "titre": "A gauuuche",
+      "desc": "Je suis pas à droiute mais à gauche",
+      "img": "",
+      "coord": false
+     },
+     {}
+    ]
+   }
+  }
+ ],
+ "symbolLib": [
+  {
+   "name": "",
+   "type": "Polygon",
+   "style": {
+    "strokeWidth": 2,
+    "strokeDash": "",
+    "strokeColor": "rgba(255, 0, 0, 1)",
+    "fillColor": "rgba(255, 204, 204, 0.54)",
+    "fillPattern": "",
+    "sizePattern": 5,
+    "spacingPattern": 10,
+    "anglePattern": 0,
+    "offsetPattern": 0,
+    "scalePattern": 1,
+    "fillColorPattern": "rgba(0,0,0,0)",
+    "labelAttribute": "",
+    "textColor": "#000",
+    "textStyle": "normal",
+    "textSize": 12,
+    "textFont": "Arial, Helvetica, sans-serif",
+    "textOutlineColor": "",
+    "textOutlineWidth": 3,
+    "textAlign": "left",
+    "textBaseline": "middle",
+    "textOverflow": "#000"
+   }
+  }
+ ]
+}
