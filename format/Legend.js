@@ -88,8 +88,8 @@ Legend.prototype.write = function(legend) {
     legendtitle: legend.getTitle(),
     lineHeight: legend.get('lineHeight'),
     legendWidth: 300,
-    legendParam: { width: 300, lineHeight: options.lineHeight }
   };
+  options.legendParam = { width: 300, lineHeight: options.lineHeight }
   
   // options.legendPos = "bottom-left"
   if (legend.get('type')) options.type = legend.get('type');
