@@ -848,4 +848,82 @@ md2html.iconize = function(md) {
   return md2html.doIcons(md2html.doSecure(md))
 }
 
+/** Display selection element
+ * @param {Element} parent
+ * @param {SelectMultiple} select
+ * @param {Number} count
+ * @param {Array<Element>} contents
+ * @param {Array<Feature>} features
+ */
+md2html.showSelection =  function(parent, select, count, contents, features) {
+  const div = ol_ext_element.create('DIV', { className: 'ol-count', parent: parent });
+
+  // Show next/prev
+  const incShow = (ninc) => {
+    count += ninc;
+    if (count < 1){
+      count = contents.length;
+    } else if (count > contents.length) {
+      count = 1;
+    }
+    // Update HTML
+    countElt.innerHTML = count + '/' + contents.length
+    infoElt.innerHTML = '';
+    infoElt.appendChild(contents[count - 1])
+    // Render
+    md2html.renderWidget(infoElt);
+    // Update scroll div on image load
+    const scrollElt = parent.closest('.ol-scrolldiv')
+    if (scrollElt) {
+      // Update on image load
+      Array.prototype.slice.call(infoElt.querySelectorAll('img')).forEach((image) => {
+        image.addEventListener('load', () => {
+          scrollElt.dispatchEvent(new Event('scroll'));
+        });
+      });
+    }
+    // Update select
+    select.setIndex(count)
+    select.setShownFeature(features[count - 1])
+  };
+
+  // Set button
+  const setButton = (inc) => {
+    const className = (inc > 0 ? 'popup-next' : 'popup-prev')
+
+    // Add button
+    ol_ext_element.create('BUTTON', {
+      className: className,
+      parent: div,
+      on: {
+        keydown: e => {
+          switch (e.key) {
+            case 'ArrowRight': {
+              e.preventDefault()
+              e.stopPropagation()
+              incShow(1)
+              break;
+            }
+            case 'ArrowLeft': {
+              e.preventDefault()
+              e.stopPropagation()
+              incShow(-1)
+              break;
+            }
+          }
+        }
+      },
+      click: () => incShow(inc)
+    });
+  }
+
+  setButton(-1)
+  const countElt = ol_ext_element.create('SPAN', { parent: div });
+  setButton(1)
+  const infoElt = ol_ext_element.create('DIV', { parent: parent })
+  incShow(0);
+
+  return parent;
+}
+
 export default md2html

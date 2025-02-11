@@ -511,58 +511,35 @@ StoryMap.prototype.setInfoVolet = function(md, sel2) {
     where.innerHTML = '';
     // Multi selection
     if (md && md.contents && md.renderedFeatures) {
-      let mdClone = {...md};
-      const contents = mdClone.contents;
-      const features = mdClone.renderedFeatures;
-      let index = mdClone.index;
-      if (!index) {
-        index = 1;
-      }
-      // Add arrows for multi select
+      const contents = md.contents;
+
+      // Multi select
       if (contents.length > 1) {
-        let div = ol_ext_element.create('DIV', { className: 'ol-count', parent: where });
-        ol_ext_element.create('BUTTON', {
-          className: 'ol-prev fa fa-caret-left fa-2x',
-          parent: div,
-          click: function () {
-            index--;
-            if (index < 1)
-              index = contents.length;
-            mdClone.index = index;
-            this.setInfoVolet(mdClone, sel2);
-            this.getCarte().getSelect().setIndex(index);
-            this.getCarte().getSelect().setShownFeature(features[index - 1]);
-          }.bind(this)
-        });
-        ol_ext_element.create('TEXT', { html: index + '/' + contents.length, parent: div });
-        ol_ext_element.create('BUTTON', {
-          className: 'ol-next fa fa-caret-right fa-2x',
-          parent: div,
-          click: function () {
-            index++;
-            if (index > contents.length)
-              index = 1;
-            mdClone.index = index;
-            this.setInfoVolet(mdClone, sel2);
-            this.getCarte().getSelect().setIndex(index);
-            this.getCarte().getSelect().setShownFeature(features[index - 1]);
-          }.bind(this)
-        });
+        // Multi features
+        md2html.showSelection(where, this.getCarte().getSelect(), md.index || 1, md.contents, md.renderedFeatures);
+      } else {
+        // Only one feature
+        if (contents.length) {
+          md = contents[index - 1]
+          where.appendChild(md);
+        }
       }
-      if (contents.length) {
-        md = contents[index - 1]
-      }
-    }
-    if (md instanceof Element) {
-      where.appendChild(md);
     } else {
-      ol_ext_element.create('DIV', {
-        html: md2html(md),
-        parent: where
-      });
+      // Show MD
+      if (md instanceof Element) {
+        where.appendChild(md);
+      } else {
+        ol_ext_element.create('DIV', {
+          html: md2html(md),
+          parent: where
+        });
+      }
     }
+
+    // Render
     md2html.renderWidget(where);
     where.scrollTop = 0;
+
     // Update on image load
     Array.prototype.slice.call(this.element.content.querySelectorAll('img'))
       .forEach((image) => {
@@ -570,6 +547,7 @@ StoryMap.prototype.setInfoVolet = function(md, sel2) {
           this.element.content.dispatchEvent(new Event('scroll'));
         });
       });
+
     // Add print
     if (where.querySelector('.md-card-printer')) {
       if (this.get('model')==='differentiel') {

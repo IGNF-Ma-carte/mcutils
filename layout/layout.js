@@ -29,7 +29,7 @@ const rules = {
     'color': 'VOLETCOLOR',
     'background-color': 'BGVOLETCOLOR',
   },
-  /* Next / prev arrows for volet (multi selection) */
+  /* Next / prev arrows for volet (multi selection) * /
   '[data-role="storymap"] .volet .content .ol-count, .ol-popup .ol-popupfeature .ol-count' : {
     'text-align': 'center',
     'display': 'flex',

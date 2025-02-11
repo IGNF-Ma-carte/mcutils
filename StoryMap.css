@@ -108,25 +108,43 @@
 }
 
 /* Next / prev arrows for volet (multi selection) */
-[data-role="storymap"] .volet .content .ol-count, .ol-popup .ol-popupfeature .ol-count {
+[data-role="storymap"] .volet .content .ol-count, 
+.ol-popup .ol-popupfeature .ol-count {
   display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
   float: none;
 }
+[data-role="storymap"] .volet .content .ol-count span,
+.ol-popup .ol-popupfeature .ol-count span {
+  min-width: 3.5em;
+  vertical-align: middle;
+  line-height: 1em;
+}
 
-[data-role="storymap"] .volet .content .ol-prev,
-[data-role="storymap"] .volet .content .ol-next,
-.ol-popup .ol-popupfeature .ol-prev,
-.ol-popup .ol-popupfeature .ol-next {
-  border:0;
-  margin: 0 .2em;
-  padding: 0 .5em;
+/* Select navigation button */
+button.popup-prev,
+button.popup-next {
+  border: 0;
+  margin: 0;
+  padding: 0.3em 0.7em;
   background-color: inherit;
   display: inline-block;
   vertical-align: bottom;
   cursor: pointer;
+}
+button.popup-prev:focus-visible,
+button.popup-next:focus-visible {
+  outline: 2px solid currentColor;
+}
+button.popup-prev:before {
+  content: '\e909';
+  font-family: font-ign;
+}
+button.popup-next:before {
+  content: '\e907';
+  font-family: font-ign;
 }
 
 [data-role="storymap"] .volet .md img {
