@@ -303,7 +303,7 @@ class StoryMap extends ol_Object {
     this.on('read', this.start.bind(this));
 
     // Set step on arrow left/right
-    document.addEventListener('keyup', (e) => {
+    document.addEventListener('keydown', (e) => {
       if (
         !this.get('noStep') 
         && !this.get('freezeStep') 
@@ -314,11 +314,13 @@ class StoryMap extends ol_Object {
           case 'ArrowRight':
           case 'ArrowDown': {
             if (this.currentStep < this.steps.getLength()-1) this.setStep(this.currentStep + 1);
+            this.element.step.querySelector('.next').focus()
             break;
           }
           case 'ArrowLeft':
           case 'ArrowUp': {
             if (this.currentStep > 0) this.setStep(this.currentStep - 1);
+            this.element.step.querySelector('.prev').focus()
             break;
           }
           default: {
@@ -692,11 +694,14 @@ StoryMap.prototype.setStep = function(n, anim) {
     className: 'pages'
   });
   // Previous
-  ol_ext_element.create('SPAN', {
+  const prevBt = ol_ext_element.create('BUTTON', {
     className: 'prev' + (n===0 ? ' hidden' : ''),
     title: _T('prev'),
     click: () => {
-      if (!this.get('freezeStep') && n>0) this.setStep(n-1);
+      if (!this.get('freezeStep') && n>0) {
+        this.setStep(n-1);
+        prevBt.focus();
+      }
     },
     parent: div
   });
@@ -707,15 +712,16 @@ StoryMap.prototype.setStep = function(n, anim) {
     parent: div
   });
   // Next
-  ol_ext_element.create('SPAN', {
+  const nextBt = ol_ext_element.create('BUTTON', {
     className: 'next' + (n >= this.steps.getLength() -1 ? ' hidden' : ''),
     title: _T('next'),
     click: () => {
       if (!this.get('freezeStep') && n < this.steps.getLength() -1) this.setStep(n+1);
+      nextBt.focus();
     },
     parent: div
   });
-  ol_ext_element.create('DIV', {
+  ol_ext_element.create('BUTTON', {
     className: 'toc',
     title: _T('toc'),
     click: () => {

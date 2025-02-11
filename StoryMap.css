@@ -361,31 +361,45 @@ button.popup-next:before {
   pointer-events: none;
 }
 
-[data-role="storymap"] .volet .steps span.hidden {
+[data-role="storymap"] .volet .steps:has(button.next.hidden) {
+  padding-right: 1.5em;
+}
+[data-role="storymap"] .volet .steps:has(button.prev.hidden) {
+  padding-left: 1.5em;
+}
+[data-role="storymap"] .volet .steps button.hidden {
   opacity: 0;
   pointer-events: none;
+  display: none;
 }
-[data-role="storymap"] .volet .steps span.prev,
-[data-role="storymap"] .volet .steps span.next {
+[data-role="storymap"] .volet .steps button.prev,
+[data-role="storymap"] .volet .steps button.next {
+  font-size: 1em;
   width: 1.5em;
   border: none;
   border-radius: 3px;
-  padding: .1em 0;
+  padding: .35em .5em;
+  background-color: transparent;
 }
-[data-role="storymap"] .volet .steps span.prev:before,
-[data-role="storymap"] .volet .steps span.next:before {
+[data-role="storymap"] .volet .steps button.prev:before,
+[data-role="storymap"] .volet .steps button.next:before {
   content: '\f054';
   font-family: 'FontAwesome';
+  width: 1em;
+  height: 1em;
 }
-[data-role="storymap"] .volet .steps span.prev:before {
+[data-role="storymap"] .volet .steps button.prev:before {
   content: '\f053';
 }
 [data-role="storymap"] .volet .pages .toc {
+  font-size: 1em;
   position: absolute;
-  top: 0;
+  top: .2em;
   right: 0;
-  padding: .2em;
+  padding: .35em;
   cursor: pointer;
+  border: 0;
+  background-color: transparent;
 }
 [data-role="storymap"] .volet .pages .toc:before {
   content: '\f0c9';

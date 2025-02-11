@@ -902,12 +902,14 @@ md2html.showSelection =  function(parent, select, count, contents, features) {
               e.preventDefault()
               e.stopPropagation()
               incShow(1)
+              bt.parentNode.querySelector('.popup-next').focus()
               break;
             }
             case 'ArrowLeft': {
               e.preventDefault()
               e.stopPropagation()
               incShow(-1)
+              bt.parentNode.querySelector('.popup-prev').focus()
               break;
             }
           }

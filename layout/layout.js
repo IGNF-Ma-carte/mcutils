@@ -48,7 +48,7 @@ const rules = {
     'color': 'DARKCOLOR',
   },
   */
-  '[data-role="storymap"] .volet .pages span:hover, [data-role="storymap"] .volet .pages span.active': {
+  '[data-role="storymap"] .volet .pages button:hover, [data-role="storymap"] .volet .pages button:focus, [data-role="storymap"] .volet .pages button.active': {
     'color': 'BGVOLETCOLOR',
     'background-color': 'VOLETCOLOR',
     'border-color': 'VOLETCOLOR'
