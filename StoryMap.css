@@ -133,10 +133,12 @@ button.popup-next {
   display: inline-block;
   vertical-align: bottom;
   cursor: pointer;
+  border-radius: 3px;
 }
 button.popup-prev:focus-visible,
 button.popup-next:focus-visible {
-  outline: 2px solid currentColor;
+  outline: unset;
+  opacity: 0.5;
 }
 button.popup-prev:before {
   content: '\e909';

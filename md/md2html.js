@@ -892,7 +892,7 @@ md2html.showSelection =  function(parent, select, count, contents, features) {
     const className = (inc > 0 ? 'popup-next' : 'popup-prev')
 
     // Add button
-    ol_ext_element.create('BUTTON', {
+    const bt = ol_ext_element.create('BUTTON', {
       className: className,
       parent: div,
       on: {
@@ -913,7 +913,10 @@ md2html.showSelection =  function(parent, select, count, contents, features) {
           }
         }
       },
-      click: () => incShow(inc)
+      click: () => {
+        bt.focus();
+        incShow(inc)
+      }
     });
   }
 

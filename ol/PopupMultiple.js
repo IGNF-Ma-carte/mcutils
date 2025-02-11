@@ -75,7 +75,7 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
 
     // Counter
     if (this._contents.length > 1) {
-      return md2html.showSelection(html, this.select, count, this._contents, this._features);
+      return md2html.showSelection(html, this.select, count || 1, this._contents, this._features);
     }
 
     // Insert content

@@ -4,7 +4,9 @@ import { asString } from 'ol/color'
 import jCSSRule from './jCSSRule'
 import { darkenColor } from './jCSSRule'
 import chroma from 'chroma-js'
+import { color } from 'chart.js/helpers'
 
+/* Layout color rules */
 const rules = {
   '[data-role="storymap"] select': {
     'color': 'COLOR',
@@ -29,22 +31,17 @@ const rules = {
     'color': 'VOLETCOLOR',
     'background-color': 'BGVOLETCOLOR',
   },
-  /* Next / prev arrows for volet (multi selection) * /
-  '[data-role="storymap"] .volet .content .ol-count, .ol-popup .ol-popupfeature .ol-count' : {
-    'text-align': 'center',
-    'display': 'flex',
-    'justify-content': 'center',
-    'align-items': 'center',
-    'float': 'none',
+  /* Next / prev arrows for volet (multi selection) */
+  '[data-role="storymap"] .volet button.popup-prev:focus-visible, [data-role="storymap"] .volet button.popup-next:focus-visible' : {
+    'color': 'BGVOLETCOLOR',
+    'background-color': 'VOLETCOLOR',
   },
-  '[data-role="storymap"] .volet .content .ol-prev, [data-role="storymap"] .volet .content .ol-next, .ol-popup .ol-popupfeature .ol-prev, .ol-popup .ol-popupfeature .ol-next' : {
-    'border': '0',
-    'margin': '0 .2em',
-    'padding': '0 .5em',
-    'background-color': 'inherit',
-    'display': 'inline-block',
-    'vertical-align': 'bottom',
-    'cursor': 'pointer',
+  '[data-role="storymap"] .ol-popup button.popup-prev, [data-role="storymap"] .ol-popup button.popup-next' : {
+    'color': 'currentColor'
+  },
+  '[data-role="storymap"] .ol-popup button.popup-prev:focus-visible, [data-role="storymap"] .ol-popup button.popup-next:focus-visible' : {
+    'color': 'BGCOLOR',
+    'background-color': 'COLOR',
   },
   /*
   '[data-role="storymap"] .volet a': {
