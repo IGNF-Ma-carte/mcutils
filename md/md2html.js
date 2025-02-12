@@ -856,7 +856,7 @@ md2html.iconize = function(md) {
  * @param {Array<Feature>} features
  */
 md2html.showSelection =  function(parent, select, count, contents, features) {
-  const div = ol_ext_element.create('DIV', { className: 'ol-count', parent: parent });
+  const div = ol_ext_element.create('FORM', { className: 'ol-count', parent: parent });
 
   // Show next/prev
   const incShow = (ninc) => {

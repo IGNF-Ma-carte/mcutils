@@ -690,7 +690,7 @@ StoryMap.prototype.setStep = function(n, anim) {
   n = Math.max(Math.min(n, this.steps.getLength()-1), 0);
   this.currentStep = n;
   // Create content
-  const div = ol_ext_element.create('DIV', {
+  const div = ol_ext_element.create('FORM', {
     className: 'pages'
   });
   // Previous
@@ -700,7 +700,7 @@ StoryMap.prototype.setStep = function(n, anim) {
     click: () => {
       if (!this.get('freezeStep') && n>0) {
         this.setStep(n-1);
-        prevBt.focus();
+        this.element.step.querySelector('button.prev').focus()
       }
     },
     parent: div
@@ -717,7 +717,7 @@ StoryMap.prototype.setStep = function(n, anim) {
     title: _T('next'),
     click: () => {
       if (!this.get('freezeStep') && n < this.steps.getLength() -1) this.setStep(n+1);
-      nextBt.focus();
+      this.element.step.querySelector('button.next').focus()
     },
     parent: div
   });
@@ -793,7 +793,7 @@ StoryMap.prototype.showTOC = function(current) {
   });
   this.steps.forEach((s, i) => {
     ol_ext_element.create('LI', {
-      html: s.title,
+      html: ol_ext_element.create('A', { href: '#', text: s.title, click: e => e.preventDefault() }),
       className: current===i ? 'active' : '',
       click: () => {
         this.setStep(i, false);

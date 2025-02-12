@@ -381,6 +381,12 @@ button.popup-next:before {
   padding: .35em .5em;
   background-color: transparent;
 }
+[data-role="storymap"] .volet .pages .toc:focus,
+[data-role="storymap"] .volet .steps button.prev:focus,
+[data-role="storymap"] .volet .steps button.next:focus {
+  opacity: 0.8;
+}
+
 [data-role="storymap"] .volet .steps button.prev:before,
 [data-role="storymap"] .volet .steps button.next:before {
   content: '\f054';
@@ -416,6 +422,14 @@ button.popup-next:before {
 [data-role="storymap"] .volet .content .toc li {
   padding: .1em .5em;
   text-align: left;
+}
+[data-role="storymap"] .volet .content .toc li a {
+  text-decoration: none;
+  font-weight: inherit;
+}
+[data-role="storymap"] .volet .content .toc li a:focus-visible {
+  font-weight: bold;
+  text-decoration: underline;
 }
 [data-role="storymap"] .volet .content .toc li.active {
   font-weight: bold;
