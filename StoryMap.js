@@ -428,6 +428,7 @@ StoryMap.prototype.clearInfoVolet = function() {
  * @param {boolean} sel2 second selection (model differentiel)
  */
 StoryMap.prototype.setInfoVolet = function(md, sel2) {
+  console.log('setinfo')
   if (this.models[this.get('model')] && this.models[this.get('model')].volet) {
     let where = this.element.info;
     // Differentiel model: 2 selects
@@ -522,7 +523,7 @@ StoryMap.prototype.setInfoVolet = function(md, sel2) {
       } else {
         // Only one feature
         if (contents.length) {
-          md = contents[index - 1]
+          md = contents[(md.index || 1) - 1]
           where.appendChild(md);
         }
       }
@@ -1466,7 +1467,8 @@ StoryMap.prototype.setCarte = function(carte, n) {
     const onselect = (e) => {
       // Get copy of selected features
       let features = [...carte.getSelect().getFeatures().getArray()];
-      let firstFeature = features[0]
+      // Fist feature or selected one
+      let firstFeature = features[0] || e.selected[0];
 
       // Cluster : zoom or display Popup
       if (firstFeature && firstFeature.get('features') instanceof Array) {
@@ -1477,9 +1479,9 @@ StoryMap.prototype.setCarte = function(carte, n) {
           // Check all elements in the selected features
           features.forEach(feat => {
             const cluster = feat.get('features');
-            if (cluster)
+            if (cluster) {
               clusterFeatures.push(...cluster)
-              else {
+            } else {
               clusterFeatures.push(feat)
             }
           })
@@ -1516,9 +1518,20 @@ StoryMap.prototype.setCarte = function(carte, n) {
         }
       } else {
         if (firstFeature) firstFeature._indicator = this.get('indicator');
+        let md;
+        if (features.length) {
+          // Multi features
+          md = carte.getFeaturesPopupContent(features, true)
+        } else if (firstFeature) {
+          // Only one
+          md = firstFeature.getPopupContent(true)
+        } else {
+          // No features
+          md = this.get('description')
+        }
         // Display feature info or description
-        this.setInfoVolet(
-          features.length ? carte.getFeaturesPopupContent(features, true) : this.get('description'),
+        this.setInfoVolet( 
+          md,
           // Second select (differentiel model)
           e.target === carte._interactions.select2
         );
