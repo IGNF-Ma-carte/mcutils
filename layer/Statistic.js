@@ -564,11 +564,15 @@ Statistic.prototype.setStatistic = function(stat, delay) {
       stat.max2 = 0;
       for (i = 0; i < features.length; i++) {
         var data = features[i].get(stat.cols[0]);
-        if (!data) {
+        if (!data && stat.typeMap !== 'heatmap') {
           continue;
         }
 
-        val = parseFloat(data);
+        if (data === undefined) {
+          val = 1
+        } else {
+          val = parseFloat(data);
+        }
         if (!isNaN(val)) {
           tab.push(val);
           features[i]._stat = {};
@@ -661,7 +665,11 @@ Statistic.prototype.setStatistic = function(stat, delay) {
       this.layerHeat.setBlur(stat.hblur);
       this.layerHeat.setRadius(stat.hradius);
       for (i = 0; i < features.length; i++) {
-        val = Number(features[i].get(stat.cols[0]));
+        if (stat.cols[0]) {
+          val = Number(features[i].get(stat.cols[0]));
+        } else {
+          val = 1;
+        }
         if (min < 0) {
           features[i].set('weight', (val - min) / (max - min));
         } else {
