@@ -131,7 +131,8 @@ md2html.doWidget = function (md, data) {
     }
     // mdblock
     case 'mdblock': {
-      return '<div class="' + type.replace(/[^(a-z|A-Z|0-9|-| ]/g,'_') + '">' + md2html(md, data) + '</div>';
+      const className = md2html.doData(type, data).replace(/[^(a-z|A-Z|0-9|-| ]/g,'_')
+      return '<div class="' + className + '">' + md2html(md, data) + '</div>';
     }
     // Piwik
     case 'piwik': {

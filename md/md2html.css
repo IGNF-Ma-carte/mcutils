@@ -43,6 +43,10 @@
 .md .left { text-align: left; margin:0; }
 .md table { text-align: left; }
 
+.md .mdblock.hidden {
+  display: none;
+}
+
 .md ul {
   list-style: disc;
 }

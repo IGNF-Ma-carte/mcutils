@@ -165,6 +165,7 @@ Il est également possible de définir :
 * l'affichage d'une légende et sa position (`top`, `left`, `bottom` ou `right`)
 * le titre de la légende (`legend-title`)
 * la couleur du fond du widget (`backgroundColor`)
+* la visibilité (`visible`) si vide le diagramme ne s'affiche pas (s'affiche si contient une valeur)
 
 [++ :fa-code:fw: Code ++]
 ```md
@@ -174,6 +175,7 @@ data-title:  Données
 data:   3;1;5
 labels: rouge; bleu; jaune
 colors: red; #0A0; rgba(255,255,0,.5)
+visible: 1
 legend: right
 legend-title: Légende
 backgroundColor: #eef

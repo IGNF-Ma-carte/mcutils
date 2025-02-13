@@ -236,3 +236,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 &#96;``
 ```
 [----]
+
+En ajoutant la classe `hidden` le block ne s'affiche pas. 
+Par exemple pour masquer le bloc que si l'attribut `name` n'est pas remplit (voir l'onglet attributs) :
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``mdblock classname ((!%name% hidden))
+## %name%
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+&#96;``
+```
+[----]
