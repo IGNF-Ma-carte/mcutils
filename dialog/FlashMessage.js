@@ -27,7 +27,7 @@ class FlashMessage extends ol_Object {
   constructor(options) {
     options = options || {};
     super();
-    const id = options.id || '';
+    const id = this.id = options.id || '';
     const element = this.element = ol_ext_element.create('DIV', {
       className: 'fmessage flash-' + (options.type || 'info'),
       'data-id': id,
@@ -39,9 +39,7 @@ class FlashMessage extends ol_Object {
       'aria-label': 'Fermer',
       title: 'Fermer',
       click: () => {
-        element.classList.add('hide');
-        setTimeout(() => element.remove(), 250);
-        this.dispatchEvent({ type: 'close', id: id })
+        this.hide()
       },
       parent: element
     });
@@ -50,6 +48,13 @@ class FlashMessage extends ol_Object {
       parent: element
     });
     setTimeout(() => element.dataset.visible = '', 200);
+  }
+  /** Hide the message
+   */
+  hide(){
+    this.element.classList.add('hide');
+    setTimeout(() => this.element.remove(), 250);
+    this.dispatchEvent({ type: 'close', id: this.id })
   }
 }
 

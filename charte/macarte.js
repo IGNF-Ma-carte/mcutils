@@ -494,38 +494,56 @@ api.on('login', e => {
 
 
 /** Show team info at start up */
-function showTeamInfo() {
-  if (!/macarte|geocod|mestat|narration/.test(charte.appID)) return;
+function showTeamInfo(force) {
+  if (!force && !/macarte|geocod|mestat|narration/.test(charte.appID)) return;
   if (!team.getId()) return;
-  const delay = 3;
+  // Delay before hide
+  const delay = 5;
 
-  dialogMessage.show({
-    content: '<img> Vous êtes dans l\'équipe <b>' + team.getName() +'</b>',
-    className: 'teamInfo',
-    autoclose: delay * 1000,
-    buttons: { change: 'changer d\'équipe', exit: 'sortir', submit: 'ok' },
-    onButton: (b) => {
-      if (b === 'exit') {
-        team.set();
-      } else if (b === 'change') {
-        changeTeam()
-      }
-    }
+  const element = ol_ext_element.create('DIV')
+  // Flash message
+  const fm = new FlashMessage(({
+    type: 'info',
+    message: element
+  }))
+  element.innerHTML = '<img> Vous êtes dans l\'équipe : <b>' + team.getName() +'</b><br/>'
+  element.classList.add('team-info')
+  element.querySelector('img').src = team.getImage()
+  ol_ext_element.create('A', {
+    href: '#',
+    text: 'Quitter',
+    click: e => {
+      e.preventDefault();
+      fm.hide();
+      team.set();
+    },
+    parent: element
   })
-  dialogMessage.getContentElement().querySelector('img').src = team.getImage()
+  ol_ext_element.create('SPAN', { text: ' - ', parent: element });
+  ol_ext_element.create('A', {
+    href: '#',
+    text: 'Changer d\'équipe',
+    click: e => {
+      e.preventDefault();
+      fm.hide();
+      changeTeam();
+    },
+    parent: element
+  })
+
   // Timer
-  const timer = ol_ext_element.create('I', {
-    parent: dialogMessage.getContentElement()
-  })
+  const timer = ol_ext_element.create('I', { parent: element })
   const showTimer = function(t) {
     if (t>0) {
       timer.innerHTML = 'Fermeture automatique dans ' + t + ' secondes'
       setTimeout(() => showTimer(t-1), 1000)
+    } else {
+      fm.hide();
     }
   }
   showTimer(delay)
 }
 
-export { connectDialog, changeTeam }
+export { connectDialog, changeTeam, showTeamInfo }
 
 export default charte
