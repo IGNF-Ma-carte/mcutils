@@ -1846,7 +1846,7 @@ StoryMap.prototype.print = function(n, callback) {
   const c = this.getCarte(n);
   if (c && c.getControl('printDlg')) {
     if (callback) {
-      const printer = this.getCarte().getControl('printDlg').getrintControl();
+      const printer = this.getCarte().getControl('printDlg').getPrintControl();
       printer.fastPrint({}, callback)
     } else {
       c.getControl('printDlg').print();
