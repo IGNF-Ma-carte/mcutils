@@ -443,6 +443,8 @@ api.on(['logout', 'disconnect'], () => {
 
 /* Handle team */
 function changeTeam() {
+  dialogMessage.hide();
+  // Dialog
   dialog.show({
     title: 'Equipes',
     className: 'select-team',
@@ -524,6 +526,6 @@ function showTeamInfo() {
   showTimer(delay)
 }
 
-export { connectDialog }
+export { connectDialog, changeTeam }
 
 export default charte
