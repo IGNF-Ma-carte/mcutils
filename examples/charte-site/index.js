@@ -24,16 +24,16 @@ new FlashMessage({
 document.querySelector('.flashMessage').addEventListener('click', () => {
   const mess = [{
     type: 'info',
-    message: 'Les flash messages permettent d\'informer les utilisateurs sur ce qui se passe...'
+    message: md2html('|<!(https://upload.wikimedia.org/wikipedia/commons/a/a0/IGN_logo_2012.svg x80)\nLes flash messages permettent d\'informer les utilisateurs sur ce qui se passe...')
   },{
     type: 'success',
-    message: 'Tout c\'est passé correctement, vous pouvez continuer à travailler...'
+    message: md2html('|<!(https://upload.wikimedia.org/wikipedia/commons/a/a1/SuccesRed.png x80)\nTout c\'est passé correctement, vous pouvez continuer à travailler...')
   },{
     type: 'error',
-    message: 'Oops ! Une erreur est survenue, faites attention à ce que vous faites !'
+    message: md2html('|<!(https://upload.wikimedia.org/wikipedia/commons/4/46/Error_Message_Example_vbs.png x80)\nOops ! Une erreur est survenue, faites attention à ce que vous faites !')
   },{
     type: 'warning',
-    message: 'C\'est pas encore parfait mais on y travaille...'
+    message: md2html('|\t!(https://upload.wikimedia.org/wikipedia/commons/d/de/White_Rock%2C_BC_-_rail_warning_sign.jpg x80)\nC\'est pas encore parfait mais on y travaille...')
   }]
   const n = Math.trunc(Math.random() * mess.length);
   console.log(n)
@@ -84,6 +84,7 @@ new DashInput({ input: document.querySelector('.dash') })
 
 import PatternInput from '../../input/PopupPattern'
 import FlashMessage from '../../dialog/FlashMessage'
+import md2html from '../../md/md2html'
 new PatternInput({ input: document.querySelector('.pattern') })
 
 // Add accordion dynamically

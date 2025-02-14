@@ -33,6 +33,12 @@
 [data-role="flashMessage"] > div[data-visible] {
   transform: scale(1);
 }
+[data-role="flashMessage"] > div:after {
+  content: "";
+  display: block;
+  height: 0px;
+  clear: both;
+}
 
 [data-role="flashMessage"] > div:before {
   position: absolute;

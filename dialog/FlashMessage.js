@@ -29,7 +29,7 @@ class FlashMessage extends ol_Object {
     super();
     const id = this.id = options.id || '';
     const element = this.element = ol_ext_element.create('DIV', {
-      className: 'fmessage flash-' + (options.type || 'info'),
+      className: 'fmessage md flash-' + (options.type || 'info'),
       'data-id': id,
       parent: flashContainer
     })
@@ -57,5 +57,7 @@ class FlashMessage extends ol_Object {
     this.dispatchEvent({ type: 'close', id: this.id })
   }
 }
+
+console.log (FlashMessage)
 
 export default FlashMessage
