@@ -65,6 +65,11 @@ function shareCarte(options) {
       + '&via=IGNFrance'
       + '&hashtags=Macarte'
   },{
+    title: '<i class="fa fi-bluesky"></i> Bluesky',
+    href: 'https://bsky.app/intent/compose?'
+      + 'text=' + encodeURI(title + ' - Ma carte')
+      + '\n ' + encodeURIComponent(url)
+  },{
     title: '<i class="fa fa-facebook"></i> Facebook',
     href: 'https://www.facebook.com/sharer/sharer.php?'
       + 'u=' + encodeURIComponent(url)

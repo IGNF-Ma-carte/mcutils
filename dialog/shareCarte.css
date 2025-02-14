@@ -37,7 +37,7 @@
 }
 
 .mc-share-map .list {
-  margin: 0;
+  margin: 0 -1em 1em;
   padding: 0;
   list-style: none;
   text-align: center;
@@ -49,7 +49,7 @@
 .mc-share-map .list a {
   display: inline-block;
   text-align: center;
-  margin: .5em 1em;
+  margin: .5em .7em;
   cursor: pointer;
 }
 
