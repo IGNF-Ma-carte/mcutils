@@ -139,6 +139,8 @@ button.popup-prev:focus-visible,
 button.popup-next:focus-visible {
   outline: unset;
   opacity: 0.5;
+  color: #fff;
+  background-color: rgba(0, 60, 136, 0.7);
 }
 button.popup-prev:before {
   content: '\e909';
