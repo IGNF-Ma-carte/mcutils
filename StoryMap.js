@@ -428,7 +428,6 @@ StoryMap.prototype.clearInfoVolet = function() {
  * @param {boolean} sel2 second selection (model differentiel)
  */
 StoryMap.prototype.setInfoVolet = function(md, sel2) {
-  console.log('setinfo')
   if (this.models[this.get('model')] && this.models[this.get('model')].volet) {
     let where = this.element.info;
     // Differentiel model: 2 selects
