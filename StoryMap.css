@@ -108,25 +108,45 @@
 }
 
 /* Next / prev arrows for volet (multi selection) */
-[data-role="storymap"] .volet .content .ol-count, .ol-popup .ol-popupfeature .ol-count {
+[data-role="storymap"] .volet .content .ol-count, 
+.ol-popup .ol-popupfeature .ol-count {
   display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
   float: none;
 }
+[data-role="storymap"] .volet .content .ol-count span,
+.ol-popup .ol-popupfeature .ol-count span {
+  min-width: 3.5em;
+  vertical-align: middle;
+  line-height: 1em;
+}
 
-[data-role="storymap"] .volet .content .ol-prev,
-[data-role="storymap"] .volet .content .ol-next,
-.ol-popup .ol-popupfeature .ol-prev,
-.ol-popup .ol-popupfeature .ol-next {
-  border:0;
-  margin: 0 .2em;
-  padding: 0 .5em;
+/* Select navigation button */
+button.popup-prev,
+button.popup-next {
+  border: 0;
+  margin: 0;
+  padding: 0.3em 0.7em;
   background-color: inherit;
   display: inline-block;
   vertical-align: bottom;
   cursor: pointer;
+  border-radius: 3px;
+}
+button.popup-prev:focus-visible,
+button.popup-next:focus-visible {
+  outline: unset;
+  opacity: 0.5;
+}
+button.popup-prev:before {
+  content: '\e909';
+  font-family: font-ign;
+}
+button.popup-next:before {
+  content: '\e907';
+  font-family: font-ign;
 }
 
 [data-role="storymap"] .volet .md img {
@@ -341,31 +361,51 @@
   pointer-events: none;
 }
 
-[data-role="storymap"] .volet .steps span.hidden {
+[data-role="storymap"] .volet .steps:has(button.next.hidden) {
+  padding-right: 1.5em;
+}
+[data-role="storymap"] .volet .steps:has(button.prev.hidden) {
+  padding-left: 1.5em;
+}
+[data-role="storymap"] .volet .steps button.hidden {
   opacity: 0;
   pointer-events: none;
+  display: none;
 }
-[data-role="storymap"] .volet .steps span.prev,
-[data-role="storymap"] .volet .steps span.next {
+[data-role="storymap"] .volet .steps button.prev,
+[data-role="storymap"] .volet .steps button.next {
+  font-size: 1em;
   width: 1.5em;
   border: none;
   border-radius: 3px;
-  padding: .1em 0;
+  padding: .35em .5em;
+  background-color: transparent;
 }
-[data-role="storymap"] .volet .steps span.prev:before,
-[data-role="storymap"] .volet .steps span.next:before {
+[data-role="storymap"] .volet .pages .toc:focus,
+[data-role="storymap"] .volet .steps button.prev:focus,
+[data-role="storymap"] .volet .steps button.next:focus {
+  opacity: 0.8;
+}
+
+[data-role="storymap"] .volet .steps button.prev:before,
+[data-role="storymap"] .volet .steps button.next:before {
   content: '\f054';
   font-family: 'FontAwesome';
+  width: 1em;
+  height: 1em;
 }
-[data-role="storymap"] .volet .steps span.prev:before {
+[data-role="storymap"] .volet .steps button.prev:before {
   content: '\f053';
 }
 [data-role="storymap"] .volet .pages .toc {
+  font-size: 1em;
   position: absolute;
-  top: 0;
+  top: .2em;
   right: 0;
-  padding: .2em;
+  padding: .35em;
   cursor: pointer;
+  border: 0;
+  background-color: transparent;
 }
 [data-role="storymap"] .volet .pages .toc:before {
   content: '\f0c9';
@@ -382,6 +422,14 @@
 [data-role="storymap"] .volet .content .toc li {
   padding: .1em .5em;
   text-align: left;
+}
+[data-role="storymap"] .volet .content .toc li a {
+  text-decoration: none;
+  font-weight: inherit;
+}
+[data-role="storymap"] .volet .content .toc li a:focus-visible {
+  font-weight: bold;
+  text-decoration: underline;
 }
 [data-role="storymap"] .volet .content .toc li.active {
   font-weight: bold;

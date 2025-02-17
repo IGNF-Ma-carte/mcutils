@@ -303,7 +303,7 @@ class StoryMap extends ol_Object {
     this.on('read', this.start.bind(this));
 
     // Set step on arrow left/right
-    document.addEventListener('keyup', (e) => {
+    document.addEventListener('keydown', (e) => {
       if (
         !this.get('noStep') 
         && !this.get('freezeStep') 
@@ -314,11 +314,13 @@ class StoryMap extends ol_Object {
           case 'ArrowRight':
           case 'ArrowDown': {
             if (this.currentStep < this.steps.getLength()-1) this.setStep(this.currentStep + 1);
+            this.element.step.querySelector('.next').focus()
             break;
           }
           case 'ArrowLeft':
           case 'ArrowUp': {
             if (this.currentStep > 0) this.setStep(this.currentStep - 1);
+            this.element.step.querySelector('.prev').focus()
             break;
           }
           default: {
@@ -426,6 +428,7 @@ StoryMap.prototype.clearInfoVolet = function() {
  * @param {boolean} sel2 second selection (model differentiel)
  */
 StoryMap.prototype.setInfoVolet = function(md, sel2) {
+  console.log('setinfo')
   if (this.models[this.get('model')] && this.models[this.get('model')].volet) {
     let where = this.element.info;
     // Differentiel model: 2 selects
@@ -511,58 +514,35 @@ StoryMap.prototype.setInfoVolet = function(md, sel2) {
     where.innerHTML = '';
     // Multi selection
     if (md && md.contents && md.renderedFeatures) {
-      let mdClone = {...md};
-      const contents = mdClone.contents;
-      const features = mdClone.renderedFeatures;
-      let index = mdClone.index;
-      if (!index) {
-        index = 1;
-      }
-      // Add arrows for multi select
+      const contents = md.contents;
+
+      // Multi select
       if (contents.length > 1) {
-        let div = ol_ext_element.create('DIV', { className: 'ol-count', parent: where });
-        ol_ext_element.create('BUTTON', {
-          className: 'ol-prev fa fa-caret-left fa-2x',
-          parent: div,
-          click: function () {
-            index--;
-            if (index < 1)
-              index = contents.length;
-            mdClone.index = index;
-            this.setInfoVolet(mdClone, sel2);
-            this.getCarte().getSelect().setIndex(index);
-            this.getCarte().getSelect().setShownFeature(features[index - 1]);
-          }.bind(this)
-        });
-        ol_ext_element.create('TEXT', { html: index + '/' + contents.length, parent: div });
-        ol_ext_element.create('BUTTON', {
-          className: 'ol-next fa fa-caret-right fa-2x',
-          parent: div,
-          click: function () {
-            index++;
-            if (index > contents.length)
-              index = 1;
-            mdClone.index = index;
-            this.setInfoVolet(mdClone, sel2);
-            this.getCarte().getSelect().setIndex(index);
-            this.getCarte().getSelect().setShownFeature(features[index - 1]);
-          }.bind(this)
-        });
+        // Multi features
+        md2html.showSelection(where, this.getCarte().getSelect(), md.index || 1, md.contents, md.renderedFeatures);
+      } else {
+        // Only one feature
+        if (contents.length) {
+          md = contents[(md.index || 1) - 1]
+          where.appendChild(md);
+        }
       }
-      if (contents.length) {
-        md = contents[index - 1]
-      }
-    }
-    if (md instanceof Element) {
-      where.appendChild(md);
     } else {
-      ol_ext_element.create('DIV', {
-        html: md2html(md),
-        parent: where
-      });
+      // Show MD
+      if (md instanceof Element) {
+        where.appendChild(md);
+      } else {
+        ol_ext_element.create('DIV', {
+          html: md2html(md),
+          parent: where
+        });
+      }
     }
+
+    // Render
     md2html.renderWidget(where);
     where.scrollTop = 0;
+
     // Update on image load
     Array.prototype.slice.call(this.element.content.querySelectorAll('img'))
       .forEach((image) => {
@@ -570,6 +550,7 @@ StoryMap.prototype.setInfoVolet = function(md, sel2) {
           this.element.content.dispatchEvent(new Event('scroll'));
         });
       });
+
     // Add print
     if (where.querySelector('.md-card-printer')) {
       if (this.get('model')==='differentiel') {
@@ -710,15 +691,18 @@ StoryMap.prototype.setStep = function(n, anim) {
   n = Math.max(Math.min(n, this.steps.getLength()-1), 0);
   this.currentStep = n;
   // Create content
-  const div = ol_ext_element.create('DIV', {
+  const div = ol_ext_element.create('FORM', {
     className: 'pages'
   });
   // Previous
-  ol_ext_element.create('SPAN', {
+  const prevBt = ol_ext_element.create('BUTTON', {
     className: 'prev' + (n===0 ? ' hidden' : ''),
     title: _T('prev'),
     click: () => {
-      if (!this.get('freezeStep') && n>0) this.setStep(n-1);
+      if (!this.get('freezeStep') && n>0) {
+        this.setStep(n-1);
+        this.element.step.querySelector('button.prev').focus()
+      }
     },
     parent: div
   });
@@ -729,15 +713,16 @@ StoryMap.prototype.setStep = function(n, anim) {
     parent: div
   });
   // Next
-  ol_ext_element.create('SPAN', {
+  const nextBt = ol_ext_element.create('BUTTON', {
     className: 'next' + (n >= this.steps.getLength() -1 ? ' hidden' : ''),
     title: _T('next'),
     click: () => {
       if (!this.get('freezeStep') && n < this.steps.getLength() -1) this.setStep(n+1);
+      this.element.step.querySelector('button.next').focus()
     },
     parent: div
   });
-  ol_ext_element.create('DIV', {
+  ol_ext_element.create('BUTTON', {
     className: 'toc',
     title: _T('toc'),
     click: () => {
@@ -809,7 +794,7 @@ StoryMap.prototype.showTOC = function(current) {
   });
   this.steps.forEach((s, i) => {
     ol_ext_element.create('LI', {
-      html: s.title,
+      html: ol_ext_element.create('A', { href: '#', text: s.title, click: e => e.preventDefault() }),
       className: current===i ? 'active' : '',
       click: () => {
         this.setStep(i, false);
@@ -1482,7 +1467,8 @@ StoryMap.prototype.setCarte = function(carte, n) {
     const onselect = (e) => {
       // Get copy of selected features
       let features = [...carte.getSelect().getFeatures().getArray()];
-      let firstFeature = features[0]
+      // Fist feature or selected one
+      let firstFeature = features[0] || e.selected[0];
 
       // Cluster : zoom or display Popup
       if (firstFeature && firstFeature.get('features') instanceof Array) {
@@ -1493,9 +1479,9 @@ StoryMap.prototype.setCarte = function(carte, n) {
           // Check all elements in the selected features
           features.forEach(feat => {
             const cluster = feat.get('features');
-            if (cluster)
+            if (cluster) {
               clusterFeatures.push(...cluster)
-              else {
+            } else {
               clusterFeatures.push(feat)
             }
           })
@@ -1532,9 +1518,20 @@ StoryMap.prototype.setCarte = function(carte, n) {
         }
       } else {
         if (firstFeature) firstFeature._indicator = this.get('indicator');
+        let md;
+        if (features.length) {
+          // Multi features
+          md = carte.getFeaturesPopupContent(features, true)
+        } else if (firstFeature) {
+          // Only one
+          md = firstFeature.getPopupContent(true)
+        } else {
+          // No features
+          md = this.get('description')
+        }
         // Display feature info or description
-        this.setInfoVolet(
-          features.length ? carte.getFeaturesPopupContent(features, true) : this.get('description'),
+        this.setInfoVolet( 
+          md,
           // Second select (differentiel model)
           e.target === carte._interactions.select2
         );
@@ -1849,7 +1846,7 @@ StoryMap.prototype.print = function(n, callback) {
   const c = this.getCarte(n);
   if (c && c.getControl('printDlg')) {
     if (callback) {
-      const printer = this.getCarte().getControl('printDlg').getrintControl();
+      const printer = this.getCarte().getControl('printDlg').getPrintControl();
       printer.fastPrint({}, callback)
     } else {
       c.getControl('printDlg').print();

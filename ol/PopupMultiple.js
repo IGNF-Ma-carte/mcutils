@@ -5,6 +5,7 @@
 
 import ol_Overlay_Popup from 'ol-ext/overlay/Popup.js'
 import ol_ext_element from 'ol-ext/util/element'
+import md2html from '../md/md2html';
 
 /**
  * A popup element to be displayed on a feature.
@@ -44,6 +45,7 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
     this._contents = contents.slice();
     this._features = features;
 
+    // [TODO] remove count
     this._count = 1;
     // Set _count to count if given
     if (count && Number.isInteger(count) && 0 < count && count < this._contents.length + 1) {
@@ -52,7 +54,7 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
 
     // Calculate html upon content values
     let content = contents[this._count - 1]
-    var html = this._getHtml(content);
+    var html = this._getHtml(content, count);
     if (html) {
       if (!this.element.classList.contains('ol-fixed'))
         this.hide();
@@ -66,45 +68,14 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
 
 
   /**
- * @private
- */
-  _getHtml(content) {
-    var html = ol_ext_element.create('DIV', { className: 'ol-popupfeature' });
-    
+   * @private
+   */
+  _getHtml(content, count) {
+    let html = ol_ext_element.create('DIV', { className: 'ol-popupfeature' });
+
     // Counter
     if (this._contents.length > 1) {
-      let div = ol_ext_element.create('DIV', { className: 'ol-count', parent: html });
-      ol_ext_element.create('BUTTON', {
-        className: 'ol-prev fa fa-caret-left fa-2x',
-        parent: div,
-        click: function () {
-          this._count--;
-          if (this._count < 1)
-            this._count = this._contents.length;
-          html = this._getHtml(this._contents[this._count - 1]);
-          setTimeout(function () {
-            ol_Overlay_Popup.prototype.show.call(this, this.getPosition(), html, this._count);
-          }.bind(this), 350);
-          this.select.setIndex(this._count)
-          this.select.setShownFeature(this._features[this._count - 1])
-        }.bind(this)
-      });
-      ol_ext_element.create('TEXT', { html: this._count + '/' + this._contents.length, parent: div });
-      ol_ext_element.create('BUTTON', {
-        className: 'ol-next fa fa-caret-right fa-2x',
-        parent: div,
-        click: function () {
-          this._count++;
-          if (this._count > this._contents.length)
-            this._count = 1;
-          html = this._getHtml(this._contents[this._count - 1]);
-          setTimeout(function () {
-            ol_Overlay_Popup.prototype.show.call(this, this.getPosition(), html, this._count);
-          }.bind(this), 350);
-          this.select.setIndex(this._count)
-          this.select.setShownFeature(this._features[this._count - 1])
-        }.bind(this)
-      });
+      return md2html.showSelection(html, this.select, count || 1, this._contents, this._features);
     }
 
     // Insert content
