@@ -994,13 +994,14 @@ body > [data-role="storymap"] > * {
 .ol-ext-dialog.connectDlg .ol-content .extra p {
   margin: 0;
 }
-.ol-ext-dialog.connectDlg .ol-content .extra a {
+.ol-ext-dialog.connectDlg .ol-content .extra p a {
   float: unset;
   margin-left: .5em;
 }
 .ol-ext-dialog.connectDlg .ol-content [data-connect] {
   clear: both;
   display: inline-block;
+  float: none;
   width: calc(50% - 3em);
   background-color: #f4f6f8;
   margin: 1em .5em;
@@ -1009,6 +1010,10 @@ body > [data-role="storymap"] > * {
   vertical-align: top;
   line-height: 6em;
 }
+.ol-ext-dialog.connectDlg .ol-content [data-connect]:before {
+  content: none;
+}
+
 .ol-ext-dialog.connectDlg .ol-content [data-connect] img {
   display: inline-block;
   max-width: calc(100% - 2em);
@@ -1020,6 +1025,14 @@ body > [data-role="storymap"] > * {
 }
 .ol-ext-dialog.connectDlg .ol-content [data-connect]:hover img {
   transform: scale(1.05);
+}
+
+.ol-ext-dialog.connectDlg .ol-content [data-connect="gpf"] {
+  width: calc(100% - 5em);
+}
+.ol-ext-dialog.connectDlg .ol-content [data-connect="gpf"] img {
+  padding: 0 1em;
+  max-height: 4.5em;
 }
 
 .ol-ext-dialog.connectDlg .ol-content a {

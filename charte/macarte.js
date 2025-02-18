@@ -305,11 +305,15 @@ function connectDialog(callback, error) {
 
   // External connection
   dialog.getContentElement().querySelectorAll('[data-connect').forEach(elt => {
-    elt.addEventListener('click', () => {
-      const href = elt.dataset.href.replace(/SERVER/, serviceURL.home.replace(/\/$/,''))
+    elt.addEventListener('click', e => {
+      e.stopPropagation();
+      e.preventDefault();
+      // Redirect
+      const href = (elt.dataset.href || elt.href).replace(/SERVER/, serviceURL.home.replace(/\/$/,''))
       window.open(href);
       // Check connection + close
       function onfocus() {
+        console.log('focus')
         // Connected ?
         api.whoami(user => {
           if (user.status !== 401) {
