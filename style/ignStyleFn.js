@@ -944,12 +944,14 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
  *  @param {number | undefined} options.radius radius for the points, default 5
  *  @param {function | undefined} options.styleFn a style function
  *  @param {ol/colorLike} options.color
+ * @param {Number} [zIndex=MAX_SAFE_INTEGER]
  * @return {function} style function
  */
-function getSelectStyleFn(options) {
+function getSelectStyleFn(options, zIndex) {
+  const maxZindex = zIndex || Number.MAX_SAFE_INTEGER;
   options = options || {};
   const style = options.styleFn || getStyleFn({
-    // zIndex: Infinity,
+    zIndex: maxZindex,
     select: options.type });
   const selColor = options.color ? asArray(options.color) : [255,0,0];
   const selColorFill = selColor.slice();
@@ -977,7 +979,7 @@ function getSelectStyleFn(options) {
   const ptsStyle = new ol_style_Style({
     image: pts,
     geometry: getGeomPoints,
-    zIndex: Infinity
+    zIndex: maxZindex
   });
   const strokePoint = new ol_style_Stroke({
     color: color,
@@ -993,7 +995,7 @@ function getSelectStyleFn(options) {
     }),
     stroke: stroke,
     fill: fill,
-    zIndex: Infinity
+    zIndex: maxZindex
   });
 
   return function(f, res) {
@@ -1051,7 +1053,7 @@ function getSelectStyleFn(options) {
               radius: r,
               declutterMode: 'none',
             }),
-            zIndex: Infinity
+            zIndex: maxZindex
           }));
         } else {
           if (points) {
@@ -1060,7 +1062,7 @@ function getSelectStyleFn(options) {
           s.unshift(new ol_style_Style({
             stroke: stroke,
             geometry: fromExtent( g.getExtent() ),
-            zIndex: Infinity
+            zIndex: maxZindex
           }));
         }
         return s;
@@ -1077,9 +1079,10 @@ function getSelectStyleFn(options) {
  * @return {function} style function
  */
 function getShownFeatureStyleFn(options) {
+  const maxZindex = Infinity;
   options = options || {};
   // Get select style as default style
-  const style = options.styleFn || getSelectStyleFn(options);
+  const style = options.styleFn || getSelectStyleFn(options, maxZindex);
 
   const selColor = options.color ? asArray(options.color) : [255,0,0];
   const stroke = options.stroke || new ol_style_Stroke({
@@ -1094,7 +1097,7 @@ function getShownFeatureStyleFn(options) {
   });
   const fillStyle = new ol_style_Style({
     fill: fill,
-    zIndex: Infinity
+    zIndex: maxZindex
   });
 
   const radius = options.radius || 5;
@@ -1115,7 +1118,7 @@ function getShownFeatureStyleFn(options) {
     }),
     stroke: stroke,
     fill: fill,
-    zIndex: Infinity
+    zIndex: maxZindex
   });
 
   return function(f, res) {
@@ -1130,7 +1133,7 @@ function getShownFeatureStyleFn(options) {
         if (s && s.length) {
           const g = f.getGeometry();
           // Set z-index of feature to Infinity
-          s[0].setZIndex(Infinity)
+          s[0].setZIndex(maxZindex)
           if (/Point/.test(g.getType())) {
             let cluster = f.get('features');
             let feat = f;
@@ -1151,7 +1154,7 @@ function getShownFeatureStyleFn(options) {
                 radius: r,
                 declutterMode: 'none',
               }),
-              zIndex: Infinity
+              zIndex: maxZindex
             }));
           } else {
             s.push(fillStyle);
