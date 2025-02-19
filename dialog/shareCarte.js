@@ -52,13 +52,18 @@ function shareCarte(options) {
   const ul = target.querySelector('.list');
   ol_ext_element.create('A', {
     html: '<i class="fa fa-code"></i> Intégrer',
+    href: '#',
     className: 'colored',
-    click: () => embedCarte(options),
+    click: e => {
+      e.preventDefault();
+      embedCarte(options)
+    },
     parent: ul
   })
   // Social network
   const socials = [{
     title: '<i class="fa fa-twitter"></i> Twitter',
+    className: 'so-twitter',
     href: 'https://twitter.com/intent/tweet?'
       + 'url=' + encodeURIComponent(url)
       + (title ? '&text=' + encodeURI(title) : '')
@@ -66,19 +71,23 @@ function shareCarte(options) {
       + '&hashtags=Macarte'
   },{
     title: '<i class="fa fi-bluesky"></i> Bluesky',
+    className: 'so-bluesky',
     href: 'https://bsky.app/intent/compose?'
       + 'text=' + encodeURI(title + ' - Ma carte')
       + '\n ' + encodeURIComponent(url)
   },{
     title: '<i class="fa fa-facebook"></i> Facebook',
+    className: 'so-facebook',
     href: 'https://www.facebook.com/sharer/sharer.php?'
       + 'u=' + encodeURIComponent(url)
   }, {
     title: '<i class="fa fa-linkedin"></i> LinkedIn',
+    className: 'so-linkedin',
     href: 'https://www.linkedin.com/shareArticle?mini=true'
       + '&url=' + encodeURIComponent(url)
   },{
     title: '<i class="fa fa-envelope-o"></i> Courrier',
+    className: 'so-mailto',
     href: 'mailto:?'
       + 'subject=' + encodeURIComponent(title || 'Macarte')
       + '&body=Je vous invite à consulter la carte ' + encodeURIComponent(title || '') + ' : \n' 
@@ -88,7 +97,7 @@ function shareCarte(options) {
   socials.forEach(s => {
     ol_ext_element.create('A', {
       html: s.title,
-      className: 'colored external',
+      className: 'colored external ' + s.className,
       href: s.href,
       click: () => {
         dialog.hide()

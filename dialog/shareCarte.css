@@ -52,6 +52,12 @@
   margin: .5em .7em;
   cursor: pointer;
 }
+.mc-share-map .list a.so-twitter {
+  display: none;
+}
+.mc-share-map .list a:focus-visible {
+  outline: 2px solid;
+}
 
 .mc-share-map .list a i {
   font-size: 3em;
