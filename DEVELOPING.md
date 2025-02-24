@@ -41,6 +41,18 @@ npm run build
 
 NB: You may have to clean manually the build repository before running the build to remove unnecessary files.
 
+NB2: bug in geotiff lib on build
+Replace in :
+node_modules\geotiff\dist-module\dataview64.js
+node_modules\geotiff\dist-module\geotiffimage.js
+```
+import { getFloat16 } from '@petamoriken/float16'
+```
+par
+```
+import { getFloat16 } from '@petamoriken/float16/browser/float16.mjs';
+``` 
+
 ## Building Documentation
 
 > npm run doc
