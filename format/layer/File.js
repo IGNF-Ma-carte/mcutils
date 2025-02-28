@@ -40,10 +40,16 @@ File.prototype.read = function (options) {
         extractStyles: options.extractStyles
       })
       if (features.length) {
+        layer.getSource().dispatchEvent('featuresloadstart')
         layer.getSource().addFeatures(features)
+        layer.getSource().dispatchEvent('featuresloadend')
+      } else {
+        layer.getSource().dispatchEvent('featuresloaderror')
       }
     })
-    .catch(() => { })
+    .catch(() => {
+      layer.getSource().dispatchEvent('featuresloaderror')
+     })
   return layer;
 };
 
