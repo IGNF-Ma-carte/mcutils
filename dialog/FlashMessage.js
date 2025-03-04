@@ -58,6 +58,4 @@ class FlashMessage extends ol_Object {
   }
 }
 
-console.log (FlashMessage)
-
 export default FlashMessage
