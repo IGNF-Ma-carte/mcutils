@@ -569,13 +569,13 @@ const charte = {
   setUnivers: (name) => { document.body.dataset.univers = name },
   /** Set the app name
    * @param {string} name application name
-   * @param {string} [title] link title, default 'Acceuil - ' + name
+   * @param {string} [title] link title, default 'Accueil - ' + name
    * @instance
    */
   setName: (name, title) => {
     if (!initName && name) initName = name;
     if (!name) name = initName;
-    title = title || ('Acceuil - ' + name);
+    title = title || ('Accueil - ' + name);
     logoElt.title = titleElt.title = title;
     titleElt.innerText = name;
   },
@@ -587,7 +587,7 @@ const charte = {
   },
   /** Set the app logo
    * @param {string} name application name
-   * @param {string} [title] link title, default 'Acceuil - ' + name
+   * @param {string} [title] link title, default 'Accueil - ' + name
    * @instance
    */
   setLogo: (url) => { 

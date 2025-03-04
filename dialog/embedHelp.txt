@@ -18,7 +18,7 @@ Si votre carte doit être intégrée sur une page avec un défilement, le zoom �
 Dans ce cas, choisissez le mode de zoom avec <kbd Ctrl> + molette, la molette seule étant réservée au défilement de la page.
 
 #### :fa-check-square-o:fw: Masquer le titre
-Vous pouvez choisir de ne pas afficher le titre de la carte si celui-ci est déjà présent sur la page Web d'acceuil.
+Vous pouvez choisir de ne pas afficher le titre de la carte si celui-ci est déjà présent sur la page Web d'accueil.
 :fa-warning:fw: Attention : la carte est responsive, c'est à dire que si la zone dans laquelle votre carte doit s'afficher est trop petite le titre sera automatiquement masqué pour laisser plus de place à la carte.
 NB : cette option est sans effet si le titre de la carte est masqué dans le modèle utilisé.
 
