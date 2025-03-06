@@ -498,7 +498,7 @@ function showTeamInfo(force) {
   if (!force && !/macarte|geocod|mestat|narration/.test(charte.appID)) return;
   if (!team.getId()) return;
   // Delay before hide
-  const delay = 5;
+  const delay = 10;
 
   const element = ol_ext_element.create('DIV')
   // Flash message
