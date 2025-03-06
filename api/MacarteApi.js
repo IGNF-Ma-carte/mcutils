@@ -279,8 +279,8 @@ MacarteAPI.prototype.logout =  function(callback) {
   // Session deconnection
   this._send('POST', _apiURL+'logout', {}, resp => {
   //this._send('GET', _logoutURL, {}, resp => {
-    console.log('logout')
-    alert ('logout')
+    console.log('logout', resp)
+    // alert ('logout')
     // Clear user
     this._user = {
       username: this._user.username
@@ -288,7 +288,7 @@ MacarteAPI.prototype.logout =  function(callback) {
     // Disconnected
     this.setToken();
     if (resp.logout_url) {
-      window.location = resp.logoutURL;
+      window.location = resp.logout_url;
     } else {
       this.dispatchEvent({ type: 'logout' });
       if (callback) callback(resp);
