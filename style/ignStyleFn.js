@@ -1158,6 +1158,7 @@ function getShownFeatureStyleFn(options) {
             }));
           } else {
             s.push(fillStyle);
+            if (s[0].getStroke()) s[0].getStroke().setWidth(s[0].getStroke().getWidth() + 2)
           }
         }
         return s
