@@ -38,10 +38,12 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
    * @param {string|Element|Array<string|Element>} count The count of the feature to display
    */
   show(coordinate, contents, features, count) {
-    if (!(contents instanceof Array))
+    if (!(contents instanceof Array)) {
       contents = [contents];
-    if (!(features instanceof Array))
+    }
+    if (!(features instanceof Array)) {
       features = [features];
+    }
     this._contents = contents.slice();
     this._features = features;
 
@@ -55,9 +57,10 @@ var ol_Overlay_PopupMultiple = class olOVerlayPopupMultiple extends ol_Overlay_P
     // Calculate html upon content values
     let content = contents[this._count - 1]
     var html = this._getHtml(content, count);
-    if (html) {
-      if (!this.element.classList.contains('ol-fixed'))
+    if (html && html.innerText) {
+      if (!this.element.classList.contains('ol-fixed')) {
         this.hide();
+      }
       this.select.setIndex(this._count)
       this.select.setShownFeature(this._features[this._count - 1])
       super.show(coordinate, html);
