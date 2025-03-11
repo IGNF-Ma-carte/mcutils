@@ -1156,6 +1156,7 @@ Statistic.mode = {
   e: 'Equidistance',
   l: 'Logarithmique',
   k: 'Clusters',
+  j: 'Jenkins',
   h: 'Head/tail',
   c: 'Manuelle'
 }
