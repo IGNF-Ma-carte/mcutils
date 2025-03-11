@@ -27,6 +27,7 @@ import ol_layer_VectorStyle from './VectorStyle'
 import getInteriorPoint from '../geom/getInteriorPoint'
 import SymbolLib from '../style/SymbolLib'
 import { style2IgnStyle } from '../style/ignStyleFn'
+import jenks from '../utils/jenks.js'
 
 /** Layer with statitic symbolization
  * The layer is a layer group with a vector layer or a heatmap
@@ -1201,6 +1202,11 @@ Statistic.prototype.limits = function(stat, data) {
     case 'c': {
       limits.push(min);
       limits.push(max);
+      break;
+    }
+    // Jenks
+    case 'j': {
+      limits = jenks(data, num);
       break;
     }
     // Equidistance
