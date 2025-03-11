@@ -1197,11 +1197,13 @@ Statistic.prototype.limits = function(stat, data) {
   limits = [];
 
   switch (mode.substr(0, 1)) {
+    // Custom
     case 'c': {
       limits.push(min);
       limits.push(max);
       break;
     }
+    // Equidistance
     case 'e': {
       limits.push(min);
       for (i = o = 1, ref = num - 1; 1 <= ref ? o <= ref : o >= ref; i = 1 <= ref ? ++o : --o) {
@@ -1210,6 +1212,7 @@ Statistic.prototype.limits = function(stat, data) {
       limits.push(max);
       break;
     } 
+    // Logarithmic
     case 'l': {
       if (min <= 0) {
         throw 'Logarithmic scales are only possible for values > 0';
@@ -1223,6 +1226,7 @@ Statistic.prototype.limits = function(stat, data) {
       limits.push(max);
       break;
     } 
+    // Quantile
     case 'q': {
       limits.push(min);
       for (i = aa = 1, ref2 = num - 1; 1 <= ref2 ? aa <= ref2 : aa >= ref2; i = 1 <= ref2 ? ++aa : --aa) {
@@ -1238,6 +1242,7 @@ Statistic.prototype.limits = function(stat, data) {
       limits.push(max);
       break;
     } 
+    // K-mean
     case 'k': {
       /*
       implementation based on
@@ -1326,6 +1331,7 @@ Statistic.prototype.limits = function(stat, data) {
       }
       break;
     } 
+    // Head/tail
     case 'h': {
       /* Head/tail 
         source: https://www.icem7.fr/cartographie/la-discretisation-head-tail-produit-des-cartes-mieux-hierarchisees/
