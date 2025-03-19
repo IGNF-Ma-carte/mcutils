@@ -3,6 +3,18 @@ import InputCollection from 'ol-ext/util/input/Collection'
 
 import './SymbolLibInput.css'
 
+/* Clone canvas */
+function cloneCanvas(oldCanvas) {
+  var newCanvas = document.createElement('canvas');
+  var context = newCanvas.getContext('2d');
+  newCanvas.width = oldCanvas.width;
+  newCanvas.height = oldCanvas.height;
+
+  // copy img
+  context.drawImage(oldCanvas, 0, 0);
+  return newCanvas;
+}
+
 /** A list input to get/handle symbol lib
  * @memberof mcutils.input
  * @extends {InputCollection}
@@ -29,7 +41,7 @@ class SymbolLibInput extends InputCollection {
       getTitle: (item) => {
         if (!options.filter || options.filter.indexOf(item.getType()) >= 0) {
           const content = ol_ext_element.create('DIV', { className: 'mcSymbol' })
-          content.appendChild(item.getImage())
+          content.appendChild(cloneCanvas(item.getImage()))
           const editor = ol_ext_element.create('INPUT', {
             type: 'text',
             placeholder: 'nom du symbole',

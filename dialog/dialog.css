@@ -102,6 +102,7 @@ body > .ol-ext-dialog form > h2 {
   transform: none;
   border: 0;
   transition: none;
+  width: 100%;
 }
 .ol-ext-dialog.page404 form .ol-content {
   position: absolute;
