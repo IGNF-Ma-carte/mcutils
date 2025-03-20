@@ -1587,13 +1587,14 @@ StoryMap.prototype.setCarte = function(carte, n) {
             const content = e.feature.getInfoContent()
             if (content) {
               carte.popover.show(e.coordinate, content);
+              carte.popover.prevHTML = content;
             } else {
               carte.popover.hide();
               carte.popover.prevHTML = '';
             }
           } else {
             if (carte.popover.prevHTML) {
-              carte.popover.show(e.coordinate);
+              carte.popover.show(e.coordinate, carte.popover.prevHTML);
             }
           }
         } else {

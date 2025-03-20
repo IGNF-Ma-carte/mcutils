@@ -360,6 +360,9 @@ body > .ol-ext-dialog.mapInfo > form.ol-title .ol-content {
 .ol-popup.tooltips > div {
   background-color: #ffa;
 }
+.ol-popup.tooltips .ol-popup-content:after {
+  display: none;
+}
 .ol-popup.tooltips .ol-popup-content {
   white-space: normal;
 }
