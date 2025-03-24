@@ -644,7 +644,6 @@ FormStyle.addSymbolLibDialog = function(symbolLib, symbol, cback) {
     content: select,
     buttons: buttons,
     onButton: b => {
-      console.log('BUTTON', b)
       if (b==='submit' && symbol) {
         // Update symbol
         const st = form.getStyle();
@@ -654,7 +653,7 @@ FormStyle.addSymbolLibDialog = function(symbolLib, symbol, cback) {
         if (typeof(cback) === 'function') cback(symbol)
       } else if (b==='submit' || b==='add') {
         // New Symbol
-        setTimeout(() => form.addSymbol(symbolLib, cback))
+        form.addSymbol(symbolLib, cback)
       }
     }
   })
@@ -693,7 +692,7 @@ FormStyle.showDialogEditor = function(symbolLib) {
     buttons: { ok: 'ajouter...', cancel: 'annuler'},
     onButton: (b) => {
       if (b==='ok') {
-        setTimeout(() => FormStyle.addSymbolLibDialog(symbolLib))
+        FormStyle.addSymbolLibDialog(symbolLib)
       }
     }
   })
