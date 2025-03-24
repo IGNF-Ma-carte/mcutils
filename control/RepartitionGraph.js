@@ -294,9 +294,10 @@ RepartitionGraph.prototype.draw = function() {
   
     // Smooth histogram
     const smoothHisto = function (t) {
-      var t2 = [];
+      const t2 = [];
+      let i;
       t2[0] = (t[0].nb+t[1].nb/2)/1.5;
-      for (let i=1; i<t.length-1; i++) {
+      for (i=1; i<t.length-1; i++) {
         t2[i] = (t[i].nb + (t[i-1].nb+t[i+1].nb)/2)/2;
       }
       t2[i] = (t[i].nb+t[i-1].nb/2)/1.5;
