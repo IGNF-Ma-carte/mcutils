@@ -1005,7 +1005,7 @@ Statistic.prototype.getVectorStyle = function(param) {
       }
     } else {
       const img = style[style.length-1]
-      if (img.getImage()) {
+      if (/Point/.test(f.getGeometry().getType()) && img.getImage()) {
         ignStyle.symbolColor = ol_color_asString(img.getImage().getFill().getColor());
         ignStyle.pointRadius = Math.round((img.getImage().getRadius() || 0) * 10) / 10;
       } else {
