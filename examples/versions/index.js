@@ -6,6 +6,7 @@ import maplibre from 'maplibre-gl/package.json'
 import chartjs from 'chart.js/package.json'
 import maplibre_layer from '@geoblocks/ol-maplibre-layer/package.json'
 import proj4 from 'proj4/package.json'
+import ol_ext from 'ol-ext/package.json'
 
 import './versions.scss'
 
@@ -32,6 +33,7 @@ function showInfo(data, info) {
 
 // Infos
 showInfo(olversion, 'Openlayers')
+showInfo(ol_ext)
 showInfo(mbstyle)
 showInfo(maplibre)
 showInfo(maplibre_layer)
