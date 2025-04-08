@@ -57,7 +57,8 @@ document.querySelector('.notification').addEventListener('click', () => {
 document.querySelector('.progress').addEventListener('click', () => {
   dialogMessage.show({ 
     title: 'Patientez...', 
-    buttons:{ ok: 'ok' }
+    buttons:{ ok: 'ok' },
+    closeBox: false
   })
   dialogMessage.setContentMessage('80%');
   dialogMessage.setProgress (8,10,

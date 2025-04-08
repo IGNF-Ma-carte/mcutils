@@ -336,9 +336,9 @@ function connectDialog(callback, error) {
   const inputName = dialog.element.querySelector('input.name');
   if (user && !user.error) {
     charte.setInputValue(inputName, user.username);
-    dialog.element.querySelector('input.pwd').focus();
+    setTimeout(() => dialog.element.querySelector('input.pwd').focus());
   } else {
-    inputName.focus();
+    setTimeout(() => inputName.focus());
   }
   // Prevent capslock
   dialog.element.querySelectorAll('label input').forEach(i => {
