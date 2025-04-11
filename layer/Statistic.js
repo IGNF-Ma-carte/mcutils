@@ -385,13 +385,21 @@ Statistic.prototype._getStyle = function(stat) {
           color = stat.color(data).rgb();
           const id = (isLine ? 'line-' : '') + color.join('-') + (stat.stroke ? '-1' : '-0');
           style = styleCache[id];
-          if (!style) {	// Graphe Polygones
+          if (!style) {	
+            // Graphe Polygones
             if (isPolygon || isPoint) {
               fill = new ol_style_Fill({ color: color });
-              stroke = stat.stroke ? new ol_style_Stroke({ 
-                color: stat.stroke === true ? '#3399CC' : stat.stroke, 
-                width: stat.stroke === false ? 0 : 1.25
-              }) : null;
+              if (stat.stroke) {
+                stroke = new ol_style_Stroke({ 
+                  color: stat.stroke === true ? '#3399CC' : stat.stroke, 
+                  width: 1.25
+                })
+              } else if (isPolygon) {
+                stroke = new ol_style_Stroke({ 
+                  color: color, 
+                  width: 0.5
+                })
+              }
               image = new ol_style_FontSymbol({
                 glyph: stat.symbol || 'ign-form-rond',
                 fill: fill,

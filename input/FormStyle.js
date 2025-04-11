@@ -696,6 +696,8 @@ FormStyle.showDialogEditor = function(symbolLib) {
       }
     }
   })
+  // Remove focus
+  document.activeElement.blur();
   // Set symbol on dblclick
   symbolList.on(['item:dblclick', 'item:duplicate'], e => {
     FormStyle.addSymbolLibDialog(symbolLib, e.item)
