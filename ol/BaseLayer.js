@@ -23,6 +23,17 @@ function addFilter(layer) {
   }
 }
 
+/* Prevent code injection
+ */
+const setFn = ol_layer_Base.prototype.set
+ol_layer_Base.prototype.set = function(p,val) {
+  if (val && (p==='name' || p==='title')) {
+    const html = ol_ext_element.create('DIV', { html: val })
+    val = html.innerText;
+  }
+  setFn.call(this, p,val)
+}
+
 /* Force layer className on layer creation
  */
 const setProperties = ol_layer_Base.prototype.setProperties
