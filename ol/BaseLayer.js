@@ -2,6 +2,7 @@
  */
 import 'ol-ext/filter/Base'
 import ol_layer_Base from 'ol/layer/Base'
+import ol_ext_element from 'ol-ext/util/element';
 import CSSFilter from 'ol-ext/filter/CSS';
 import getUid from '../format/layer/getUid';
 
