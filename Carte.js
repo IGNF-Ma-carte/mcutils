@@ -49,6 +49,7 @@ import LocateCtrl from 'ol-ext/control/GeolocationButton'
 import notification from './dialog/notification'
 import getLayerSwitcher from './control/layerSwitcher'
 
+import ol_Overlay_Popup from 'ol-ext/overlay/Popup.js'
 import ol_Overlay_PopupMultiple from './ol/PopupMultiple'
 import Tooltip from 'ol-ext/overlay/Tooltip'
 import Hover from 'ol-ext/interaction/Hover'
@@ -394,7 +395,7 @@ class Carte extends ol_Object {
     this.map.addOverlay(this.popup);
     this.popup.on('show', () => this.popup.content.scrollTop = 0);
     // Hover
-    this.popover = new ol_Overlay_PopupMultiple({
+    this.popover = new ol_Overlay_Popup({
       className: 'tooltips popuphover',
       positioning: 'center-left',
       stopEvent: false,
