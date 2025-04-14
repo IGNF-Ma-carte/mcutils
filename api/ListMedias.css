@@ -111,7 +111,7 @@
   border: 1px solid #3993f3;
   margin: 0 .5em .5em;
 }
-.ol-ext-dialog.mc-list-media select {
+.ol-ext-dialog .mc-list-media select {
   padding: .5em 1em .5em 0em;
   vertical-align: middle;
   max-width: 10em;
