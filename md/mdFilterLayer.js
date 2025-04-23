@@ -36,6 +36,7 @@ const mdFilterLayer = function(element, story) {
   if (filters.length) {
     const layers = story.getCarte().getMap().getLayers().getArray();
     filters.forEach(elt => {
+      elt.innerHTML = '';
       const lid = elt.dataset.layerId
       const layer = layers.find(l => l.get('id') == lid )
       if (layer && layer.getConditionStyle()) {
