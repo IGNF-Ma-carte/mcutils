@@ -20,11 +20,12 @@ const prepareFilterLayer = function(type, data) {
 
   // LayerId
   const filterDiv = ol_ext_element.create('DIV', { 
-    className: 'mdFilterLayer ' + (atts.className || ''),
+    className: 'mdFilterLayer ' + (atts.className || '') + (atts.border ? ' mdSwitcherBorder': ''),
     parent: container
   });
   filterDiv.dataset.layerId = atts.layerId;
   if (atts.reset) filterDiv.dataset.reset = atts.reset;
+  if (atts.background) filterDiv.style = 'background: ' + atts.background + ';';
 
   // Title
   if (atts.title) {

@@ -29,9 +29,10 @@ const prepareLayerSwitcher = function(type, data) {
   atts.size = (atts.size || 'x').split('x')
   // LayerId
   const switcher = ol_ext_element.create('UL', { 
-    className: 'mdLayerSwitcher ' + (atts.className || '') + (atts.type==='button' ? ' mdSwitcherButton': '') + ' ' + (align || ''),
+    className: 'mdLayerSwitcher ' + (atts.className || '') + (atts.type==='button' ? ' mdSwitcherButton': '') + ' ' + (align || '') + (atts.border ? ' mdSwitcherBorder' : ''),
     parent: container
   });
+  if (atts.background && atts.type !== 'button') switcher.style = 'background: ' + atts.background + ';';
   // Title
   if (atts.title) {
     ol_ext_element.create('H2', { 
@@ -45,7 +46,8 @@ const prepareLayerSwitcher = function(type, data) {
       text: l,
       style: {
         width: (atts.size[0] ? atts.size[0]+'px' : ''),
-        height: (atts.size[1] ? atts.size[1]+'px' : '')
+        height: (atts.size[1] ? atts.size[1]+'px' : ''),
+        background: (atts.background && atts.type === 'button' ? atts.background : '')
       },
       className: 'mdLayer',
       parent: switcher
