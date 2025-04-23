@@ -25,6 +25,7 @@ import mdQCM, { prepareQCM, nbQCM, nbQCMok } from './mdQCM.js';
 import { prepareCard } from './mdCardPrinter';
 import { prepareFeatureSelect } from './mdFeatureSelect.js';
 import mdFilterLayer, { prepareFilterLayer } from './mdFilterLayer.js';
+import mdLayerSwitcher, { prepareLayerSwitcher } from './mdLayerSwitcher.js';
 
 let nbBlock = 0;
 let currentStory = null;
@@ -160,9 +161,12 @@ md2html.doWidget = function (md, data) {
     case 'calendar': {
       return prepareCalendar(type, md2html.doData(md, data));
     }
-    // QCM
+    // Filter layer
     case 'filter-layer': {
       return prepareFilterLayer(type, md2html.doData(md, data));
+    }
+    case 'layerSwitcher': {
+      return prepareLayerSwitcher(type, md2html.doData(md, data));
     }
     // QCM
     case 'QCM': {
@@ -846,6 +850,8 @@ md2html.renderWidget = function(element) {
   mdQCM(element);
   // Create filter
   mdFilterLayer(element, currentStory)
+  // LayerSwitcher
+  mdLayerSwitcher(element, currentStory)
 }
 
 /** Render icons in a markdown text

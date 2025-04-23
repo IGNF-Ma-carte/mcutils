@@ -3,8 +3,9 @@
   clear: both;
 }
 .mdFilterLayer .ol-ext-check span {
-  margin-right: 0
+  margin-right: 0;
 }
 .mdFilterLayer canvas {
   vertical-align: middle;
+  margin: -7px 0;
 }

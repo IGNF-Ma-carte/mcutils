@@ -1,6 +1,4 @@
 import ol_ext_element from "ol-ext/util/element";
-import SelectBase from 'ol-ext/control/SelectBase'
-import md2html from "./md2html";
 
 import './mdFilterLayer.css'
 
@@ -15,7 +13,7 @@ const prepareFilterLayer = function(type, data) {
   });
   // LayerId
   const filterDiv = ol_ext_element.create('DIV', { 
-    className: 'mdFilterLayer',
+    className: 'mdFilterLayer ' + (atts.className || ''),
     parent: container
   });
   filterDiv.dataset.layerId = atts.layerId;
@@ -34,7 +32,7 @@ const prepareFilterLayer = function(type, data) {
 
 const mdFilterLayer = function(element, story) {
   if (!story || !story.getCarte()) return;
-  const filters = document.querySelectorAll('.mdFilterLayer')
+  const filters = element.querySelectorAll('.mdFilterLayer')
   if (filters.length) {
     const layers = story.getCarte().getMap().getLayers().getArray();
     filters.forEach(elt => {
@@ -42,7 +40,6 @@ const mdFilterLayer = function(element, story) {
       const layer = layers.find(l => l.get('id') == lid )
       if (layer && layer.getConditionStyle()) {
         layer.getConditionStyle().forEach(cond => {
-          console.log(cond)
           const c = ol_ext_element.createCheck({
             after: cond.title,
             on: {

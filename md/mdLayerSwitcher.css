@@ -1,0 +1,56 @@
+.md ul.mdLayerSwitcher {
+  padding: 0;
+  list-style: none;
+  margin: 0.25em 0;
+}
+
+.mdLayerSwitcher .mdLayerLogo {
+  width: 3em;
+  height: 2em;
+  vertical-align: middle;
+  display: inline-block;
+  overflow: hidden;
+  margin: 3px 0.5em;
+}
+
+.mdLayerSwitcher.mdSwitcherButton span {
+  display: none;
+}
+
+.mdLayerSwitcher.mdSwitcherButton {
+  width: fit-content;
+  margin: auto;
+  text-align: center;
+}
+.mdLayerSwitcher.mdSwitcherButton li label {
+  padding: 0.5em;
+  cursor: pointer;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.mdLayerSwitcher.mdSwitcherButton li {
+  border: 1px solid currentColor;
+  display: inline-block;
+  box-sizing: border-box;
+  text-align: center;
+  opacity: 0.6;
+  border-radius: 0.25em;
+  margin: 0.25em;
+  overflow: hidden;
+}
+
+.mdLayerSwitcher.mdSwitcherButton li:hover {
+  box-shadow: 0 0 3px currentColor;
+}
+.mdLayerSwitcher.mdSwitcherButton li:has(input:checked) {
+  opacity: 1;
+  box-shadow: 0 0 3px currentColor;
+}
+
+.mdLayerSwitcher.mdSwitcherButton .mdLayerLogo {
+  display: block;
+  margin: auto;
+  height: 80px;
+  width: 80px;
+  max-width: 100%;
+}
