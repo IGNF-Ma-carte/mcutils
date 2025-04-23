@@ -369,6 +369,7 @@ Feature.prototype.showPopup = function(popup, coord, geom) {
 
 // Handle style
 RenderFeature.prototype.getIgnStyle = Feature.prototype.getIgnStyle;
+RenderFeature.prototype.getLabelContent = Feature.prototype.getLabelContent;
 RenderFeature.prototype.getLayer = Feature.prototype.getLayer;
 RenderFeature.prototype.setLayer = Feature.prototype.setLayer;
 RenderFeature.prototype.showPopup = function(popup, coord, geom) {
