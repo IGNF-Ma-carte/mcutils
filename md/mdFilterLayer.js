@@ -2,6 +2,12 @@ import ol_ext_element from "ol-ext/util/element";
 
 import './mdFilterLayer.css'
 
+/** Prepare layerFilter
+ * @param {string} type
+ * @param {string} data
+ * @returns {string}
+ * @private
+ */
 const prepareFilterLayer = function(type, data) {
   const container = ol_ext_element.create('DIV');
   const atts = {};
@@ -11,12 +17,14 @@ const prepareFilterLayer = function(type, data) {
     const val = d.substr(i+1).trim();
     atts[att] = val;
   });
+
   // LayerId
   const filterDiv = ol_ext_element.create('DIV', { 
     className: 'mdFilterLayer ' + (atts.className || ''),
     parent: container
   });
   filterDiv.dataset.layerId = atts.layerId;
+  if (atts.reset) filterDiv.dataset.reset = atts.reset;
 
   // Title
   if (atts.title) {
@@ -29,7 +37,10 @@ const prepareFilterLayer = function(type, data) {
   return container.innerHTML;
 }
 
-
+/** Create filtering elements 
+ * @param {Element} element current element
+ * @param {Story} story the current story
+ */
 const mdFilterLayer = function(element, story) {
   if (!story || !story.getCarte()) return;
   const filters = element.querySelectorAll('.mdFilterLayer')
@@ -41,6 +52,9 @@ const mdFilterLayer = function(element, story) {
       const layer = layers.find(l => l.get('id') == lid )
       if (layer && layer.getConditionStyle()) {
         layer.getConditionStyle().forEach(cond => {
+          if (elt.dataset.reset) {
+            cond.filtered = false;
+          }
           const c = ol_ext_element.createCheck({
             after: cond.title,
             on: {
@@ -54,6 +68,9 @@ const mdFilterLayer = function(element, story) {
           c.parentNode.querySelector('span').after(cond.symbol.getImage(true))
           c.checked = (cond.filtered !== true)
         })
+        if (elt.dataset.reset) {
+          layer.getSource().changed();
+        }
       }
     })
   }

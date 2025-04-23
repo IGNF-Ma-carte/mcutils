@@ -1,7 +1,20 @@
 .md ul.mdLayerSwitcher {
   padding: 0;
   list-style: none;
-  margin: 0.25em 0;
+  margin: 0.25em auto;
+}
+
+.md ul.mdLayerSwitcher.left {
+  text-align: left;
+  float: left;
+}
+.md ul.mdLayerSwitcher.right {
+  text-align: left;
+  float: right;
+}
+.md ul.mdLayerSwitcher.center{
+  width: fit-content;
+  text-align: left;
 }
 
 .mdLayerSwitcher .mdLayerLogo {
@@ -10,7 +23,7 @@
   vertical-align: middle;
   display: inline-block;
   overflow: hidden;
-  margin: 3px 0.5em;
+  margin: 3px 0.5em 3px 0;
 }
 
 .mdLayerSwitcher.mdSwitcherButton span {
@@ -18,9 +31,9 @@
 }
 
 .mdLayerSwitcher.mdSwitcherButton {
-  width: fit-content;
   margin: auto;
   text-align: center;
+  line-height: 1em;
 }
 .mdLayerSwitcher.mdSwitcherButton li label {
   padding: 0.5em;
@@ -45,6 +58,9 @@
 .mdLayerSwitcher.mdSwitcherButton li:has(input:checked) {
   opacity: 1;
   box-shadow: 0 0 3px currentColor;
+}
+.mdLayerSwitcher.mdSwitcherButton li:has(input:focus-visible) {
+  box-shadow: inset 0 0 3px currentColor, 0 0 3px currentColor;
 }
 
 .mdLayerSwitcher.mdSwitcherButton .mdLayerLogo {

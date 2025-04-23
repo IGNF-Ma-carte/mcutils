@@ -162,7 +162,8 @@ md2html.doWidget = function (md, data) {
       return prepareCalendar(type, md2html.doData(md, data));
     }
     // Filter layer
-    case 'filter-layer': {
+    case 'filter-layer': 
+    case 'layerFilter': {
       return prepareFilterLayer(type, md2html.doData(md, data));
     }
     case 'layerSwitcher': {
