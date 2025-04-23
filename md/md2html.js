@@ -24,8 +24,10 @@ import mdCalendar, { prepareCalendar } from './mdCalendar.js';
 import mdQCM, { prepareQCM, nbQCM, nbQCMok } from './mdQCM.js';
 import { prepareCard } from './mdCardPrinter';
 import { prepareFeatureSelect } from './mdFeatureSelect.js';
+import mdFilterLayer, { prepareFilterLayer } from './mdFilterLayer.js';
 
 let nbBlock = 0;
+let currentStory = null;
 
 /* Global functions to dispatch an event / do something on the map */
 window.appDo = function(type) { 
@@ -157,6 +159,10 @@ md2html.doWidget = function (md, data) {
     // Calendar
     case 'calendar': {
       return prepareCalendar(type, md2html.doData(md, data));
+    }
+    // QCM
+    case 'filter-layer': {
+      return prepareFilterLayer(type, md2html.doData(md, data));
     }
     // QCM
     case 'QCM': {
@@ -838,6 +844,8 @@ md2html.renderWidget = function(element) {
   mdCalendar(element);
   // Create QCM
   mdQCM(element);
+  // Create filter
+  mdFilterLayer(element, currentStory)
 }
 
 /** Render icons in a markdown text
@@ -930,6 +938,14 @@ md2html.showSelection =  function(parent, select, count, contents, features) {
   incShow(0);
 
   return parent;
+}
+
+
+/** Set the current carte
+ * @param {Story} story
+ */
+md2html.setStory = function(story) {
+  currentStory = story;
 }
 
 export default md2html

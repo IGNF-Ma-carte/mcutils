@@ -1,0 +1,10 @@
+.mdFilterLayer label {
+  display: block;
+  clear: both;
+}
+.mdFilterLayer .ol-ext-check span {
+  margin-right: 0
+}
+.mdFilterLayer canvas {
+  vertical-align: middle;
+}

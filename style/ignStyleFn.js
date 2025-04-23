@@ -729,7 +729,7 @@ function getConditionStyle(f, clustered, options, clusterColor) {
       }
     }
     if (isok) {
-      if (!st.symbol) return [];
+      if (!st.symbol || st.filtered === true) return [];
       return getFeatureStyle(f, clustered, options, st.symbol.getIgnStyle(), clusterColor)
     }
   }

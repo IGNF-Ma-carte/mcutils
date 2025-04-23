@@ -182,6 +182,7 @@ class StoryMap extends ol_Object {
     options = options || {};
     super(options);
     globalStory = this;
+    md2html.setStory(globalStory);
     this.cartes = [];
     this.tabs = new Collection();
     if (!options.target) {
