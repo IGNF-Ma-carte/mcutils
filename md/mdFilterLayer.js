@@ -10,12 +10,16 @@ import './mdFilterLayer.css'
  */
 const prepareFilterLayer = function(type, data) {
   const container = ol_ext_element.create('DIV');
-  const atts = {};
+  const atts = { layers: [] };
   data.split('\n').forEach(d => {
     const i = d.indexOf(':');
     const att = d.substr(0,i).trim();
     const val = d.substr(i+1).trim();
-    atts[att] = val;
+    if (att==='layer') {
+      atts.layers.push(val)
+    } else {
+      atts[att] = val;
+    }
   });
 
   // LayerId
@@ -24,6 +28,7 @@ const prepareFilterLayer = function(type, data) {
     parent: container
   });
   filterDiv.dataset.layerId = atts.layerId;
+  filterDiv.dataset.layers = atts.layers.join(',');
   if (atts.reset) filterDiv.dataset.reset = atts.reset;
   if (atts.background) filterDiv.style = 'background: ' + atts.background + ';';
 
@@ -49,10 +54,17 @@ const mdFilterLayer = function(element, story) {
     const layers = story.getCarte().getMap().getLayers().getArray();
     filters.forEach(elt => {
       elt.innerHTML = '';
+      // Linked layers
+      const linked = elt.dataset.layers.split(',')
+      linked.forEach((id,i) => {
+        linked[i] = layers.find(l => l.get('id') == id)
+      })
+      // layer with condition
       const lid = elt.dataset.layerId
-      const layer = layers.find(l => l.get('id') == lid )
-      if (layer && layer.getConditionStyle()) {
-        layer.getConditionStyle().forEach(cond => {
+      const layer = lid ? layers.find(l => l.get('id') == lid) : linked[0]
+      // 
+      if (layer && layer.getConditionStyle && layer.getConditionStyle()) {
+        layer.getConditionStyle().forEach((cond, i) => {
           if (elt.dataset.reset) {
             cond.filtered = false;
           }
@@ -62,6 +74,12 @@ const mdFilterLayer = function(element, story) {
               change: (e) => {
                 cond.filtered = !e.target.checked
                 layer.getSource().changed();
+                linked.forEach(l => {
+                  if (l && l.getConditionStyle && l.getConditionStyle() && layer.getConditionStyle()[i]) {
+                    l.getConditionStyle()[i].filtered = cond.filtered;
+                    l.getSource().changed();
+                  }
+                })
               }
             },
             parent: elt
