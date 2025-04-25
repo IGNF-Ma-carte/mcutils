@@ -34,6 +34,9 @@
 .mdLayerSwitcher.mdSwitcherButton span {
   display: none;
 }
+.md .mdLayerSwitcher.mdSwitcherButton.center {
+  text-align: center;
+}
 
 .mdLayerSwitcher.mdSwitcherButton {
   margin: auto;
@@ -74,4 +77,17 @@
   height: 80px;
   width: 80px;
   max-width: 100%;
+}
+
+select.mdLayerSwitcher {
+  font-size: 1em;
+  display: block;
+  margin: auto;
+  padding: 0.5em 1em;
+}
+select.mdLayerSwitcher.left {
+  float: left;
+}
+select.mdLayerSwitcher.right {
+  float: right;
 }

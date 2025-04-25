@@ -27,22 +27,20 @@ const prepareLayerSwitcher = function(type, data) {
     }
   });
   atts.size = (atts.size || 'x').split('x')
+  const popup = (atts.type === 'popup')
   // LayerId
-  const switcher = ol_ext_element.create('UL', { 
-    className: 'mdLayerSwitcher ' + (atts.className || '') + (atts.type==='button' ? ' mdSwitcherButton': '') + ' ' + (align || '') + (atts.border ? ' mdSwitcherBorder' : ''),
+  const switcher = ol_ext_element.create(popup ? 'SELECT' : 'UL', { 
+    className: ('mdLayerSwitcher ' + (atts.className || '') 
+        + (atts.type==='button' ? ' mdSwitcherButton': '') 
+        + (atts.type==='popup' ? ' ol-noscroll': '') 
+        + ' ' + (align || '') 
+        + (atts.border ? ' mdSwitcherBorder' : '')).replace(/  /g,' '),
     parent: container
   });
   if (atts.background && atts.type !== 'button') switcher.style = 'background: ' + atts.background + ';';
-  // Title
-  if (atts.title) {
-    ol_ext_element.create('H2', { 
-      text: atts.title, 
-      parent: switcher 
-    })
-  }
   // Layers
   atts.layers.forEach(l => {
-    const d = ol_ext_element.create('LI', {
+    const d = ol_ext_element.create(popup ? 'OPTION' : 'LI', {
       text: l,
       style: {
         width: (atts.size[0] ? atts.size[0]+'px' : ''),
@@ -50,6 +48,7 @@ const prepareLayerSwitcher = function(type, data) {
         background: (atts.background && atts.type === 'button' ? atts.background : '')
       },
       className: 'mdLayer',
+      value: l,
       parent: switcher
     })
     d.dataset.layerId = l;
@@ -71,10 +70,21 @@ const mdLayerSwitcher = function(element, story) {
     switchers.forEach(swt => {
       const name = 'layer_' + (radio++);
       let lgroup = []
+      // Handle popup
+      if (swt.tagName === 'SELECT') {
+        swt.addEventListener('change', () => {
+          lgroup.forEach(id => {
+            const layer = layers.find(l => l.get('id') == id )
+            if (layer) layer.setVisible(false)
+          })
+          const layer = layers.find(l => l.get('id') == swt.value )
+          if (layer) layer.setVisible(true)
+        })
+      }
       swt.querySelectorAll('.mdLayer').forEach(elt => {
         let lid = [];
         let theme = null;
-        // Thématique (alpha)
+        // Thematique (alpha)
         if (elt.dataset.layerId.replace(/[0-9, ]/g,'')) {
           theme = elt.dataset.layerId;
           layers.forEach(l => {
@@ -84,48 +94,57 @@ const mdLayerSwitcher = function(element, story) {
           lid = elt.dataset.layerId.split(' ')
         }
         lgroup = lgroup.concat(lid)
+        // Current layer
         const layer = layers.find(l => l.get('id') == lid[0] )
+        const layerTitle = md2html.iconize(theme || layer.get('title') || layer.get('name'));
         // display layer
         elt.innerHTML = '';
         if (layer) {
-          const label = ol_ext_element.create('LABEL', {
-            className: 'ol-ext-check ol-ext-checkbox' + (elt.dataset.radio ? ' ol-ext-radio' : ''),
-            parent: elt
-          })
-          ol_ext_element.create('INPUT', {
-            type: elt.dataset.radio ? 'radio' : 'checkbox',
-            checked: layer.getVisible(),
-            name: name,
-            on: {
-              change: e => {
-                if (elt.dataset.radio) {
-                  lgroup.forEach(id => {
+          if (elt.tagName === 'OPTION') {
+            elt.innerText = layerTitle
+            if (layer.getVisible()) {
+              switchers.value = elt.value;
+            }
+          } else {
+            const label = ol_ext_element.create('LABEL', {
+              className: 'ol-ext-check ol-ext-checkbox' + (elt.dataset.radio ? ' ol-ext-radio' : ''),
+              parent: elt
+            })
+            ol_ext_element.create('INPUT', {
+              type: elt.dataset.radio ? 'radio' : 'checkbox',
+              checked: layer.getVisible(),
+              name: name,
+              on: {
+                change: e => {
+                  if (elt.dataset.radio) {
+                    lgroup.forEach(id => {
+                      const layer = layers.find(l => l.get('id') == id )
+                      if (layer) layer.setVisible(false)
+                    })
+                  }
+                  lid.forEach(id => {
                     const layer = layers.find(l => l.get('id') == id )
-                    layer.setVisible(false)
+                    if (layer) layer.setVisible(e.target.checked)
                   })
                 }
-                lid.forEach(id => {
-                  const layer = layers.find(l => l.get('id') == id )
-                  layer.setVisible(e.target.checked)
-                })
-              }
-            },
-            parent: label
-          })
-          ol_ext_element.create('SPAN', {
-            parent: label
-          })
-          if (layer.get('logo')) {
-            ol_ext_element.create('DIV', {
-              className: 'mdLayerLogo',
-              html: ol_ext_element.create('IMG', { src: layer.get('logo') }),
+              },
+              parent: label
+            })
+            ol_ext_element.create('SPAN', {
+              parent: label
+            })
+            if (layer.get('logo')) {
+              ol_ext_element.create('DIV', {
+                className: 'mdLayerLogo',
+                html: ol_ext_element.create('IMG', { src: layer.get('logo') }),
+                parent: label
+              })
+            }
+            ol_ext_element.create('TEXT', {
+              html: layerTitle,
               parent: label
             })
           }
-          ol_ext_element.create('TEXT', {
-            html: md2html.iconize(theme || layer.get('title') || layer.get('name')),
-            parent: label
-          })
         }
       })
     })

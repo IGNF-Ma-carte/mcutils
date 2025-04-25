@@ -24,11 +24,10 @@ const prepareFilterLayer = function(type, data) {
 
   // LayerId
   const filterDiv = ol_ext_element.create('DIV', { 
-    className: 'mdFilterLayer ' + (atts.className || '') + (atts.border ? ' mdSwitcherBorder': ''),
+    className: ('mdFilterLayer ' + (atts.className || '') + (atts.border ? ' mdSwitcherBorder': '')).replace(/  /g,' '),
     parent: container
   });
-  filterDiv.dataset.layerId = atts.layerId;
-  filterDiv.dataset.layers = atts.layers.join(',');
+  filterDiv.dataset.layers = JSON.stringify(atts.layers);
   if (atts.reset) filterDiv.dataset.reset = atts.reset;
   if (atts.background) filterDiv.style = 'background: ' + atts.background + ';';
 
@@ -55,19 +54,21 @@ const mdFilterLayer = function(element, story) {
     filters.forEach(elt => {
       elt.innerHTML = '';
       // Linked layers
-      const linked = elt.dataset.layers.split(',')
-      linked.forEach((id,i) => {
-        linked[i] = layers.find(l => l.get('id') == id)
+      const linked = []
+      JSON.parse(elt.dataset.layers).forEach(id => {
+        const l = layers.find(l => l.get('id') == id)
+        console.log(id, l)
+        if (l) linked.push(l)
       })
-      // layer with condition
-      const lid = elt.dataset.layerId
-      const layer = lid ? layers.find(l => l.get('id') == lid) : linked[0]
-      // 
+      // First layer / condition
+      const layer = linked.shift()
+      // Display condition
       if (layer && layer.getConditionStyle && layer.getConditionStyle()) {
         layer.getConditionStyle().forEach((cond, i) => {
           if (elt.dataset.reset) {
             cond.filtered = false;
           }
+          // Checkbox
           const c = ol_ext_element.createCheck({
             after: cond.title,
             on: {

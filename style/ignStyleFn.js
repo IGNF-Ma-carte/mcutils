@@ -435,6 +435,11 @@ function getStatisticClusterStyle(f, cluster, minmax, optId, clusterColor, clust
   const styleid = 'cluster-stat:'+cacheKey+'-'+optId;
   let style = _cacheStyle[styleid];
   if (!style) {
+    // empty cluster
+    if (!size) {
+      return [];
+    }
+    // cluster
     style = _cacheStyle[styleid] = new ol_style_Style({
       image: statisticImage({ size: size, min: minmax[0], max: minmax[1], colors: colors, data: data, dash: clusterDash }),
       text: new ol_style_Text({
