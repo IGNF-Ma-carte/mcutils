@@ -217,6 +217,31 @@
   padding: 3px;
 }
 
+.ol-ext-dialog.mdedit-layer a {
+  display: block;
+  color: currentColor;
+  cursor: pointer;
+  padding: 0.2em 0.5em;
+  font-weight: normal;
+}
+.ol-ext-dialog.mdedit-layer a:hover {
+  background-color: #e1eefd;
+}
+.ol-ext-dialog.mdedit-layer a::before {
+  display: none;
+}
+.ol-ext-dialog.mdedit-layer img {
+  width: 5em;
+  height: 3em;
+  object-fit: cover;
+  vertical-align: middle;
+  margin-right: 0.5em;
+}
+.ol-ext-dialog.mdedit-layer img[src=""] {
+  height: 0;
+  opacity: 0;
+}
+
 .ol-ext-dialog.mdedit-attr ul {
   margin: 0;
   padding: 0;

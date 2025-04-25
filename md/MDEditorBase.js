@@ -602,15 +602,61 @@ function addIcon(text, p){
         this.input.value = text;
         this.input.selectionStart = p.end + 1;
         this.input.selectionEnd = p.end + val.length-1;
-        this.input.focus();
         this._onchange();
         this.refresh();
+        setTimeout(() => this.input.focus());
       },
       parent: dlg
     });
   })
   // Dialog
-  dialog.show({ title: 'Insérer une icone', content: dlg, className: 'mdedit-icon', buttons: ['annuler'], onButton: () => { this.input.focus(); } })
+  dialog.show({ 
+    title: 'Insérer une icone', 
+    content: dlg, 
+    className: 'mdedit-icon', 
+    buttons: ['annuler'], 
+    onButton: () => { this.input.focus(); } 
+  })
+}
+
+/* Add layer id dialog */
+function addLayerId(text, p){
+  const dlg = ol_ext_element.create('DIV');
+  
+  const carte = currentCarte.getCarte ? currentCarte.getCarte() : currentCarte
+  if (carte) {
+    const layers = carte.getMap().getLayers().getArray()
+    layers.forEach(l => {
+      const a = ol_ext_element.create('A', {
+        html: '#' + l.get('id') + ' ' + md2html(l.get('title') || l.get('name')),
+        on: {
+          click: () => {
+            dialog.hide();
+            const val = String(l.get('id')) + ' '
+            text = insertAt(text, p.end, val);
+            this.input.value = text;
+            this.input.selectionStart = p.end + val.length;
+            this.input.selectionEnd = p.end + val.length;
+            this._onchange();
+            this.refresh();
+            setTimeout(() => this.input.focus());
+          }
+        },
+        parent: dlg
+      })
+      a.prepend(ol_ext_element.create('IMG', {
+        src: l.get('logo') || ''
+      }))
+    })
+    // Dialog
+    dialog.show({ 
+      title: 'Liste des couches', 
+      content: dlg, 
+      className: 'mdedit-layer', 
+      buttons: ['annuler'], 
+      onButton: () => { this.input.focus(); } 
+    })
+  }
 }
 
 /**
@@ -933,6 +979,13 @@ MDEditorBase.prototype.setTools = function (minibar) {
         return text;
       }
     });
+    // array list
+    this.addTool({ 
+      title:'rechercher un calque', 
+      icon: 'fg-layer-stack-o',
+      type: 'dialog',
+      fn: addLayerId
+    })
     // separateur
     this.addSeparatorTool();
     // Twitter
@@ -1001,6 +1054,16 @@ MDEditorBase.prototype.setTools = function (minibar) {
       }
     }
   }
+}
+
+
+let currentCarte;
+
+/** Define the current carte
+ * @param {Story|Carte} carte
+ */
+MDEditorBase.setCarte = function(carte) {
+  currentCarte = carte
 }
 
 export default MDEditorBase

@@ -95,11 +95,11 @@ const mdLayerSwitcher = function(element, story) {
         }
         lgroup = lgroup.concat(lid)
         // Current layer
-        const layer = layers.find(l => l.get('id') == lid[0] )
-        const layerTitle = md2html.iconize(theme || layer.get('title') || layer.get('name'));
+        const layer = layers.find(l => l.get('id') == lid[0])
         // display layer
         elt.innerHTML = '';
         if (layer) {
+          const layerTitle = md2html.iconize(theme || layer.get('title') || layer.get('name'));
           if (elt.tagName === 'OPTION') {
             elt.innerText = layerTitle
             if (layer.getVisible()) {

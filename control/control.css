@@ -114,6 +114,14 @@
   float: left;
   font-size: 1.5em;
 }
+.ol-ext-dialog.layer-info > form h2 span {
+  margin-right: 0.5em;
+  display: none;
+}
+.ol-ext-dialog.layer-info > form h2 span:before {
+  content: '#';
+}
+
 
 .ol-ext-dialog select,
 .ol-ext-dialog input {
