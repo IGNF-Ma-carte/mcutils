@@ -107,7 +107,7 @@ const mdLayerSwitcher = function(element, story) {
             }
           } else {
             const label = ol_ext_element.create('LABEL', {
-              className: 'ol-ext-check ol-ext-checkbox' + (elt.dataset.radio ? ' ol-ext-radio' : ''),
+              className: 'ol-ext-check' + (elt.dataset.radio ? ' ol-ext-radio' : ' ol-ext-checkbox'),
               parent: elt
             })
             ol_ext_element.create('INPUT', {

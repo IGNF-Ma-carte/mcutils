@@ -1056,7 +1056,6 @@ MDEditorBase.prototype.setTools = function (minibar) {
   }
 }
 
-
 let currentCarte;
 
 /** Define the current carte

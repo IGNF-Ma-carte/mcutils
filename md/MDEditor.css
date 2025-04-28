@@ -554,3 +554,11 @@ body > .ol-ext-dialog.fullMD .ol-content textarea {
   }
 }
 
+.ol-ext-dialog.help.no-anim {
+  transition: none!important;
+  opacity: 1!important;
+  display: block!important;
+}
+.ol-ext-dialog.help.no-anim form {
+  transition: none!important;
+}
