@@ -1791,6 +1791,7 @@ StoryMap.prototype.readData = function(data, id, c) {
         this.dispatchEvent(e);
       });
       carte.read(data);
+      this.set('atlas', c);
       // Force tips
       this.setTips({ hover: true, shadow: false })
     }

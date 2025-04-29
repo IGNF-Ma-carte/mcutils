@@ -233,24 +233,25 @@ body > .ol-ext-dialog.mapInfo > form.ol-title .ol-content {
   font-size: 1.2em;
   margin: 0;
 }
-.carte-info-dialog ul {
+.carte-info-dialog > ul.attribution {
   padding: 0;
   font-size: .9em;
+  margin: 0.5em 0;
 }
-.carte-info-dialog li {
+.carte-info-dialog > ul.attribution li {
   display: inline-block;
   padding-right: .5em;
 }
-.carte-info-dialog li:before {
+.carte-info-dialog > ul.attribution li:before {
   content: "- "
 }
-.carte-info-dialog li:first-child:before {
+.carte-info-dialog > ul.attribution li:first-child:before {
   content: none;
 }
 
 .carte-info-dialog .permalink {
   background-color: #ccc;
-  margin: 1em -1em 0;
+  margin: 0.5em -1em 0;
   padding: 1em;
   position: relative;
 }
@@ -310,6 +311,9 @@ body > .ol-ext-dialog.mapInfo > form.ol-title .ol-content {
 .carte-info-dialog .description {
   overflow-x: hidden;
   overflow-y: auto;
+}
+.carte-info-dialog .author {
+  text-align: center;
 }
 .carte-info-dialog .cgu {
   text-align: right;
