@@ -1,5 +1,60 @@
 L'ajout de widgets se fait en encadrant le code entre trois `&#96;&#96;&#96;`
 
+## Outils de filtrage
+
+Un outil de filtrage permet de proposer à l'utilisateur final de filtrer le contenu d'une couche en n'affichant que les objets répondant à un style paramétrique : `&#96;&#96;&#96;layerFilter`.
+Il faut lui donner l'identifiant de la couche sur laquelle s'effectue le filtrage (`layer`). Pour vous aider à récupérer l'identifiant de la couche, utilisez l'outil :fg-layer-stack-o: de la barre de Markdown.
+La couche doit utiliser un style paramétrique qui servira à établir les critères de filtrage en fonction des attributs des objets.
+Vous pouvez utiliser plusieurs couches (`layer`) mais elles doivent toutes avoir la même définition de style (car c'est celle de la première couche qui sera utilisée).
+
+Vous pouvez spécifier la classe du widget (`className` pour une utilisation avec une feuille de style personnalisée).
+Vous pouvez modifier la couleur du fond du wiget (`background`) et lui ajouter une bordure (`border: 1`).
+Vous pouvez également remettre à jour l'affichage en utilisant `reset: 1` (lors d'une utilisation dan une carte par étape pour revenir au style par défaut)
+Le widget peut être placé dans la description de la couche (accessible via le :fa-info-circle: du gestionnaire de couche). Dans ce cas, vous pouvez utiliser l'attribut `%id%` pour accéder à l'identifiant de la couche (`layer: %id%`)
+
+[++ :fa-code:fw: Code ++]
+```md
+&#96;``layerFilter
+layer: 1
+className: maClasse
+background: rgba(255,255,255,0.5)
+border: 1
+reset: 1
+&#96;``
+```
+[----]
+
+
+```hidden
+## Gestionnaire de couches
+Ajoutez un gestionnaire de couche (`&#96;&#96;&#96;layerSwitcher`) pour gérer l'affichage des couches dans un volet Markdown.
+Il faut lui indiquer les identifiants des couches à gérer (`layer`). Pour vous aider à récupérer l'identifiant de la couche, utilisez l'outil :fg-layer-stack-o: de la barre de Markdown.
+Si vous spécifiez plusieurs couche (séparées par de espaces), elles s'afficheront / masqueront en même temps.
+
+Le widget propose 3 types d'affichage : 
+- case à coché (par defaut),
+- menu (`type: menu`), 
+- ou boutons (`type: button`)
+Il est possible de rendre les affichages exclusifs en ajoutant l'option `radio: 1`. 
+Dans ce cas, l'affichage d'une couche masquera les autres (NB: dans le type menu, l'affichage est toujours exclusif, seule la couche sélectionnée dans le menu est visible).
+
+Vous pouvez spécifier la classe du widget (`className` pour utilisation avec une feuille de style personnalisée).
+Vous pouvez modifier la couleur du fond du wiget (`background`) et lui ajouter une bordure (`border: 1`).
+
+[++ :fa-code:fw: Code ++]
+ ```md
+&#96;``layerSwitcher
+layer: 1
+layer: 5 6
+type: button
+className: maClasse
+background: rgba(255,255,255,0.5)
+border: 1
+&#96;``
+ ```
+[----]
+```
+
 ## Diaporama
 
 Vous pouvez ajouter un diaporama à partir d'image en utilisant `&#96;&#96;&#96;diaporama`.

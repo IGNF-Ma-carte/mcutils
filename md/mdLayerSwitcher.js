@@ -95,11 +95,11 @@ const mdLayerSwitcher = function(element, story) {
         }
         lgroup = lgroup.concat(lid)
         // Current layer
-        const layer = layers.find(l => l.get('id') == lid[0] )
-        const layerTitle = md2html.iconize(theme || layer.get('title') || layer.get('name'));
+        const layer = layers.find(l => l.get('id') == lid[0])
         // display layer
         elt.innerHTML = '';
         if (layer) {
+          const layerTitle = md2html.iconize(theme || layer.get('title') || layer.get('name'));
           if (elt.tagName === 'OPTION') {
             elt.innerText = layerTitle
             if (layer.getVisible()) {
@@ -107,7 +107,7 @@ const mdLayerSwitcher = function(element, story) {
             }
           } else {
             const label = ol_ext_element.create('LABEL', {
-              className: 'ol-ext-check ol-ext-checkbox' + (elt.dataset.radio ? ' ol-ext-radio' : ''),
+              className: 'ol-ext-check' + (elt.dataset.radio ? ' ol-ext-radio' : ' ol-ext-checkbox'),
               parent: elt
             })
             ol_ext_element.create('INPUT', {
