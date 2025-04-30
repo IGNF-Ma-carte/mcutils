@@ -57,7 +57,6 @@ const mdFilterLayer = function(element, story) {
       const linked = []
       JSON.parse(elt.dataset.layers).forEach(id => {
         const l = layers.find(l => l.get('id') == id)
-        console.log(id, l)
         if (l) linked.push(l)
       })
       // First layer / condition
