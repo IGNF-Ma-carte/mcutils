@@ -746,15 +746,17 @@ StoryMap.prototype.setStep = function(n, anim) {
     // Delete previous animation
     setTimeout(() => this.cartes[0].map.getView().cancelAnimations());
     // Map position
-    if (anim===false || s.animation === 'none') {
-      this.cartes[0].map.getView().setCenter(s.center);
-      this.cartes[0].map.getView().setZoom(s.zoom);
-    } else {
-      this.cartes[0].map.getView().takeTour([{
-        type: s.animation || 'moveTo',
-        center: s.center,
-        zoom: s.zoom
-      }]);
+    if (s.animation !== 'nomove') {
+      if (anim===false || s.animation === 'none') {
+        this.cartes[0].map.getView().setCenter(s.center);
+        this.cartes[0].map.getView().setZoom(s.zoom);
+      } else {
+        this.cartes[0].map.getView().takeTour([{
+          type: s.animation || 'moveTo',
+          center: s.center,
+          zoom: s.zoom
+        }]);
+      }
     }
     /*
     // Get layer ids?
