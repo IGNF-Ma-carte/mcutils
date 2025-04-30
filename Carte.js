@@ -68,7 +68,7 @@ import { toStringHDMS } from 'ol/coordinate'
 
 import loadFont from './font/loadFonts'
 import api from './api/api'
-import serviceURL from './api/serviceURL'
+import serviceURL, { getUserURL, getTeamURL } from './api/serviceURL'
 import Collection from 'ol/Collection'
 import SymbolLib from './style/SymbolLib'
 import { fromLonLat } from 'ol/proj'
@@ -465,15 +465,60 @@ Carte.prototype.dialogInfo = function() {
       parent: content
     });
   }
+  let description = this.map.get('description') || '';
+  let atlas = this.get('atlas') || {}
+  if (this._story) {
+    atlas = this._story.get('atlas') || {};
+    description = this._story.get('description') || atlas.description || ''
+  }
+
   ol_ext_element.create('DIV', {
     className: 'description',
-    html: this._story ? md2html.element(this._story.get('description')) : this.map.get('description'),
+    html: md2html.element(description),
     parent: content
   });
   ol_ext_element.create('UL', {
+    className: 'attribution',
     html: this.getControl('attribution').element.querySelector('ul').innerHTML,
     parent: content
   })
+  // Author
+  const auth = ol_ext_element.create('DIV', {
+    className: 'author',
+    parent: content
+  })
+  if (atlas.organization_name || atlas.author) {
+    auth.innerHTML = _T('created_by')
+    if (atlas.organization_name) {
+      ol_ext_element.create('A', {
+        text: atlas.organization_name,
+        href: getTeamURL({ 
+          name: atlas.organization_name, 
+          public_id: atlas.organization_id 
+        }),
+        target: '_blank',
+        parent: auth
+      })
+    } else {
+      ol_ext_element.create('A', {
+        text: atlas.author,
+        href: getUserURL({ 
+          public_name: atlas.author, 
+          public_id: atlas.author_id 
+        }),
+        target: '_blank',
+        parent: auth
+      })
+    }
+  } else {
+    auth.innerHTML = _T('created_with')
+  }
+  // Ma carte
+  ol_ext_element.create('SPAN', {
+    html: _T('macarte_link').replace('{SERVER}', mcOptions.server).replace('{APPNAME}', mcOptions.server.replace(/http.?:|\//g, '')),
+    parent: auth
+  })
+  // Permalink
   const plink = ol_ext_element.create('DIV', {
     className: 'permalink',
     parent: content
@@ -509,8 +554,7 @@ Carte.prototype.dialogInfo = function() {
   // CGU
   const cgu = ol_ext_element.create('DIV', {
     className: 'cgu',
-    html: _T('macarte_link').replace('{SERVER}', mcOptions.server).replace('{APPNAME}', mcOptions.server.replace(/http.?:|\//g, '')) + '<br/>'
-      + _T('cgu_link').replace('{URL}', serviceURL.cgu) + '<br/>',
+    html: _T('cgu_link').replace('{URL}', serviceURL.cgu) + '<br/>',
     parent: content
   });
   const user = api.getMe() || {};
@@ -523,6 +567,7 @@ Carte.prototype.dialogInfo = function() {
     userID: user.id,
     email: user.email
   }, cgu)
+  // Show dialog
   this.getDialog().show({
     content: content,
     buttons: { ok: 'ok' }
@@ -634,7 +679,7 @@ Carte.prototype.read = function(options, atlas) {
 
   // set atlas definition
   this.set('atlas', atlas || {});
-
+  
   // Read carte
   const format = new CarteFormat;
   format.read(this, options);

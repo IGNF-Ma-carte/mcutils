@@ -182,6 +182,7 @@ class StoryMap extends ol_Object {
     options = options || {};
     super(options);
     globalStory = this;
+    md2html.setStory(globalStory);
     this.cartes = [];
     this.tabs = new Collection();
     if (!options.target) {
@@ -1790,6 +1791,7 @@ StoryMap.prototype.readData = function(data, id, c) {
         this.dispatchEvent(e);
       });
       carte.read(data);
+      this.set('atlas', c);
       // Force tips
       this.setTips({ hover: true, shadow: false })
     }

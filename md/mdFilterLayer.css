@@ -1,0 +1,17 @@
+.mdFilterLayer label {
+  display: block;
+  clear: both;
+}
+.mdFilterLayer .ol-ext-check span {
+  margin-right: 0;
+}
+.mdFilterLayer canvas {
+  vertical-align: middle;
+  margin: -7px 0;
+}
+
+.mdFilterLayer.mdSwitcherBorder {
+  box-shadow: 0 0 3px currentColor;
+  padding: 0.5em 0;
+  margin: 0.5em 0;
+}

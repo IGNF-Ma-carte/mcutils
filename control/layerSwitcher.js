@@ -29,10 +29,11 @@ function showInfo(layer, map) {
   // Show
   dialog.show({
     className: 'layer-info' + (layer.get('exportable') ? ' exportable' : ''),
-    title: layer.get('title'),
+    title: md2html(layer.get('title')),
     content: content,
     buttons: { pk: 'ok' }
   })
+  dialog.element.querySelector('h2').prepend(ol_ext_element.create('SPAN', { text : layer.get('id') }))
 
   // Render content
   md2html.renderWidget(content);

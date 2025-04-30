@@ -76,7 +76,9 @@ function getParams(data) {
   return atts;
 }
 
-/** Prepare image Slider
+/** Prepare Calendar element
+ * @param {string} type
+ * @param {string} data
  * @private
  */
 function prepareCalendar(type, data) {
