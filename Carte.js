@@ -46,6 +46,8 @@ import _T from './i18n/i18n'
 import ol_ext_element from 'ol-ext/util/element'
 import CanvasTitle from 'ol-ext/control/CanvasTitle'
 import LocateCtrl from 'ol-ext/control/GeolocationButton'
+import MapZone from 'ol-ext/control/MapZone'
+import Geoportail from 'ol-ext/layer/Geoportail'
 import notification from './dialog/notification'
 import getLayerSwitcher from './control/layerSwitcher'
 
@@ -352,6 +354,11 @@ class Carte extends ol_Object {
         geohash: true,
         onclick: this.dialogInfo.bind(this)
       }),
+      // DOM/TOM
+      mapzone: new MapZone({
+        layer: new Geoportail({ layer: 'ORTHOIMAGERY.ORTHOPHOTOS' }),
+        zones: []
+      }),
       // Locate / GPS
       locate: new LocateCtrl({ minZoom: 16 }),
       // Default map dialog
@@ -389,6 +396,8 @@ class Carte extends ol_Object {
     this._controls.ctrlbar.addControl(this._controls.locate);
     this._controls.locate.set('bar', true);
     this.showControl('toolbar', false);
+    // MapZone
+    this.setMapZone();
     // Popup
     this.popup = new ol_Overlay_PopupMultiple({ closeBox: true, minibar: true, select: this.getSelect()});
     // this.popup = new Popup({ closeBox: true, minibar: true });
@@ -410,6 +419,55 @@ class Carte extends ol_Object {
     // Load carte
     if (options.url) this.read(options.url);
     else if (options.id) this.load(options.id);
+  }
+}
+
+/** Set tje mapzone control
+ * @param {string} [zone] DOM|TOM|DOMTOM default remove the control
+ * @param {boolean} [collapsed]
+ */
+Carte.prototype.setMapZone = function(zone, collapsed) {
+  // clear
+  const nb = this.getControl('mapzone').getMaps().length;
+  for (let i=0; i<nb; i++) this.getControl('mapzone').removeZone(0);
+  const metro = MapZone.zones.DOMTOM[0];
+
+  // disable
+  if (!zone) this.getControl('mapzone').element.classList.add('hidden')
+  else this.getControl('mapzone').element.classList.remove('hidden');
+  const vis = this.getControl('mapzone').getCollapsed();
+  // this.getControl('mapzone').setCollapsed(false);
+
+  // Add zone
+  switch(zone) {
+    case 'DOM': {
+      this.getControl('mapzone').addZone(metro)
+      MapZone.zones.DOM.forEach(z => {
+        this.getControl('mapzone').addZone(z)
+      })
+      break;
+    }
+    case 'TOM': {
+      this.getControl('mapzone').addZone(metro)
+      MapZone.zones.TOM.forEach(z => {
+        this.getControl('mapzone').addZone(z)
+      })
+      break;
+    }
+    case 'DOMTOM': {
+      MapZone.zones.DOMTOM.forEach(z => {
+        this.getControl('mapzone').addZone(z)
+      })
+      break;
+    }
+    default: {
+      break;
+    }
+  }
+  if (collapsed !== undefined) {
+    this.getControl('mapzone').setCollapsed(collapsed);
+  } else {
+    // this.getControl('mapzone').setCollapsed(vis);
   }
 }
 

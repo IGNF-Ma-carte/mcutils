@@ -64,6 +64,59 @@ h1, h2, h3, h4 {
   line-height: 1em;
 }
 
+/* Map zone */
+.ol-viewport.ol-ready .ol-mapzonezone:focus {
+  box-shadow: 0 0 0 0.2em #369;
+}
+.ol-viewport.ol-ready .ol-mapzone {
+  top: unset;
+  bottom: 2.5em;
+  left: 0.5em;
+  right: unset;
+  width: fit-content;
+  padding: 0.2em 0;
+  padding-left: 2em;
+  max-width: calc(100% - 1em);
+  line-height: 0;
+}
+.ol-viewport.ol-ready .ol-mapzone p {
+  line-height: 1.2em;
+}
+.ol-viewport.ol-ready .ol-mapzone > div {
+  margin: 0.2em 0.2em 0.2em 0;
+}
+.ol-viewport.ol-ready .ol-mapzone > div:focus {
+  box-shadow: none;
+  z-index: 1;
+}
+.ol-viewport.ol-ready .ol-mapzone > div:focus-visible {
+  box-shadow: 0 0 0 0.3em #307ccd;
+}
+
+.ol-viewport .ol-mapzone button {
+  position: absolute;
+  margin: 1px;
+  bottom: 2px;
+  left: 2px;
+}
+.ol-viewport .ol-mapzone button:before {
+  content: "\ea1a";
+  font-family: font-ign;
+}
+.ol-viewport .ol-mapzone button i {
+  display: none;
+}
+.ol-viewport.ol-ready .ol-mapzone.hidden {
+  display: none;
+}
+
+.ol-viewport.ol-ready .ol-mapzone.ol-collapsed {
+  padding: 2px;
+}
+.ol-viewport .ol-mapzone.ol-collapsed button {
+  position: unset;
+}
+
 /* Target */
 .ol-target-overlay .ol-target {
   display: block;
@@ -71,6 +124,7 @@ h1, h2, h3, h4 {
   width: 30px;
   box-shadow: none;
 }
+
 .ol-target-overlay .ol-target:after, .ol-target-overlay .ol-target:before {
   content: "";
   display: block;
