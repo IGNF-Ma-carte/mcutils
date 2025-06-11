@@ -208,12 +208,16 @@ StoryMap.prototype.write = function(story) {
     geoloc: story.hasControl('locate'),
     global: false,
     legende: [story.hasControl('legend'), false],
+    mapzone: story.get('controls').mapzone,
     profil: story.hasControl('profil'),
     lswitcher: story.hasControl('layerSwitcher'),
     switcherModel: story.get('controls').switcherModel,
     rotation: story.get('controls').rotation,
     scale: story.hasControl('scaleLine'),
     zoom: story.hasControl('zoom'),
+  }
+  if (story.cartes[0]) {
+    options.controls.mapzone.collapsed = story.cartes[0].getControl('mapzone').getCollapsed()
   }
   // Tools
   const tools = story.get('tools') || {};

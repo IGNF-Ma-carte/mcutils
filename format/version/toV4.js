@@ -173,7 +173,8 @@ function storyV4(options) {
     profil: toBool(options.controls.profil),
     printDlg: toBool(options.ifrTools.print),
     mousePosition: toBool(options.controls.coordinates), 
-    legend: options.controls.legende ?  options.controls.legende[0] : toBool(options.controls.legende)
+    legend: options.controls.legende ?  options.controls.legende[0] : toBool(options.controls.legende),
+    mapzone: options.controls.mapzone || {},
   };
   if (options.bulle) options.bulle.type = (options.bulle.type || 'default').replace('mainPopup', '').trim();
   options.popup = {

@@ -980,19 +980,23 @@ StoryMap.prototype.setControls = function(controls) {
   if (!controls) controls = storyControls;
   for (let c in controls) {
     storyControls[c] = controls[c];
-    if (this.cartes[0]) this.cartes[0].showControl(c, controls[c]);
-    if (this.cartes[1]) this.cartes[1].showControl(c, controls[c]);
+    if (c==='mapzone') {
+      if (this.cartes[0]) this.cartes[0].setMapZone(controls[c].zones, controls[c].collapsed);
+    } else {
+      if (this.cartes[0]) this.cartes[0].showControl(c, controls[c]);
+      if (this.cartes[1]) this.cartes[1].showControl(c, controls[c]);
+    }
   }
   this.changed('control');
 };
 
 /** Set control a control on the map
  * @param {string} controlName
- * @param {boolean|Object} enable
+ * @param {boolean|Object} [options=false] enable/disabled or control options
  */
-StoryMap.prototype.setControl = function(controlName, enable) {
+StoryMap.prototype.setControl = function(controlName, options) {
   const opt = {};
-  opt[controlName] = enable;
+  opt[controlName] = options;
   if (this.get('controls')[controlName] !== opt[controlName]) {
     this.setControls(opt);
   }

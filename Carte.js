@@ -435,8 +435,6 @@ Carte.prototype.setMapZone = function(zone, collapsed) {
   // disable
   if (!zone) this.getControl('mapzone').element.classList.add('hidden')
   else this.getControl('mapzone').element.classList.remove('hidden');
-  const vis = this.getControl('mapzone').getCollapsed();
-  // this.getControl('mapzone').setCollapsed(false);
 
   // Add zone
   switch(zone) {
@@ -461,13 +459,17 @@ Carte.prototype.setMapZone = function(zone, collapsed) {
       break;
     }
     default: {
+      if (Array.isArray(zone)) {
+        zone.forEach(z => this.getControl('mapzone').addZone(z))
+      } else {
+        this.getControl('mapzone').element.classList.add('hidden');
+      }
       break;
     }
   }
+  // Force collapsed
   if (collapsed !== undefined) {
     this.getControl('mapzone').setCollapsed(collapsed);
-  } else {
-    // this.getControl('mapzone').setCollapsed(vis);
   }
 }
 
