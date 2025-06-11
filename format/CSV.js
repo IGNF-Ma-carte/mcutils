@@ -57,7 +57,7 @@ const wktFormat = new ol_format_WKT()
  */
 function getGeom(c, wkfField, lonField, latField) {
   if (lonField && latField) {
-    return new Point([c[lonField], c[latField]]);
+    return new Point([parseFloat(c[lonField]), parseFloat(c[latField])]);
   }
   if (!c[wkfField]) return false;
   return wktFormat.readGeometry(c[wkfField])
