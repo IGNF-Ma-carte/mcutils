@@ -336,6 +336,15 @@ MacarteAPI.prototype.getMe =  function() {
   return this._user;
 };
 
+/** Delete user
+ * @param {function} callback
+ */
+MacarteAPI.prototype.deleteMe = function (callback) {
+  this._send('DELETE', _apiURL + 'me', {}, (r) => {
+    callback(r)
+  }, true);
+};
+
 /** Get user premium 
  * @param {string} edugeo or default
  */
