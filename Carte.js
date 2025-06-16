@@ -398,6 +398,12 @@ class Carte extends ol_Object {
     this.showControl('toolbar', false);
     // MapZone
     this.setMapZone();
+    this._controls.mapzone.on('change:collapse', (e) => {
+      if (!e.collapsed) this._controls.legend.collapse(true)
+    })
+    this._controls.legend.on('change:collapse', (e) => {
+      if (!e.collapsed) this._controls.mapzone.setCollapsed(true)
+    })
     // Popup
     this.popup = new ol_Overlay_PopupMultiple({ closeBox: true, minibar: true, select: this.getSelect()});
     // this.popup = new Popup({ closeBox: true, minibar: true });

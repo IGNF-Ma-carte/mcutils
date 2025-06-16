@@ -64,7 +64,7 @@ const rules = {
   '[data-role="storymap"] .title > img': {
     'color': 'BGCOLOR' 
   },
-  '[data-role="storymap"] .map button' : {
+  '[data-role="storymap"] .map button, [data-role="storymap"] .map .ol-legend button' : {
     'color': 'COLOR',
     'background-color': 'BGCOLOR_08' 
   },

@@ -594,6 +594,10 @@ button.popup-next:before {
 [data-role="storymap"][data-model="diapo"] .ol-legend {
   bottom: 5.5em;
 }
+[data-role="storymap"][data-model="photo"] .ol-mapzone,
+[data-role="storymap"][data-model="diapo"] .ol-mapzone {
+  bottom: 7.5em;
+}
 [data-role="storymap"][data-model="photo"] .ol-permalink,
 [data-role="storymap"][data-model="diapo"] .ol-permalink {
   bottom: 6.5em;

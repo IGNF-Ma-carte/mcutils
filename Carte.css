@@ -78,6 +78,7 @@ h1, h2, h3, h4 {
   padding-left: 2em;
   max-width: calc(100% - 1em);
   line-height: 0;
+  z-index: 2;
 }
 .ol-viewport.ol-ready .ol-mapzone p {
   line-height: 1.2em;
@@ -115,6 +116,29 @@ h1, h2, h3, h4 {
 }
 .ol-viewport .ol-mapzone.ol-collapsed button {
   position: unset;
+}
+
+/* Legend */
+.ol-control.ol-legend button.ol-closebox:before,
+.ol-control.ol-legend button.ol-closebox:hover:before,
+.ol-control.ol-legend > button:first-child:before {
+  content: '\ea85';
+  font-family: font-gis;
+  color: inherit;
+  font-size: 1em;
+  font-weight: normal;
+}
+.ol-viewport.ol-ready .ol-control.ol-legend {
+  padding-left: 2em;
+}
+.ol-viewport.ol-ready .ol-control.ol-legend.ol-collapsed {
+  padding-left: 2px;
+}
+.ol-control.ol-legend button.ol-closebox {
+  position: absolute;
+  left: 2px;
+  top: unset;
+  bottom: 2px;
 }
 
 /* Target */
