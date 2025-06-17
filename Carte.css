@@ -79,6 +79,11 @@ h1, h2, h3, h4 {
   max-width: calc(100% - 1em);
   line-height: 0;
   z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+}
+.ol-viewport.ol-ready .ol-mapzone > div {
+  flex: 1 0 5em;
 }
 .ol-viewport.ol-ready .ol-mapzone p {
   line-height: 1.2em;
