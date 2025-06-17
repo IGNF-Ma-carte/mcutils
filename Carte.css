@@ -131,6 +131,10 @@ h1, h2, h3, h4 {
 .ol-viewport.ol-ready .ol-control.ol-legend {
   padding-left: 2em;
 }
+.ol-viewport.ol-ready .ol-control.ol-legend.ol-empty {
+  padding-left: 2px;
+}
+
 .ol-viewport.ol-ready .ol-control.ol-legend.ol-collapsed {
   padding-left: 2px;
 }
