@@ -124,9 +124,12 @@ h1, h2, h3, h4 {
 }
 
 /* Legend */
-.ol-control.ol-legend button.ol-closebox:before,
-.ol-control.ol-legend button.ol-closebox:hover:before,
-.ol-control.ol-legend > button:first-child:before {
+.ol-control.legendBt {
+  left: 0.5em;
+  bottom: 0.5em;
+  z-index: 2;
+}
+.ol-control.legendBt > button:before {
   content: '\ea85';
   font-family: font-gis;
   color: inherit;
@@ -143,11 +146,8 @@ h1, h2, h3, h4 {
 .ol-viewport.ol-ready .ol-control.ol-legend.ol-collapsed {
   padding-left: 2px;
 }
-.ol-control.ol-legend button.ol-closebox {
-  position: absolute;
-  left: 2px;
-  top: unset;
-  bottom: 2px;
+.ol-control.ol-legend > button {
+  display: none!important;
 }
 
 /* Target */

@@ -59,6 +59,7 @@ import Hover from 'ol-ext/interaction/Hover'
 import CarteFormat from './format/Carte'
 import LegendCtrl from 'ol-ext/control/Legend'
 import Legend from 'ol-ext/legend/Legend'
+import Button from 'ol-ext/control/button'
 
 import { saveAs } from 'file-saver';
 import { jsPDF } from "jspdf";
@@ -330,6 +331,13 @@ class Carte extends ol_Object {
         title: _T('printLabel'),
         saveAs: saveAs,
         jsPDF: jsPDF
+      }),
+      legendBt: new Button({
+        title: 'Légende',
+        className: 'legendBt',
+        handleClick: () => {
+          this._controls.legend.toggle()
+        }
       }),
       // Legend
       legend: new LegendCtrl({
