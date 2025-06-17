@@ -706,6 +706,10 @@ Carte.prototype.showControl = function(name, show) {
         try { this.map.removeControl(c); } catch(e) { /* ok */ }
       }
     }
+    // Legend Button
+    if (name === 'legend') {
+      this.getControl('legendBt').setVisible(show)
+    }
     // Handle mousePosition parameters
     if (name === 'mousePosition' && show) {
       if (show === true) show = { proj:'EPSG:4326', unit: 'dms' };
