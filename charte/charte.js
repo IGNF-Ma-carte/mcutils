@@ -117,8 +117,13 @@ createElement('DIV', {
 // HEADER
 const header = createElement('DIV', {
   'data-role': 'header',
-  parent: document.body
 });
+const topElement = document.body.querySelector('*')
+if (topElement) {
+  topElement.parentNode.insertBefore(header, topElement)
+} else {
+  document.body.appendChild(header)
+}
 
 function toggleMenu() {
   menu.classList.toggle('visible');
@@ -131,6 +136,20 @@ function toggleMenu() {
   menuBurger.setAttribute('aria-expanded', expanded);
   menu.setAttribute('aria-hidden', !expanded)
 }
+
+/* Menu burger */
+const menuBurger = createElement('BUTTON', { 
+  html: '<span>Menu</span>',
+  className: 'menuBar backColored',
+  'aria-expanded': false,
+  'aria-controls': 'menu-panel',
+  'aria-label': 'Menu secondaire',
+  click: () => {
+    toggleMenu();
+    dispatchEvent('header:menu');
+  },
+  parent: header
+});
 
 const menu =  createElement('DIV', { 
   id: 'menu-panel',
@@ -147,18 +166,6 @@ const menuList =  createElement('UL', {
   parent: menu
 });
 
-const menuBurger = createElement('DIV', { 
-  html: '<span>Menu</span>',
-  className: 'menuBar backColored',
-  'aria-expanded': false,
-  'aria-controls': 'menu-panel',
-  click: () => {
-    toggleMenu();
-    dispatchEvent('header:menu');
-  },
-  parent: header
-});
-
 const logoElt = createElement('DIV', {
   className: 'logoIGN',
   click: () => {
@@ -167,9 +174,10 @@ const logoElt = createElement('DIV', {
   parent: header
 });
 
-const titleElt = createElement('H1', {
-  className: 'colored',
+const titleElt = createElement('BUTTON', {
+  className: 'h1 colored',
   title: 'Accueil',
+  'aria-label': 'Accueil',
   click: () => {
     dispatchEvent('header:title')
   },
@@ -192,7 +200,7 @@ createElement('I', {
   parent: megaDiv
 })
 
-createElement('DIV', {
+createElement('BUTTON', {
   className: 'mega hoverColored',
   click: () => {
     dispatchEvent('header:mega');
@@ -202,11 +210,13 @@ createElement('DIV', {
 })
 
 // Handle access
-createElement('DIV', {
+createElement('BUTTON', {
   className: 'access hoverColored',
   click: () => {
     if (document.body.dataset.page === 'site') {
       document.body.dataset.accessDialog = ''
+      console.log('show')
+      document.querySelector('[data-role="access-dialog"]').showModal()
     } else {
       if (document.body.dataset.access) {
         delete document.body.dataset.access;
@@ -330,6 +340,7 @@ createElement('DIV', {
   className: 'help hoverColored',
   html: createElement('A', { 
     title: 'Aide en ligne',
+    'aria-label': 'Aide en ligne',
     href: serviceURL.doc,
     target: '_help'
   }),
@@ -392,13 +403,14 @@ if (document.body.dataset.page === 'site') {
     parent: document.body
   });
   // Access page
-  const accessd = createElement('DIV', {
+  const accessd = createElement('DIALOG', {
     'data-role': 'access-dialog',
     html: _T('accessDialogHTML'),
     parent: document.body
   })
   accessd.querySelector('button.btn-close').addEventListener('click', () => {
     delete document.body.dataset.accessDialog
+    accessd.close()
   })
   accessd.querySelectorAll('input[type="radio"]').forEach(input => {
     input.addEventListener('change', () => {

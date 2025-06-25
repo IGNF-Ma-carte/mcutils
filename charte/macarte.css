@@ -43,10 +43,10 @@
   display: none;
 }
 [data-id="minetest"]{
-  display:none;
+  display:none!important;
 }
 [data-user-role*="EDUGEO"] [data-id="minetest"]{
-  display:block;
+  display:block!important;
 }
 
 #menu-panel [data-id="account"] {

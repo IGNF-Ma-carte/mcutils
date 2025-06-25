@@ -288,16 +288,26 @@ body > [data-role="storymap"] > * {
   display: inline-block;
   vertical-align: middle;
 }
-[data-role="header"] > h1 {
+[data-role="header"] > .h1:focus-visible {
+  outline: 2px solid #333;
+  outline-offset: 2px;
+  box-shadow: unset;
+}
+
+[data-role="header"] > .h1 {
   font-size: 1.2em;
   font-weight: 700;
   text-transform: uppercase;
   margin: 0 .6em;
+  padding: 0;
   cursor: pointer;
   max-width: 14rem;
   overflow: hidden;
+  background-color: transparent;
+  border: 0;
+  font-family: inherit;
 }
-[data-role="header"] > h1:after {
+[data-role="header"] > .h1:after {
   content: "";
   position: absolute;
   height: 7rem;
@@ -306,7 +316,7 @@ body > [data-role="storymap"] > * {
   top: 0;
 }
 @media (max-width: 750px) {
-  [data-role="header"] > h1:after {
+  [data-role="header"] > .h1:after {
     display: none;
   }
 }
@@ -361,6 +371,9 @@ body > [data-role="storymap"] > * {
 [data-role="header"] .menu ul li {
   background-color: currentColor;
 }
+[data-role="header"] .menu ul li a:focus-visible {
+  box-shadow: inset 0 0 0 2px #333;
+}
 [data-role="header"] .menu ul li a:before {
   content: none;
   background-color: transparent;
@@ -405,6 +418,10 @@ body > [data-role="storymap"] > * {
 
 [data-role="header"] .menu > ul > li {
   border-bottom: 1px solid #dde1e6;
+  display: none;
+}
+[data-role="header"] .menu.visible > ul > li {
+  display: list-item;
 }
 [data-role="header"] .menu > ul ul a {
   padding-left: 2em;
@@ -449,7 +466,12 @@ body > [data-role="storymap"] > * {
   height: 5rem; 
   background-color: currentColor;
   cursor: pointer;
+  border:0;
 }
+[data-role="header"] .menuBar:focus-visible {
+  box-shadow: inset 0 0 0 3px #333;
+}
+
 [data-role="header"] .menuBar span {
   position: absolute;
   font-weight: 600;
@@ -522,12 +544,24 @@ body > [data-role="storymap"] > * {
   cursor: pointer;
 }
 
+[data-role="header"] > button {
+  background-color: transparent;
+  border: 0;
+}
+[data-role="header"] > button:focus-visible {
+  box-shadow: inset 0 0 0 2px #333;
+}
+
 [data-role="header"] .help:before {
   content: "\ea11";
 }
 [data-role="header"] .access:before {
   content: "\e900";
 }
+[data-role="header"] .access:focus-visible {
+  box-shadow: inset 0 0 0 2px #333;
+}
+
 [data-role="header"] .help a {
   position: absolute;
   display: block;
@@ -537,6 +571,11 @@ body > [data-role="storymap"] > * {
   left: 0;
   cursor: pointer;
 }
+[data-role="header"] .help a:focus-visible {
+  box-shadow: inset 0 0 0 2px #333;
+}
+
+[data-role="header"] .help a:before,
 [data-role="header"] .help a:after {
   display: none;
 }

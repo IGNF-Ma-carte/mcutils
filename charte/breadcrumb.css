@@ -21,6 +21,10 @@ ul.breadcrumb li:first-child::before {
   content: none;
 }
 
+ul.breadcrumb li a:focus-visible {
+  outline: 2px solid #333;
+  outline-offset: 0.5em;
+}
 ul.breadcrumb li a:before,
 ul.breadcrumb li a:after {
   content: none;

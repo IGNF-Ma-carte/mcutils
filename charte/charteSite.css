@@ -332,14 +332,15 @@
 
 /* Access dialog */
 [data-role="access-dialog"] {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
   background-color: #fff;
-  display: none;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  box-sizing: content-box;
+  /* display: none; */
 }
 [data-access-dialog] [data-role="access-dialog"] {
-  display: block;
+  /* display: block; */
 }
 [data-access-dialog] {
   overflow: hidden;
@@ -372,6 +373,9 @@
   margin: auto;
   padding: 0 3rem;
   box-sizing: border-box;
+}
+[data-role="access-dialog"] .btn-close:focus-visible {
+  outline: 2px solid #333;
 }
 [data-role="access-dialog"] .btn-close {
   border: 0;
