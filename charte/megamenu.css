@@ -1,13 +1,9 @@
 [data-role="mega"] {
   font-family: Fira Sans,Open Sans,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif;
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
   background-color: #fff;
   z-index: 9999;
+  width: 100%;
+  height: 100%;
 }
 
 [data-role="mega"] i {
@@ -47,7 +43,7 @@
 }
 
 [data-mega] [data-role="mega"] {
-  display: block;
+  display: inherit;
 }
 [data-role="mega"] > ul {
   position: absolute;

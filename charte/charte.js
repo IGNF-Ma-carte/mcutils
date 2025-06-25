@@ -184,7 +184,7 @@ const titleElt = createElement('BUTTON', {
   parent: header
 });
 
-const megaDiv = createElement('DIV', { 
+const megaDiv = createElement('DIALOG', { 
   'data-role': 'mega', 
   html:'<ul></ul>', 
   parent: document.body 
@@ -193,18 +193,23 @@ createElement('I', {
   title: 'Fermer le Menu Portails',
   className: 'hoverColored',
   click: () => {
-    delete document.body.dataset.mega;
-    // dispatch a resize event
-    window.dispatchEvent(new Event('resize'));
+    megaDiv.close()
   },
   parent: megaDiv
 })
+megaDiv.addEventListener('close', () => {
+  delete document.body.dataset.mega;
+  window.dispatchEvent(new Event('resize'));
+  console.log('cloese')
+})
+
 
 createElement('BUTTON', {
   className: 'mega hoverColored',
   click: () => {
     dispatchEvent('header:mega');
     document.body.dataset.mega = '';
+    megaDiv.showModal();
   },
   parent: header
 })
@@ -409,8 +414,10 @@ if (document.body.dataset.page === 'site') {
     parent: document.body
   })
   accessd.querySelector('button.btn-close').addEventListener('click', () => {
-    delete document.body.dataset.accessDialog
     accessd.close()
+  })
+  accessd.addEventListener('close', () => {
+    delete document.body.dataset.accessDialog
   })
   accessd.querySelectorAll('input[type="radio"]').forEach(input => {
     input.addEventListener('change', () => {
