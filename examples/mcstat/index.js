@@ -4,7 +4,7 @@ var limit = 100;
 function getUrl(offset) {
   args = [
     'context=atlas',
-    'type=storymap',
+    'type=storymap', // macarte
     'limit=' + limit,
     'offset=' + (offset||0)
   ]
