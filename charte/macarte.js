@@ -230,7 +230,9 @@ charte.addUserMenuItem(ol_ext_element.create('A', {
 }))
 charte.addUserMenuItem(ol_ext_element.create('A', {
   text: 'Changer d\'équipe...',
-  click: () => {
+  href: '#',
+  click: e => {
+    e.stopPropagation();
     changeTeam()
   }
 }))
@@ -525,6 +527,7 @@ function showTeamInfo(force) {
     text: 'Changer d\'équipe',
     click: e => {
       e.preventDefault();
+      e.stopPropagation();
       fm.hide();
       changeTeam();
     },

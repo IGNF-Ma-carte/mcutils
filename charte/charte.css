@@ -689,6 +689,9 @@ body > [data-role="storymap"] > * {
   display: block;
   transition: .5s;
 }
+[data-role="header"] ul.userMenu a:focus-visible {
+  outline: 2px solid #333;
+}
 [data-role="header"] ul.userMenu a:before {
   display: none;
 }

@@ -239,7 +239,7 @@ if (localStorage.getItem('IGN@access')) document.body.dataset.access = 'enforce'
 if (localStorage.getItem('IGN@accessLi')) document.body.dataset.accessLi = 'augmented';
 
 // USER
-const userElement = createElement('DIV', {
+const userElement = createElement('BUTTON', {
   className: 'user',
   'aria-label': 'Déplier le menu utilisateur',
   'aria-expanded': false,
@@ -294,6 +294,7 @@ ol_ext_element.create('DIV', {
 })
 ol_ext_element.create('A', {
   html: 'Me connecter',
+  href: '#',
   parent: userName
 })
 ol_ext_element.create('LI', {
@@ -310,12 +311,16 @@ ol_ext_element.create('LI', {
   parent: userMenu
 })
 ol_ext_element.create('LI', {
-  html: ol_ext_element.create('A', { text: 'Me déconnecter' }),
-  click: () => {
-    if (charte.canLogout()) {
-      dispatchEvent('user:logout', { head: true });
-    }
-  },
+  html: ol_ext_element.create('A', { 
+    text: 'Me déconnecter',
+    href: '#',
+    click: e => {
+      e.stopPropagation()
+      if (charte.canLogout()) {
+        dispatchEvent('user:logout', { head: true });
+      }
+    },
+  }),
   parent: userMenu
 })
 // Hide user menu
