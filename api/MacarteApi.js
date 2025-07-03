@@ -138,6 +138,8 @@ MacarteAPI.prototype.refreshToken =  function(callback) {
   const request = new XMLHttpRequest();
   request.open('POST', _apiURL+'token/refresh');
   request.setRequestHeader ('Content-Type', 'application/json; charset=utf-8');
+  // Test load / error
+  request.ontimeout = 
   request.onerror = 
   request.onload = () => {
     if (request.status === 200) {
