@@ -59,7 +59,7 @@ import Hover from 'ol-ext/interaction/Hover'
 import CarteFormat from './format/Carte'
 import LegendCtrl from 'ol-ext/control/Legend'
 import Legend from 'ol-ext/legend/Legend'
-import Button from 'ol-ext/control/button'
+import Button from 'ol-ext/control/Button'
 
 import { saveAs } from 'file-saver';
 import { jsPDF } from "jspdf";
