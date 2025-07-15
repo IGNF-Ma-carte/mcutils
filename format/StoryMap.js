@@ -208,7 +208,7 @@ StoryMap.prototype.write = function(story) {
     geoloc: story.hasControl('locate'),
     global: false,
     legende: [story.hasControl('legend'), false],
-    mapzone: story.get('controls').mapzone,
+    mapzone: story.get('controls').mapzone || { zones: '' },
     profil: story.hasControl('profil'),
     lswitcher: story.hasControl('layerSwitcher'),
     switcherModel: story.get('controls').switcherModel,
