@@ -341,6 +341,7 @@ VectorStyle.prototype.setMode = function(mode, options) {
           distance: options.clusterDistance || 40,
           source: this.getSource(),
         });
+        clusterSource.setAttributions(this.getSource().getAttributions())
         // Animated layer
         this.layerCluster_ = new ol_layer_AnimatedCluster({
           name: 'cluster',
