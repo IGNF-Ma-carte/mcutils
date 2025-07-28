@@ -332,7 +332,7 @@ function statisticImage(options) {
  */
 function getFeatureColor(feature) {
   let color;
-  const st = feature.getLayer().getStyle()(feature);
+  const st = feature.getStyle() ||feature.getLayer().getStyle()(feature);
 
   if (st.length != 0) {
     switch(feature.getGeometry().getType()) {
