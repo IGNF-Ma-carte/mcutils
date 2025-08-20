@@ -3,6 +3,8 @@ import team from "../api/team";
 let _apiURL = '';
 let _logoutURL = '';
 
+const MAX_FILE_SIZE = 23; // 23 Mo
+
 const MCToken = 'MC@token';
 const MCRefreshToken = 'MC@refreshToken';
 
@@ -446,6 +448,15 @@ MacarteAPI.prototype.postMap = function(carte, data, callback) {
   const blob = new Blob([json], {
     type: 'application/json'
   });
+  // Too large file
+  if (blob.size / 1024 / 1024 > MAX_FILE_SIZE) {
+    callback({
+      error: true,
+      status: 413,
+      msg: 'Content Too Large'
+    })
+    return;
+  }
   formData.append('file', blob);
   formData.append('carte', JSON.stringify(carte));
   this._send('POST', _apiURL + 'maps', formData, resp => {
@@ -470,6 +481,16 @@ MacarteAPI.prototype.updateMapFile =  function(id, data, callback) {
   const blob = new Blob([json], {
     type: 'application/json'
   });
+  // Too large file
+  if (blob.size / 1024 / 1024 > MAX_FILE_SIZE) {
+    callback({
+      error: true,
+      status: 413,
+      msg: 'Content Too Large'
+    })
+    return;
+  }
+  // Send file
   formData.append('file', blob);
   this._send('POST', _apiURL + 'maps/' + id +'/file', formData, callback);
 };
