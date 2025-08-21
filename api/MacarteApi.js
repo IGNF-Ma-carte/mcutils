@@ -1,9 +1,10 @@
 import team from "../api/team";
+import config from "../config/config";
 
 let _apiURL = '';
 let _logoutURL = '';
 
-const MAX_FILE_SIZE = 23; // 23 Mo
+const MAX_FILE_SIZE = config.maxFileSize || 23; // 23 Mo
 
 const MCToken = 'MC@token';
 const MCRefreshToken = 'MC@refreshToken';
