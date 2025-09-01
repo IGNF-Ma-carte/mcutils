@@ -24,7 +24,7 @@ const prepareFilterLayer = function(type, data) {
 
   // LayerId
   const filterDiv = ol_ext_element.create('DIV', { 
-    className: ('mdFilterLayer ' + (atts.className || '') + (atts.border ? ' mdSwitcherBorder': '')).replace(/  /g,' '),
+    className: ('mdFilterLayer ' + (atts.className || '') + (atts.border ? ' mdSwitcherBorder': '')).replace(/ {2}/g,' '),
     parent: container
   });
   filterDiv.dataset.layers = JSON.stringify(atts.layers);
