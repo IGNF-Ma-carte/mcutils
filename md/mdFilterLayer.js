@@ -64,6 +64,9 @@ const mdFilterLayer = function(element, story) {
       // Display condition
       if (layer && layer.getConditionStyle && layer.getConditionStyle()) {
         layer.getConditionStyle().forEach((cond, i) => {
+          // Nothing displayed for this condition
+          if (!cond.symbol) return
+          // Reset condition
           if (elt.dataset.reset) {
             cond.filtered = false;
           }
