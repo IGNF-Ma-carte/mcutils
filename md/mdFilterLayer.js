@@ -79,8 +79,11 @@ const mdFilterLayer = function(element, story) {
                 layer.getSource().changed();
                 linked.forEach(l => {
                   if (l && l.getConditionStyle && l.getConditionStyle() && layer.getConditionStyle()[i]) {
-                    l.getConditionStyle()[i].filtered = cond.filtered;
-                    l.getSource().changed();
+                    const cstyle = l.getConditionStyle()[i];
+                    if (cstyle) {
+                      cstyle.filtered = cond.filtered;
+                      l.getSource().changed();
+                    }
                   }
                 })
               }
