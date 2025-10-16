@@ -449,15 +449,6 @@ MacarteAPI.prototype.postMap = function(carte, data, callback) {
   const blob = new Blob([json], {
     type: 'application/json'
   });
-  // Too large file
-  if (blob.size / 1024 / 1024 > MAX_FILE_SIZE) {
-    callback({
-      error: true,
-      status: 413,
-      msg: 'Content Too Large'
-    })
-    return;
-  }
   formData.append('file', blob);
   formData.append('carte', JSON.stringify(carte));
   this._send('POST', _apiURL + 'maps', formData, resp => {
@@ -470,6 +461,22 @@ MacarteAPI.prototype.postMap = function(carte, data, callback) {
     callback(resp)
   });
 };
+/** Test data size
+ * @param {Object} data 
+ * @returns {boolean|size} true if ok or the data size
+ */
+MacarteAPI.prototype.testMapSize = function(data) {
+  const json = JSON.stringify(data);
+  const blob = new Blob([json], {
+    type: 'application/json'
+  });
+  // Too large file
+  // console.log(blob.size / 1024 / 1024, MAX_FILE_SIZE);
+  if (blob.size / 1024 / 1024 > MAX_FILE_SIZE) {
+    return blob.size / 1020 / 1024;
+  }
+  return true;
+}
 
 /** Post a file media
  * @param {string} id map edit id
@@ -482,15 +489,6 @@ MacarteAPI.prototype.updateMapFile =  function(id, data, callback) {
   const blob = new Blob([json], {
     type: 'application/json'
   });
-  // Too large file
-  if (blob.size / 1024 / 1024 > MAX_FILE_SIZE) {
-    callback({
-      error: true,
-      status: 413,
-      msg: 'Content Too Large'
-    })
-    return;
-  }
   // Send file
   formData.append('file', blob);
   this._send('POST', _apiURL + 'maps/' + id +'/file', formData, callback);
