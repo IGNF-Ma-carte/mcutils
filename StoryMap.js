@@ -737,12 +737,22 @@ StoryMap.prototype.setStep = function(n, anim) {
   // Show step
   const s = this.steps.item(n);
   if (s) {
+    // Map layers
+    this.cartes[0].map.getLayers().forEach((l) => {
+      if (s.layerIds.indexOf(l.get('id')) >= 0) {
+        l.setVisible(true);
+      } else {
+        l.setVisible(false);
+      }
+    })
+
     // content
     let content = s.content;
     if (s.showTitle && s.title) {
       content = '## ' + s.title + '\n' + content;
     }
     this.setInfoVolet(content);
+
     // Delete previous animation
     setTimeout(() => this.cartes[0].map.getView().cancelAnimations());
     // Map position
@@ -771,14 +781,6 @@ StoryMap.prototype.setStep = function(n, anim) {
       })
     }
     */
-    // Map layers
-    this.cartes[0].map.getLayers().forEach((l) => {
-      if (s.layerIds.indexOf(l.get('id')) >= 0) {
-        l.setVisible(true);
-      } else {
-        l.setVisible(false);
-      }
-    })
   }
 
   // Change step
