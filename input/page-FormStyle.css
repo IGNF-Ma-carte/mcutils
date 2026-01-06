@@ -337,6 +337,7 @@
 .ol-ext-dialog.symbolLib .ol-collection-list {
   width: 28em;
   max-width: 100%;
+  padding: 3px;
 }
 
 /* Point forms */
