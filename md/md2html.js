@@ -377,33 +377,36 @@ md2html.doData = function(md, data) {
   // Remove tags
   const hasTag = /HTML\[%(.*)%\]/.test(md);
   
-  for (let i in data) if (data[i]) {
-    // Conditional display
-    md = md.replace(new RegExp("\\(\\(\\?\%"+i+"%([^‡]*)‡",'g'), "$1");
-//		md = md.replace(new RegExp("\\(\\(?\%"+i+"%",'g'), "((?%%");
-    // Result 
-    let param = data[i];
-    // Encode URI
-    if (hasURL && typeof(param) === 'string') {
-      const d = md2html.encodeURI(param);
-      md = md.replace(new RegExp('URL\\[%'+i+'%\\]','g'), d);
-      const dc = md2html.encodeURI(param, true);
-      md = md.replace(new RegExp('URI\\[%'+i+'%\\]','g'), dc);
-    } 
-    if (hasTag && typeof(param) === 'string') {
-      const d = param.replace(/(<([^>]+)>)/ig, '');
-      md = md.replace(new RegExp('HTML\\[%'+i+'%\\]','g'), d);
-    }
-    if (typeof(param) === 'object') {
-      // Objects
-      try {
-        param = JSON.stringify(param)
-      } catch(e) {
-        param = '{}'
+  for (let i in data) {
+     if (data[i] || data[i] === 0) {
+      // Conditional display
+      md = md.replace(new RegExp("\\(\\(\\?\%"+i+"%([^‡]*)‡",'g'), "$1");
+  //		md = md.replace(new RegExp("\\(\\(?\%"+i+"%",'g'), "((?%%");
+      // Result 
+      let param = data[i];
+      // Encode URI
+      if (hasURL && typeof(param) === 'string') {
+        const d = md2html.encodeURI(param);
+        md = md.replace(new RegExp('URL\\[%'+i+'%\\]','g'), d);
+        const dc = md2html.encodeURI(param, true);
+        md = md.replace(new RegExp('URI\\[%'+i+'%\\]','g'), dc);
+      } 
+      if (hasTag && typeof(param) === 'string') {
+        const d = param.replace(/(<([^>]+)>)/ig, '');
+        md = md.replace(new RegExp('HTML\\[%'+i+'%\\]','g'), d);
       }
+      if (typeof(param) === 'object') {
+        // Objects
+        try {
+          param = JSON.stringify(param)
+        } catch(e) {
+          param = '{}'
+        }
+      }
+      md = md.replace(new RegExp('%' + i + '%','g'), this.doSecure(String(param)));
     }
-    md = md.replace(new RegExp('%' + i + '%','g'), this.doSecure(String(param)));
   }
+  
 
   // Display attributs
   const hasAttr = /%ATTRIBUTES%/.test(md);
