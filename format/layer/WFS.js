@@ -1,6 +1,7 @@
 /**	@copy (c) IGN - 2018 
 	@author Jean-Marc VIGLINO jean-marc.viglino@ign.fr
 */
+import { intersects as ol_extent_intersects } from 'ol/extent.js'
 import ol_source_WFS from 'ol-ext/source/TileWFS'
 import LayerFormat from './Layer';
 import VectorStyle from '../../layer/VectorStyle'
@@ -34,6 +35,15 @@ class WFS extends LayerFormat {
     }),
   })
   layer.setMinZoom(options.tileZoom)
+  // Prevent load outside extent
+  const loader = layer.getSource().loader_;
+  const layerExtent = options.extent;
+  layer.getSource().loader_ = function(extent, resolution, projection) {
+    if (layerExtent && ol_extent_intersects(extent, layerExtent)) {
+      loader.call(this, extent, resolution, projection)
+    }
+  }
+
   // Save parameters
   layer.getSource().set('url', options.url)
   layer.getSource().set('version', options.version)
