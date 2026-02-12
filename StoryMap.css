@@ -107,7 +107,7 @@
 }
 [data-role="storymap"] .volet button.foldup {
   position: absolute; 
-  width: 1em; 
+  width: 1.1em; 
   height: 4em;
   top: 50%;
   left: -1em;
@@ -151,7 +151,7 @@
     left: 50%;
     transform: translateX(-50%);
     width: 4em;
-    height: 1em;
+    height: 1.1em;
     border-radius: 5px 5px 0 0;
   }
 }
