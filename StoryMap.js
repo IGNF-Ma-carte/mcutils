@@ -267,6 +267,8 @@ class StoryMap extends ol_Object {
     // Foldup volet
     ol_ext_element.create('BUTTON', {
       className: 'foldup',
+      ariaLabel: 'Afficher/masquer le volet',
+      title: 'Afficher/masquer le volet',
       parent: this.element.volet,
       click: () => {
         this.target.dataset.foldup = this.target.dataset.foldup === 'unfold' ? 'fold' : 'unfold';

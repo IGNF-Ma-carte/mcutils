@@ -103,7 +103,7 @@
   display: block;
   box-sizing: border-box;
   max-width: 50%;
-  transition: width .2s;
+  transition: width .2s, height .2s;
 }
 [data-role="storymap"] .volet button.foldup {
   position: absolute; 
@@ -136,6 +136,24 @@
 }
 [data-role="storymap"][data-foldup="fold"][data-model="etape"] .map {
   width: calc(100% - 4px)!important;
+}
+
+@media (orientation: portrait) and (height >= 300px) and (width <= 1024px) {
+  [data-role="storymap"][data-foldup="fold"].fullscreen .volet {
+    height: 4px;
+  }
+  [data-role="storymap"][data-foldup="fold"][data-volet="right"].fullscreen .map, 
+  [data-role="storymap"][data-foldup="fold"][data-volet="left"].fullscreen .map {
+    bottom: 4px;
+  }
+  [data-role="storymap"][data-foldup][data-model="etape"] .volet button.foldup {
+    top: -1em;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4em;
+    height: 1em;
+    border-radius: 5px 5px 0 0;
+  }
 }
 
 /* Next / prev arrows for volet (multi selection) */
