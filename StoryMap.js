@@ -264,6 +264,14 @@ class StoryMap extends ol_Object {
       className: 'header',
       parent: this.element.tabs
     });
+    // Foldup volet
+    ol_ext_element.create('BUTTON', {
+      className: 'foldup',
+      parent: this.element.volet,
+      click: () => {
+        this.target.dataset.foldup = this.target.dataset.foldup === 'unfold' ? 'fold' : 'unfold';
+      }
+    });
     // Volet content
     this.element.step = ol_ext_element.create('DIV', {
       className: 'steps',
@@ -421,6 +429,18 @@ StoryMap.prototype.clearInfoVolet = function() {
   if (this.models[this.get('model')].volet) {
     this.element.info.innerHTML = '';
     this.setInfoVolet();
+  }
+}
+
+/** Enable foldup volet
+ * @param {boolean} [b=false] enable foldup 
+ */
+StoryMap.prototype.setFoldup = function(b) {
+  this.set('foldup', b);
+  if (b) {
+    this.target.dataset.foldup = 'unfold';
+  } else {
+    delete this.target.dataset.foldup;
   }
 }
 

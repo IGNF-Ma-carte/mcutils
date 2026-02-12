@@ -132,6 +132,7 @@ StoryMap.prototype.read2 = function(story, options) {
 
   // Etape
   story.set('animStep', options.animStep)
+  story.setFoldup(!!options.foldup);
   const steps = story.getSteps();
   steps.clear();
   if (options.type === 'etape' && story.getCarte()) {
@@ -195,6 +196,7 @@ StoryMap.prototype.write = function(story) {
   options.etapes.anim = !!story.get('animStep');
   if (story.get('model')==='etape') {
     options.noStep = !!story.get('noStep');
+    options.foldup = !!story.get('foldup');
   }
 
   // Bulles
@@ -242,7 +244,7 @@ StoryMap.prototype.write = function(story) {
   if (story.models[story.get('model') || 'standard'].volet) {
     options.volet = {
       position: story.get('voletPosition').replace('left', 'gauche').replace('right', 'droite'),
-      width: story.get('voletWidth')
+      width: story.get('voletWidth'),
     }
   }
   // Theme

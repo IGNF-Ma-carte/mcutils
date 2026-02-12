@@ -103,8 +103,39 @@
   display: block;
   box-sizing: border-box;
   max-width: 50%;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  transition: width .2s;
+}
+[data-role="storymap"] .volet button.foldup {
+  position: absolute; 
+  width: 1em; 
+  height: 4em;
+  top: 50%;
+  left: -1em;
+  transform: translateY(-50%);
+  border: 0;
+  background-color: inherit; 
+  cursor: pointer; 
+  border-radius: 5px 0 0 5px;
+  overflow: hidden;
+  color: currentColor;
+  display: none;
+} 
+[data-role="storymap"][data-foldup][data-model="etape"] .volet button.foldup {
+  display: block;
+}
+[data-role="storymap"] .volet button.foldup:before { 
+  content: "\e916";
+  font-family: font-ign;
+  font-size: 1.5em;
+}
+[data-role="storymap"][data-foldup="fold"][data-model="etape"] .volet {
+  width: 4px;
+}
+[data-role="storymap"][data-foldup="fold"][data-model="etape"] .volet .ol-scroll { 
+  display: none;
+}
+[data-role="storymap"][data-foldup="fold"][data-model="etape"] .map {
+  width: calc(100% - 4px)!important;
 }
 
 /* Next / prev arrows for volet (multi selection) */
