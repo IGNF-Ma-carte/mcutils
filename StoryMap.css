@@ -145,6 +145,7 @@
   [data-role="storymap"][data-foldup="fold"][data-volet="right"].fullscreen .map, 
   [data-role="storymap"][data-foldup="fold"][data-volet="left"].fullscreen .map {
     bottom: 4px;
+    height: calc(100% - 4em - 4px);
   }
   [data-role="storymap"][data-foldup][data-model="etape"] .volet button.foldup {
     top: -1em;
@@ -218,6 +219,7 @@ button.popup-next:before {
   min-width: 50%;
   height: auto;
   background-color: #fff;
+  transition: width 0.3s, height 0.3s;
 }
 [data-role="storymap"][data-nomap] .map {
   display: none;
@@ -718,6 +720,7 @@ button.popup-next:before {
     left: 0;
     right: 0;
     bottom: 40%;
+    height: calc(60% - 4em);
     width: auto!important;
     min-width: unset;
   }
