@@ -145,7 +145,7 @@
   [data-role="storymap"][data-foldup="fold"][data-volet="right"].fullscreen .map, 
   [data-role="storymap"][data-foldup="fold"][data-volet="left"].fullscreen .map {
     bottom: 4px;
-    height: calc(100% - 4em - 4px);
+    height: calc(100% - 5em - 4px);
   }
   [data-role="storymap"][data-foldup][data-model="etape"] .volet button.foldup {
     top: -1em;
@@ -722,7 +722,7 @@ button.popup-next:before {
     left: 0;
     right: 0;
     bottom: 40%;
-    height: calc(60% - 4em);
+    height: calc(60% - 5em);
     width: auto!important;
     min-width: unset;
   }
