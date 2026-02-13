@@ -641,8 +641,8 @@ button.popup-next:before {
   opacity: 0;
 }
 /* Photo model */
-[data-role="storymap"][data-model="photo"] .legendBt ,
-[data-role="storymap"][data-model="diapo"] .legendBt zone,
+[data-role="storymap"][data-model="photo"] .legendBt,
+[data-role="storymap"][data-model="diapo"] .legendBt,
 [data-role="storymap"][data-model="photo"] .ol-legend,
 [data-role="storymap"][data-model="diapo"] .ol-legend {
   bottom: 5.5em;
