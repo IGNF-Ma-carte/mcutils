@@ -39,7 +39,7 @@ function legendConfigurator(symbolLib, legend, options) {
   if (layers.length) {
     const div = ol_ext_element.create('DIV', { className: 'layerLegend', parent: dialog.getContentElement() });
     ol_ext_element.create('LABEL', {
-      text: 'Utliser la légende du calque : ',
+      text: 'Utiliser la légende du calque : ',
       parent: div
     })
     // Select layers
