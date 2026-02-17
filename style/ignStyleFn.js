@@ -118,6 +118,7 @@ function getStyleId(s, clustered, sel) {
 			+s.fillColor+'-'+s.fillPattern+'-'+s.sizePattern+'-'+s.spacingPattern+'-'+s.anglePattern+'-'+s.offsetPattern+'-'+s.scalePattern+'-'+s.fillColorPattern+'-',
     shadow: sel + 'shad:'+s.poointRadius,
     arrow: sel + 'arrow:'+s.strokeWidth+'-'+s.strokeArrow+'-'+s.strokeColor+'-',
+    arrowstart: sel + 'arrowstart:'+s.strokeWidth+'-'+s.strokeArrowStart+'-'+s.strokeColor+'-',
     text: sel + 'text:'+s.pointRadius+'-'+s.textColor+'-'+s.textStyle+'-'+s.textSize+'-'+s.textFont
 			+'-'+s.textOutlineColor+'-'+s.textOutlineWidth
 			+'-'+s.textAlign+'-'+s.textBaseline
@@ -617,15 +618,17 @@ function getStyleShadow(s) {
 
 /** Get Shadow style
  * @param {*} style
+ * @param {boolean} [start=false]
  * @return {ol.style.Style}
  * @private
  */
-function getStyleArrow(s) {
+function getStyleArrow(s, start) {
   var width = s.strokeWidth + 6;
+  const form = start ? s.strokeArrowStart : s.strokeArrow;
   const img = new ol_style_FontSymbol({
-    form: s.strokeArrow,
+    form: form,
     radius: width,
-    offsetY: s.strokeArrow==='triangle' ? -5 : 0,
+    offsetY: form === 'triangle' ? -5 : 0,
     rotation: 0,
     rotateWithView: true,
     fill: new ol_style_Fill({
@@ -636,13 +639,25 @@ function getStyleArrow(s) {
   // BUG: 
   img.declutterMode_ = 'none';
   // arrow style
-  return new ol_style_Style({
-    image: img,
-    geometry: function(f) {
-      // Cluster ?
-      return (f.get('features')) ? new ol_geom_Point(f.get('features')[0].getGeometry().getLastCoordinate()) : new ol_geom_Point(f.getGeometry().getLastCoordinate());
-    }
-  });
+  if (start) {
+    return new ol_style_Style({
+      image: img,
+      geometry: function(f) {
+        // Cluster ?
+        const geom = f.get('features') ? f.get('features')[0].getGeometry() : f.getGeometry();
+        return new ol_geom_Point(geom.getFirstCoordinate());
+      }
+    });
+  } else {
+    return new ol_style_Style({
+      image: img,
+      geometry: function(f) {
+        // Cluster ?
+        const geom = f.get('features') ? f.get('features')[0].getGeometry() : f.getGeometry();
+        return new ol_geom_Point(geom.getLastCoordinate());
+      }
+    });
+  }
 }
 
 /** Get style for a label
@@ -689,12 +704,19 @@ function getStyleLabel(s) {
 /** Set arrow rotation according a feature
  * @param {ol_style_Style} st
  * @param {ol_Feature} f
+ * @param {boolean} [start=false] start / end of line 
  * @private
  */
-function setArrowRotation(st, f) {
+function setArrowRotation(st, f, start) {
   var g = f.getGeometry().getCoordinates();
-  var p1 = g.pop();
-  var p2 = g.pop();
+  var p1, p2;
+  if (start) {
+    p1 = g[0];
+    p2 = g[1];
+  } else {
+    p1 = g.pop();
+    p2 = g.pop();
+  }
   var rot = 0;
     if (p1 && p2) {
     rot = Math.atan2(p2[0] - p1[0], p2[1] - p1[1]);
@@ -893,14 +915,25 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
     }
     st.setZIndex(options.zIndex || 0);
     style.unshift( st );
-  } else if (!clustered && s.strokeArrow && typeGeom == 'LineString') {
-    // Stroke Arrow
-    if (!(st = _cacheStyle[id.arrow])) {
-      st = _cacheStyle[id.arrow] = getStyleArrow(s);
+  } else if (!clustered && typeGeom == 'LineString') {
+    // Stroke Arrow start
+    if (s.strokeArrowStart) {
+      if (!(st = _cacheStyle[id.arrowstart])) {
+        st = _cacheStyle[id.arrowstart] = getStyleArrow(s, true);
+      }
+      setArrowRotation(st, f, true)
+      st.setZIndex(options.zIndex||0);
+      style.push(st);
     }
-    setArrowRotation(st, f)
-    st.setZIndex(options.zIndex||0);
-    style.push(st);
+    // Stroke Arrow end
+    if (s.strokeArrow) {
+      if (!(st = _cacheStyle[id.arrow])) {
+        st = _cacheStyle[id.arrow] = getStyleArrow(s);
+      }
+      setArrowRotation(st, f)
+      st.setZIndex(options.zIndex||0);
+      style.push(st);
+    }
   }
   // Label
   if (label) {
