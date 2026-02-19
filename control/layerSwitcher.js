@@ -15,7 +15,7 @@ function showInfo(layer, map) {
   const content = ol_ext_element.create('DIV', { className: 'md' });
   // Description
   ol_ext_element.create('DIV', {
-    html: md2html(layer.get('desc') || layer.get('description'), layer.getProperties()),
+    html: md2html('## ' + layer.get('title') + '\n' + (layer.get('desc') || layer.get('description') || ''), layer.getProperties()),
     parent: content
   })
   // Copyright
@@ -29,11 +29,12 @@ function showInfo(layer, map) {
   // Show
   dialog.show({
     className: 'layer-info' + (layer.get('exportable') ? ' exportable' : ''),
-    title: md2html(layer.get('title')),
+    // title: md2html(layer.get('title')),
     content: content,
     buttons: { pk: 'ok' }
   })
-  dialog.element.querySelector('h2').prepend(ol_ext_element.create('SPAN', { text : layer.get('id') }))
+  // Add id
+  content.querySelector('h2').prepend(ol_ext_element.create('SPAN', { text : layer.get('id') }))
 
   // Render content
   md2html.renderWidget(content);
@@ -74,6 +75,8 @@ function getLayerSwitcher() {
     selection: false,
     minibar: true
   })
+  layerSwitcher.button.title = 'Afficher les couches';
+  layerSwitcher.button.ariaLabel = 'Afficher les couches';
   // No selection
   layerSwitcher.set('selection', false);
   // Inview layers
