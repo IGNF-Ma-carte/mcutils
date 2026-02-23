@@ -758,6 +758,14 @@ button.popup-next:before {
   [data-role="storymap"].fullscreen .map {
     top: 4em; 
   }
+  [data-role="storymap"][data-volet="right"].fullscreen .map, 
+  [data-role="storymap"][data-volet="left"].fullscreen .map {
+    height: calc(60% - 4em);
+  }
+  [data-role="storymap"][data-foldup="fold"][data-volet="right"].fullscreen .map, 
+  [data-role="storymap"][data-foldup="fold"][data-volet="left"].fullscreen .map {
+      height: calc(100% - 4em - 4px);
+  }
 
   [data-role="storymap"][data-model="photo"] .ol-permalink {
     bottom: 5.5em;
