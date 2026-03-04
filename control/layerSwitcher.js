@@ -152,7 +152,7 @@ function showThemeDialog(layerSwitcher) {
     const li = ol_ext_element.create('LI', {
       class: 'theme',
       html: ol_ext_element.create('H3', { 
-        html: md2html.iconize(th),
+        html: md2html.iconize(th || ':fg-layer-stack-o: Couches'),
         click: () => {
           if (li.dataset.expended !== undefined) {
             delete li.dataset.expended;
