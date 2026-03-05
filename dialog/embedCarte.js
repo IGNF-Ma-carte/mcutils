@@ -105,7 +105,7 @@ function embedCarte(options) {
     inputs.url.value = '<iframe src="' + carteURL + '"'
       + ' width="' + inputs.width.value + inputs.wunit.value +'"'
       + ' height="' + inputs.height.value + inputs.hunit.value +'"'
-      + ' allow="geolocation clipboard-read; clipboard-write"'
+      + ' allow="geolocation;clipboard-read;clipboard-write"'
       + '></iframe>';
     // Update iframe
     if (iframe.src !== carteURL) {
