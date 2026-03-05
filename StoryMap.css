@@ -147,7 +147,7 @@
     bottom: 4px;
     height: calc(100% - 5em - 4px);
   }
-  [data-role="storymap"][data-foldup][data-model="etape"] .volet button.foldup {
+  [data-role="storymap"][data-foldup][data-model="etape"].fullscreen .volet button.foldup {
     top: -1em;
     left: 50%;
     transform: translateX(-50%);
