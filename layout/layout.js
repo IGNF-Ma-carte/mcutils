@@ -53,6 +53,16 @@ const rules = {
     'background-color': 'VOLETCOLOR',
     'border-color': 'VOLETCOLOR'
   },
+  '[data-role="storymap"] .volet .ulPages': {
+    'color': 'VOLETCOLOR',
+    'background-color': 'BGVOLETCOLOR',
+    'border-color': 'VOLETCOLOR'
+  },
+  '[data-role="storymap"] .volet .ulPages li.active': {
+    'color': 'BGVOLETCOLOR',
+    'background-color': 'VOLETCOLOR',
+    'border-color': 'VOLETCOLOR'
+  },
   '[data-role="storymap"] .volet .content .toc li:hover, [data-role="storymap"] .tools > div:hover': {
     'color': 'BGVOLETCOLOR',
     'background-color': 'VOLETCOLOR'  

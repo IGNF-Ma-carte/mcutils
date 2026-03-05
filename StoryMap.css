@@ -386,11 +386,50 @@ button.popup-next:before {
   font-weight: bold;
   margin: 0 -.5em;
 }
-
-[data-role="storymap"][data-model="etape"][data-no-step] .volet .steps {
+[data-role="storymap"][data-no-step="onglet"] .volet .steps .pages {
   display: none;
 }
-[data-role="storymap"][data-model="etape"][data-no-step] .volet .md.content {
+[data-role="storymap"][data-no-step="onglet"] .volet .steps {
+  padding: 0!important;
+}
+[data-role="storymap"] .volet .steps .ulPages {
+  display: none;
+}
+[data-role="storymap"][data-no-step="onglet"] .volet .steps .ulPages {
+  display: block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  margin-left: 0;
+  border-bottom: 1px solid currentColor;
+  height: 100%;
+  white-space: nowrap;
+  box-sizing: border-box;
+  height: 1.6em;
+  overflow: hidden;
+}
+[data-role="storymap"] .volet .steps .ulPages li {
+  display: inline-block;
+  padding: 0 .2em;
+  border: 1px solid currentColor;
+  border-bottom: 0;
+  border-radius: 5px 5px 0 0;
+  margin-right: 3px;
+  margin-top: 1px;
+}
+[data-role="storymap"] .volet .steps .ulPages li a {
+  text-decoration: none;
+  color: currentColor;
+}
+[data-role="storymap"] .volet .steps .ulPages li a:before {
+  display: none;
+}
+
+[data-role="storymap"][data-model="etape"][data-no-step="true"] .volet .steps {
+  display: none;
+}
+[data-role="storymap"][data-model="etape"][data-no-step="true"] .volet .md.content {
   top: 0;
 }
 

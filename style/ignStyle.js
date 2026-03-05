@@ -121,7 +121,7 @@ const ignStyleDef = {
   },
   strokeArrowStart: {
     geom: /LineString/,
-    short: 'sa',
+    short: 'sa2',
     defaultValue: ''
   },
   strokeColor: {

@@ -316,7 +316,7 @@ class StoryMap extends ol_Object {
     // Set step on arrow left/right
     document.addEventListener('keydown', (e) => {
       if (
-        !this.get('noStep') 
+        (!this.get('noStep') || this.get('noStep') === 'true')
         && !this.get('freezeStep') 
         && this.get('model') === 'etape' 
         && !/INPUT|TEXTAREA/.test(e.target.tagName)
@@ -712,9 +712,14 @@ StoryMap.prototype.setStep = function(n, anim) {
   n = n || 0;
   n = Math.max(Math.min(n, this.steps.getLength()-1), 0);
   this.currentStep = n;
-  // Create content
+
+  // Content
+  this.element.step.innerHTML = '';
+
+  // Pages bar
   const div = ol_ext_element.create('FORM', {
-    className: 'pages'
+    className: 'pages',
+    parent: this.element.step
   });
   // Previous
   const prevBt = ol_ext_element.create('BUTTON', {
@@ -753,8 +758,30 @@ StoryMap.prototype.setStep = function(n, anim) {
     parent: div
   });
 
-  this.element.step.innerHTML = '';
-  this.element.step.appendChild(div);
+  // Pages as buttons
+  const ulpages = ol_ext_element.create('UL', {
+    className: 'ulPages',
+    parent: this.element.step
+  });
+  ol_ext_element.create('LI', {
+    className: 'toc',
+    html: ol_ext_element.create('A', { href: '#', html: '<i class="fi-burger fi-fw"/><i>', title: _T('toc'), click: e => e.preventDefault() }),
+    click: () => {
+      if (!this.get('freezeStep')) this.showTOC(n);
+    },
+    parent: ulpages
+  });
+  this.steps.forEach((s, i) => {
+    ol_ext_element.create('LI', {
+      html: ol_ext_element.create('A', { href: '#', text: s.title, click: e => e.preventDefault() }),
+      className: n===i ? 'active' : '',
+      click: () => {
+        if (!this.get('freezeStep')) this.setStep(i, false);
+      },
+      parent: ulpages
+    });
+  });
+
 
   // Show step
   const s = this.steps.item(n);
@@ -1135,11 +1162,7 @@ StoryMap.prototype.setModel = function(model) {
   } else {
     this.target.dataset.volet = 'none';
   }
-  if (this.get('noStep')) {
-    this.target.dataset.noStep = '';
-  } else {
-    delete this.target.dataset.noStep;
-  }
+  this.target.dataset.noStep = String(this.get('noStep') || 'step');
   // Remove old controls / add new
   if (this.cartes[1]) {
     this.cartes[1]._interactions.synchro.setActive(false);

@@ -195,7 +195,7 @@ StoryMap.prototype.write = function(story) {
   options.etapes.sort = Object.keys(options.etapes);
   options.etapes.anim = !!story.get('animStep');
   if (story.get('model')==='etape') {
-    options.noStep = !!story.get('noStep');
+    options.noStep = story.get('noStep');
     options.foldup = !!story.get('foldup');
   }
 
