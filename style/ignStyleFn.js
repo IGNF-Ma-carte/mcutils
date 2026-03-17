@@ -810,7 +810,10 @@ function getStyleFn(options) {
         // Update values from layer for clusters
         clusterType = clusterType;
         if (!clusterType && cluster[0].getLayer()) clusterType = cluster[0].getLayer().get('clusterType');
-        if (!clusterType) return [];
+        if (!clusterType) {
+          clusterType = "normal";
+          clusterDistance = 40;
+        };
         clusterDistance = (clusterDistance ? clusterDistance : cluster[0].getLayer().get('clusterDistance'))
         // Update radius max
         radiusMax = getRadiusMax(clusterDistance)
