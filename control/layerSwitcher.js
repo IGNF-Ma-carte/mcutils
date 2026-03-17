@@ -204,7 +204,7 @@ function showThemeDialog(layerSwitcher) {
     ol_ext_element.create('BUTTON', {
       text: 'tout sélectionner',
       click: () => {
-        seli.parentNode.querySelectorAll('[type="checkbox"]').forEach(i => {
+        seli.parentNode.querySelectorAll('li > label [type="checkbox"]').forEach(i => {
           if (!i.checked) i.click()
         })
       },
@@ -217,7 +217,7 @@ function showThemeDialog(layerSwitcher) {
     ol_ext_element.create('BUTTON', {
       text: 'tout supprimer',
       click: () => {
-        seli.parentNode.querySelectorAll('[type="checkbox"]').forEach(i => {
+        seli.parentNode.querySelectorAll('li > label [type="checkbox"]').forEach(i => {
           if (i.checked) i.click()
         })
       },
@@ -227,8 +227,8 @@ function showThemeDialog(layerSwitcher) {
 
   const updateList = function() {
     list.querySelectorAll('.count').forEach(count => {
-      const c = count.parentNode.querySelectorAll('[type="checkbox"]:checked').length
-      const nb = count.parentNode.querySelectorAll('[type="checkbox"]').length
+      const c = count.parentNode.querySelectorAll('li > label [type="checkbox"]:checked').length
+      const nb = count.parentNode.querySelectorAll('li > label [type="checkbox"]').length
       count.innerText = c + ' / ' + nb;
     })
   }
@@ -240,13 +240,13 @@ function showThemeDialog(layerSwitcher) {
     title: 'Ajouter des données',
     closeBox: false,
     content: content,
-    buttons: ['Terminé'],
-    onButton: () => {
-      layerSwitcher.drawPanel();
-    }
+    buttons: ['Terminé']
   })
   dialog.set('hideOnBack', true);
-  dialog.once('hide', () => { dialog.set('hideOnBack', false) })
+  dialog.once('hide', () => { 
+    layerSwitcher.drawPanel();
+    dialog.set('hideOnBack', false) 
+  })
 }
 
 export default getLayerSwitcher
