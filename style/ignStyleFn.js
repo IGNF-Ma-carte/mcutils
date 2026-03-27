@@ -332,7 +332,11 @@ function statisticImage(options) {
  * @private
  */
 function getFeatureColor(feature) {
-  const id = getStyleId(feature.getIgnStyle(true), false, true).main;
+  // Check if filtered
+  const filtered = getFiltered(feature);
+  if (filtered && !filtered.symbol || filtered.filtered === true) return null;
+  // Get style id for cache
+  const id = getStyleId(feature.getIgnStyle(true), false, true).main + '-' + filtered;
   // Check cache
   if (feature._color && feature._color.id === id) {
     return feature._color.color;
@@ -378,7 +382,7 @@ function getFeatureColor(feature) {
     }
   } else {
     // No style so it will not be rendered
-    return null;
+    color = null;
   }
   // Cache color for the feature
   feature._color = {
@@ -431,42 +435,34 @@ function getStatisticClusterStyle(f, cluster, minmax, optId, clusterColor, clust
 
   const hexKeys = Object.keys(dataColor).sort()
   // Construct the new data and colors + cache key
-  let cacheKey = "";
-  let colors = [];
-  let data = []
+  const colors = [];
+  const data = []
   hexKeys.forEach(key => {
     colors.push(key);
     data.push(dataColor[key])
-    cacheKey += key.toString() + dataColor[key].toString()
   })
 
   // Count number of rendered items
   const size = data.reduce((partialSum, a) => partialSum + a, 0);
-
-  // Construct style id and style
-  const styleid = 'cluster-stat:'+cacheKey+'-'+optId;
-  let style = _cacheStyle[styleid];
-  if (!style) {
-    // empty cluster
-    if (!size) {
-      return [];
-    }
-    // cluster
-    style = _cacheStyle[styleid] = new ol_style_Style({
-      image: statisticImage({ size: size, min: minmax[0], max: minmax[1], colors: colors, data: data, dash: clusterDash }),
-      text: new ol_style_Text({
-        text: size.toString(),
-        scale: 1.3,
-        fill: new ol_style_Fill({
-          color: "black",
-        }),
-        backgroundFill: new ol_style_Fill({
-          color: "rgba(255, 255, 255, 0.5)",
-        }),
-      }),
-    });
-    style.setZIndex(options.zIndex||0);
+  // empty cluster
+  if (!size) {
+    return [];
   }
+  // New style
+  style = new ol_style_Style({
+    image: statisticImage({ size: size, min: minmax[0], max: minmax[1], colors: colors, data: data, dash: clusterDash }),
+    text: new ol_style_Text({
+      text: size.toString(),
+      scale: 1.3,
+      fill: new ol_style_Fill({
+        color: "black",
+      }),
+      backgroundFill: new ol_style_Fill({
+        color: "rgba(255, 255, 255, 0.5)",
+      }),
+    }),
+  });
+  style.setZIndex(options.zIndex || 0);
   return [style];
 }
 
@@ -743,10 +739,48 @@ const matchGeom = {
   Polygon: /polygon/i
 }
 
+/** Get filtered style
+ * @param {ol_Feature} f
+ * @param {boolean} style return style or boolean if filtered
+ * @return {ol_style_Style|boolean}
+ * @private
+ */
+function getFiltered(f, style) {
+  const styles = f.getLayer().getConditionStyle()
+  for (let k=0; k < styles.length; k++) {
+    const st = styles[k];
+    // Good geom type
+    if (!st.symbol || matchGeom[st.symbol.getType()].test(f.getGeometry().getType())) {
+      const cond = st.condition.conditions;
+      var isok = st.condition.all;
+      // Check condition
+      for (let i = 0; i < cond.length; i++) {
+        const c = cond[i];
+        if (c.attr) {
+          if (st.condition.all) {
+            isok = isok && selectBase._checkCondition(f, c, st.condition.useCase);
+          } else {
+            isok = isok || selectBase._checkCondition(f, c, st.condition.useCase);
+          }
+        }
+      }
+    }
+    if (isok) {
+      if (style) {
+        return st;
+      } else {
+        return (!st.symbol || st.filtered === true);
+      }
+    }
+  }
+  return false;
+}
+
 /** Get style for layer condition
  * 
  */
 function getConditionStyle(f, clustered, options, clusterColor) {
+  /*
   const styles = f.getLayer().getConditionStyle()
   for (let k=0; k < styles.length; k++) {
     const st = styles[k];
@@ -770,6 +804,12 @@ function getConditionStyle(f, clustered, options, clusterColor) {
       if (!st.symbol || st.filtered === true) return [];
       return getFeatureStyle(f, clustered, options, st.symbol.getIgnStyle(), clusterColor)
     }
+  }
+  */
+  const filtered = getFiltered(f, true);
+  if (filtered) {
+    if (filtered && !filtered.symbol || filtered.filtered === true) return [];
+    return getFeatureStyle(f, clustered, options, filtered.symbol.getIgnStyle(), clusterColor)
   }
   return getFeatureStyle(f, clustered, options, f.getLayer().getIgnStyle(true), clusterColor)
 }
