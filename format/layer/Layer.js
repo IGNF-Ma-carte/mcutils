@@ -73,6 +73,8 @@ Layer.prototype.readOptions = function(layer, options) {
   if (layer.selectable) {
     layer.selectable(options.selectable);
   }
+  // Reload
+  layer.set('reload', options.reload || 0);
   // Multi select
   if (options.multiSelect) layer.set('multiSelect', options.multiSelect);
   // Popup
@@ -171,6 +173,7 @@ Layer.prototype.writeOptions = function(layer, options) {
   if (layer.selectable) {
     options.selectable = layer.selectable();
   }
+  options.reload = layer.get('reload') || 0;
   // Multi select
   options.multiSelect = layer.get('multiSelect');
   // PopupContent
