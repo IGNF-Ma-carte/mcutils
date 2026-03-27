@@ -332,6 +332,12 @@ function statisticImage(options) {
  * @private
  */
 function getFeatureColor(feature) {
+  const id = getStyleId(feature.getIgnStyle(true), false, true).main;
+  // Check cache
+  if (feature._color && feature._color.id === id) {
+    return feature._color.color;
+  }
+  // Calculate cache
   let color;
   const st = feature.getLayer().getStyle()(feature);
 
@@ -374,6 +380,11 @@ function getFeatureColor(feature) {
     // No style so it will not be rendered
     return null;
   }
+  // Cache color for the feature
+  feature._color = {
+    id: id,
+    color: color
+  };
   return color
 }
 
@@ -885,6 +896,7 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
   // Main style
   var st;
   if (!(st = _cacheStyle[id.main])) {
+    f._color
     var strokeDash = getStrokeDash(s);
     var img;
     if (clustered && typeGeom !== 'Point') {
