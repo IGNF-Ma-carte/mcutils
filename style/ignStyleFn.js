@@ -449,7 +449,7 @@ function getStatisticClusterStyle(f, cluster, minmax, optId, clusterColor, clust
     return [];
   }
   // New style
-  style = new ol_style_Style({
+  const style = new ol_style_Style({
     image: statisticImage({ size: size, min: minmax[0], max: minmax[1], colors: colors, data: data, dash: clusterDash }),
     text: new ol_style_Text({
       text: size.toString(),
@@ -808,7 +808,7 @@ function getConditionStyle(f, clustered, options, clusterColor) {
   */
   const filtered = getFiltered(f, true);
   if (filtered) {
-    if (filtered && !filtered.symbol || filtered.filtered === true) return [];
+    if (!filtered.symbol || filtered.filtered === true) return [];
     return getFeatureStyle(f, clustered, options, filtered.symbol.getIgnStyle(), clusterColor)
   }
   return getFeatureStyle(f, clustered, options, f.getLayer().getIgnStyle(true), clusterColor)
@@ -859,12 +859,11 @@ function getStyleFn(options) {
         f = cluster[0];
       } else {
         // Update values from layer for clusters
-        clusterType = clusterType;
         if (!clusterType && cluster[0].getLayer()) clusterType = cluster[0].getLayer().get('clusterType');
         if (!clusterType) {
           clusterType = "normal";
           clusterDistance = 40;
-        };
+        }
         clusterDistance = (clusterDistance ? clusterDistance : cluster[0].getLayer().get('clusterDistance'))
         // Update radius max
         radiusMax = getRadiusMax(clusterDistance)
