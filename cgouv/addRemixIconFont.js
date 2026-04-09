@@ -1,8 +1,9 @@
 import ol_style_FontSymbol from 'ol-ext/style/FontSymbol.js';
 import font from './remix-icons-font.def.json?url&raw';
 
+let f = font;
 try {
-  font = JSON.parse(font)
+  f = JSON.parse(font)
 } catch (error) {
   console.warn(error);
 }
@@ -15,8 +16,8 @@ try {
 * Font definiton to use with fontsymbols
 */
 ol_style_FontSymbol.addDefs ({
-  'font': font.meta.font,
-  'name': font.meta.name,
-  'copyright': font.meta.copyright,
-  'prefix': font.meta.prefix,
-}, font.icons);
+  'font': f.meta.font,
+  'name': f.meta.name,
+  'copyright': f.meta.copyright,
+  'prefix': f.meta.prefix,
+}, f.icons);
