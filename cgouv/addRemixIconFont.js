@@ -1,5 +1,11 @@
 import ol_style_FontSymbol from 'ol-ext/style/FontSymbol.js';
-import font from './remix-icons-font.def.json?raw';
+import font from './remix-icons-font.def.json?url&raw';
+
+try {
+  font = JSON.parse(font)
+} catch (error) {
+  console.warn(error);
+}
 
 /* Copyright (c) 2014 by Jean-Marc.Viglino [at]ign.fr
 * Dual-licensed under the CeCILL-B Licence (http://www.cecill.info/)
