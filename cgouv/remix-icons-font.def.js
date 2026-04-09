@@ -1,4 +1,4 @@
-{
+export default {
   "meta": {
     "generatedAt": "2026-03-26T10:30:25.252Z",
     "source": "./node_modules/remixicon/fonts/remixicon.css",
