@@ -12,6 +12,20 @@ class CarteFormat extends BaseFormat {
     super();
   }
 
+/** Read a single layer
+ * @param {Object} options layer options (json object)
+ * @param {string} key GPP API key
+ * @return {ol/layer/Layer}
+ */
+  readLayer(options, key) {
+    const layer = super.readLayer(options, key);
+    if (layer && (options.logo || options.thumbnail)) {
+      // Met le logo dans thumbnail pour compatibilité ext-gpf
+      layer.set("thumbnail", options.logo || options.thumbnail);
+    }
+    return layer;
+  }
+
   /** Write method
    * @param {mcutils.Carte} carte
    * @param {boolean} uncompressed if true, the output will not be compressed (for debug purpose)
