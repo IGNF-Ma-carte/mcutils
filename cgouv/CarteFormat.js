@@ -34,6 +34,11 @@ class CarteFormat extends BaseFormat {
   write(carte, uncompressed) {
     const options = super.write(carte, uncompressed);
     options.version = 3.01; // Force version to 3.01 for backward compatibility
+
+    // Options pour la storymap
+    if (carte.get("story")) {
+      options.param.story = Object.assign({}, carte.get("story"));
+    }
     return options;
   }
 
@@ -55,6 +60,12 @@ class CarteFormat extends BaseFormat {
           }
         }
       });
+    }
+
+    // Options pour la storymap
+    if (options.param?.story) {
+      const story = Object.assign({}, options.param?.story);
+      carte.set("story", story);
     }
     return carte;
   }
