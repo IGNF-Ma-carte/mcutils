@@ -478,6 +478,11 @@ button.popup-next:before {
 [data-role="storymap"] .volet .steps .ulPages li a:before {
   display: none;
 }
+[data-role="storymap"] .volet .steps .ulPages li button:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, .5);
+  outline-offset: 2px;
+  z-index: 1;
+}
 
 [data-role="storymap"][data-model="etape"][data-no-step="true"] .volet .steps {
   display: none;
