@@ -119,6 +119,7 @@
   overflow: hidden;
   color: currentColor;
   display: none;
+  z-index: 1;
 } 
 [data-role="storymap"][data-foldup][data-model="etape"] .volet button.foldup {
   display: block;
@@ -127,10 +128,19 @@
   content: "\e916";
   font-family: font-ign;
   font-size: 1.5em;
+  width: 0.25em;
+  overflow: hidden;
+  display: inline-block;
 }
 [data-role="storymap"][data-foldup="fold"][data-model="etape"] .volet {
   width: 4px;
 }
+
+[data-role="storymap"][data-foldup="fold"][data-model="etape"][data-volet="left"] .volet .content {
+  padding: 0;
+  transform: translateX(-0.5em);
+}
+[data-role="storymap"][data-foldup="fold"][data-model="etape"] .volet .steps,
 [data-role="storymap"][data-foldup="fold"][data-model="etape"] .volet .ol-scroll { 
   display: none;
 }
@@ -352,6 +362,12 @@ button.popup-next:before {
   left: 0;
   right: auto;
 }
+[data-role="storymap"][data-volet="left"] .volet button.foldup {
+  left: unset;
+  right: -1em;
+  border-radius: 0 5px 5px 0;
+  padding-left: 0.3em;
+}
 [data-role="storymap"][data-volet="left"] .map {
   right: 0;
   left: auto;
@@ -386,15 +402,18 @@ button.popup-next:before {
   font-weight: bold;
   margin: 0 -.5em;
 }
+[data-role="storymap"][data-no-step="title"] .volet .steps .pages,
 [data-role="storymap"][data-no-step="onglet"] .volet .steps .pages {
   display: none;
 }
+[data-role="storymap"][data-no-step="title"] .volet .steps,
 [data-role="storymap"][data-no-step="onglet"] .volet .steps {
   padding: 0!important;
 }
 [data-role="storymap"] .volet .steps .ulPages {
   display: none;
 }
+[data-role="storymap"][data-no-step="title"] .volet .steps .ulPages,
 [data-role="storymap"][data-no-step="onglet"] .volet .steps .ulPages {
   display: block;
   list-style: none;
@@ -409,6 +428,34 @@ button.popup-next:before {
   height: 1.6em;
   overflow: hidden;
 }
+
+[data-role="storymap"][data-no-step="title"] .volet {
+  top: 3em;
+}
+[data-role="storymap"][data-no-step="title"] .volet .steps {
+  position: absolute;
+  width: 100vw;
+  padding-top: 0.4em;
+  height: auto;
+}
+[data-role="storymap"][data-no-step="title"][data-volet="right"] .volet .steps {
+  left: unset;
+  right: 0;
+}
+[data-role="storymap"][data-no-step="title"][data-volet="right"] .volet .steps ul {
+  text-align: right;
+  direction: rtl;
+}
+[data-role="storymap"][data-no-step="title"][data-volet] .volet .steps ul {
+  padding-top: 0.3em;
+  height: 2em;
+}
+[data-role="storymap"][data-no-step="title"] .title > img {
+  max-height: 3em;
+}
+
+
+
 [data-role="storymap"] .volet .steps .ulPages li {
   display: inline-block;
   padding: 0 .2em;
