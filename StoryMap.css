@@ -159,6 +159,7 @@
   }
   [data-role="storymap"][data-foldup="fold"][data-volet="right"][data-title="hidden"].fullscreen .map, 
   [data-role="storymap"][data-foldup="fold"][data-volet="left"][data-title="hidden"].fullscreen .map {
+    top: 0;
     bottom: 4px;
     height: calc(100% - 4px);
   }
@@ -621,8 +622,8 @@ button.popup-next:before {
 [data-role="storymap"][data-title="hidden"] .map {
   top: 0;
 }
-[data-role="storymap"][data-title="hidden"][data-no-step="title"].fullscreen .map,
-[data-role="storymap"][data-title="hidden"][data-no-step="title"] .map {
+[data-role="storymap"][data-title="hidden"][data-foldup="unfold"][data-no-step="title"].fullscreen .map,
+[data-role="storymap"][data-title="hidden"][data-foldup="unfold"][data-no-step="title"] .map {
   top: 2em;
 }
 [data-role="storymap"][data-title="hidden"].fullscreen .volet,
