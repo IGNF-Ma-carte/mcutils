@@ -465,9 +465,15 @@ button.popup-next:before {
   margin-right: 3px;
   margin-top: 1px;
 }
+[data-role="storymap"] .volet .steps .ulPages li button,
 [data-role="storymap"] .volet .steps .ulPages li a {
   text-decoration: none;
   color: currentColor;
+  border: 0;
+  background-color: unset;
+  font-size: 1em;
+  padding: 0 .1em;
+  cursor: pointer;
 }
 [data-role="storymap"] .volet .steps .ulPages li a:before {
   display: none;
