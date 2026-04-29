@@ -442,9 +442,11 @@ button.popup-next:before {
   left: unset;
   right: 0;
 }
+[data-role="storymap"][data-no-step="title"][data-volet="right"] .volet .steps ul .toc {
+  float: right;
+}
 [data-role="storymap"][data-no-step="title"][data-volet="right"] .volet .steps ul {
   text-align: right;
-  direction: rtl;
 }
 [data-role="storymap"][data-no-step="title"][data-volet] .volet .steps ul {
   padding-top: 0.3em;
@@ -453,8 +455,9 @@ button.popup-next:before {
 [data-role="storymap"][data-no-step="title"] .title > img {
   max-height: 3em;
 }
-
-
+[data-role="storymap"][data-title="hidden"][data-no-step="title"] .map {
+  top: 2em;
+}
 
 [data-role="storymap"] .volet .steps .ulPages li {
   display: inline-block;
