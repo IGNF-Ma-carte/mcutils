@@ -765,19 +765,28 @@ StoryMap.prototype.setStep = function(n, anim) {
   });
   ol_ext_element.create('LI', {
     className: 'toc',
-    html: ol_ext_element.create('A', { href: '#', html: '<i class="fi-burger fi-fw"/><i>', title: _T('toc'), click: e => e.preventDefault() }),
-    click: () => {
-      if (!this.get('freezeStep')) this.showTOC(n);
-    },
+    html: ol_ext_element.create('BUTTON', { 
+      html: '<i class="fi-burger fi-fw"/><i>', 
+      type: 'button',
+      title: _T('toc'), 
+      'aria-label': _T('toc'),
+      click: () => {
+        if (!this.get('freezeStep')) this.showTOC(n);
+      },
+    }),
     parent: ulpages
   });
   this.steps.forEach((s, i) => {
     ol_ext_element.create('LI', {
-      html: ol_ext_element.create('A', { href: '#', text: s.title, click: e => e.preventDefault() }),
+      html: ol_ext_element.create('BUTTON', { 
+        'aria-label': 'Etape : ' + s.title,
+        type: 'button',
+        text: s.title, 
+        click: () => {
+          if (!this.get('freezeStep')) this.setStep(i, false);
+        },
+      }),
       className: n===i ? 'active' : '',
-      click: () => {
-        if (!this.get('freezeStep')) this.setStep(i, false);
-      },
       parent: ulpages
     });
   });

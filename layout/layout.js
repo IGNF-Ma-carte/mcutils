@@ -58,7 +58,7 @@ const rules = {
     'background-color': 'BGVOLETCOLOR',
     'border-color': 'VOLETCOLOR'
   },
-  '[data-role="storymap"] .volet .ulPages li.active': {
+  '[data-role="storymap"] .volet .ulPages li.active, [data-role="storymap"] .volet .ulPages li:hover': {
     'color': 'BGVOLETCOLOR',
     'background-color': 'VOLETCOLOR',
     'border-color': 'VOLETCOLOR'
