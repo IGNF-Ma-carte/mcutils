@@ -25,6 +25,7 @@ class WFS extends LayerFormat {
  */
  WFS.prototype.read = function (options) {
   if (options.type !== 'WFS') return null;
+  console.log('WFS read', options)
   const layer = new VectorStyle({
     source: new ol_source_WFS({
       url: options.url,
@@ -39,7 +40,7 @@ class WFS extends LayerFormat {
   const loader = layer.getSource().loader_;
   const layerExtent = options.extent;
   layer.getSource().loader_ = function(extent, resolution, projection) {
-    if (layerExtent && ol_extent_intersects(extent, layerExtent)) {
+    if (!layerExtent || ol_extent_intersects(extent, layerExtent)) {
       loader.call(this, extent, resolution, projection)
     }
   }
