@@ -93,6 +93,9 @@
 [data-role="storymap"][data-model^="compare"][data-compare="dub1"] .map1 .ol-cgu {
     display: block;
 }
+[data-role="storymap"][data-model^="compare"] .map {
+  transition: none;
+}
 
 [data-role="storymap"] .volet {
   position: absolute;
