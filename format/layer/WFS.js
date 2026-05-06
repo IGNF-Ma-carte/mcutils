@@ -25,7 +25,6 @@ class WFS extends LayerFormat {
  */
  WFS.prototype.read = function (options) {
   if (options.type !== 'WFS') return null;
-  console.log('WFS read', options)
   const layer = new VectorStyle({
     source: new ol_source_WFS({
       url: options.url,
