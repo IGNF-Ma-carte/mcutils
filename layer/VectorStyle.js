@@ -91,28 +91,7 @@ import { getStyleFn, defaultIgnStyle, clearCache, getIgnStyle, ordering } from '
     this.setMode('vector');
 
     // Handle membership
-    this.getSource().on('addfeature', (function(e) {
-      const f = e.feature;
-      // Feature layer
-      f._layer = this;
-      // Layer attributes
-      const layerAttr = Object.values(this.getAttributes())
-      if (layerAttr.length) {
-        const attr = f.getProperties();
-        layerAttr.forEach(a => {
-          if (!Object.prototype.hasOwnProperty.call(attr, a.name)) {
-            f.set(a.name, a.default)
-          }
-        })
-      }
-      // Others?
-      if (options.onaddfeature) {
-        options.onaddfeature(e);
-      }
-    }).bind(this));
-    this.getSource().on('removefeature', (function(e) {
-      delete e.feature._layer;
-    }).bind(this));
+    this.setSource(null, options);
 
     // Clear the cache and force redraw when fonts are loaded
     loadFonts(() => {
@@ -128,6 +107,48 @@ import { getStyleFn, defaultIgnStyle, clearCache, getIgnStyle, ordering } from '
         this.activateCluster(true);
       }
     })
+  }
+}
+
+/** Set vector source
+ * @param {ol_source_Vector} [source] source to set, if not keep the existing one
+ * @param {*} options
+ *  @param {function} options.onaddfeature callback on add feature event, with event as parameter
+ */
+VectorStyle.prototype.setSource = function(source, options) {
+  const oldSource = this.getSource();
+  // Change source
+  if (source) {
+    this.layerVector_.setSource(source);
+    this.layerImage_.setSource(source);
+    if (this.layerCluster_) {
+      this.layerCluster_.setSource(source);
+    }
+  }
+  // Handle features (if not done)
+  if (oldSource !== source) {
+    this.getSource().on('addfeature', (function(e) {
+      const f = e.feature;
+      // Feature layer
+      f._layer = this;
+      // Layer attributes
+      const layerAttr = Object.values(this.getAttributes())
+      if (layerAttr.length) {
+        const attr = f.getProperties();
+        layerAttr.forEach(a => {
+          if (!Object.prototype.hasOwnProperty.call(attr, a.name)) {
+            f.set(a.name, a.default)
+          }
+        })
+      }
+      // Others?
+      if (options && options.onaddfeature) {
+        options.onaddfeature(e);
+      }
+    }).bind(this));
+    this.getSource().on('removefeature', (function(e) {
+      delete e.feature._layer;
+    }).bind(this));
   }
 }
 

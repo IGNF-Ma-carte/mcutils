@@ -39,7 +39,7 @@ class WFS extends LayerFormat {
   const loader = layer.getSource().loader_;
   const layerExtent = options.extent;
   layer.getSource().loader_ = function(extent, resolution, projection) {
-    if (layerExtent && ol_extent_intersects(extent, layerExtent)) {
+    if (!layerExtent || ol_extent_intersects(extent, layerExtent)) {
       loader.call(this, extent, resolution, projection)
     }
   }
