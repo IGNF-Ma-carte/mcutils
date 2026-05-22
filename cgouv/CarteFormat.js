@@ -23,6 +23,10 @@ class CarteFormat extends BaseFormat {
       // Met le logo dans thumbnail pour compatibilité ext-gpf
       layer.set("thumbnail", options.logo || options.thumbnail);
     }
+    if (layer && (options.description)) {
+      // Met le logo dans thumbnail pour compatibilité ext-gpf
+      layer.set("description", options.description);
+    }
     return layer;
   }
 
