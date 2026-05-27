@@ -1579,24 +1579,27 @@ StoryMap.prototype.setCarte = function(carte, n) {
           carte.popupFeatures(features, e.mapBrowserEvent ? e.mapBrowserEvent.coordinate : carte.map.getView().getCenter());
         }
       } else {
-        if (firstFeature) firstFeature._indicator = this.get('indicator');
-        let md;
-        if (features.length) {
-          // Multi features
-          md = carte.getFeaturesPopupContent(features, true)
-        } else if (firstFeature) {
-          // Only one
-          md = firstFeature.getPopupContent(true)
-        } else {
-          // No features
-          md = this.get('description')
-        }
-        // Display feature info or description
-        this.setInfoVolet( 
-          md,
-          // Second select (differentiel model)
-          e.target === carte._interactions.select2
-        );
+        // Wait selection ready
+        setTimeout(() => {
+          if (firstFeature) firstFeature._indicator = this.get('indicator');
+          let md;
+          if (features.length) {
+            // Multi features
+            md = carte.getFeaturesPopupContent(features, true)
+          } else if (firstFeature) {
+            // Only one
+            md = firstFeature.getPopupContent(true)
+          } else {
+            // No features
+            md = this.get('description')
+          }
+          // Display feature info or description
+          this.setInfoVolet( 
+            md,
+            // Second select (differentiel model)
+            e.target === carte._interactions.select2
+          );
+        });
       }
     }
     carte.getSelect().on('select', onselect);
