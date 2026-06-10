@@ -124,6 +124,11 @@ const ignStyleDef = {
     short: 'sas',
     defaultValue: ''
   },
+  strokeArrowStart: {
+    geom: /LineString/,
+    short: 'sa2',
+    defaultValue: ''
+  },
   strokeColor: {
     geom: /LineString|Polygon/,
     short: 'sc',

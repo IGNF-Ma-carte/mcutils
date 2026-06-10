@@ -136,3 +136,7 @@
   margin-top: .5em;
   padding-top: .5em;
 }
+
+.ol-ext-dialog.legendConfig .layerLegend select {
+  max-width: 80%;
+}

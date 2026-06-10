@@ -239,8 +239,31 @@
 }
 .ol-ext-dialog.mdedit-layer img[src=""] {
   height: 0;
-  opacity: 0;
+  opacity: 1;
 }
+.ol-ext-dialog.mdedit-layer a:has(img[src=""]):before {
+  content: "";
+  display: block;
+  width: 3em;
+  height: 1.5em;
+  text-align: center;
+  color: #ccc;
+  opacity: 0.5;
+  margin-left: 1em; 
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 8px,
+    #ccc 8px,
+    #ccc 16px
+  );
+  background-color: transparent;
+  border: 1px solid #aaa;
+}
+
 
 .ol-ext-dialog.mdedit-attr ul {
   margin: 0;

@@ -207,3 +207,7 @@
   font-size: 1.2em;
   margin-bottom: .5em
 }
+
+.ol-ext-dialog.layer-inview .mdFilterLayer {
+  display: none;
+}

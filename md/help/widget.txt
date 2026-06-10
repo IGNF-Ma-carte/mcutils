@@ -19,7 +19,6 @@ layer: 1
 className: maClasse
 background: rgba(255,255,255,0.5)
 border: 1
-reset: 1
 &#96;``
 ```
 [----]

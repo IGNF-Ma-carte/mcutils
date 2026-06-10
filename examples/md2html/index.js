@@ -85,6 +85,7 @@ const data = {
   labels: 'toto; titi; tutu',
   tab_1: '10; 15; 8',
   tab_2: '12; 9; 13',
+  valeur_0: 0,
   valeur_1: 2,
   valeur_2: 4,
   valeur_3: 3,

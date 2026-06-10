@@ -119,6 +119,7 @@ function getStyleId(s, clustered, sel) {
     shadow: sel + 'shad:'+s.poointRadius,
     arrow: sel + 'arrow:'+s.strokeWidth+'-'+s.strokeArrow+'-'+s.strokeColor+'-',
     arrowstart: sel + 'arrowstart:'+s.strokeWidth+'-'+s.strokeArrowStart+'-'+s.strokeColor+'-',
+    arrowstart: sel + 'arrowstart:'+s.strokeWidth+'-'+s.strokeArrowStart+'-'+s.strokeColor+'-',
     text: sel + 'text:'+s.pointRadius+'-'+s.textColor+'-'+s.textStyle+'-'+s.textSize+'-'+s.textFont
 			+'-'+s.textOutlineColor+'-'+s.textOutlineWidth
 			+'-'+s.textAlign+'-'+s.textBaseline
@@ -332,6 +333,16 @@ function statisticImage(options) {
  * @private
  */
 function getFeatureColor(feature) {
+  // Check if filtered
+  const filtered = getFiltered(feature);
+  if (filtered && !filtered.symbol || filtered.filtered === true) return null;
+  // Get style id for cache
+  const id = getStyleId(feature.getIgnStyle(true), false, true).main + '-' + filtered;
+  // Check cache
+  if (feature._color && feature._color.id === id) {
+    return feature._color.color;
+  }
+  // Calculate cache
   let color;
   const st = feature.getLayer().getStyle()(feature);
 
@@ -372,8 +383,13 @@ function getFeatureColor(feature) {
     }
   } else {
     // No style so it will not be rendered
-    return null;
+    color = null;
   }
+  // Cache color for the feature
+  feature._color = {
+    id: id,
+    color: color
+  };
   return color
 }
 
@@ -420,42 +436,34 @@ function getStatisticClusterStyle(f, cluster, minmax, optId, clusterColor, clust
 
   const hexKeys = Object.keys(dataColor).sort()
   // Construct the new data and colors + cache key
-  let cacheKey = "";
-  let colors = [];
-  let data = []
+  const colors = [];
+  const data = []
   hexKeys.forEach(key => {
     colors.push(key);
     data.push(dataColor[key])
-    cacheKey += key.toString() + dataColor[key].toString()
   })
 
   // Count number of rendered items
   const size = data.reduce((partialSum, a) => partialSum + a, 0);
-
-  // Construct style id and style
-  const styleid = 'cluster-stat:'+cacheKey+'-'+optId;
-  let style = _cacheStyle[styleid];
-  if (!style) {
-    // empty cluster
-    if (!size) {
-      return [];
-    }
-    // cluster
-    style = _cacheStyle[styleid] = new ol_style_Style({
-      image: statisticImage({ size: size, min: minmax[0], max: minmax[1], colors: colors, data: data, dash: clusterDash }),
-      text: new ol_style_Text({
-        text: size.toString(),
-        scale: 1.3,
-        fill: new ol_style_Fill({
-          color: "black",
-        }),
-        backgroundFill: new ol_style_Fill({
-          color: "rgba(255, 255, 255, 0.5)",
-        }),
-      }),
-    });
-    style.setZIndex(options.zIndex||0);
+  // empty cluster
+  if (!size) {
+    return [];
   }
+  // New style
+  const style = new ol_style_Style({
+    image: statisticImage({ size: size, min: minmax[0], max: minmax[1], colors: colors, data: data, dash: clusterDash }),
+    text: new ol_style_Text({
+      text: size.toString(),
+      scale: 1.3,
+      fill: new ol_style_Fill({
+        color: "black",
+      }),
+      backgroundFill: new ol_style_Fill({
+        color: "rgba(255, 255, 255, 0.5)",
+      }),
+    }),
+  });
+  style.setZIndex(options.zIndex || 0);
   return [style];
 }
 
@@ -618,6 +626,7 @@ function getStyleShadow(s) {
 
 /** Get Shadow style
  * @param {*} style
+ * @param {boolean} [start=false]
  * @return {ol.style.Style}
  * @private
  */
@@ -642,7 +651,7 @@ function getStyleArrow(s, start) {
     return new ol_style_Style({
       image: img,
       geometry: function(f) {
-        // Geom / clusters
+        // Cluster ?
         const geom = f.get('features') ? f.get('features')[0].getGeometry() : f.getGeometry();
         return new ol_geom_Point(geom.getFirstCoordinate());
       }
@@ -651,7 +660,7 @@ function getStyleArrow(s, start) {
     return new ol_style_Style({
       image: img,
       geometry: function(f) {
-        // Geom / clusters
+        // Cluster ?
         const geom = f.get('features') ? f.get('features')[0].getGeometry() : f.getGeometry();
         return new ol_geom_Point(geom.getLastCoordinate());
       }
@@ -703,6 +712,7 @@ function getStyleLabel(s) {
 /** Set arrow rotation according a feature
  * @param {ol_style_Style} st
  * @param {ol_Feature} f
+ * @param {boolean} [start=false] start / end of line 
  * @private
  */
 function setArrowRotation(st, f, start) {
@@ -730,10 +740,48 @@ const matchGeom = {
   Polygon: /polygon/i
 }
 
+/** Get filtered style
+ * @param {ol_Feature} f
+ * @param {boolean} style return style or boolean if filtered
+ * @return {ol_style_Style|boolean}
+ * @private
+ */
+function getFiltered(f, style) {
+  const styles = f.getLayer().getConditionStyle()
+  for (let k=0; k < styles.length; k++) {
+    const st = styles[k];
+    // Good geom type
+    if (!st.symbol || matchGeom[st.symbol.getType()].test(f.getGeometry().getType())) {
+      const cond = st.condition.conditions;
+      var isok = st.condition.all;
+      // Check condition
+      for (let i = 0; i < cond.length; i++) {
+        const c = cond[i];
+        if (c.attr) {
+          if (st.condition.all) {
+            isok = isok && selectBase._checkCondition(f, c, st.condition.useCase);
+          } else {
+            isok = isok || selectBase._checkCondition(f, c, st.condition.useCase);
+          }
+        }
+      }
+    }
+    if (isok) {
+      if (style) {
+        return st;
+      } else {
+        return (!st.symbol || st.filtered === true);
+      }
+    }
+  }
+  return false;
+}
+
 /** Get style for layer condition
  * 
  */
 function getConditionStyle(f, clustered, options, clusterColor) {
+  /*
   const styles = f.getLayer().getConditionStyle()
   for (let k=0; k < styles.length; k++) {
     const st = styles[k];
@@ -757,6 +805,12 @@ function getConditionStyle(f, clustered, options, clusterColor) {
       if (!st.symbol || st.filtered === true) return [];
       return getFeatureStyle(f, clustered, options, st.symbol.getIgnStyle(), clusterColor)
     }
+  }
+  */
+  const filtered = getFiltered(f, true);
+  if (filtered) {
+    if (!filtered.symbol || filtered.filtered === true) return [];
+    return getFeatureStyle(f, clustered, options, filtered.symbol.getIgnStyle(), clusterColor)
   }
   return getFeatureStyle(f, clustered, options, f.getLayer().getIgnStyle(true), clusterColor)
 }
@@ -806,9 +860,11 @@ function getStyleFn(options) {
         f = cluster[0];
       } else {
         // Update values from layer for clusters
-        clusterType = clusterType;
         if (!clusterType && cluster[0].getLayer()) clusterType = cluster[0].getLayer().get('clusterType');
-        if (!clusterType) return [];
+        if (!clusterType) {
+          clusterType = "normal";
+          clusterDistance = 40;
+        }
         clusterDistance = (clusterDistance ? clusterDistance : cluster[0].getLayer().get('clusterDistance'))
         // Update radius max
         radiusMax = getRadiusMax(clusterDistance)
@@ -880,6 +936,7 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
   // Main style
   var st;
   if (!(st = _cacheStyle[id.main])) {
+    f._color
     var strokeDash = getStrokeDash(s);
     var img;
     if (clustered && typeGeom !== 'Point') {
@@ -913,7 +970,7 @@ function getFeatureStyle(f, clustered, options, ignStyle, clusterColor) {
     }
     st.setZIndex(options.zIndex || 0);
     style.unshift( st );
-  } else if (!clustered && (s.strokeArrow || s.strokeArrowStart) && typeGeom == 'LineString') {
+  } else if (!clustered && typeGeom == 'LineString') {
     // Stroke Arrow start
     if (s.strokeArrowStart) {
       if (!(st = _cacheStyle[id.arrowstart])) {

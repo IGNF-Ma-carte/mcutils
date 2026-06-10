@@ -34,7 +34,7 @@ const prepareLayerSwitcher = function(type, data) {
         + (atts.type==='button' ? ' mdSwitcherButton': '') 
         + (atts.type==='popup' ? ' ol-noscroll': '') 
         + ' ' + (align || '') 
-        + (atts.border ? ' mdSwitcherBorder' : '')).replace(/  /g,' '),
+        + (atts.border ? ' mdSwitcherBorder' : '')).replace(/ {2}/g,' '),
     parent: container
   });
   if (atts.background && atts.type !== 'button') switcher.style = 'background: ' + atts.background + ';';

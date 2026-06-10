@@ -8,7 +8,7 @@
 function jenks(data, n_classes) {
   if (n_classes >= data.length) {
     n_classes = data.length - 2;
-  };
+  }
   if (n_classes < 0) n_classes = 0;
 
   data = data.slice().sort(function (a, b) {

@@ -24,7 +24,7 @@ const prepareFilterLayer = function(type, data) {
 
   // LayerId
   const filterDiv = ol_ext_element.create('DIV', { 
-    className: ('mdFilterLayer ' + (atts.className || '') + (atts.border ? ' mdSwitcherBorder': '')).replace(/  /g,' '),
+    className: ('mdFilterLayer ' + (atts.className || '') + (atts.border ? ' mdSwitcherBorder': '')).replace(/ {2}/g,' '),
     parent: container
   });
   filterDiv.dataset.layers = JSON.stringify(atts.layers);
@@ -64,6 +64,9 @@ const mdFilterLayer = function(element, story) {
       // Display condition
       if (layer && layer.getConditionStyle && layer.getConditionStyle()) {
         layer.getConditionStyle().forEach((cond, i) => {
+          // Nothing displayed for this condition
+          if (!cond.symbol) return
+          // Reset condition
           if (elt.dataset.reset) {
             cond.filtered = false;
           }
@@ -76,8 +79,11 @@ const mdFilterLayer = function(element, story) {
                 layer.getSource().changed();
                 linked.forEach(l => {
                   if (l && l.getConditionStyle && l.getConditionStyle() && layer.getConditionStyle()[i]) {
-                    l.getConditionStyle()[i].filtered = cond.filtered;
-                    l.getSource().changed();
+                    const cstyle = l.getConditionStyle()[i];
+                    if (cstyle) {
+                      cstyle.filtered = cond.filtered;
+                      l.getSource().changed();
+                    }
                   }
                 })
               }
