@@ -75,7 +75,7 @@ Layer.prototype.readOptions = function(layer, options) {
   }
   // Reload
   layer.set('reload', options.reload || 0);
-  layer.set('reloadId', options.reloadId || 0);
+  layer.set('reloadId', options.reloadId || '');
   // Multi select
   if (options.multiSelect) layer.set('multiSelect', options.multiSelect);
   // Popup
@@ -175,7 +175,7 @@ Layer.prototype.writeOptions = function(layer, options) {
     options.selectable = layer.selectable();
   }
   options.reload = layer.get('reload') || 0;
-  options.reloadId = layer.get('reloadId') || 0;
+  options.reloadId = layer.get('reloadId') || '';
   // Multi select
   options.multiSelect = layer.get('multiSelect');
   // PopupContent
