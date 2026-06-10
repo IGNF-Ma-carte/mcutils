@@ -54,6 +54,7 @@ function showInfo(layer, map) {
         const format = new GeoJSON;
         const data = format.writeFeatures(features, {
           featureProjection: map.getView().getProjection(),
+          decimals: 7,
           rightHanded: true
         })
         var blob = new Blob([data], {type: "text/plain;charset=utf-8"});
