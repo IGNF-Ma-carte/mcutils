@@ -16,9 +16,9 @@ ol_style_FontSymbol.addDefs({
 });
 
 /* Overwrite defaultIgnStyle for GPF */
-defaultIgnStyle.pointRadius = 19;
+defaultIgnStyle.pointRadius = 20;
 defaultIgnStyle.pointGlyph = " ";
-defaultIgnStyle.pointForm = "marker",
+defaultIgnStyle.pointForm = "marker";
 defaultIgnStyle.symbolColor = "rgba(255, 255, 255, 1)"; // "#ffffff";
 defaultIgnStyle.pointColor = "rgba(0, 0, 145, 1)"; // "#000091";
 defaultIgnStyle.pointStrokeColor = "rgba(255, 255, 255, 1)"; // "#ffffff";
@@ -28,6 +28,16 @@ defaultIgnStyle.strokeWidth = 4;
 defaultIgnStyle.fillColor = "rgba(51, 177, 255, 0.5)"; // "rgba(51, 177, 255, .5)";
 defaultIgnStyle.textColor = "rgba(0, 0, 0, 1)"; 
 defaultIgnStyle.fillColorPattern = "rgba(0, 0, 0, 0)";
+
+// Taille du symbole
+if (!ignStyleDef["pointGlyphSize"]) {
+  ignStyleDef["pointGlyphSize"] = {
+    defaultValue: 1,
+    geom: /Point/,
+    short: "pgys"
+  }
+}
+defaultIgnStyle.pointGlyphSize = "0.8";
 
 // Update default style for GPF
 for (let k in defaultIgnStyle) {
