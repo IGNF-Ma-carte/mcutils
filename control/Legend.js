@@ -137,6 +137,7 @@ class LegendControl extends ol_Object {
         content.appendChild(Legend.getLegendImage(prop))
         const span = ol_ext_element.create('SPAN', {
           html: title.replace(/\n/, '<br/>')  + '&nbsp;',
+          title: title,
           parent: content
         });
         const txt = ol_ext_element.create('TEXTAREA', {

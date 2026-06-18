@@ -892,6 +892,8 @@ Carte.prototype.getFeaturesPopupContent = function(feat, getAllFeaturesContent =
 
   let contents = []
   let renderedFeatures = []
+  let index = 0;
+  const shownf = this.getSelect().getShownFeature();
   for (let i = 0; i < features.length; i++) {
     let f = features[i]
     // If it's a cluster, then we check if there is a style to display it
@@ -907,9 +909,13 @@ Carte.prototype.getFeaturesPopupContent = function(feat, getAllFeaturesContent =
     if (getAllFeaturesContent || content.innerText.trim() || content.querySelector('canvas') || content.querySelector('img') || f.getLayer().get('multiSelect')) {
       contents.push(content);
       renderedFeatures.push(f);
+      // Is shown feature?
+      if (f === shownf) {
+        index = renderedFeatures.length;
+      }
     }
   }
-  return {contents, renderedFeatures}
+  return {contents, renderedFeatures, index}
 }
 
 /** Show a multi popup for an array of features

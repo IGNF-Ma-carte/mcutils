@@ -15,7 +15,7 @@ function showInfo(layer, map) {
   const content = ol_ext_element.create('DIV', { className: 'md' });
   // Description
   ol_ext_element.create('DIV', {
-    html: md2html(layer.get('desc') || layer.get('description'), layer.getProperties()),
+    html: md2html('## ' + layer.get('title') + '\n' + (layer.get('desc') || layer.get('description') || ''), layer.getProperties()),
     parent: content
   })
   // Copyright
@@ -29,11 +29,12 @@ function showInfo(layer, map) {
   // Show
   dialog.show({
     className: 'layer-info' + (layer.get('exportable') ? ' exportable' : ''),
-    title: md2html(layer.get('title')),
+    // title: md2html(layer.get('title')),
     content: content,
     buttons: { pk: 'ok' }
   })
-  dialog.element.querySelector('h2').prepend(ol_ext_element.create('SPAN', { text : layer.get('id') }))
+  // Add id
+  content.querySelector('h2').prepend(ol_ext_element.create('SPAN', { text : layer.get('id') }))
 
   // Render content
   md2html.renderWidget(content);
@@ -53,6 +54,7 @@ function showInfo(layer, map) {
         const format = new GeoJSON;
         const data = format.writeFeatures(features, {
           featureProjection: map.getView().getProjection(),
+          decimals: 7,
           rightHanded: true
         })
         var blob = new Blob([data], {type: "text/plain;charset=utf-8"});
@@ -74,6 +76,8 @@ function getLayerSwitcher() {
     selection: false,
     minibar: true
   })
+  layerSwitcher.button.title = 'Afficher les couches';
+  layerSwitcher.button.ariaLabel = 'Afficher les couches';
   // No selection
   layerSwitcher.set('selection', false);
   // Inview layers
@@ -149,7 +153,7 @@ function showThemeDialog(layerSwitcher) {
     const li = ol_ext_element.create('LI', {
       class: 'theme',
       html: ol_ext_element.create('H3', { 
-        html: md2html.iconize(th),
+        html: md2html.iconize(th || ':fg-layer-stack-o: Couches'),
         click: () => {
           if (li.dataset.expended !== undefined) {
             delete li.dataset.expended;
@@ -201,7 +205,7 @@ function showThemeDialog(layerSwitcher) {
     ol_ext_element.create('BUTTON', {
       text: 'tout sélectionner',
       click: () => {
-        seli.parentNode.querySelectorAll('[type="checkbox"]').forEach(i => {
+        seli.parentNode.querySelectorAll('li > label [type="checkbox"]').forEach(i => {
           if (!i.checked) i.click()
         })
       },
@@ -214,7 +218,7 @@ function showThemeDialog(layerSwitcher) {
     ol_ext_element.create('BUTTON', {
       text: 'tout supprimer',
       click: () => {
-        seli.parentNode.querySelectorAll('[type="checkbox"]').forEach(i => {
+        seli.parentNode.querySelectorAll('li > label [type="checkbox"]').forEach(i => {
           if (i.checked) i.click()
         })
       },
@@ -224,8 +228,8 @@ function showThemeDialog(layerSwitcher) {
 
   const updateList = function() {
     list.querySelectorAll('.count').forEach(count => {
-      const c = count.parentNode.querySelectorAll('[type="checkbox"]:checked').length
-      const nb = count.parentNode.querySelectorAll('[type="checkbox"]').length
+      const c = count.parentNode.querySelectorAll('li > label [type="checkbox"]:checked').length
+      const nb = count.parentNode.querySelectorAll('li > label [type="checkbox"]').length
       count.innerText = c + ' / ' + nb;
     })
   }
@@ -237,13 +241,13 @@ function showThemeDialog(layerSwitcher) {
     title: 'Ajouter des données',
     closeBox: false,
     content: content,
-    buttons: ['Terminé'],
-    onButton: () => {
-      layerSwitcher.drawPanel();
-    }
+    buttons: ['Terminé']
   })
   dialog.set('hideOnBack', true);
-  dialog.once('hide', () => { dialog.set('hideOnBack', false) })
+  dialog.once('hide', () => { 
+    layerSwitcher.drawPanel();
+    dialog.set('hideOnBack', false) 
+  })
 }
 
 export default getLayerSwitcher

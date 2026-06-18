@@ -264,6 +264,16 @@ class StoryMap extends ol_Object {
       className: 'header',
       parent: this.element.tabs
     });
+    // Foldup volet
+    ol_ext_element.create('BUTTON', {
+      className: 'foldup',
+      ariaLabel: 'Afficher/masquer le volet',
+      title: 'Afficher/masquer le volet',
+      parent: this.element.volet,
+      click: () => {
+        this.target.dataset.foldup = this.target.dataset.foldup === 'unfold' ? 'fold' : 'unfold';
+      }
+    });
     // Volet content
     this.element.step = ol_ext_element.create('DIV', {
       className: 'steps',
@@ -306,7 +316,7 @@ class StoryMap extends ol_Object {
     // Set step on arrow left/right
     document.addEventListener('keydown', (e) => {
       if (
-        !this.get('noStep') 
+        (!this.get('noStep') || this.get('noStep') === 'true')
         && !this.get('freezeStep') 
         && this.get('model') === 'etape' 
         && !/INPUT|TEXTAREA/.test(e.target.tagName)
@@ -421,6 +431,18 @@ StoryMap.prototype.clearInfoVolet = function() {
   if (this.models[this.get('model')].volet) {
     this.element.info.innerHTML = '';
     this.setInfoVolet();
+  }
+}
+
+/** Enable foldup volet
+ * @param {boolean} [b=false] enable foldup 
+ */
+StoryMap.prototype.setFoldup = function(b) {
+  this.set('foldup', b);
+  if (b) {
+    this.target.dataset.foldup = 'unfold';
+  } else {
+    delete this.target.dataset.foldup;
   }
 }
 
@@ -690,9 +712,14 @@ StoryMap.prototype.setStep = function(n, anim) {
   n = n || 0;
   n = Math.max(Math.min(n, this.steps.getLength()-1), 0);
   this.currentStep = n;
-  // Create content
+
+  // Content
+  this.element.step.innerHTML = '';
+
+  // Pages bar
   const div = ol_ext_element.create('FORM', {
-    className: 'pages'
+    className: 'pages',
+    parent: this.element.step
   });
   // Previous
   const prevBt = ol_ext_element.create('BUTTON', {
@@ -731,18 +758,59 @@ StoryMap.prototype.setStep = function(n, anim) {
     parent: div
   });
 
-  this.element.step.innerHTML = '';
-  this.element.step.appendChild(div);
+  // Pages as buttons
+  const ulpages = ol_ext_element.create('UL', {
+    className: 'ulPages',
+    parent: this.element.step
+  });
+  ol_ext_element.create('LI', {
+    className: 'toc',
+    html: ol_ext_element.create('BUTTON', { 
+      html: '<i class="fi-burger fi-fw"/><i>', 
+      type: 'button',
+      title: _T('toc'), 
+      'aria-label': _T('toc'),
+      click: () => {
+        if (!this.get('freezeStep')) this.showTOC(n);
+      },
+    }),
+    parent: ulpages
+  });
+  this.steps.forEach((s, i) => {
+    ol_ext_element.create('LI', {
+      html: ol_ext_element.create('BUTTON', { 
+        'aria-label': 'Etape : ' + s.title,
+        type: 'button',
+        text: s.title, 
+        click: () => {
+          if (!this.get('freezeStep')) this.setStep(i, false);
+        },
+      }),
+      className: n===i ? 'active' : '',
+      parent: ulpages
+    });
+  });
+
 
   // Show step
   const s = this.steps.item(n);
   if (s) {
+    // Map layers
+    this.cartes[0].map.getLayers().forEach((l) => {
+      if (s.layerIds.indexOf(l.get('id')) >= 0) {
+        l.setVisible(true);
+      } else {
+        l.setVisible(false);
+      }
+    })
+
     // content
     let content = s.content;
     if (s.showTitle && s.title) {
       content = '## ' + s.title + '\n' + content;
     }
     this.setInfoVolet(content);
+
     // Delete previous animation
     setTimeout(() => this.cartes[0].map.getView().cancelAnimations());
     // Map position
@@ -771,14 +839,6 @@ StoryMap.prototype.setStep = function(n, anim) {
       })
     }
     */
-    // Map layers
-    this.cartes[0].map.getLayers().forEach((l) => {
-      if (s.layerIds.indexOf(l.get('id')) >= 0) {
-        l.setVisible(true);
-      } else {
-        l.setVisible(false);
-      }
-    })
   }
 
   // Change step
@@ -1111,11 +1171,7 @@ StoryMap.prototype.setModel = function(model) {
   } else {
     this.target.dataset.volet = 'none';
   }
-  if (this.get('noStep')) {
-    this.target.dataset.noStep = '';
-  } else {
-    delete this.target.dataset.noStep;
-  }
+  this.target.dataset.noStep = String(this.get('noStep') || 'step');
   // Remove old controls / add new
   if (this.cartes[1]) {
     this.cartes[1]._interactions.synchro.setActive(false);
@@ -1523,24 +1579,27 @@ StoryMap.prototype.setCarte = function(carte, n) {
           carte.popupFeatures(features, e.mapBrowserEvent ? e.mapBrowserEvent.coordinate : carte.map.getView().getCenter());
         }
       } else {
-        if (firstFeature) firstFeature._indicator = this.get('indicator');
-        let md;
-        if (features.length) {
-          // Multi features
-          md = carte.getFeaturesPopupContent(features, true)
-        } else if (firstFeature) {
-          // Only one
-          md = firstFeature.getPopupContent(true)
-        } else {
-          // No features
-          md = this.get('description')
-        }
-        // Display feature info or description
-        this.setInfoVolet( 
-          md,
-          // Second select (differentiel model)
-          e.target === carte._interactions.select2
-        );
+        // Wait selection ready
+        setTimeout(() => {
+          if (firstFeature) firstFeature._indicator = this.get('indicator');
+          let md;
+          if (features.length) {
+            // Multi features
+            md = carte.getFeaturesPopupContent(features, true)
+          } else if (firstFeature) {
+            // Only one
+            md = firstFeature.getPopupContent(true)
+          } else {
+            // No features
+            md = this.get('description')
+          }
+          // Display feature info or description
+          this.setInfoVolet( 
+            md,
+            // Second select (differentiel model)
+            e.target === carte._interactions.select2
+          );
+        });
       }
     }
     carte.getSelect().on('select', onselect);

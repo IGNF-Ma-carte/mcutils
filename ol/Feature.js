@@ -41,6 +41,24 @@ Feature.prototype.setLayer= function(layer) {
   this._layer = layer;
 };
 
+const altProperties = {
+  labelAttribute: {
+    Point: 'point-text-value',
+    LineString: 'line-text-value',
+    Polygon: 'fill-text-value'
+  },
+  textColor: {
+    Point: 'point-text-fill-color',
+    LineString: 'line-text-fill-color',
+    Polygon: 'fill-text-fill-color'
+  },
+  textSize: {
+    Point: 'point-text-size',
+    LineString: 'line-text-size',
+    Polygon: 'fill-text-size'
+  }
+}
+
 /** Get IGN style for a feature
  * @method ol.Feature#getIgnStyle
  * @param { string | boolean | undefined } [property]
@@ -73,23 +91,27 @@ Feature.prototype.getIgnStyle = function(property, iStyle) {
     if (iStyle && Object.prototype.hasOwnProperty.call(iStyle, property)) {
       return iStyle[property];
     }
-    var val;
     // Feature property
     if (Object.prototype.hasOwnProperty.call(this._ignStyle, property)) {
-      val = this._ignStyle[property];
+      return this._ignStyle[property];
     } else {
       // or default layer property
-      if (this.getLayer() 
-        && this.getLayer()._ignStyle 
-        && Object.prototype.hasOwnProperty.call(this.getLayer()._ignStyle, property)
-        ) {
-        val = this.getLayer()._ignStyle[property];
-      } else {
-        // or default property
-        val = defaultIgnStyle[property];
+      const layer = this.getLayer();
+      const ignStyle = layer?._ignStyle;
+      const typegeom = this.getGeometry().getType().replace('Multi', '');
+      if (layer && ignStyle) {
+        // Alternative property name for label
+        const altProp = altProperties[property]?.[typegeom];
+        if (altProp && Object.prototype.hasOwnProperty.call(ignStyle, altProp)) {
+          return ignStyle[altProp];
+        }
+        if (Object.prototype.hasOwnProperty.call(ignStyle, property)) {
+          return ignStyle[property];
+        }
       }
+      // or default property
+      return defaultIgnStyle[property];
     }
-    return val;
   }
 };
 

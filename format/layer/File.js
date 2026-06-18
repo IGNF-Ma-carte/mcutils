@@ -30,26 +30,32 @@ File.prototype.read = function (options) {
   this.readOptions(layer, options);
   layer.set('url', options.url);
   layer.set('extractStyles', options.extractStyles);
-  // Read feature
-  fetch(options.url)
-    .then(resp => resp.text())
-    .then(data => {
-      const format = new ol_format_Guesser();
-      const features = format.readFeatures(data, {
-        featureProjection: 'EPSG:3857',
-        extractStyles: options.extractStyles
+  const url = options.url;
+  const source = layer.getSource();
+  source.reload = () => {
+    // Read feature
+    fetch(url)
+      .then(resp => resp.text())
+      .then(data => {
+        const format = new ol_format_Guesser();
+        const features = format.readFeatures(data, {
+          featureProjection: 'EPSG:3857',
+          extractStyles: options.extractStyles
+        })
+        if (features.length) {
+          source.dispatchEvent('featuresloadstart');
+          source.clear(true);
+          source.addFeatures(features);
+          source.dispatchEvent('featuresloadend');
+        } else {
+          source.dispatchEvent('featuresloaderror');
+        }
       })
-      if (features.length) {
-        layer.getSource().dispatchEvent('featuresloadstart')
-        layer.getSource().addFeatures(features)
-        layer.getSource().dispatchEvent('featuresloadend')
-      } else {
-        layer.getSource().dispatchEvent('featuresloaderror')
-      }
-    })
-    .catch(() => {
-      layer.getSource().dispatchEvent('featuresloaderror')
-     })
+      .catch(() => {
+        source.dispatchEvent('featuresloaderror');
+      })
+  }
+  source.reload();
   return layer;
 };
 
@@ -61,7 +67,7 @@ File.prototype.write = function (layer) {
   if (layer.get('type') !== 'file') return null;
   return this.writeOptions(layer, {
     url: layer.get('url'),
-    extractStyles: !!layer.get('extractStyles')
+    extractStyles: !!layer.get('extractStyles'),
   });
 };
 

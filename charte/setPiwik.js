@@ -1,4 +1,13 @@
+/** Gestion Matomo (anciennement Piwik) 
+ */
+
+import setMatomo from './setMatomo.js';
+
 function setPiwik(siteId) {
+  if (siteId) {
+    setMatomo("8");
+  }
+  /* old piwik code, to be removed when all sites will be migrated to matomo 
   // No piwik defined
   if (!siteId) return;
   // Add piwik
@@ -28,6 +37,7 @@ function setPiwik(siteId) {
     g.src = u + 'piwik.js';
     s.parentNode.insertBefore(g, s);
   })();
+  */
 }
 
 export default setPiwik

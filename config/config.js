@@ -9,6 +9,7 @@ let options = {
   editor: 'SERVER/edition/$TYPE/$ID',
   faq: 'SERVER/aide/faq/$ARTICLE',
   tuto: 'SERVER/aide/tuto/$ARTICLE',
+  maxFileSize: 23, // 23 Mo
   version: 'SERVER/aide/notes-de-version/$ARTICLE',
   guichetURL: 'https://qlf-collaboratif.cegedim-hds.fr/collaboratif-4.0/',
   // sitePiwik: 39,

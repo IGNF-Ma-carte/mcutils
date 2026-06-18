@@ -623,7 +623,7 @@ function addIcon(text, p){
 function addLayerId(text, p){
   const dlg = ol_ext_element.create('DIV');
   
-  const carte = currentCarte.getCarte ? currentCarte.getCarte() : currentCarte
+  const carte = (currentCarte && currentCarte.getCarte) ? currentCarte.getCarte() : currentCarte;
   if (carte) {
     const layers = carte.getMap().getLayers().getArray()
     layers.forEach(l => {

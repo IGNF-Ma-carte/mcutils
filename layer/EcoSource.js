@@ -28,7 +28,13 @@ if (!proj4.defs["EPSG:5490"]) proj4.defs("EPSG:5490","+proj=utm +zone=20 +ellps=
 // Guyane
 if (!proj4.defs["EPSG:2972"]) proj4.defs("EPSG:2972","+proj=utm +zone=22 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
 // Mayotte
-if (!proj4.defs["EPSG:EPSG:4471"]) proj4.defs("EPSG:4471","+proj=utm +zone=38 +south +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+if (!proj4.defs["EPSG:4471"]) proj4.defs("EPSG:4471","+proj=utm +zone=38 +south +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+// La Reunion
+if (!proj4.defs["EPSG:2975"]) proj4.defs("EPSG:2975","+proj=utm +zone=40 +south +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs");
+// Guadeloupe 
+if (!proj4.defs["EPSG:2970"]) proj4.defs("EPSG:2970","+proj=utm +zone=20 +ellps=intl +towgs84=-472.29,-5.63,-304.12,0.4362,-0.8374,0.2563,1.8984 +units=m +no_defs +type=crs");
+// Martinique
+if (!proj4.defs["EPSG:2973"]) proj4.defs("EPSG:2973","+proj=utm +zone=20 +ellps=intl +towgs84=126.93,547.94,130.41,-2.7867,5.1612,-0.8584,13.8227 +units=m +no_defs +type=crs");
 
 ol_proj_proj4_register(proj4);
 
