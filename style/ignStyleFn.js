@@ -550,6 +550,7 @@ function getImage(id, s, f, ghost, label) {
       radius: s.pointRadius,
       glyph: s.pointGlyph,
       color: s.symbolColor,
+      fontSize: s.pointGlyphSize || 1,
       form: s.pointForm || (s.pointGlyph ? undefined : 'circle'),
       rotation: s.pointRotation *Math.PI/180,
       gradient: Number(s.pointGradient),

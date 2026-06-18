@@ -43,19 +43,28 @@ Feature.prototype.setLayer= function(layer) {
 
 const altProperties = {
   labelAttribute: {
-    Point: 'point-text-value',
-    LineString: 'line-text-value',
-    Polygon: 'fill-text-value'
+    Point: 'pointTextValue',
+    LineString: 'lineTextValue',
+    Polygon: 'fillTextValue'
   },
   textColor: {
-    Point: 'point-text-fill-color',
-    LineString: 'line-text-fill-color',
-    Polygon: 'fill-text-fill-color'
+    Point: 'pointTextFillColor',
+    LineString: 'lineTextFillColor',
+    Polygon: 'fillTextFillColor'
   },
   textSize: {
-    Point: 'point-text-size',
-    LineString: 'line-text-size',
-    Polygon: 'fill-text-size'
+    Point: 'pointTextSize',
+    LineString: 'lineTextSize',
+    Polygon: 'fillTextSize'
+  },
+  strokeColor: {
+    Polygon: 'fillStrokeColor'
+  },
+  strokeWidth: {
+    Polygon: 'fillStrokeWidth'
+  },
+  strokeDash: {
+    Polygon: 'fillStrokeDash'
   }
 }
 
@@ -105,6 +114,7 @@ Feature.prototype.getIgnStyle = function(property, iStyle) {
         if (altProp && Object.prototype.hasOwnProperty.call(ignStyle, altProp)) {
           return ignStyle[altProp];
         }
+        // Fallback to property name
         if (Object.prototype.hasOwnProperty.call(ignStyle, property)) {
           return ignStyle[property];
         }
@@ -435,5 +445,5 @@ function render2Feature(feature) {
   return f2;
 }
 
-export { render2Feature }
+export { render2Feature, altProperties }
 export default Feature
