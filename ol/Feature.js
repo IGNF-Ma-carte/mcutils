@@ -111,8 +111,13 @@ Feature.prototype.getIgnStyle = function(property, iStyle) {
       if (layer && ignStyle) {
         // Alternative property name for label
         const altProp = altProperties[property]?.[typegeom];
-        if (altProp && Object.prototype.hasOwnProperty.call(ignStyle, altProp)) {
-          return ignStyle[altProp];
+        if (altProp) {
+          // Check alternative property AND default value for this property
+          const value = Object.prototype.hasOwnProperty.call(ignStyle, altProp) ? ignStyle[altProp] : defaultIgnStyle[altProp];
+          // Return only if a value is found
+          if (value) {
+            return value;
+          }
         }
         // Fallback to property name
         if (Object.prototype.hasOwnProperty.call(ignStyle, property)) {

@@ -29,7 +29,7 @@ defaultIgnStyle.fillColor = "rgba(51, 177, 255, 0.5)"; // "rgba(51, 177, 255, .5
 defaultIgnStyle.textColor = "rgba(0, 0, 0, 1)"; 
 defaultIgnStyle.fillColorPattern = "rgba(0, 0, 0, 0)";
 
-// Taille du symbole
+// Glyph size
 if (!ignStyleDef["pointGlyphSize"]) {
   ignStyleDef["pointGlyphSize"] = {
     defaultValue: 1,
@@ -38,6 +38,22 @@ if (!ignStyleDef["pointGlyphSize"]) {
   }
 }
 defaultIgnStyle.pointGlyphSize = "0.8";
+
+// Define fill stroke values (different from stroke values)
+defaultIgnStyle.fillStrokeColor = defaultIgnStyle.strokeColor;
+ignStyleDef["fillStrokeColor"] = Object.assign({}, ignStyleDef["strokeColor"]);
+ignStyleDef["fillStrokeColor"].short = `f${ignStyleDef["fillStrokeColor"].short}`;
+ignStyleDef["fillStrokeColor"].geom = /Polygon/;
+
+defaultIgnStyle.fillStrokeDash = defaultIgnStyle.strokeDash;
+ignStyleDef["fillStrokeDash"] = Object.assign({}, ignStyleDef["strokeDash"]);
+ignStyleDef["fillStrokeDash"].short = `f${ignStyleDef["fillStrokeDash"].short}`;
+ignStyleDef["fillStrokeDash"].geom = /Polygon/;
+
+defaultIgnStyle.fillStrokeWidth = defaultIgnStyle.strokeWidth;
+ignStyleDef["fillStrokeWidth"] = Object.assign({}, ignStyleDef["strokeWidth"]);
+ignStyleDef["fillStrokeWidth"].short = `f${ignStyleDef["fillStrokeWidth"].short}`;
+ignStyleDef["fillStrokeWidth"].geom = /Polygon/;
 
 // Update default style for GPF
 for (let k in defaultIgnStyle) {
