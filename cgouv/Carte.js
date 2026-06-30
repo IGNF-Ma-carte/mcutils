@@ -1,9 +1,9 @@
-import Carte from 'mcutils/Carte.js';
+import Carte from '../Carte.js';
 import {
   GeoportalZoom,
   SelectingInteraction,
 } from 'geopf-extensions-openlayers/src/index.js';
-import SelectMultiple from 'mcutils/ol/SelectMultiple.js';
+import SelectMultiple from '../ol/SelectMultiple.js';
 import {gpfStyleFn, gpfShownStyleFn} from './gpfStyleFn.js';
 import './gpfStyleFn.js';
 
@@ -209,7 +209,7 @@ class GPPCarte extends Carte {
     this.dispatchEvent({
       type: 'read'
     });
-  };
+  }
 }
 
 export default GPPCarte

@@ -1,8 +1,8 @@
-import { getSelectStyleFn, getShownFeatureStyleFn } from 'mcutils/style/ignStyleFn.js';
+import { getSelectStyleFn, getShownFeatureStyleFn } from '../style/ignStyleFn.js';
 import CircleStyle from 'ol/style/Circle.js';
 import Stroke from 'ol/style/Stroke.js';
 import Fill from 'ol/style/Fill.js';
-import { defaultIgnStyle, ignStyleDef } from 'mcutils/style/ignStyleFn.js';
+import { defaultIgnStyle, ignStyleDef } from '../style/ignStyleFn.js';
 
 import ol_style_FontSymbol from 'ol-ext/style/FontSymbol.js'
 

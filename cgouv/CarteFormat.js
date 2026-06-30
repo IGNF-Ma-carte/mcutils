@@ -1,5 +1,8 @@
-import BaseFormat from 'mcutils/format/Carte.js';
-import { ignStyleDef } from 'mcutils/style/ignStyleFn.js';
+import BaseFormat from '../format/Carte.js';
+import { ignStyleDef } from '../style/ignStyleFn.js';
+import Layer from '../format/layer/Layer';
+import GeopfExtensionsFormat from './GeopfExtensionsFormat.js';
+
 
 /** Base class for reading / writing .macarte
  * @memberof mcutils.format
@@ -12,11 +15,23 @@ class CarteFormat extends BaseFormat {
     super();
   }
 
-/** Read a single layer
- * @param {Object} options layer options (json object)
- * @param {string} key GPP API key
- * @return {ol/layer/Layer}
- */
+  /**
+   * Add a layer format to the list of existing formats
+   * @param {import("../format/layer/Layer").default} format Format to add
+   */
+  static addLayerFormat(format) {
+    if (format instanceof Layer || format.prototype instanceof Layer) {
+      this.layerFormats?.push(format);
+    } else {
+      console.warn(`format is not an instance of mcutils.format.Layer.`);
+    }
+  }
+
+  /** Read a single layer
+   * @param {Object} options layer options (json object)
+   * @param {string} key GPP API key
+   * @return {ol/layer/Layer}
+   */
   readLayer(options, key) {
     const layer = super.readLayer(options, key);
     if (layer && (options.logo || options.thumbnail)) {
@@ -52,7 +67,7 @@ class CarteFormat extends BaseFormat {
    * @return {mcutils.Carte}
    */
   read(carte, options) {
-    const v4 =  (options.version > 3);
+    const v4 = (options.version > 3);
     // upgradeCarte(options);
     super.read(carte, options);
     // Update layer styles to V4 format
@@ -75,5 +90,6 @@ class CarteFormat extends BaseFormat {
   }
 }
 
+CarteFormat.addLayerFormat(GeopfExtensionsFormat);
 
-export default CarteFormat
+export default CarteFormat;
