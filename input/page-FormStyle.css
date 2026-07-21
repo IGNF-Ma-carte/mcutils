@@ -359,6 +359,10 @@
 [data-formstyle] li[data-attr="pointForm"] i.triangle:before {
   transform: rotate(180deg);
 }
+[data-formstyle] li[data-attr="textMulti"] i {
+  padding: 0;
+  display: inline;
+}
 
 /* Display right */
 [data-formstyle][data-preview="left"] .onglets {

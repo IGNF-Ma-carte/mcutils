@@ -250,6 +250,11 @@ const ignStyleDef = {
     short: 'tp',
     defaultValue: 'point'
   },
+  textMulti: {
+    geom: /Point|LineString|Polygon/,
+    short: 'tm',
+    defaultValue: true
+  },
 
 }
 

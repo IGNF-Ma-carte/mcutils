@@ -439,6 +439,11 @@ FormStyle.prototype._initFormPointText = function(element) {
   this._inputs.textPlacement.addEventListener('change', () => {
     this.dispatchEvent({ type:'change', attr: 'textPlacement', value: this._inputs.textPlacement.checked ? 'line' : 'point' })
   })
+  // textMulti
+  this._inputs.textMulti = element.querySelector('[data-attr="textMulti"] input');
+  this._inputs.textMulti.addEventListener('change', () => {
+    this.dispatchEvent({ type:'change', attr: 'textMulti', value: this._inputs.textMulti.checked ? true : false })
+  })
   // textOverflow
   this._inputs.textOverflow = element.querySelector('[data-attr="textOverflow"] input');
   this._inputs.textOverflow.addEventListener('change', () => {
@@ -562,7 +567,9 @@ FormStyle.prototype.setStyle = function(style, silence) {
 
   // Set input value
   for (let k in style) {
-    if (k === 'textPlacement') {
+    if (k === 'textMulti') {
+      this._inputs[k].checked = style[k] !== false;
+    } else if (k === 'textPlacement') {
       this._inputs[k].checked = style[k] === 'line';
     } else if (k === 'fillPattern') {
       this._inputs.fillPattern.setValue({

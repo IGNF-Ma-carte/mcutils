@@ -123,7 +123,9 @@ function getStyleId(s, clustered, sel) {
 			+'-'+s.textOutlineColor+'-'+s.textOutlineWidth
 			+'-'+s.textAlign+'-'+s.textBaseline
       +'-'+s.textBgFill+'-'+s.textBgStroke+'-'+s.textBgStrokeWidth
-      +'-'+s.textPlacement+'-'+s.textOverflow,
+      +'-'+s.textPlacement+'-'+s.textPlacement
+      +'-'+s.textOverflow+'-'+s.textOverflow
+      +'-'+s.textMulti+'-'+s.textMulti,
   };
 }
 
@@ -288,9 +290,9 @@ function getClusterStyle(cluster, minmax, optId, clusterColor, clusterDash, clus
       image: clusterImage({ size: size, min: minmax[0], max: minmax[1], color: clusterColor, dash: clusterDash, type: clusterType}),
       text: new ol_style_Text({
         text: size.toString(),
-          fill: new ol_style_Fill({
-            color: clusterTextColor,
-          }),
+        fill: new ol_style_Fill({
+          color: clusterTextColor,
+        }),
       }),
     });
     style.setZIndex(options.zIndex||0);
@@ -705,7 +707,55 @@ function getStyleLabel(s) {
   // Style
   return new ol_style_Style({
     text: new ol_style_Text(options),
-    geometry: getClusterGeom
+    geometry: (f) => {
+      // Clusters
+      if (f.get('features')) {
+        return getClusterGeom(f);
+      } else {
+        if (s.textMulti !== false) {
+          return f.getGeometry();
+        } else {
+          const geom = f.getGeometry();
+          switch (geom.getType()) {
+            // First point is used for text placement
+            case 'MultiPoint': {
+              return geom.getPoints()[0];
+            }
+            // Longest line string is used for text placement
+            case 'MultiLineString': {
+              if (!geom._textGeom) {
+                let l = 0;
+                geom.getLineStrings().forEach(ls => {
+                  const li = ls.getLength();
+                  if (li > l) {
+                    l = li;
+                    geom._textGeom = ls;
+                  }
+                });
+              }
+              return geom._textGeom;
+            }
+            // Larger area polygon is used for text placement
+            case 'MultiPolygon': {
+              if (!geom._textGeom) {
+                let a = 0;
+                geom.getPolygons().forEach(p => {
+                  const ai = p.getArea();
+                  if (ai > a) {
+                    a = ai;
+                    geom._textGeom = p;
+                  }
+                });
+              }
+              return geom._textGeom;
+            }
+            default: {
+              return geom;
+            }
+          }
+        }
+      }
+    }
   });
 }
 
